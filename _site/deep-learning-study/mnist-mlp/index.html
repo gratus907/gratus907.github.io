@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | Softmax Regression / MLP로 MNIST 풀어보기
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/deep-learning-study/mnist-mlp/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Softmax Regression / MLP로 MNIST 풀어보기</h1>
+    <p class="post-meta">October 6, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#problem--dataset" id="markdown-toc-problem--dataset">Problem / Dataset</a></li>
+  <li><a href="#softmax-regression" id="markdown-toc-softmax-regression">Softmax Regression</a></li>
+  <li><a href="#multi-layer-perceptron" id="markdown-toc-multi-layer-perceptron">Multi-Layer Perceptron</a></li>
+</ul>
+<hr>
+
+<p><strong>심층 신경망의 수학적 기초</strong> 5강, 6강 (9월 16일, 23일) 에 기반합니다. 이번 내용은 대부분이 코드에 대한 내용이라서, $\LaTeX$ 노트를 변환하지 않고 여기에 바로 작성했습니다.</p>
+
+<p>아직 읽지 않았다면, 최소한 <a href="/deep-learning-study/softmax-regression">Softmax(링크)</a>와 <a href="/deep-learning-study/multilayer-perceptron">MLP(링크)</a>에 대한 포스팅 을, 되도록 <a href="/deep-learning-study/">링크</a> 에 있는 포스팅 중 shallow-nn과 SVM, LR에 대한 내용을 읽으면 이론적 배경이 충분할 것으로 생각합니다 (제가 이 내용을 공부해서 이해한대로 정리했으니까요..?)</p>
+
+<h2 id="problem--dataset">Problem / Dataset</h2>
+<p>이번에 해결하고자 하는 문제는, MNIST라는 매우 유명한 데이터셋을 이용합니다. MNIST는 Hand-written 숫자로 구성된 데이터셋으로, 널리 알려진 CNN 모델을 처음 제시한 LeCun의 연구에 사용되었던 데이터셋이기도 합니다. 실제로 작동하는 딥 러닝을 만들기에는 너무 작은 데이터셋이지만 공부하는 목적으로 주로 사용됩니다.</p>
+
+<p>각 이미지는 28 by 28 grayscale image로, 편의상 $\R^{28 \times 28}$ 으로 생각하면 됩니다.</p>
+
+<p>가장 먼저 해야할 일은 pytorch module을 import하고, 데이터를 받아오고 정리하는 것입니다.<br>
+Pytorch에서는 <code class="language-plaintext highlighter-rouge">DataLoader</code>라는 모듈을 이용하여, 편하게 데이터를 Batch로 먹인다거나 하는 작업을 할 수 있습니다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">device =</code> 부분은 가능하다면 cuda GPU를 사용하도록 하는 부분인데, 사실 이번 태스크는 너무 작기 때문에 GPU를 쓰면 이득이 없거나 오히려 더 느려질 수도 있습니다.</p>
+
+<h2 id="softmax-regression">Softmax Regression</h2>
+<p>먼저, 우리는 Softmax regression을 시도해 보겠습니다. Pytorch에서는 다음과 같은 과정으로 머신러닝 모델을 학습합니다.</p>
+<ul>
+  <li>Model 정의 : 입력 $x$를 어떤 과정을 거쳐 출력값으로 만들지를 정의합니다. 이 모델에는 훈련가능한 parameter가 있습니다.</li>
+  <li>Loss function 정의 : 모델이 어떤 방법으로 현재 정확도를 측정할지를 정의합니다.</li>
+  <li>학습 : Training data를 이용하여 모델의 파라미터를 조정합니다.</li>
+</ul>
+
+<p>이제, Model을 정의해야 합니다. Model은 기본적으로 softmax regression에서 공부했던 모델로, $Ax + b$ 를 10개 만들어야 합니다.</p>
+
+<p>여기서, <code class="language-plaintext highlighter-rouge">__init__</code> 을 이용하여 이 모델에서 쓸 Layer들을 정의하고, 그 Layer들을 <code class="language-plaintext highlighter-rouge">forward</code> 메서드를 통해 사용해서 넘겨주면 됩니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SoftMax</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nb">float</span><span class="p">().</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SoftMax</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Softmax Regression은 이렇게 정의된 model에 다음과 같은 최적화 문제를 푸는 방법입니다. 
+\(\underset{a \in \R^{k \times n}, b \in \R^k}{\minimize}\ \frac{1}{N}\sum_{i = 1}^{N}  \left(-(a_{Y_i}^T X_i + b_{Y_i} + \log\left(\sum_{j = 1}^{k} e^{a_j^TX_i + b}\right)\right)\)</p>
+
+<p>pytorch에는 $Ax + b$의 결과만 받아내면 이를 계산해주는 함수가 있으므로, 모델은 $Ax + b$만 해주면 됩니다.<br>
+대신 Loss function을 다음과 같이 사용합니다. 여기서 <code class="language-plaintext highlighter-rouge">lr</code> 은 learning rate, $\alpha$ 값을 의미합니다. 최적화 자체에는 Stochastic Gradient Descent를 사용하겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss_function</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>    
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>   
+</code></pre></div></div>
+
+<p>이제, 우리에게 필요한 모델의 훈련 과정은 이렇게 진행됩니다. Epoch를 많이 돌릴수록 정확해지긴 하지만, 투입하는 시간 대비 얼만큼의 효율이 있는지는 상황마다 다르므로 적당히 판단할 필요가 있습니다.</p>
+
+<p>워낙 단순한 모델이라 학습할게 많지 않으므로 여기서는 epoch=2 (즉, 전체 데이터를 두바퀴 돌립니다) 만 돌리겠습니다.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NUM_EPOCH</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_EPOCH</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span> <span class="p">:</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">train_loss</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">train_loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>이를 뜯어보면,</p>
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">optimizer.zero_grad()</code> 로 기존 MLP 모델에 남아있던 gradient 값들을 다 날리고</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">train_loss</code> 는 현재 시점에 모델이 이미지를 받아서 추측을 해보고 그 loss function 값을 확인하고,</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">.backward()</code> 로 현재 시점의 gradient를 계산하고</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">optimizer.step()</code> 으로 실제 optimization (여기선 SGD)를 수행합니다.</li>
+</ul>
+
+<p>그렇다면, 이 모델은 얼마나 정확할까요?</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_loss</span><span class="p">,</span> <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">label</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">label</span><span class="p">).</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">label</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'''[Test set]</span><span class="se">\n</span><span class="s">Average loss: </span><span class="si">{</span><span class="n">test_loss</span> <span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, 
+Accuracy: </span><span class="si">{</span><span class="n">correct</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span><span class="si">}</span><span class="s"> (</span><span class="si">{</span><span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%)'''</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 코드는 테스트셋을 모두 한바퀴 돌리면서, test loss의 값과 결과의 정확도를 확인합니다.</p>
+
+<p>초기화 상황 등에 따라 조금 달라질수는 있을텐데, 저는 2번의 epoch로 92.11%의 정확도를 얻을 수 있었습니다.</p>
+
+<h2 id="multi-layer-perceptron">Multi-Layer Perceptron</h2>
+<p>Pytorch는 굉장히 쓰기 편한 모듈인데, 위 코드에서 정말 <code class="language-plaintext highlighter-rouge">model</code>만 바꾸면 바로 MLP를 사용해볼수 있습니다. MLP를 수행하면서 점점 개수가 줄어들어야 하는데, 여기서는 크게 중요하지 않으므로 그냥 편의상 점점 줄어드는 이쁜 값을 몇개 적어넣겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,)</span> <span class="p">:</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear4</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nb">float</span><span class="p">().</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    
+<span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">().</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div></div>
+<p>이 모델은 activation function으로 ReLU를 쓰는 depth 4짜리 MLP인데, 784 -&gt; 256 -&gt; 128 -&gt; 64 -&gt; 10으로 단계적으로 개수를 줄여나갑니다. 순서대로 Linear-&gt;ReLU-&gt;…-&gt;Linear로 끝납니다.</p>
+
+<p>위 코드에서 <code class="language-plaintext highlighter-rouge">loss_function</code> 정의부터는 그대로 실행하면 됩니다. 저는 로컬에서 정확도가 96% 정도 나오고, 참을성을 갖고 Epoch를 10으로 바꿨을 때는 98%의 정확도를 얻을 수 있었습니다.</p>
+
+<p>Q. 왜 4단계 layer를 (3단계, 5단계가 아니라…) 쓰나요?<br>
+-&gt; 일반적으로 Layer가 깊어질수록 파라미터가 많아져서 training 시간이 오래 걸리고 capacity가 커집니다. 반대로, layer가 얕으면 non-linearity를 충분히 주지 못해서 underfitting할 우려가 있습니다. 
+그렇다고 해서 문제로부터 바로 몇 Layer짜리 MLP를 쓸지 결정할 수 있는 것은 아닙니다. 해보니까 저는 4 Layer 정도가 가장 적당해 보였습니다.</p>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/deep-learning-study/mnist-mlp';
+      var disqus_title      = "Softmax Regression / MLP로 MNIST 풀어보기";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

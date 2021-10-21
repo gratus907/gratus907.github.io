@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | Hello, Jekyll!
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/jekyll/Hello-Jekyll/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Hello, Jekyll!</h1>
+    <p class="post-meta">January 6, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="jekyll-blog">Jekyll Blog</h2>
+<p>Jekyll은 Markdown을 이용해서 (주로 이런 주제의) 블로그를 쉽게 작성할 수 있도록 해주는 놀라운 툴입니다. Theme을 원하는 대로 적용해서 커스터마이즈 할 수 있고, 저는 아직 잘 모르겠지만 .scss 파일을 잘 만지면 생각보다 많이 손댈 수 있어 보입니다.</p>
+
+<h2 id="why-jekyll">Why Jekyll?</h2>
+<p>저는 기존에 네이버 블로그와 지금 쓰고 있는 티스토리 <a href="https://gratus-blog.tistory.com/" target="_blank" rel="noopener noreferrer">링크</a> 에서 글을 작성해 보았습니다. 네이버 블로그를 버린 이유는 크게 두 가지입니다.</p>
+<ol>
+  <li>Mathjax 미지원 및 네이버 수식 편집기의 한계. 저는 LaTeX가 아닌 수식 폰트가 용납이 안 되기 때문에(…)</li>
+  <li>Code highlight의 미흡함. 대표적으로, python의 // 연산자를 C-스타일의 주석이라고 생각하는 그런 끔찍한 경향이 있습니다.</li>
+</ol>
+
+<p>이 두 가지 모두 티스토리는 잘 해결해 줍니다. 특히 원하는 대로 Code highlight을 js를 이용해 마치 설치형 블로그처럼 쓸 수 있었던 점은 (비록 과정이 힘들었지만) 인상적이었습니다.</p>
+
+<p>그럼에도 불구하고 Jekyll 블로그를 따로 여는 이유는…</p>
+<ol>
+  <li>.github.io 가 .tistory.com 보다 개인적으로 좀더 마음에 들었습니다. 물론 저는 어차피 gratus907.com 도메인을 샀고 적어도 5년 이상은 보유할 예정이기 때문에 이부분은 별로 큰 문제는 아닙니다.<br>
+수학과 컴퓨터에 대한 Techy한 글이 주류이기 때문에, github.io가 조금더 정체성에 맞는다는 생각이 들었습니다.</li>
+  <li>어차피 tistory 글을 markdown으로 거의 비슷하게 export할 수 있어서, 블로그 두개에 똑같은 글을 올리는 데 별로 추가적인 노력이 들지 않습니다.</li>
+  <li>가장 큰 문제인데, 티스토리는 마음대로 url을 바꾸기 어렵습니다. 예를 들어, CEOI 2015 풀이를 …/ps/ceoi/2015 로 올리고 싶다고 해도, 티스토리는 이런 부분에서 (제가 알기로는) 지원이 미비합니다.</li>
+  <li>
+<a href="https://justicehui.github.io/xoi/" target="_blank" rel="noopener noreferrer">justicehui님의 블로그에 있는 navigator</a> 를 보면, 포스팅을 원하는 대로 정리하기가 조금 더 편한 것을 볼 수 있습니다. 티스토리는 포스트와 홈 이외의 뭔가를 제공하지 않기 때문에 이런 관리가 어렵습니다.</li>
+</ol>
+
+<p>그런 이유로, 당분간 글은 같은 글을 양쪽에 올릴 예정이고, 이쪽이 조금더 정돈된 형태로 올라갈 것 같습니다. :)</p>
+
+<h2 id="testing">Testing</h2>
+<p>English font 한국어 폰트 다람쥐 헌 쳇바퀴에 타고파</p>
+
+<p>줄<br>
+바<br>
+꿈</p>
+
+<p>Inline math $^\forall x \in \R$, $\int_{0}^{1} f(x) \text{ d}x$</p>
+
+<p>Display math \(\int_{0}^{1} f(x) \text{ d}x\)</p>
+
+<p>Code highlight</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;bits/stdc++.h&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello world</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/jekyll/Hello-Jekyll';
+      var disqus_title      = "Hello, Jekyll!";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

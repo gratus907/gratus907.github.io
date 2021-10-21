@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | V. Graph Basics, Heaps
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/ds-alg-note/05-graph-basics/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">V. Graph Basics, Heaps</h1>
+    <p class="post-meta">August 9, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#graphs" id="markdown-toc-graphs">Graphs</a></li>
+  <li><a href="#implementation-of-graphs" id="markdown-toc-implementation-of-graphs">Implementation of Graphs</a></li>
+  <li><a href="#trees--binary-trees" id="markdown-toc-trees--binary-trees">Trees / Binary Trees</a></li>
+  <li>
+<a href="#heaps" id="markdown-toc-heaps">Heaps</a>    <ul>
+      <li><a href="#heap-operation" id="markdown-toc-heap-operation">Heap Operation</a></li>
+      <li><a href="#heap-sort" id="markdown-toc-heap-sort">Heap Sort</a></li>
+      <li><a href="#heap-implementation" id="markdown-toc-heap-implementation">Heap Implementation</a></li>
+    </ul>
+  </li>
+  <li><a href="#additional-topics-and-problems" id="markdown-toc-additional-topics-and-problems">Additional topics and Problems</a></li>
+  <li><a href="#programming-practice" id="markdown-toc-programming-practice">Programming Practice</a></li>
+</ul>
+<hr>
+
+<p>저번 세션에 이어서, 자료구조를 공부하고자 합니다.</p>
+
+<h2 id="graphs">Graphs</h2>
+
+<p>추상적으로, 그래프는 다음과 같이 정의된 $G = (V, E)$를 의미합니다.</p>
+
+<ul>
+  <li>
+    <p>$V$는 정점의 집합으로, 그냥 원소들을 모은 집합으로 생각하면 됩니다.</p>
+  </li>
+  <li>
+    <p>$E$는 $V \times V$의 어떤 부분집합으로, 원소들 간의 연결성을
+표현합니다.</p>
+  </li>
+</ul>
+
+<p>즉, 점 (정점, 노드) 들과 그들 간의 연결선 (간선, 에지) 들의
+configuration을 그래프라고 정의한다는 의미입니다. 몇가지 용어를
+짚자면...</p>
+
+<ul>
+  <li>
+    <p>Directed/Undirected graph : Directed graph는 간선 $(u, v)$ 와
+$(v, u)$ 를 다른 것으로 보고, Undirected graph는 같지 않은 것으로
+봅니다.</p>
+  </li>
+  <li>
+    <p>Multigraph : $(u, v)_1$ 과 $(u, v)_2$로, 같은 간선이 여러 개 있을 수
+있는 - 즉, $E$가 set이 아니라 multiset인 - 그래프를 말합니다.
+일반적으로 우리는 고려하지 않을 것입니다.</p>
+  </li>
+  <li>
+    <p>Simple graph : $E$가 중복을 허용하지 않을 뿐 아니라, $(u, u)$ 도
+허용하지 않는 그래프를 말합니다.</p>
+  </li>
+  <li>
+    <p>Path : 간선들을 따라 돌 수 있는 ‘경로’ 를 말합니다.</p>
+  </li>
+  <li>
+    <p>Circuit / Cycle : Path의 시작점이 끝점과 같은 경우를 말합니다.</p>
+  </li>
+  <li>
+    <p>Adjacent : 정점 $u, v$에 대해, $(u, v) \in E$ 이면 adjacent라고
+말합니다. 또한 $u, v$는 서로의 neighbor입니다.</p>
+  </li>
+  <li>
+    <p>Connected Component : 정점 $u, v$에 대해, $u$에서 시작해서 $v$에
+도착하는 path가 존재하면 같은 connected component에 있다고 말합니다.
+특히 모든 정점이 하나의 connected component를 이루면 connected
+graph라고 말합니다.</p>
+  </li>
+</ul>
+
+<p>Unless otherwise specified, $V$는 정점의 집합이면서 간혹 정점의 개수를
+$V$개라고 부를 것입니다. $E$도 마찬가지입니다. (Abuse of notation) 또한,
+앞으로 그냥 그래프 $G$라고 하면 $n$개의 정점과 $m$개의 간선으로 이루어진
+Undirected Connected Simple Graph를 생각하겠습니다. 그래프에 대한 많은
+논증은 각 Connected Component를 독립적으로 생각할 수 있으며,
+Multigraph도 대충 비슷하게 다루어질 수 있기 때문입니다.</p>
+
+<h2 id="implementation-of-graphs">Implementation of Graphs</h2>
+
+<p>그래프에 대해서는 후에 다시 자세히 보겠지만, 여기서는 그래프를 어떻게
+구현할지만 생각해 보겠습니다.</p>
+
+<p>흔히 사용하는 그래프 구현은 두 가지가 있습니다.</p>
+
+<ul>
+  <li>
+    <p>Adjacent matrix : 2차원 $n \times n$ 배열을 잡고, $A_{ij}$ 를
+$(i, j)$ 간선의 존재 여부를 인코딩하는 것입니다. Directed graph를
+기준으로 생각하는 것이 조금 더 자연스럽고, Undirected graph일 때는
+$A$가 대칭행렬이 될 것입니다.</p>
+
+    <p>이론적으로 이 방법이 조금더 자연스럽게 그래프를 대할 수 있는데, 특히
+Adjacency matrix $A$의 선형대수학적 성질로부터 (Eigenvalue 등)
+그래프의 성질을 알 수 있는 것들이 많이 있기 때문입니다.</p>
+  </li>
+  <li>
+    <p>Adjacent list : Vector나 List같은 다이나믹한 뭔가를 정점마다 하나씩
+$n$개 잡고, “이 정점에 인접한 정점” 들의 리스트 (배열) 을 관리하는
+관점입니다.</p>
+  </li>
+</ul>
+
+<p>그래프의 Density에 대해 생각해 봅시다. 일상에서 만나는 대부분의 (큰)
+그래프들은, 굉장히 sparse합니다. 예를 들어, 페이스북 전체의 친구 관계를
+그래프로 그린다면, 페이스북 유저 10억 명 중 여러분의 페친은 많아야 천 명
+단위일 것이므로 전체 가능한 간선들 중 100만 분의 1 정도밖에 사용되지
+않는다는 의미입니다. 대충 간선이 $n^2$개 근처일 때 dense, 그보다 많이
+작으면 sparse라고 하겠습니다.</p>
+
+<p>Adjacent matrix가 이론적으로 보다 아름답게 느껴질 수 있지만, 그래프가
+sparse할 때 adjacent matrix는 $O(n^2)$ 메모리를 소모한다는 심각한 단점이
+있습니다. 우리는 많은 경우에 sparse한 그래프를 다루고 싶고, 간선을
+따라가면서 작업을 하고 싶습니다. 예를 들어...</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (int nxt = 0; nxt &lt; n; nxt++)
+    if (A[i][nxt])
+        traverse(A[i][nxt]);
+
+for (int j = 0; j &lt; A[i].size(); j++)
+    traverse(A[i][j]);
+</code></pre></div></div>
+
+<p>이 코드는 둘 다 $i$의 neighbor들을 돌면서 traverse함수를 호출하지만,
+전자의 경우에는 if문이 추가될 뿐 아니라 $O(n)$ 개만큼 확인해야 합니다.
+만약 페이스북 친구 그래프에 대해 코드를 돌리면, 위쪽 경우에는 내
+친구들을 찾기 위해 10억명의 모든 유저를 탐색하는 반면 후자는 그런 필요가
+없습니다.</p>
+
+<p>다만 인접행렬이 구현이 좀더 간단하고, 행렬 곱셈을 통해 연결성을 본다던가
+하는 연산들이 가능하기 때문에, 필요한 경우에는 사용할 수 있어야 합니다.
+그러나 위 이유들 때문에, 우리는 기본적으로 인접리스트를 그래프의 기본
+표현으로 보겠습니다.</p>
+
+<h2 id="trees--binary-trees">Trees / Binary Trees</h2>
+
+<p>정점 $n$개 중 어떤 루트가 있고, 루트로부터 모든 정점까지의 경로가
+유일하게 존재하는 그래프를 Tree라고 합니다. 이때 루트로부터 경로를
+내렸을 때 내 바로 이전 노드를 parent, 그 이전 노드들을 ancestor라고
+합니다 (반대는 child, descendant) 트리의 경우, 인접 리스트 표현 외에도
+그냥 $n$칸 배열에 각 tree의 parent node를 저장하는 방법으로도 저장할 수
+있습니다.</p>
+
+<p>Binary Tree란, 모든 노드의 Child node가 최대 2개인 트리를 의미합니다.
+구현의 편의와, 다양한 활용처 때문에 매우 자주 활용되는 자료 구조입니다.
+우리는 앞으로 Binary tree 노드를 다음과 같이 생각할 것입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct node {
+    int val, id;
+    node * left;
+    node * right;
+} root;
+</code></pre></div></div>
+
+<p>즉, 각 노드가 id와 어떤 값을 하나 가지고 있고, 자신의 left / right
+child로 가는 포인터를 가지고 있음을 의미합니다.</p>
+
+<p>이진 트리의 Special case로 다음과 같은 경우들이 있습니다.</p>
+
+<ul>
+  <li>
+    <p>Full Binary Tree : 모든 노드가 0개 또는 2개의 자식 노드를 갖습니다.</p>
+  </li>
+  <li>
+    <p>Complete Binary Tree : 가장 아래 층을 제외한 모든 층이 최대한 노드가
+차 있고, 가장 아래 층에서도 최대한 왼쪽으로 노드가 몰려있는
+트리입니다.</p>
+  </li>
+  <li>
+    <p>Perfect Binary Tree : Complete 이면서 Full 인 binary tree입니다.
+높이가 $h$인 Perfect Binary Tree의 노드는 항상 $2^h$임을 기억하세요.</p>
+  </li>
+</ul>
+
+<p>일반적으로, Balance가 잘 잡혀 있는 binary tree는 높이가 $\log n$
+정도이고, 한 줄에 가까운 binary tree는 높이가 $n$ 정도임을 기억하면
+좋습니다.</p>
+
+<h2 id="heaps">Heaps</h2>
+
+<p>Heap이라는 자료 구조는, 다음과 같은 성질을 만족하는 트리를 의미합니다.</p>
+
+<ul>
+  <li>
+    <p>Complete Binary Tree. 즉, 최대한 균형이 잡혀 있고, 노드가 남는다면 왼쪽으로 몰아넣은 상태의 트리여야 합니다.</p>
+  </li>
+  <li>
+    <p>힙 성질. 부모 노드에 쓰여 있는 값은, 자식 노드에 쓰여 있는 값보다
+항상 작거나 같다.</p>
+  </li>
+</ul>
+
+<p>이제, Complete Binary Tree의 구조를 생각해 보면, 한 층씩 밑으로 내려올 때마다
+노드의 개수가 2배씩 늘어나므로, 전체 노드의 개수가 $n$개 정도일 때, 높이
+$h$ 는 $h \in \Theta(\log n)$ 입니다. 또한, Heap의 성질 상, Heap의
+임의의 노드를 하나 잡으면, 그 노드를 root로 하는 subtree도 다시 heap임을
+알 수 있습니다.</p>
+
+<h3 id="heap-operation">Heap Operation</h3>
+
+<p>Heap의 기본 operation으로, 다음과 같은 두가지 연산을 생각합니다.</p>
+
+<ul>
+  <li>
+    <p>Heap에 어떤 수 $x$를 삽입하는 Push 연산</p>
+  </li>
+  <li>
+    <p>Heap의 노드를 삭제하는 연산</p>
+  </li>
+</ul>
+
+<p>Pop 연산에서 루트만 생각해도 되는 이유는 앞서 말한 바와 같이, 모든
+노드가 자신을 subtree로 하는 heap의 루트이기 때문입니다. 따라서, 위 두
+연산만 있으면 Heap에 임의의 원소를 삽입하고 삭제할 수 있다는
+의미입니다.<br>
+이 연산을 어떻게 구현할지 생각해 봅시다. Push의 경우, 다음과 같은
+과정으로 수행합니다.</p>
+
+<ul>
+  <li>
+    <p>무조건 완전 이진 트리 성질을 만족하는 것을 우선하여, 끝 자리에
+삽입합니다.</p>
+  </li>
+  <li>
+    <p>끝자리의 삽입으로 인해 힙 성질이 깨졌을 수 있으므로, 그 자리부터
+올라오면서 힙을 수선합니다.</p>
+  </li>
+</ul>
+
+<p>힙을 수선한다고 하는 말은, 실제로는 삽입한 자리부터 올라오거나
+내려가면서, 자식 노드가 부모 노드보다 큰 값을 가졌으면 두 노드를
+교환한다는 의미입니다. 앞으로 이와 같은 “힙 수선” 이라는 말을 계속 쓸
+텐데, 기본적으로 특정 노드에서 힙을 수선한다면, 루트부터 리프까지
+내려가면서 매 단계 최대 2개씩, 많아야 $2h \in O(\log n)$ 개의 노드만
+보면 됩니다.<br>
+<br>
+힙에서 노드를 삭제하는 연산은 다음과 같습니다.</p>
+
+<ul>
+  <li>
+    <p>완전 이진 트리 성질을 만족하는 것을 우선하여, 끝 자리 노드와 삭제할
+노드의 자리를 바꿉니다.</p>
+  </li>
+  <li>
+    <p>끝 자리의 노드를 지워도 완전 이진 트리 성질이 깨지지 않습니다.</p>
+  </li>
+  <li>
+    <p>이제, 방금 교환에 의해 힙 성질이 깨졌을 수 있으므로, 위아래로
+오가면서 힙을 수선합니다.</p>
+  </li>
+</ul>
+
+<p>과정을 보면, 수선 외의 모든 Operation은 구현을 잘 하면 $O(1)$에 해결할
+수 있을 것 같아 보입니다. 수선에서는 값 간의 비교가 최대 $O(\log n)$ 번
+일어나기 때문에, 전체 알고리즘의 수행 시간은 $O(\log n)$ 입니다.</p>
+
+<h3 id="heap-sort">Heap Sort</h3>
+
+<p>빈 Heap과 $n$ 크기의 배열에서 시작해서, 모든 element를 Heap에 넣습니다.
+그다음, 루트가 전체 heap의 최솟값이므로, 루트를 확인하고 삭제하는 연산을
+$n$번 반복하면, 작은 원소부터 순서대로 나오게 됩니다. 넣고 빼는데 매번
+$O(\log n)$씩이므로 항상 $O(n \log n)$ 정렬임이 보장됩니다!</p>
+
+<h3 id="heap-implementation">Heap Implementation</h3>
+
+<p>힙이 트리 구조라고 해서, 실제로 포인터 세개짜리 노드로 (Parent,
+Left-Child, Right-Child) 구현해야 할 필요는 없습니다. 실제로는, 다음과
+같은 원리로 배열에 트리를 얹는 느낌으로 구현하면 유용합니다.</p>
+
+<ul>
+  <li>
+    <p>1번 노드를 루트로 한다.</p>
+  </li>
+  <li>
+    <p>$n$번 노드의 두 자식 노드는 $2n$, $2n+1$번으로 한다.</p>
+  </li>
+  <li>
+    <p>그러면, 자동으로 $n$번 노드의 부모 노드는 $n/2$번 노드 (정수
+나눗셈만 하면 바로 나옵니다!).</p>
+  </li>
+</ul>
+
+<p>이 ‘배열에 이진트리를 얹는’ 구현은 나중에 이진트리 기반의 자료구조를 구현할 때 정말 많이 쓰게 됩니다.</p>
+
+<h2 id="additional-topics-and-problems">Additional topics and Problems</h2>
+
+<ol>
+  <li>
+    <p>Heap sort에서는 어차피 복잡도가 달라지지 않아서 빈 힙에 $n$개의
+원소를 순서대로 삽입하는 식으로 힙을 구성했지만, 실제로는 이미 있는
+배열을 그대로 Heap으로 만드는 Heapify() 연산은 이보다 빨리 할 수
+있습니다. 다음과 같은 과정을 이용합니다.</p>
+
+    <ul>
+      <li>
+        <p>가장 아래 노드 ($N$번) 부터 시작합니다.</p>
+      </li>
+      <li>
+        <p>자신의 값이 부모노드보다 높다면, 부모노드와 값을 교환합니다.</p>
+      </li>
+      <li>
+        <p>이때의 값이 자식 정점보다 작다면, 자식노드 중 작은 쪽과 값을
+교환합니다. (리프까지 내려가면서)</p>
+      </li>
+      <li>
+        <p>재귀적으로 반복합니다.</p>
+      </li>
+    </ul>
+
+    <p>Heap 수선 과정과 똑같아 보이지만, 약간의 차이는 위쪽으로는 끝까지
+확인하지 않는다는 점입니다. 아래쪽으로는 재귀적으로 반복해야 하지만,
+부모노드와 값을 교환했다고 해서 한번에 위쪽까지 힙을 수선하지 말고,
+부모노드의 값은 나중에 그 노드 차례가 될 때 확인해도 됩니다.<br>
+이 알고리즘의 시간 복잡도를 생각해 보면, 자신의 높이에 비례하는
+정도의 연산이 필요함을 알 수 있습니다. 대략 각 노드마다 높이가
+$h$라면 대략 $O(h)$번 연산이 필요합니다. 높이가 $k$인 노드가
+$2^k$개임을 이용하여, 이 알고리즘이 주어진 Array를 Heap으로 고치는
+데 $O(n)$ 시간밖에 걸리지 않음을 보이세요.</p>
+
+    <p>힌트) 각 노드는 ‘최대 얼마나’ 내려갈 수 있나요?</p>
+  </li>
+</ol>
+
+<h2 id="programming-practice">Programming Practice</h2>
+
+<ol>
+  <li>
+    <p>BOJ 19535번을 해결해 보세요.</p>
+  </li>
+  <li>
+    <p>BOJ 11279번을 (STL의 priority queue를 쓰지 말고) 해결해 보세요.</p>
+  </li>
+  <li>
+    <p>BOJ 1655번을 해결해 보세요.</p>
+  </li>
+</ol>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/ds-alg-note/05-graph-basics';
+      var disqus_title      = "V. Graph Basics, Heaps";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

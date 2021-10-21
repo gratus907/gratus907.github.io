@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | [P] Stochastic Gradient Descent
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/deep-learning-study/sgd/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">[P] Stochastic Gradient Descent</h1>
+    <p class="post-meta">September 24, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#stochastic-gradient-descent" id="markdown-toc-stochastic-gradient-descent">Stochastic Gradient Descent</a></li>
+  <li><a href="#batch-sgd--cyclic-sgd" id="markdown-toc-batch-sgd--cyclic-sgd">Batch SGD / Cyclic SGD</a></li>
+  <li><a href="#sgd-convergence-theorem" id="markdown-toc-sgd-convergence-theorem">SGD Convergence Theorem</a></li>
+</ul>
+<hr>
+
+<p><strong>심층 신경망의 수학적 기초</strong> 2강 (9월 7일), 3강 (9월 9일) 에 기반합니다.</p>
+
+<p>이 문서는 $\LaTeX$를 pandoc으로 변환하여 작성하였기 때문에, 레이아웃 등이 깔끔하지 않을 수 있습니다. 언젠가 pdf 버전의 노트를 공개한다면 그쪽을 참고하면 좋을 것 같습니다.</p>
+
+<h2 id="stochastic-gradient-descent">Stochastic Gradient Descent</h2>
+
+<p>ML에는 많은 Finite sum optimization이 있다. 우리는
+$F(x) = \frac{1}{N} \sum_{i = 1}^{N} f_i(x)$ 를 최적화하고 싶다.
+대표적으로, Gradient Descent를 쓸 수 있다. But, $N$이 매우 크면 이
+함수를 한번 계산하는 시간이 매우 오래 걸린다.</p>
+
+<p>위 식을, 이 함수의 <strong>기댓값</strong> 으로 이해할 수 있다.
+\(\underset{x \in \R^p}{\minimize}\ \E_I[f_I(x)], \ I \sim \uniform{1}{N}\)</p>
+
+<p>이런 motivation을 통해, Stochastic (Random) Gradient Descent를 생각한다.</p>
+
+<p><strong>Algorithm (Stochastic Gradient Descent)</strong> <br>
+임의의 시작점 $x^0 \in \R^p$ 를 잡고, 적절한 $\alpha_k &gt; 0$ 에 대해
+다음을 반복한다.
+\(i(k) \sim \uniform{1}{N},\quad x^{k+1} = x^k - \alpha_k \nabla{f_{i(k)}(x^k)}\)</p>
+
+<p><strong>대략의 아이디어</strong> :<br>
+GD처럼, Taylor expansion하고 Stochastic을 고려하여 Expectation을 씌운다.</p>
+
+<p>$x^k$ 근처에서 $F(x) = \frac{1}{N} \sum_{i = 1}^{N} f_i(x)$를 테일러
+전개하고 $x^{k+1}$ 대입하면,
+\(F(x^{k+1}) = F(x^k) - \alpha_k \nabla F(x^k)^T \nabla f_{i(k)}(x^k) + \order{\alpha_k^2}\)
+이제, 양쪽에 $\E$ 를 씌운다.
+\(\expect{F(x^{k+1})} = \expect{F(x^k)} - \alpha_k \expect{\nabla F(x^k)^T \nabla f_{i(k)}(x^k)} + \order{\alpha_k^2}\)
+$\nabla F(x^k)^T$ 는 기댓값에 영향이 없고, $\nabla f_{i(k)}(x^k)$ 의
+기댓값은 $\nabla F(x^k)$ 이므로,
+\(\expect{F(x^{k+1})} = \expect{F(x^k)} - \alpha_k \norm{\nabla F(x^k)}^2 + \order{\alpha_k^2}\)
+적당히 $\alpha_k$를 충분히 작게 잡으면, 기댓값이 감소할 수 있을 것 같다.</p>
+
+<hr>
+
+<ul>
+  <li>
+    <p>Stochastic Gradient Descent도 수렴성에 관한 정리를 기술할 수
+있으나, 증명이 매우 Tedious하고 ML 세팅에서는 그렇게 중요하지 않다.</p>
+  </li>
+  <li>직접 구현해서 테스트해 보면, 초반에 SGD가 GD보다 수렴속도가 빠르지만,
+Eventually GD에게 따라잡힌다.</li>
+  <li>
+    <p>그러나, 우리는 ML을 공부하는데 있어 SGD를 Subroutine으로 쓸 것이고, 짧은 Training 시간의 환경에서 SGD가 in practice GD보다 잘 수렴한다.</p>
+  </li>
+  <li>Stochastic Gradient Descent에서, $i(k)$ 자체의 성질은 전혀 활용하지 않았다.</li>
+  <li>실제로, SGD의 수렴성 증명에서 중요한 것은, 다음과 같은 Framework면 충분하기 때문.</li>
+</ul>
+
+<p><strong>Algorithm (Stochastic Gradient Descent)</strong> <br>
+임의의 시작점 $x^0 \in \R^p$ 를 잡고, 적절한 $\alpha_k &gt; 0$ 에 대해
+다음을 반복한다.
+\(i(k) \sim \uniform{1}{N},\quad x^{k+1} = x^k - \alpha_k g^k\) 이때,
+$g^k$ 는 Stochastic gradient로, $\nabla F(x^k)$ 의 Unbiased Estimator
+이면 - 즉, 기댓값이 $\nabla F(x^k)$ 이면 충분하다.</p>
+
+<h2 id="batch-sgd--cyclic-sgd">Batch SGD / Cyclic SGD</h2>
+<ul>
+  <li>예를 들어, $g^k$를 고르는 방법으로 Batch sampling with/without
+Replacement를 생각할 수 있다.</li>
+  <li>즉, $N$개 중 일부인 $B$개를 랜덤하게 계속
+뽑아서, $\frac{1}{B}\sum_{b = 1}^{B} \nabla f_{i(k, b)}(x^k)$, 즉
+$B$개의 batch에 대한 gradient의 평균을 쓰는 것.</li>
+  <li>이때, Batch를 뽑을 때
+중복을 허용하는지 여부는 상관 없다 (둘 다 Unbiased estimator가 되기
+때문). 중복을 허용하고 싶으면 random한 $B$개를 뽑고, 허용하고 싶지
+않으면 random permutation의 첫 $B$개를 쓰면 된다.</li>
+</ul>
+
+<p>특히, Batch 방법의 경우, GPU를 이용한 Parallel 연산에 유리하다는
+추가적인 장점이 있다. GPU와 병렬처리를 최대한 활용하기 위해, GPU
+memory에 들어가는 최대 $B$를 이용하는 것이 가장 유리하다. Batch size는
+noise 정도에 따라 성능이 달라지는데, noise가 클수록 large batch가
+유리하다.</p>
+
+<p>그런데…이 알고리즘에서, 원래 랜덤하지 않은 것을 억지로 랜덤하게 만들어서 풀고 있는 것 아닌가? Stochastic하게 뽑는 대신, 그냥 순서대로 돌리면서 쓰면 안 되나?</p>
+
+<p><strong>Algorithm : Cyclic SGD</strong><br>
+임의의 시작점 $x^0 \in \R^p$ 를 잡고, 적절한 $\alpha &gt; 0$ 에 대해 다음을 반복한다.
+\(x^{k+1} = x^k - \alpha_k \nabla{f_{(k \text{ mod } N + 1)}(x^k)}\)</p>
+
+<p>이 방법은 stochastic한 부분이 사실 없다. 장단점은...</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">(+)</code> 확실하게 $N$개의 데이터를 $N$번마다 한번씩 정확하게 사용한다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">(-)</code> SGD의 수렴성에 대한 정리를 쓸 수 없다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">(-)</code> 일반 SGD에 비해 Theoretically / Empirically, some case에서는 잘 작동하지 않음.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">(-)</code> Deep Learning으로 가면, Neural network가 이 순서(cyclic order)를 기억하는 경향 발생.</li>
+</ul>
+
+<p>특히 기억하는 경향에 의한 overfitting이 큰 이슈이기 때문에, 이를
+방지해야 한다. 적당히 섞어주면 어떨까?</p>
+
+<p><strong>Algorithm : Shuffled Cyclic SGD</strong><br>
+임의의 시작점 $x^0 \in \R^p$ 를 잡고, 적절한 $\alpha &gt; 0$ 에 대해 다음을
+반복한다.
+\(x^{k+1} = x^k - \alpha \nabla{f_{\sigma^{(k/N)}(k \text{ mod } N + 1)}(x^k)}\)</p>
+
+<p>즉, $N$번에 한 번씩, 인덱스들을 랜덤하게 permutation해버린 다음, 그
+순서로 다음 $N$번의 iteration을 Cyclic하게 돌린다. 이렇게 하면, 정확하게
+$N$개의 데이터를 한번씩 쓴다는 장점을 챙기면서도, neural network가
+학습하는 일을 막을 수 있다. 기존에는 강한 theory가 별로 없었지만, recent
+breakthrough들이 이를 개선하고 있다.</p>
+
+<p>그냥 일반적인 세팅에서는, <strong>Shuffled cyclic minibatch SGD without
+replacement</strong> 를 쓰면 되고, <strong>GPU가 허락하는 최대한 큰 Batch size</strong>를
+잡으면 된다. Deep Learning의 많은 경우, 수학적인 분석이 실제
+performance를 정확하게 예측하지 못하는 경향이 있는데, empirically this
+is best.</p>
+
+<p>일반적인 expectation으로 표현된 최적화 문제, 예를 들어 확률변수
+$\omega$에 대해 이런 문제들
+\(\underset{x \in \R^p}{\minimize}\ \E_\omega[f_\omega(x)]\) 의 경우,
+똑같이 SGD로 풀 수 있다. GD로도 할 수는 있지만,
+일반적으로 ‘gradient의 기댓값’ 을 구하기가 어렵기 때문에...</p>
+
+<p>참고 : Optimization / ML에서, 대충 ‘한바퀴’ 를 <strong>Epoch</strong> 라고 부른다. 대충
+데이터들을 한바퀴 돌면 된다. Gradient descent면 한번 = 1 epoch, SGD면
+$N$번, Batched SGD면 $N / B$ 번 정도.</p>
+
+<h2 id="sgd-convergence-theorem">SGD Convergence Theorem</h2>
+
+<p>상세하게 다루어야 할 내용은 아니지만, 앞서 공부한 Lipschitz Gradient Lemma 등을 이용해서 비슷한 증명을 쓸 수 있다.</p>
+
+<p>$F : \R^n \to \R$ 이 미분가능하고, $\nabla F$ 가 $L$-Lipschitz 연속이며,
+$F$가 $-\infty$가 아닌 최소값을 가지며, $g^k$가 다음 조건
+\(\E[g^k \di x^k] = \nabla F(x^k), \quad \quad \expect{\norm{g^k - \nabla F(x^k)}^2 \di x^k} \leq \sigma^2\)
+을 만족할 때, 즉 $g^k$ 가 Gradient에 대한 Unbiased estimator이고 그
+분산이 $\sigma^2$ 이하일 때, 다음이 성립한다.
+\(\frac{1}{M}\sum_{k = 0}^{M-1} \expect{\norm{\nabla F(x^k)}^2} \leq \frac{1}{\sqrt{M}}\left(2L(F(x^0) - F^*) + \sigma^2\right)\)</p>
+
+<p>즉, Gradient의 크기의 평균이 $M$번의 iteration에 의해
+$\order{\frac{1}{\sqrt{M}}}$로 감소한다.</p>
+
+<p><strong><em>Proof.</em></strong> 먼저, Lipschitz Gradient Lemma를
+$x = x^k, \delta = -\alpha g^k$에 대해 쓰면,
+\(F(x^{k+1}) \leq F(x^k) -\alpha \nabla F(x^k)^T g^k + \frac{\alpha^2L}{2}\norm{g^k}^2\)
+$x^k$ 가 이미 주어졌을 때의 Conditional expectation을 쓴다.
+\(\expect{F(x^{k+1}) \di x^k} \leq F(x^k) - \alpha \norm{\nabla F(x^k)}^2 + \frac{\alpha^2 L}{2}\left(\norm{\nabla F(x^k)}^2 + \sigma^2\right)\)
+이제 이를 다시 Total expectation을 취하면,
+\(\expect{F(x^{k+1})} \leq \expect{F(x^k)} - \alpha\left(1 - \frac{\alpha L}{2}\right) \expect{\nabla F(x^k)} + \frac{\alpha^2 \sigma^2 L}{2}\)
+이를 $k = 0 \dots M-1$에 대해 양변을 더하여
+\(\alpha\left(1 - \frac{\alpha L}{2}\right) \sum_{k = 1}^{M-1}\expect{\nabla F(x^k)} \leq (F(x^0) - F^*) + \expect{F(x^k) - F^*} + \frac{\alpha^2 \sigma^2 L}{2}\)
+마지막으로, $\alpha = \frac{1}{L \sqrt{K}}$ 를 취하여 주어진 식을
+얻는다. ◻</p>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/deep-learning-study/sgd';
+      var disqus_title      = "[P] Stochastic Gradient Descent";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

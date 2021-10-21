@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | Coursera ML, Lecture 5 : Logistic Regression
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/ml-study/Coursera-ML-Lec5/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Coursera ML, Lecture 5 : Logistic Regression</h1>
+    <p class="post-meta">February 5, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#classification" id="markdown-toc-classification">Classification</a></li>
+  <li><a href="#multiple-features" id="markdown-toc-multiple-features">Multiple Features</a></li>
+  <li><a href="#logistic-regression" id="markdown-toc-logistic-regression">Logistic Regression</a></li>
+  <li><a href="#advanced-optimization-ideas" id="markdown-toc-advanced-optimization-ideas">Advanced Optimization Ideas</a></li>
+  <li><a href="#multiclass-classification" id="markdown-toc-multiclass-classification">Multiclass Classification</a></li>
+</ul>
+<hr>
+
+<h3 id="classification">Classification</h3>
+<ul>
+  <li>Binary 하게 (또는 Discrete하게) 뭔가를 결정하는 형태의 문제.</li>
+  <li>ex) 종양의 양성/음성, 메일이 스팸이다/아니다 등등…</li>
+  <li>Idea : Linear Regression + Threshold. Linear하게 hypothesis를 잡고, 어떤 값 (0.5) 이상이면 1로 예측하는 형태.</li>
+  <li>한계점 : 예를 들어, 양성 데이터가 (3, 4, 5, 100) 이고 음성 데이터가 (1, 2, 2) 이면? Linear hypothesis가 별로 적절하지 않은 경우가 많다. 100에 의해 threshold가 지나치게 오른쪽으로 이동하게 되기 때문.</li>
+  <li>개선 : 위 문제점은 <code class="language-plaintext highlighter-rouge">Linear</code> 때문에 생기는 문제다. <code class="language-plaintext highlighter-rouge">Linear</code> 보다 더 이런 형태에 적합하게 생긴 함수를 쓰면 어떨까? $h$ 함수의 최소와 최대도 뭔가 0과 1로 고정하고 싶다. $h_\theta(x)$ 가 1보다 크거나 0보다 작은 것은 뭔가 바람직하지 않은 상태인것으로 보인다.</li>
+  <li>Logistic regression : 다음과 같은 형태의 sigmoid 함수를 사용한다.
+\(h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}\)</li>
+  <li>Why? 그래프가 매우 유용한 성질들을 보이기 때문.<br>
+<img src="../../images/21689f9a1d965b538462169d7391a7e2fc2bccd3c9283289da2d4fb09b9867b8.png" alt="picture 2">
+</li>
+  <li>Interpretation : $h_\theta(x)$ = $y = 1$일 <strong>확률</strong> 을 돌려준다고 생각하자.
+\(h_\theta(x) = \mathsf{P}(y = 1 \ |\  x ; \theta)\)</li>
+</ul>
+
+<h3 id="multiple-features">Multiple Features</h3>
+<ul>
+  <li>$\theta$ 와 $x$를 벡터로 생각하는 앞서의 방법을 그대로 이용하면, Logistic regression도 똑같이 multiple feature에 적용 가능.</li>
+  <li>이때는, $h_\theta(x) = 0.5$ 인 경계면이 $\R^n$ 상의 초평면으로 제공하는 형태가 된다.</li>
+  <li>이를 Decision boundary 라고 부른다.</li>
+  <li>Logistic regression도 다음과 같은 형태로 일반화할 수 있다.
+    <ul>
+      <li>$h_\theta(x) = g(p(\theta, x))$, such that $g(z) = \frac{1}{1 + e^{-z}}$ 로 쓸 수 있고,</li>
+      <li>$p$에는 다양한 함수들이 들어갈 수 있다. 예를 들어, $p(\theta, x) = \theta_0 + \theta_1 x_1^2 + \theta_2 x_2^2$ 같은 다항식…</li>
+      <li>이경우, Decision boundary가 원이나 타원, 또는 다른 형태로 나타나는 문제들도 해결 가능하다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="logistic-regression">Logistic Regression</h3>
+<ul>
+  <li>Cost function 과 그 편도함수들을 안다면, gradient descent를 쓸 수 있다. $h$는 이미 정했으므로…</li>
+  <li>Linear regression에서처럼, $\frac{1}{2m}\sum_{i = 1}^{m} \ (h_\theta(x_i) - y_i)^2$ 를 쓴다면, 이 함수는 <strong>Convex</strong>하지 않다.</li>
+  <li>
+<strong>Convex</strong>하지 않으면 Gradient Descent의 수렴성이 보장되지 않는다!</li>
+  <li>가능하면 Convex한 함수를 잡아서 써야 한다. 다음 함수가 잘 작동함이 알려져 있다.
+\(Cost_\theta(x, y) = \begin{cases}
+  -\log(h_\theta(x)) &amp; \text{if } y = 1 \\
+  -\log(1 - h_\theta(x)) &amp; \text{if } y = 0
+\end{cases}\)</li>
+  <li>$y = 1, h_\theta(x) = 1$ 이라면, cost가 0이다. 이는 <strong>올바른 예측</strong>에서 cost 함수가 0이 된다는 것이므로, desirable하다.</li>
+  <li>$y = 1, h_\theta(x) \to 0$ 일 때, cost가 무한대로 발산한다. 이는, 1이어야 할 값을 0으로 예측하면 큰 penalty term을 주겠다는 의미가 된다. 이러한 intuition은 우리가 logistic regression에서 원하는 바와 잘 맞아떨어진다. $y = 0$에서도 위 두 가지가 마찬가지로 성립한다.</li>
+  <li>위 식은 경우로 나누어져 있어서 복잡하다 (특히 Grad-descent 쓰기에). 이를 잘 정리해서…
+\(Cost_\theta(x, y) = -y\log(h_\theta(x)) - (1-y)\log(1 - h_\theta(x))\)</li>
+  <li>이제, Gradient descent를 쓸 수 있다! $(x_i, y_i)$ 가 training set이라고 하면..
+\(J(\theta) = -\frac{1}{m}\left(\sum_{i = 1}^{m} y_i\log(h_\theta(x_i)) + (1-y_i)\log(1 - h_\theta(x_i))\right)\)
+\(\pdv{}{x_j}J(\theta) = \sum_{i = 1}^{m} (h_\theta(x_i) - y_i) x_j\)</li>
+  <li>Linear regression 때의 gradient descent와 <strong>똑같은 형태의</strong> 편도함수를 얻는다.</li>
+</ul>
+
+<h3 id="advanced-optimization-ideas">Advanced Optimization Ideas</h3>
+<ul>
+  <li>Optimization Algorithm은 다양하다. 더 강한 알고리즘들이 있다.
+    <ul>
+      <li>Gradient Descent</li>
+      <li>Conjuagte Gradient</li>
+      <li>BFGS algorithm, L-BFGS algorithm</li>
+    </ul>
+  </li>
+  <li>주로 Gradient Descent보다 빠르고, $\alpha$를 직접 고르지 않아도 되는 (Line Search) 고급 알고리즘들. 대체로 훨씬 복잡하지만 더 좋은 성능을 보인다.</li>
+</ul>
+
+<h3 id="multiclass-classification">Multiclass Classification</h3>
+<ul>
+  <li>0/1이 아닌, 여러 개 중 하나를 고르는 형태의 Classification</li>
+  <li>ex) Email Classification : Work / Friends / Family / Hobby를 0 / 1 / 2 / 3 으로.</li>
+  <li>One-vs-All : 문제를 one-vs-all 형태의 binary classification으로 바꾸어, classifier $h_\theta$를 각각 맞춘다.</li>
+  <li>각각의 클래스에 대한 best $h$를 학습한 후, 새로운 데이터에 대해서는 모든 $h$들을 돌려보고 확률이 가장 높게 나오는 클래스로 판정한다.</li>
+  <li>가장 자연스러운? 형태의 extension.</li>
+</ul>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/ml-study/Coursera-ML-Lec5';
+      var disqus_title      = "Coursera ML, Lecture 5 : Logistic Regression";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

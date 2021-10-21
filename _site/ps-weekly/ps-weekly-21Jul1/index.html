@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | 7월 1-2주차 Weekly PS
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/ps-weekly/ps-weekly-21Jul1/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX');
+</script>
+
+
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/ds-alg-advanced/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">7월 1-2주차 Weekly PS</h1>
+    <p class="post-meta">July 8, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#recent-updates" id="markdown-toc-recent-updates">Recent Updates</a></li>
+  <li>
+<a href="#rounds" id="markdown-toc-rounds">Rounds</a>    <ul>
+      <li><a href="#atcoder-beginner-round-208" id="markdown-toc-atcoder-beginner-round-208">Atcoder Beginner Round 208</a></li>
+      <li><a href="#virtual-codeforces-round-490-div3" id="markdown-toc-virtual-codeforces-round-490-div3">(Virtual) Codeforces Round 490 (Div.3)</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#problems" id="markdown-toc-problems">Problems</a>    <ul>
+      <li><a href="#icpc-mid-atlantic-2006-boj-1849-%EC%88%9C%EC%97%B4" id="markdown-toc-icpc-mid-atlantic-2006-boj-1849-순열">ICPC Mid Atlantic 2006, BOJ 1849 순열</a></li>
+      <li><a href="#cerc-2010d-boj-3429-%EB%B0%A9%EC%96%B4%EC%84%A0" id="markdown-toc-cerc-2010d-boj-3429-방어선">CERC 2010D, BOJ 3429 방어선</a></li>
+      <li><a href="#ucpc-2018-%EC%98%88%EC%84%A0f-boj-15899-%ED%8A%B8%EB%A6%AC%EC%99%80-%EC%83%89%EA%B9%94" id="markdown-toc-ucpc-2018-예선f-boj-15899-트리와-색깔">UCPC 2018 예선F, BOJ 15899 트리와 색깔</a></li>
+      <li><a href="#boj-14287-%ED%9A%8C%EC%82%AC-%EB%AC%B8%ED%99%94-3" id="markdown-toc-boj-14287-회사-문화-3">BOJ 14287 회사 문화 3</a></li>
+      <li><a href="#bapc-2005e-boj-5419-%EB%B6%81%EC%84%9C%ED%92%8D" id="markdown-toc-bapc-2005e-boj-5419-북서풍">BAPC 2005E, BOJ 5419 북서풍</a></li>
+      <li><a href="#sccc-2019e-boj-17131-%EC%97%AC%EC%9A%B0%EA%B0%80-%EC%A0%95%EB%B3%B4%EC%84%AC%EC%97%90-%EC%98%AC%EB%9D%BC%EC%98%A8-%EC%9D%B4%EC%9C%A0" id="markdown-toc-sccc-2019e-boj-17131-여우가-정보섬에-올라온-이유">SCCC 2019E, BOJ 17131 여우가 정보섬에 올라온 이유</a></li>
+      <li><a href="#boj-16993-%EC%97%B0%EC%86%8D%ED%95%A9%EA%B3%BC-%EC%BF%BC%EB%A6%AC" id="markdown-toc-boj-16993-연속합과-쿼리">BOJ 16993, 연속합과 쿼리</a></li>
+    </ul>
+  </li>
+  <li><a href="#review" id="markdown-toc-review">Review</a></li>
+</ul>
+<hr>
+
+<p>July 01 - July 11, 2021</p>
+
+<p>이 글에 구현코드 링크가 없더라도 <a href="https://github.com/gratus907/Gratus_PS" target="_blank" rel="noopener noreferrer">PS 레포 링크</a> 에 가서 대회 단위로 들어가면 보통 제가 올려놓은 코드를 볼 수 있습니다.</p>
+
+<h2 id="recent-updates">Recent Updates</h2>
+<ul>
+  <li>2021 UCPC에 (팀명은 미정) 참여할 예정입니다. 현재 계획된 팀원은 <code class="language-plaintext highlighter-rouge">dlwocks31</code> 과 <code class="language-plaintext highlighter-rouge">gyuni</code> 로, dlwocks31은 지난 2년간 PS를 같이 돌아왔었고 <code class="language-plaintext highlighter-rouge">gyuni</code>님과는 2019 UCPC쯤에 팀연습 스파링(?) 으로 만나본적이 있습니다.</li>
+  <li>2021 SCPC도 일단은 출전합니다.</li>
+</ul>
+
+<h2 id="rounds">Rounds</h2>
+<h3 id="atcoder-beginner-round-208">Atcoder Beginner Round 208</h3>
+<ul>
+  <li><a href="https://atcoder.jp/contests/abc208/tasks" target="_blank" rel="noopener noreferrer">라운드 링크</a></li>
+  <li>420등, +4 (1840 -&gt; 1844).</li>
+  <li>D번까지 무난하게 풀었는데 E번 구현에서 너무 심하게 말렸습니다. 딱히 재밌지는 않고… F번은 좀 재밌는 수학문제같던데 E에 말려서 읽어보지도 못했네요.</li>
+</ul>
+
+<h3 id="virtual-codeforces-round-490-div3">(Virtual) Codeforces Round 490 (Div.3)</h3>
+<ul>
+  <li>E번이 좀 재밌는 문제였습니다. 나머지는 딱히.</li>
+  <li>Directed Graph가 주어지고, 정점 $s$가 있어서 여기서 모든 점이 도달가능하기 위해 최소 개수의 간선을 추가하는 문항입니다. $n, m$은 5천으로 $O(nm)$ 풀이가 무난한 정도 크기.</li>
+  <li>모든 점에서 BFS를 돌아서 도달가능한 점들을 미리 계산하여, 각 점에서 도달가능한 집합 $R_i$를 들고있기로 합시다. 이제, $s$에서 도달 불가능한 점들을 $T$라고 하고, 어차피 도달가능한 점들은 의미가 없으므로 $R_i$ 대신 $R_i \cap T$를 생각함으로써 모든 $R_i \subset T$가 되게 합니다. 그러면 $R_i$들 중 최소 개수의 집합으로 $T$를 덮는 문제가 됩니다.</li>
+  <li>이는 set cover라는 매우 유명한 NP-complete 문제이므로 당연히 그대로는 풀 수 없습니다. 그러나, $R_i$들에 대해 순서가 존재함을 기억합시다.</li>
+  <li>$a$에서 $b$로 갈 수 있다면, $R_a$는 $R_b$를 포함합니다.</li>
+  <li>따라서, 서로 도달가능한 점들을 묶고 나면, 남은 $R$들은 set inclusion에 의해 어떤 partial order를 이룹니다.</li>
+  <li>어차피 점 한개를 먹는다면, partial order의 체인을 생각할때 무조건 각 체인의 가장 위에 있는 점들을 먹는것이 이득입니다.</li>
+  <li>이들을 어떻게 구분할 수 있을까요? 가장 간단한 방법은, $R_i$ 들 중 큰 것부터 먹으면 됩니다. 체인의 머리는 그 아래 노드들보다 크므로, 이렇게 하면 머리를 안 먹은 체인에서 아래 노드를 먹을 일은 없습니다. 머리를 이미 먹었는데 그 아래 노드를 먹는 일을 방지하기 위해, 노드를 먹으면서 그 노드에서 도달가능한 ($R_i$에 포함된) 모든 정점들은 지웁니다.</li>
+  <li>이 방법이 왜 정당한지 증명은 어렵지 않습니다.</li>
+  <li><a href="https://codeforces.com/contest/999/submission/122143517" target="_blank" rel="noopener noreferrer">구현 링크</a></li>
+  <li>별개로, SCC를 잘 활용하면 직접 모든 점에서 BFS를 돌지 않는 Linear time 풀이가 있다고 합니다.</li>
+</ul>
+
+<h2 id="problems">Problems</h2>
+<p>집나간 실력을 되찾기 위한 목적으로 몇개 밀었습니다. 주로 세그먼트 트리 문제를 밀기로 했습니다 :)</p>
+
+<p>세그먼트 트리 구현은 재귀 트리와 비재귀 트리를 섞어 쓰는 편입니다. 간단히 논의하자면, 양쪽에는 다음과 같은 장단점이 있습니다.</p>
+<ul>
+  <li>재귀트리는 밑바닥부터 제가 짰기 때문에, 동작을 보다 정확하게 이해하고 있어 변형문제를 풀기에 편합니다.</li>
+  <li>재귀트리가 근본적으로 (Fundamentally의 좋은 번역어가 떠오르지 않네요) 좀더 직관적입니다.</li>
+  <li>반면, 비재귀트리는 확실히 더 빠릅니다. 상수가 영향을 주는 문제를 많이 본적은 없지만, $O(n \log n)$ 솔루션이 있는 문제의 경우 가끔 빠른 $O(n \log^2 n)$은 통과하고 똑같은 솔루션에 상수가 크면 짤립니다. 이떄 가끔 유용합니다.</li>
+  <li>비재귀트리는 널리 알려진 구현체인 <a href="https://codeforces.com/blog/entry/18051" target="_blank" rel="noopener noreferrer">Efficient and Easy Segment Trees</a> 를 가져와서 조금 고쳐 쓰고 있습니다. 많은 사람들이 공유하는 라이브러리를 쓴다는 것은 그 자체로 장점입니다.</li>
+</ul>
+
+<p>제가 쓰는 재귀트리 구현체는 쿼리를 $[l, r]$ 에다 날리고, 비재귀트리 구현체는 가져온 코드라서 $[l, r)$ 에다 날립니다. 혹시 제 코드를 보실일이 있다면 참고해주세요..? ㅋㅋㅋ</p>
+
+<h3 id="icpc-mid-atlantic-2006-boj-1849-순열">ICPC Mid Atlantic 2006, BOJ 1849 순열</h3>
+<ul>
+  <li>난이도 : Platinum 4</li>
+  <li>$1, 2, \dots n$ 의 permutation을 찾는 문제인데, 각 $i$에 대해, $i$ 앞에 있는 수들 중 $i$보다 큰 수의 개수 $A_i$ 가 주어집니다.</li>
+  <li>기본적인 아이디어는, 각 $i$가 들어갈 위치를 찾아주는 것입니다. 1을 제외한 모든 수가 1보다 크기 때문에, $A_1$이 주어지면 1이 들어가야 할 위치를 그냥 알 수 있습니다. 1을 찾고 나면, 2는 남은 자리들 중 $A_2$번째 자리에 들어가야 한다는 것을 어렵지 않게 알 수 있습니다.</li>
+  <li>결국은 $1, 2, \dots n$ 에 대해, 이 집합에서 수를 하나 뽑아내고, 남아 있는 수들 중 $k$번째를 빠르게 구하는 자료구조가 필요합니다.</li>
+  <li>Order statistics tree를 이용하여 $O(n \log n)$에 쉽게 해결할 수 있고, segment tree로도 같은 복잡도로 구현할 수 있습니다.</li>
+</ul>
+
+<h3 id="cerc-2010d-boj-3429-방어선">CERC 2010D, BOJ 3429 방어선</h3>
+<ul>
+  <li>난이도 : Platinum 4</li>
+  <li>수열 $A_i$가 하나 주어지고, 수열에서 <strong>최장 길이의 연속하는 증가 부분</strong> 을 찾는 문제입니다. 단, 딱 한 번 원래 수열에서 연속한 부분 하나를 들어낼 수 있습니다.</li>
+  <li>예를 들어, 5, 3, 4, 9, 2, 8, 6, 7, 1 에서 (9, 2, 8) 부분을 떼어내고 가운데 3, 4, 6, 7을 취하는 식입니다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">DP1[i]</code>, <code class="language-plaintext highlighter-rouge">DP2[i]</code> 를 각각 $i$번째를 오른쪽 / 왼쪽 끝으로 하는 최장 길이의 연속하는 증가 부분이라고 합시다. 이제, 우리가 원하는 값은 모든 $i &lt; j$, $A_i &lt; A_j$에 대해, $D_1(i) + D_2(j)$ 를 계산하여 이를 maximize하는 것입니다.</li>
+  <li>위 표현을 Naive하게 계산하려고 시도하면 ‘모든 $i &lt; j$, $A_i &lt; A_j$’ 에서 이미 $O(n^2)$ 시간이 걸립니다.</li>
+  <li>대신, $A_i$가 큰 것부터 $D_2(i)$의 값들을 세그먼트 트리 같은 자료구조에 업데이트하고, 여기에 $[i, n]$ 구간의 최댓값을 쿼리하는 식으로 생각하면 $O(n \log n)$ 시간에 문제를 해결할 수 있습니다. 코어 로직의 코드는…
+    <div class="language-cpp highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">u</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+      <span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+      <span class="n">s</span><span class="p">.</span><span class="n">modify</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">dp2</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span>
+      <span class="n">dp</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp1</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">q</span><span class="p">;</span>
+      <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="err">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">arr[i].second</code> 는 $A_i$ 순으로 정렬한 후 다시 인덱스를 가져오기 위함입니다. 대략적인 업데이트 순서는 바로 눈으로 보는 대로입니다.</li>
+  <li>주의할 점은, $A_i = A_j$ 인 $i, j$가 없음이 보장되어있지 않기 때문에, 쿼리할 때 업데이트 순서를 조심해야 합니다. $A_i$가 같을 때 뭐부터 $D_2(i)$ 를 세그트리에 넣어주는지가 중요한데, $A_i = A_j$이면 $D_2(i)$의 유무가 후속하는 $j$ 쿼리에 영향을 줄 수 없도록, 왼쪽부터 업데이트해야 합니다.</li>
+</ul>
+
+<h3 id="ucpc-2018-예선f-boj-15899-트리와-색깔">UCPC 2018 예선F, BOJ 15899 트리와 색깔</h3>
+<ul>
+  <li>난이도 : Platinum 2</li>
+  <li>트리의 각 정점이 1부터 $C$ 사이의 색깔을 가지고 있고, $f(v, c)$ 를 $v$를 루트로 하는 서브트리에서 색깔이 $c$이하인 정점의 개수로 정의할 때 이를 빨리 계산하는 문제입니다.</li>
+  <li>Euler Tour 라는 테크닉을 이용, 트리를 배열로 펴 주면 서브트리에 대한 쿼리가 우리가 잘 이해하고 있는 구간에 대한 쿼리로 바뀝니다.</li>
+  <li>쿼리를 오프라인 처리해서, 색깔이 작은 쿼리부터 처리하겠습니다.</li>
+  <li>이제, 색깔이 작은 것부터 업데이트하면서 중간중간 타이밍이 될때마다 쿼리를 처리해 주면 됩니다.</li>
+</ul>
+
+<h3 id="boj-14287-회사-문화-3">BOJ 14287 회사 문화 3</h3>
+<ul>
+  <li>난이도 : Platinum 4</li>
+  <li>위 문제와 똑같이 Euler Tour 를 이용하여 트리를 배열로 펴고</li>
+  <li>칭찬받은 노드에 값을 더한 다음</li>
+  <li>쿼리가 들어오면 그 노드의 서브트리가 받은 칭찬의 값을 합하면 끝입니다.</li>
+  <li>구현이 매우 단순해서, 오일러투어 구현을 확인하기에 적절합니다.</li>
+  <li>나름대로 깨끗하게 구현하려고 노력한 <a href="https://www.acmicpc.net/source/30906316" target="_blank" rel="noopener noreferrer">링크</a> 참고.</li>
+</ul>
+
+<h3 id="bapc-2005e-boj-5419-북서풍">BAPC 2005E, BOJ 5419 북서풍</h3>
+<ul>
+  <li>난이도 : Platinum 4</li>
+  <li>전형적인 ‘스위핑 + 세그트리’ 입니다.</li>
+  <li>문제를 단순화하기 위해, 좌표평면에 N개의 점이 있고, 남동쪽 대신 북동쪽으로 간다고 생각해 봅시다. 좌표압축을 한다음 Y좌표들을 뒤집어 버리면 이렇게 만드는 것은 어렵지 않게 가능합니다.</li>
+  <li>이제, 각 점들을 $(x_i, y_i)$ 라고 하고, 1차원 세그먼트 트리 하나를 만듭니다. 각 점을 세그트리의 $x_i$ 번 위치에 추가할 것입니다.</li>
+  <li>우리가 원하는 것은, $(x_i, y_i)$에 서서 세그트리에 $[x_i, \infty]$ 쿼리를 날렸을때 여기서부터 북동쪽으로 갈수있는 점의 개수를 얻는 것입니다. 그러나 우리의 세그트리는 $y$좌표를 기억하지 않고 그냥 무작정 점의 개수를 세기 때문에, $y$좌표는 우리가 스위핑해야 합니다.</li>
+  <li>$y$좌표가 큰 순서대로, 즉 위에서부터 세그트리에 점을 하나씩 넣으면서, 이 점까지 넣은 다음 동쪽을 바라보면 나보다 아래 (y좌표 기준) 점들을 아직 아예 추가가 되지 않았기 때문에 북동쪽 점들만 보이게 됩니다.</li>
+  <li>주의할 점은, 점을 정확히 세기 위해서는 $y$좌표가 같은 점들은 $x$좌표가 큰 쪽부터 처리해야 합니다.</li>
+</ul>
+
+<h3 id="sccc-2019e-boj-17131-여우가-정보섬에-올라온-이유">SCCC 2019E, BOJ 17131 여우가 정보섬에 올라온 이유</h3>
+<ul>
+  <li>난이도 : Platinum 4</li>
+  <li>바로 위 문제와 거의 똑같습니다.</li>
+  <li>$y$ 좌표 순서대로 내려오면서 업데이트하고 쿼리합니다. 이문제는 $[0, x_i - 1]$ 과 $[x_i+1, \infty]$ 를 쿼리해서 곱하는 방식입니다.</li>
+  <li>딱 하나 주의할 점은, 위 문제와는 달리 $y$좌표가 같은 점들을 업데이트하는 순서를 어떻게 줘도 꼬이게 됩니다. $y$좌표가 같은 점들을 따로 기억해 놨다가 한번에 업데이트해야 합니다. 코드를 참고해 주세요.</li>
+</ul>
+
+<h3 id="boj-16993-연속합과-쿼리">BOJ 16993, 연속합과 쿼리</h3>
+<ul>
+  <li>난이도 : Platinum 2</li>
+  <li>연속합과 쿼리는 소위 ‘금광세그’ 를 이용하여 풀 수 있음이 매우 잘 알려져 있습니다.</li>
+  <li>세그먼트 트리를 사용하되, 다음과 같은 정보들을 저장합니다. 세그트리의 한 노드가 구간 $[l, r]$ 에 대응한다는 사실을 기억합시다.
+    <ul>
+      <li>자기가 담당하는 구간의 왼쪽 끝에서 시작해서 얻을 수 있는 최대 구간합</li>
+      <li>자기가 담당하는 구간의 오른쪽 끝에서 시작해서 얻을 수 있는 최대 구간합</li>
+      <li>자기가 담당하는 구간의 최대 구간합</li>
+      <li>자기가 담당하는 구간의 합</li>
+    </ul>
+  </li>
+  <li>이 네 정보를 ls, rs, ms, s라고 하면, 두 노드를 합칠 때 다음과 같이 생각하면 됩니다.
+    <ul>
+      <li>노드 $a$, $b$를 합쳐서 $e$로 만들 때,</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">e.s</code> 는 자명합니다.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">e.ls</code> 는, <code class="language-plaintext highlighter-rouge">e</code>의 왼쪽 끝에서 시작해야 하므로 <code class="language-plaintext highlighter-rouge">a.ls</code> 가 답일 수도 있고, a를 다 먹고 b의 왼쪽 일부를 먹는 경우가 답일 수도 있습니다. 후자는 <code class="language-plaintext highlighter-rouge">a.s + b.ls</code> 가 최대일 것입니다 (ls의 정의). 따라서, 두 값 중 최대를 취합니다.</li>
+      <li>같은 원리로, <code class="language-plaintext highlighter-rouge">e.rs</code>는 <code class="language-plaintext highlighter-rouge">b.rs</code> 와 <code class="language-plaintext highlighter-rouge">b.s + a.rs</code> 중 큰 값을 고르면 됩니다.</li>
+      <li>마지막은 <code class="language-plaintext highlighter-rouge">e.ms</code> 입니다. 이는 다시 경우를 나누어 생각하면, <code class="language-plaintext highlighter-rouge">a</code>구간에 포함된 답을 갖거나 (<code class="language-plaintext highlighter-rouge">a.ms</code>), <code class="language-plaintext highlighter-rouge">b</code>구간에 포함된 답을 갖거나 (<code class="language-plaintext highlighter-rouge">b.ms</code>), 두 구간에 걸친 답을 갖거나 (이 답이 <code class="language-plaintext highlighter-rouge">a.rs + b.ls</code>가 최선임을 관찰합니다) 세가지 경우 (대칭을 제외하면 두가지) 밖에 없습니다.</li>
+    </ul>
+  </li>
+  <li>따라서, 상수배의 시간을 지불하여 모든 정보를 관리할 수 있고, 연속합 쿼리를 똑같이 날려줄 수 있습니다.</li>
+  <li>두 노드를 합칠때, 단순합에서는 좌우가 상관없지만 이런 특수한 연산을 할 때는 좌우를 조심해야 합니다.</li>
+</ul>
+
+<h2 id="review">Review</h2>
+<p>세그먼트 트리 문제를 오랜만에 밀면서 자료구조에 대한 이해를 되짚었다는 정도의 의의가 있는것 같습니다.</p>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'gratus907';
+      var disqus_identifier = '/ps-weekly/ps-weekly-21Jul1';
+      var disqus_title      = "7월 1-2주차 Weekly PS";
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: October 21, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

@@ -1,0 +1,92 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+// Dimensions
+$max-content-width: {{site.max_width}};
+
+@import
+  "variables",
+  "themes",
+  "layout",
+  "base",
+  "distill"
+;
+
+a {
+}
+body {
+    line-height: 1.8;
+}
+code {
+    font-size: 100%;
+
+}
+code.language-plaintext {
+    color : #000000;
+    background-color : #ffffff;
+}
+body {
+    font-weight : 400;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-top:2em;
+    font-weight:400;
+    margin-bottom:0.8rem;
+}
+
+img {
+    max-width : 100%;
+}
+.publications ol.bibliography li .author > em {
+    font-weight:bold;
+}
+
+.footnotes {
+    font-size:0.8em;
+    font-weight:300;
+}
+
+h2.card-title {
+    font-size:20px;
+    min-height:2.5em;
+}
+.card-body {
+    min-height:250px;
+}
+
+.card-img-container {
+    height : 250px;
+    text-align:center;
+}
+
+.card-img-container img {
+    height : 250px;
+    display:block;
+    vertical-align : middle;
+}
+
+.card-text {
+    height : 120px;
+}
+table {
+    width:100%;
+    border: solid 2px grey;
+    border-collapse:false;
+    font-weight : 400;
+    font-size : 1em;
+}
+table td, table th {
+    border: solid 2px grey;
+    font-weight : 400;
+    padding : 10px;
+}
+thead {
+    border: solid 2px grey;
+    font-weight : 400;
+}
+
+.publications ol.bibliography li .links a.btn  {
+    margin : 0px;
+}
