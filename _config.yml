@@ -69,8 +69,8 @@ rss_icon: true
 contact_note: >
   You can even add a little note about which of these is the best way to reach you.
 
-google_analytics: UA-XXXXXXXXX # out your google-analytics code
-panelbear_analytics: XXXXXXXXX # panelbear analytics site ID
+google_analytics: G-KX3EZM1ESL # out your google-analytics code
+panelbear_analytics: KX0fnophvY8 # panelbear analytics site ID
 
 # -----------------------------------------------------------------------------
 # Blog
