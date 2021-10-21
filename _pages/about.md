@@ -25,3 +25,4 @@ social: true  # includes social icons at the bottom of the page
   - Notes : 공부한 내용 정리
   - Projects : 참여한 프로젝트에 관하여 
   - 분류 : Notes, Projects 등등의 내용을 카테고리로 분류
+- 블로그를 최근에 al-folio theme으로 옮겨서, 정리 중입니다 :) 
