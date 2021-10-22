@@ -1,6 +1,7 @@
 ---
 layout: page
 title: CS Adventure
+permalink: /cs-adventure/
 description: 공부한 논문 정리 / 리뷰
 img: /assets/img/old-library.png
 importance: 1

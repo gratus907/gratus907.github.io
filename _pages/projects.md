@@ -2,7 +2,7 @@
 layout: page
 title: Projects
 permalink: /projects/
-description: Collection of my projects
+description: Collection of my projects.
 nav: true
 display_categories: [SNU, Personal]
 horizontal: false

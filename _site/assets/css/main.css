@@ -26,7 +26,7 @@ body.sticky-bottom-footer { padding-bottom: 0; }
 /****************************************************************************** Publications */
 /***************************************************************************** Projects */
 /******************************************************************************* Styles for the base elements of the theme. */
-p, h1, h2, h3, h4, h5, h6, em, div, span, strong { color: var(--global-text-color); }
+p, h1, h2, h3, h4, h5, h6, em, div, span { color: var(--global-text-color); }
 
 a, table.table a { color: var(--global-theme-color); }
 
@@ -246,6 +246,8 @@ d-appendix h3, d-appendix li, d-appendix span { color: var(--global-distill-app-
 d-appendix a, d-appendix a.footnote-backlink { color: var(--global-distill-app-color) !important; }
 
 d-appendix a:hover, d-appendix a.footnote-backlink:hover { color: var(--global-hover-color) !important; }
+
+a { color: purple; }
 
 body { line-height: 1.8; }
 
