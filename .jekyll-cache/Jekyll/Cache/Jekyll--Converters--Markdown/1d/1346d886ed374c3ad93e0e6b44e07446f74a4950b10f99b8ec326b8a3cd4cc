@@ -1,0 +1,53 @@
+I"k<ul>
+  <li><strong>난이도</strong> : Gold 2</li>
+  <li><strong>출처</strong> : UCPC 2019 인터넷 예선 J번</li>
+  <li>solved ac class 6 essential</li>
+</ul>
+
+<h2 id="풀이">풀이</h2>
+<p>주어진 점들 중 하나가 반드시 답이 됨을 보이자.</p>
+
+<p>먼저, 평균을 최소화하는 대신 합을 최소화하는 것으로 생각하자. 답이 되는 점이 $X$ 라고 하고, 주어진 점들 중 $X$에 가장 가까운 점을 $A$, 가장 먼 점을 $B$라고 하자. 이때, 우리가 최소화하는 것은 $\overline{XA} + \overline{XB}$ 이다. 이때, 삼각 부등식으로부터 이 값이 $\overline{AB}$보다 크거나 같기 때문에, $X$ 대신 $A$를 택함으로써 반드시 거리의 합 상 이득을 얻게 된다. 따라서, 반드시 주어진 점들 중 하나가 답이 된다.</p>
+
+<h2 id="code">Code</h2>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;bits/stdc++.h&gt;
+#define usecppio ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">pt</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">dt</span><span class="p">(</span><span class="n">pt</span> <span class="o">&amp;</span><span class="n">o</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">o</span><span class="p">.</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">o</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">o</span><span class="p">.</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">o</span><span class="p">.</span><span class="n">y</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">pt</span> <span class="n">pts</span><span class="p">[</span><span class="mi">1010</span><span class="p">];</span>
+<span class="kt">int32_t</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">usecppio</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">y</span><span class="p">;</span>
+        <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">best</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">score</span> <span class="o">=</span> <span class="mf">1e12</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">MD</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">MD</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">MD</span><span class="p">,</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">dt</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">j</span><span class="p">]));</span>
+        <span class="kt">double</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">MD</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">sc</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">sc</span><span class="p">;</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pts</span><span class="p">[</span><span class="n">best</span><span class="p">].</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span> <span class="o">&lt;&lt;</span> <span class="n">pts</span><span class="p">[</span><span class="n">best</span><span class="p">].</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

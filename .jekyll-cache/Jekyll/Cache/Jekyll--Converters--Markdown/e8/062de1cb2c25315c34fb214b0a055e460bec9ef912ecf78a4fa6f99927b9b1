@@ -1,0 +1,160 @@
+I"�?<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#our-team" id="markdown-toc-our-team">Our Team</a></li>
+  <li><a href="#practice--sogang-2020-div1" id="markdown-toc-practice--sogang-2020-div1">Practice : Sogang 2020 Div1</a></li>
+  <li><a href="#phase-0--start" id="markdown-toc-phase-0--start">Phase 0 : Start</a></li>
+  <li><a href="#phase-1--easy-problems" id="markdown-toc-phase-1--easy-problems">Phase 1 : Easy Problems</a>    <ul>
+      <li><a href="#a-파일-정리" id="markdown-toc-a-파일-정리">A. 파일 정리</a></li>
+      <li><a href="#f-폰친구" id="markdown-toc-f-폰친구">F. 폰친구</a></li>
+      <li><a href="#c-연료가-부족해" id="markdown-toc-c-연료가-부족해">C. 연료가 부족해</a></li>
+      <li><a href="#b-컨설팅" id="markdown-toc-b-컨설팅">B. 컨설팅</a></li>
+    </ul>
+  </li>
+  <li><a href="#phase-2--3-graph-problems" id="markdown-toc-phase-2--3-graph-problems">Phase 2 : 3 Graph Problems</a>    <ul>
+      <li><a href="#e-사탕-배달" id="markdown-toc-e-사탕-배달">E. 사탕 배달</a></li>
+      <li><a href="#d-에어컨-설치" id="markdown-toc-d-에어컨-설치">D. 에어컨 설치</a></li>
+      <li><a href="#g-confuzzle" id="markdown-toc-g-confuzzle">G. Confuzzle</a></li>
+    </ul>
+  </li>
+  <li><a href="#phase-3--pizza-madness" id="markdown-toc-phase-3--pizza-madness">Phase 3 : Pizza Madness</a></li>
+  <li><a href="#후기" id="markdown-toc-후기">후기</a></li>
+</ul>
+<hr />
+
+<h2 id="our-team">Our Team</h2>
+<p>이번 UCPC 팀은 이렇게 구성되게 되었습니다.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gyuni</code> : DGIST에서 석사과정을 올 8월에 마무리하고 졸업합니다. ICPC는 석사 1년차까지, UCPC는 석사과정 (석박통합 2년차까지) 임을 감안하면 사실상 이번 UCPC가 대학생 프로그래밍 대회의 마지막을 장식하게 될 것인지라, 저 개인적으로 매우 영광으로 생각하고 있습니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">dlwocks31</code> : 병특 중에 있습니다. 제 블로그에도 여러번 언급되었지만… 해시코드를 함께하고 있는 Little Piplup 팀으로, 둘이서 1:1 연습을 많이 해봤습니다만 전통적인 CP대회를 같이뛰는건 처음입니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">gratus907</code></li>
+</ul>
+
+<p>세명의 Codeforces max rating은 2100+지만, 저랑 dlwocks는 파킹에 실패해서 퍼플로 낙하했습니다. 퍼플+퍼플+오렌지 팀 정도로 볼 수 있을것 같습니다.</p>
+
+<p>전력을 잠깐 생각해 보자면, <code class="language-plaintext highlighter-rouge">gyuni</code>님의 스타일은 제가 잘 모르지만 저랑 <code class="language-plaintext highlighter-rouge">dlwocks31</code>은 동일 레이팅의 2인 팀치고는 아마도 꽤 강할 것 같습니다. 제가 상대적으로 조합/정수를 잘 풀고, <code class="language-plaintext highlighter-rouge">dlwocks31</code>이 자료구조/구현 문제를 잘 풀다 보니… 그래서, 3인팀도 나름대로 스타일은 명확하고 잘 맞는것 같습니다.</p>
+
+<p>작년에 <code class="language-plaintext highlighter-rouge">dlwocks31</code> / <code class="language-plaintext highlighter-rouge">coffeetea</code> / <code class="language-plaintext highlighter-rouge">diordhd</code> 팀이 2020 ICPC 예선에서 12등인가 하는 놀라운 성적을 얻었는데, 객관적인 전력은 그 근처 어딘가라고 생각합니다.</p>
+
+<h2 id="practice--sogang-2020-div1">Practice : Sogang 2020 Div1</h2>
+<p>3시간 정도밖에 시간이 없어서, 돌만한 셋이 별로 없었습니다. Japan ICPC 예선전 정도가 3시간인데, 난이도가 널뛰기하는데다가 백준에서 푼사람이 아무도 없어서 데이터의 올바름을 확신하기 어렵기도 하고… 
+서강대학교 대회는 Div 1 과 Div 2로 나뉘어 있고, 원래는 개인대회 3시간짜리 대회입니다. 난이도가 실-골-플-다 문제가 1-2-3-2로 분포된 형태가 UCPC 예선이랑 비슷할것이라고 판단, 이 대회를 3시간 3PC로 돌아보기로 했습니다.</p>
+
+<h2 id="phase-0--start">Phase 0 : Start</h2>
+<p>리얼리티를 위해 문제 순서를 shuffle 하고, <code class="language-plaintext highlighter-rouge">gyuni-gratus907-dlwocks31</code> 순서로 3 3 2 나눠 읽기로 랬습니다.</p>
+
+<h2 id="phase-1--easy-problems">Phase 1 : Easy Problems</h2>
+<h3 id="a-파일-정리">A. 파일 정리</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">dlwocks31</code><br />
+Code : <code class="language-plaintext highlighter-rouge">dlwocks31</code> (00:07)
+‘쉬운 구현문제니까 그냥 잡을게요’ 라고 말하고 7분에 AC를 받아왔습니다. 무슨문제인지 안읽어서 모르겠습니다.</p>
+
+<hr />
+
+<h3 id="f-폰친구">F. 폰친구</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">gratus907</code><br />
+Code : <code class="language-plaintext highlighter-rouge">gratus907</code> (00:30)<br />
+재밌는 조합 문제였습니다.<br />
+$N$ 명에게 $K$ 개를 나눠주는데 1인당 $m$개 이상 $M$개 이하를 받는 경우의 수를 계산하는 문제입니다. 미리 $m$개씩 나눠주고 시작하면, $L = K - mN$ 개의 사탕을 $N$명에게 나눠주되 각자가 $x = M - m$ 개 이하로만 받는 경우의 수를 세면 됩니다.</p>
+
+<p>먼저, $x$개 조건이 없다면 답은 중복조합을 이용하여 $_N H _L$ 개입니다. $x$개 조건은 여사건을 이용하여 계산할 수 있습니다. 반대로, ‘누가 $x+1$개 이상을 받을지’ 를 미리 정하고 갑시다. $u$명이 $x+1$개 이상을 받는다면, 미리 얘네들한테 $x+1$개씩 나눠주고 나머지들에게 사탕을 잘 나눠주는 경우를 생각하면 됩니다. 따라서, $_N H _{L - (x+1)u}$ 가 될 것입니다.</p>
+
+<p>그러나, 이 방법의 문제는 ‘나머지들에게 잘 나눠줄때’ 나머지들 중에 또 $x+1$개 이상을 받는 사람이 있을수도 있다는 것입니다. 이를 포함-배제 원리를 이용하여, 다음과 같이 처리하면 됩니다.
+\(\sum_{u = 1}^{n} (-1)^u \times {_N C _u} \times {_N H _{L - (x + 1)u}}\)</p>
+
+<hr />
+
+<h3 id="c-연료가-부족해">C. 연료가 부족해</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">gyuni</code><br />
+Code : <code class="language-plaintext highlighter-rouge">gyuni</code> (00:33, 1WA)<br />
+역시 쉬운문제라고 판단하고 30분 정도 시간에 AC를 받았습니다. DP였다고 합니다. 역시 무슨문제인지 안읽어서 잘 모르겠습니다.</p>
+
+<hr />
+
+<h3 id="b-컨설팅">B. 컨설팅</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">gratus907</code><br />
+Code : <code class="language-plaintext highlighter-rouge">gratus907</code> (00:58, 1WA)<br />
+쉬운 문제인데 구현이 귀찮아서 조금 시간이 걸렸습니다. 요점은, Greedy하게 정말 필요할때만 WAIT를 걸어주면 된다는 것을 어렵지 않게 알 수 있고, WRITE의 시작점들 / 도착점들 / (시작, 도착)Pair 들을 각각, READ의 대상을 하나. 이렇게 해서 집합들을 관리하고 조건을 잘 그대로 코딩하면 됩니다. 파이썬 썼는데 set같은걸 shallow copy한다는걸 까먹어서 1틀했습니다.</p>
+
+<hr />
+
+<h2 id="phase-2--3-graph-problems">Phase 2 : 3 Graph Problems</h2>
+<h3 id="e-사탕-배달">E. 사탕 배달</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">dlwocks31</code>, <code class="language-plaintext highlighter-rouge">gyuni</code><br />
+Code : <code class="language-plaintext highlighter-rouge">dlwocks31</code> (00:52, 1WA)<br />
+뭔지 잘 모르겠지만 트리에서 뭔가를 하는 문제입니다. 제가 파이썬 구현으로 싸우고 있는 사이에 팀원 두명이 AC를 받아왔습니다.</p>
+
+<hr />
+
+<h3 id="d-에어컨-설치">D. 에어컨 설치</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">gyuni</code>, <code class="language-plaintext highlighter-rouge">dlwocks31</code>, <code class="language-plaintext highlighter-rouge">gratus907</code><br />
+Code : <code class="language-plaintext highlighter-rouge">gyuni</code> (01:36)<br />
+문제는 다음과 같습니다.</p>
+<ul>
+  <li>$\Z^3$에 정점들이 뿌려져 있고 거리가 1인 정점들을 ‘인접하다’ 고 정의하여 그래프를 만듭니다.</li>
+  <li>그래프에 ‘에어컨’ 을 설치합니다. 이 에어컨 한 대는 설치한 정점과 그 인접한 정점을 커버합니다.</li>
+  <li>이제, 최소 개수의 에어컨을 달아서 모든 정점을 커버하는 문제입니다.</li>
+</ul>
+
+<p>제가 B번을 맞고 갔을때는 이미 어느정도 둘이 솔루션을 discuss하고 있었던 중이었습니다. 여기에 같이 아이디어를 구상하고 <code class="language-plaintext highlighter-rouge">gyuni</code>님이 코딩을 바로 들어갔습니다.</p>
+<ul>
+  <li>먼저, 어차피 각 connected component별로 생각해야 하므로 그래프가 연결되어 있다고 하겠습니다.</li>
+  <li>이제, 이 문제는 <strong>최소 버텍스 커버</strong> 와 같은 문제임을 압니다.</li>
+  <li>이 문제는 NP-Complete이지만, 이분 그래프에 대해서는 빨리 풀 수 있음이 알려져 있습니다.</li>
+  <li>$(a, b, c)$ 에 대해, $a + b + c$의 홀짝성에 따라 정점에 색깔을 칠해주면 이 그래프가 이분 그래프임을 보일 수 있습니다.</li>
+  <li>따라서, 이 그래프에서 최소 버텍스 커버를 짜면 됩니다.</li>
+</ul>
+
+<p>저는 이걸 알아도 이분그래프에서 최소 버텍스 커버를 어떻게 짜는지 자신이 없었지만, <code class="language-plaintext highlighter-rouge">gyuni</code>님이 그건 짤수 있다고 확신을 줬기 때문에 (:fan:) 맡기고 저랑 <code class="language-plaintext highlighter-rouge">dlwocks31</code>은 남은 2문제를 잡으러 갔습니다.</p>
+
+<hr />
+
+<p>코딩을 맡긴게 대략 01:00 시점쯤이고, 5AC에 1문제는 코딩만 남은 상황이었기 때문에 난이도에 대해 심각한 의심이 있었습니다. 실버 1, 골드 2, 플레 2문제 + 1문제 구상까지를 1시간에 밀었다는것도 그렇지만, 지금까지 문제들 중 플레급이라고 생각이 드는건 A번 정도였기 때문입니다. C번은 제가 직접 문제를 보지 않아서 뭐라고 할수가 없고, F번은 나중에 생각해보면 포함배제 쓰는 조합문제가 익숙하지 않다면 어려울것 같기도 합니다만 그럭저럭 꽤 많이 나온 스타일의 문제였지 않나 싶습니다.</p>
+
+<hr />
+
+<h3 id="g-confuzzle">G. Confuzzle</h3>
+<p>Solve : <code class="language-plaintext highlighter-rouge">dlwocks31</code>, <code class="language-plaintext highlighter-rouge">gratus907</code><br />
+Code : <code class="language-plaintext highlighter-rouge">dlwocks31</code></p>
+<ul>
+  <li>정점 $n$개의 트리가 주어지고, 각 노드가 $1 \leq c_i \leq n$ 의 색깔을 가집니다. 이때, 색깔이 같은 노드 페어 $v_i, v_j$들 중, 서로의 거리가 가장 가까운 노드 간의 거리를 계산하는 문제입니다.</li>
+  <li>트리에서 두 정점 사이의 거리는 LCA를 이용하면 ($O(n \log n)$ 전처리를 하고) $O(\log n)$에 계산할 수 있습니다. Range Minimum Query를 잘 이용하면 $O(1)$에도 할 수 있음이 알려져 있지만, 실제로 이게 필요한 상황은 본적이 없는것 같습니다.</li>
+  <li>다만, 이때 $O(n^2)$ 개의 pair를 확인해야 하므로, $O(n^2 \log n)$ 시간이 걸리는데, 도저히 답이 없는 복잡도입니다.</li>
+  <li>각 점마다 map에, “이 노드를 루트로 하는 서브트리에서, 색깔이 $c$ 인 노드들 중 이 노드에서 가장 가까운 노드까지의 거리” 를 저장한다고 생각합니다. 이를 $M_i$ 맵이라고 생각하겠습니다.</li>
+  <li>내 자녀 노드의 $M_i$들을 모두 알고 있다면, 이들을 합치는 과정에서 두개 이상의 서브트리가 같은 색깔의 노드를 가지고 있다면 이들까지의 거리를 이용하여 페어의 거리를 계산할 수 있습니다. 이 방법이 최단 거리 페어를 항상 찾을 수 있음은 서브트리에 대해 재귀적으로 증명 가능합니다.</li>
+  <li>그러나, 이 방법은 잘 생각해보면 맵을 합치는 데 $O(n \log n)$ 까지 걸리기 때문에, $O(n^2 \log n)$ 시간이 걸립니다.</li>
+  <li>트리에서 두 Map을 합치는데, <code class="language-plaintext highlighter-rouge">small-to-large</code> 테크닉을 적용 <a href="/algorithms/BOJ4002/">(ex : BOJ 4002번 풀이 링크)</a> 하면, $O(n \log^2 n)$ 시간으로 줄일 수 있습니다.</li>
+</ul>
+
+<p>Small to Large 테크닉을 적용하자는 말을 <code class="language-plaintext highlighter-rouge">dlwocks31</code>이 거의 5분만에 했고(:fan:), 10분만에 코딩했으나 사소한 실수로 디버깅에 40분이 걸렸습니다. 무려 $n^2 \log n$ 솔루션을 코딩해서 스트레스테스트로 반례를 찾아야만 했습니다. :(<br />
+별론으로, 정해가 상당히 멋집니다. 각 색깔에 대해 그 색깔의 노드가 몇개 없으면 ($k \leq \sqrt{n}$) $O(k^2 \log k)$ 알고리즘을 돌리고, 노드가 많으면 멀티소스 BFS를 돌리는… sqrt decomp스타일 아이디어였습니다.<br />
+하지만 여전히 dlwocks31의 스몰투라지가 복잡도면에서 더 좋은 풀이일 뿐 아니라, 코딩도 매우 간단합니다. :fan:</p>
+
+<hr />
+
+<h2 id="phase-3--pizza-madness">Phase 3 : Pizza Madness</h2>
+
+<p>해결하지 못한 H번에 대한 이야기입니다.</p>
+<ul>
+  <li>어떤 수열 $A$와 작은 수열 $B$가 주어지고, $A$를 원형으로 연결했을 때 $B$에 해당하는 패턴을 매칭하는 문제입니다.</li>
+  <li>
+    <p>단, 패턴이 실제로 맞을 필요는 없고, ‘원소들 간의 순서’ 가 맞으면 됩니다. 예를 들어, (4, 3, 6) 과 (2, 1, 3) 을 매칭된 것으로 본다는 것입니다.</p>
+  </li>
+  <li>다양한 아이디어들이 등장했습니다. 각 수를 좌표압축해서, 좌표압축된 $n$개의 수를 라빈카프처럼 해싱하자는 아이디어라던가…</li>
+  <li>해싱된 수열의 일부를 오른쪽 / 왼쪽으로 미는 연산이 기존의 해싱에서 불가능합니다.</li>
+  <li>미는 부분이 구간을 연산한다는 점에 착안하여 각 노드가 구간의 라빈카프 해시값을 가지고 있는 세그먼트 트리 같은 아이디어가 나오고</li>
+  <li>세그먼트 트리도 중간에 노드를 날리지는 못하기 때문에, 여기에 무슨 스플레이 트리를 써서…</li>
+</ul>
+
+<p>=&gt; <strong>이게 될리가 없습니다</strong>. 그렇게 한시간동안 셋이서 해괴한 트리들을 꺼내다가 연습을 종료했습니다.<br />
+결국 답은 KMP 알고리즘의 변형이던데, 꽤 멋진 문제인것 같네요.</p>
+
+<hr />
+
+<h2 id="후기">후기</h2>
+<p>비대면 팀연습이지만 굉장히 재밌었습니다. 배울것도 많았고..ㅋㅋㅋ 특히 작년 ICPC같은경우는 제가 나이로나 PS짬밥으로나 맏이였는데 이번에는 양쪽으로 다 막내인 팀이라서 (?) ㅋㅋㅋ 또 색다른 팀인듯 합니다.<br />
+남은 기간 공부도 재밌게 하고, 무엇보다 대회를 즐길 수 있을 것 같아서 기대가 됩니다.</p>
+
+<p>Little Piplup을 2명 2명 (저랑 dlwocks / coffeetea와 dhdroid) 먼저 갈라놓고 새 팀원을 찾아보기로 했을때 얘기했던것중 하나가 PS를 즐길수 있었으면 한다는 것이었습니다. 사실 무슨 뉴텔라급이 아닌이상 UCPC는 수상할 수 있는 대회가 아니고, 지금으로써는 예선 통과를 걱정하는 상황도 아니기 때문에 순수하게 문제풀이의 즐거움을 추구하기로 했습니다. 2019년 말~2020년 초에는 정말 PS를 즐겼다고 생각하는데, 그후로 학교공부가 바빠지면서 그러지 못했다가 이제 다시 그때의 마음가짐이 돌아오는것 같아서 개인적으로 굉장히 행복합니다.</p>
+:ET

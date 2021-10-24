@@ -1,0 +1,154 @@
+I"�-<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#recent-updates" id="markdown-toc-recent-updates">Recent Updates</a></li>
+  <li><a href="#rounds" id="markdown-toc-rounds">Rounds</a>    <ul>
+      <li><a href="#팀연습-서강대학교-2020-spc-div1-champion" id="markdown-toc-팀연습-서강대학교-2020-spc-div1-champion">(팀연습) 서강대학교 2020 SPC Div.1 (Champion)</a></li>
+      <li><a href="#대회-scpc-2021-round-1" id="markdown-toc-대회-scpc-2021-round-1">(대회) SCPC 2021 Round 1</a></li>
+      <li><a href="#atcoder-atcoder-beginner-round-210" id="markdown-toc-atcoder-atcoder-beginner-round-210">(Atcoder) Atcoder Beginner Round 210</a></li>
+    </ul>
+  </li>
+  <li><a href="#problems" id="markdown-toc-problems">Problems</a>    <ul>
+      <li><a href="#ioi-2009-4-raisins-boj-5463-건포도" id="markdown-toc-ioi-2009-4-raisins-boj-5463-건포도">IOI 2009-4, Raisins (BOJ 5463 건포도)</a></li>
+      <li><a href="#서강대학교-spc-2015-1f-몬스터-boj-11573" id="markdown-toc-서강대학교-spc-2015-1f-몬스터-boj-11573">서강대학교 SPC 2015-1F, 몬스터 (BOJ 11573)</a></li>
+      <li><a href="#연세대학교-2018-c-나무-위의-입자-boj-15669" id="markdown-toc-연세대학교-2018-c-나무-위의-입자-boj-15669">연세대학교 2018-C 나무 위의 입자 (BOJ 15669)</a></li>
+      <li><a href="#연세대학교-2018-l-연세워터파크-boj-15678" id="markdown-toc-연세대학교-2018-l-연세워터파크-boj-15678">연세대학교 2018-L 연세워터파크 (BOJ 15678)</a></li>
+      <li><a href="#ioi-2002-4-batch-scheduling-boj-5498" id="markdown-toc-ioi-2002-4-batch-scheduling-boj-5498">IOI 2002-4, Batch Scheduling (BOJ 5498)</a></li>
+      <li><a href="#joi-2009-4-散歩-boj-5573-산책" id="markdown-toc-joi-2009-4-散歩-boj-5573-산책">JOI 2009-4 散歩 (BOJ 5573 산책)</a></li>
+    </ul>
+  </li>
+</ul>
+<hr />
+
+<p>July 11 - July 18, 2021</p>
+
+<p>이 글에 구현코드 링크가 없더라도 <a href="https://github.com/gratus907/Gratus_PS">PS 레포 링크</a> 에 가서 대회 단위로 들어가면 보통 올려놓은 코드를 볼 수 있습니다.</p>
+
+<h2 id="recent-updates">Recent Updates</h2>
+<ul>
+  <li>2021 SCPC 라운드 1은 뭐 무난히 통과했습니다.</li>
+</ul>
+
+<h2 id="rounds">Rounds</h2>
+<h3 id="팀연습-서강대학교-2020-spc-div1-champion">(팀연습) 서강대학교 2020 SPC Div.1 (Champion)</h3>
+<ul>
+  <li><a href="/cp-practice/team_practice_1/">포스팅 링크</a> 에 포스팅했습니다.</li>
+</ul>
+
+<h3 id="대회-scpc-2021-round-1">(대회) SCPC 2021 Round 1</h3>
+<ul>
+  <li><a href="/cp-rounds/SCPC-2021-Round1/">포스팅 링크</a> 에 포스팅했습니다.</li>
+</ul>
+
+<h3 id="atcoder-atcoder-beginner-round-210">(Atcoder) Atcoder Beginner Round 210</h3>
+<ul>
+  <li><a href="https://atcoder.jp/contests/abc210/tasks">라운드 링크</a></li>
+  <li>582등, -9 (1844 -&gt; 1835).</li>
+  <li>D번 DP문제를 못 풀어서 레이팅을 좀 깎아먹었습니다. 대신 E번 (수학..이라긴 좀 애매하고 잘 모르겠습니다) 을 풀어서 본전은 친듯 합니다.</li>
+</ul>
+
+<h2 id="problems">Problems</h2>
+<p>이번에는 DP 연습을 하기로 했습니다. 백준 번호를 적어놨으므로 문제설명은 가급적 생략합니다.</p>
+
+<hr />
+
+<h3 id="ioi-2009-4-raisins-boj-5463-건포도">IOI 2009-4, Raisins (BOJ 5463 건포도)</h3>
+<ul>
+  <li>난이도 Gold 1</li>
+  <li>IOI에 이런 문제가 나온적 있는지는 몰랐습니다. 무슨 20세기 대회도 아니고 2009년에..?</li>
+  <li>거의 straightforward한 DP로 해결이 가능합니다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dp[r1][c1][r2][c2]</code> 를 직접 $[r1, c1] \times [r2, c2]$ 사각형의 DP값이라고 정의하면,</li>
+      <li>이제 이 값은 모든 가로/세로 컷을 직접 확인하면 됩니다.</li>
+      <li>구현 코드 가 상당히 간단하므로 확인하면 도움이 될것 같습니다. 레포에서 IOI를 찾아가면 됩니다.</li>
+    </ul>
+  </li>
+  <li>시간 복잡도는 $O(n^4)$ 칸 DP를 칸당 $O(n)$ 시간에 채우는 것이므로 $O(n^5)$ 입니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="서강대학교-spc-2015-1f-몬스터-boj-11573">서강대학교 SPC 2015-1F, 몬스터 (BOJ 11573)</h3>
+<ul>
+  <li>난이도 Gold 1</li>
+  <li>마찬가지로 <code class="language-plaintext highlighter-rouge">dp[i][j][k]</code> 를 빨간색 노란색 파란색이 $i, j, k$ 마리 남은 상황이라고 생각하면 됩니다.</li>
+  <li>이때, Random choice에 의해 빨간색과 노란색이 만날 확률은 $\frac{ij}{ij + jk + ki}$ 입니다.</li>
+  <li>이렇게 각 state transition의 확률을 구해서, 확률을 탑다운 DP로 찾아주면 됩니다.</li>
+  <li>어떤 특정 종의 몬스터가 아예 없어지면 두 종류 중에는 항상 이기는 쪽이 정해져 있으므로 확률이 (1, 0, 0) 형태로 나옵니다. 이를 베이스 케이스로 쓰면 됩니다.</li>
+  <li>대칭성을 잘 이용하면 $n^3$ 개의 실수값만으로 계산할수 있는것 같은데, 저는 $p_1, p_2, p_3$ 을 struct로 묶어서 돌렸습니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="연세대학교-2018-c-나무-위의-입자-boj-15669">연세대학교 2018-C 나무 위의 입자 (BOJ 15669)</h3>
+<ul>
+  <li>난이도 Platinum 5</li>
+  <li>정점 U, V에 대해, 편의상 <code class="language-plaintext highlighter-rouge">depth(u) &lt; depth(v)</code> 라고 합시다.</li>
+  <li>이때, <code class="language-plaintext highlighter-rouge">v</code>의 ‘위에서’ 하나, ‘아래서’ 하나를 골라서 그 거리가 홀수/짝수가 되는 정점쌍 개수를 세는 문제입니다.
+    <ul>
+      <li>가장 쉬운 방법은, <code class="language-plaintext highlighter-rouge">dp[i]</code> 에 <code class="language-plaintext highlighter-rouge">i</code>를 루트로 하는 서브트리에서 깊이가 홀수/짝수인 점의 개수를 미리 세 놓고</li>
+      <li>거리가 짝수이려면 <code class="language-plaintext highlighter-rouge">v</code> 아래 서브트리에서 짝수 깊이, <code class="language-plaintext highlighter-rouge">v</code> 아래가 아닌 곳에서 짝수 깊이</li>
+      <li>또는 둘다 홀수 깊이인 노드들의 개수의 곱입니다.</li>
+    </ul>
+  </li>
+  <li>역시 코드가 조금더 보기 쉬운 문제입니다. 모든 정보는 DFS를 돌리면서 Tree DP 할 수 있어서 $O(n)$ 에 해결 가능합니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="연세대학교-2018-l-연세워터파크-boj-15678">연세대학교 2018-L 연세워터파크 (BOJ 15678)</h3>
+<ul>
+  <li>난이도 Platinum 5</li>
+  <li>핵심은 $D_i = \max_{i - d \leq j &lt; i} (D_j + A_i)$ 라는 DP식이고,</li>
+  <li>이 식에서 $A_i$는 이미 정해져 있으므로 $[i - d, i)$ 구간의 최댓값을 빨리 구할수 있으면 됩니다.</li>
+  <li>Deque DP Optimization이라는 방법을 적용하는 기본 연습문제입니다. 이 방법은 언젠가 따로 소개하겠습니다.</li>
+  <li>$n$ 이 작아서 세그먼트 트리로 $O(n \log n)$ 에도 풀 수 있습니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="ioi-2002-4-batch-scheduling-boj-5498">IOI 2002-4, Batch Scheduling (BOJ 5498)</h3>
+<ul>
+  <li>난이도 Platinum 3</li>
+  <li>지문이 굉장히 이해하기 어렵습니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">T</code> 의 부분합을 <code class="language-plaintext highlighter-rouge">TS</code>, <code class="language-plaintext highlighter-rouge">F</code>의 부분합을 <code class="language-plaintext highlighter-rouge">FS</code> 라고 생각하겠습니다.</li>
+  <li>뒤에서부터 역순으로 Batch를 만들면서 오는 식으로 생각합니다.
+    <ul>
+      <li>Batch 블록 하나가 <code class="language-plaintext highlighter-rouge">i, i+1, ... j</code> 구간을 커버한다면, <code class="language-plaintext highlighter-rouge">t + s + (TS[j] - TS[i-1])</code> 에 <code class="language-plaintext highlighter-rouge">(FS[j] - FS[i-1])</code> 에 곱해야 하는데, 각 블록의 시작점 <code class="language-plaintext highlighter-rouge">t</code>를 도저히 계산할 방법이 없습니다.</li>
+    </ul>
+  </li>
+  <li>이 문제를 해결하기 위해, 앞 블록에서의 소모 시간을 뒷 블록에 계속 더해 주는 식으로, <code class="language-plaintext highlighter-rouge">(s + (TS[j] - TS[i-1])) * (FS[n] - FS[i-1])</code> 로 계산해서 더해주면 모든 블록을 더했을때 결과가 같습니다.</li>
+  <li>따라서 다음 DP식을 생각합니다. 
+\(D_i = \min_{i \leq j} (D_j + (s + TS_{j} - TS_{i-1}) (FS_{n} - FS_{i-1}))\)
+이 식은 그냥 계산하면 $O(n^2)$ 라서, 더 줄이고 싶습니다.</li>
+  <li>여기서, $j$와 무관한 항을 다 min 밖으로 빼서 정리하면, $D_j + TS_{j} \times u_i$ 들의 minimum을 빠르게 계산하는 문제가 됩니다 ($u_i$는 $i$에 의해 결정되는 상수값)
+    <ul>
+      <li>이러한 DP를 Convex Hull Trick으로 빠르게 처리할 수 있음이 알려져 있습니다. $TS_{j}$의 성질을 매우 잘 이용해서 스택에 잘 왔다갔다하는 $O(n)$ 풀이도 가능하고…</li>
+      <li>Li-Chao Tree같은 놀라운 (이제 리차오는 별로 놀라운까지는 아닙니다) 자료구조를 박으면 $O(n \log n)$ 에 풀 수 있습니다.</li>
+      <li>Li-Chao Tree에 대해서는 <a href="http://www.secmem.org/blog/2019/01/03/lichao-tree/">kjp4155님의 소멤 글</a> 이 잘 알려져 있고, 무지성 복붙 가능한 최고의 코드입니다.</li>
+      <li>ICPC에도 몇번 나온 자료구조인만큼 하나 가지고 있으면 좋을듯 합니다</li>
+    </ul>
+  </li>
+  <li>이와는 별론으로, 이 문제는 무려 20년 전의 문제라서 $O(n)$ 이 정해이면서 ($n \log n$ 까지는 허용했고) $n$이 1만밖에 안 됩니다. 요즘에 나온다면 500만이나 최소 100만으로 내지 않았을까요? 500만 리차오는 불가능할거고, 100만 리차오는 잘 모르겠습니다.</li>
+  <li>슬프게도, 이것 때문에 $O(n^2)$의 나이브한 DP가 100ms대로 통과합니다. 세월의 흐름이 느껴지기도 하면서, 동시에 만약 지금보다 컴퓨터가 다시 10배 빨라져서 지금 $O(n^2)$ 가 안 뚫리는 문제들이 다 뚫리게 되면 기존 문제들을 온라인저지 상에서 리마스터할 필요가 있을수도 있겠다, 하는 (저와는 별로 상관없는 일이지만) 생각도 들게 하네요.</li>
+</ul>
+
+<hr />
+
+<h3 id="joi-2009-4-散歩-boj-5573-산책">JOI 2009-4 散歩 (BOJ 5573 산책)</h3>
+<ul>
+  <li>난이도 Platinum 4</li>
+  <li>이번주에 제가 포스팅하는 문제중 가장 어려웠습니다.</li>
+  <li>$N-1$ 번째의 보드 상태를 알고 있다면, $N$번째는 직접 시뮬레이션해서 도착할 수 있습니다.</li>
+  <li>특정 칸에 지금까지 도달한 횟수를 안다면, 그 칸의 상태를 알 수 있습니다.</li>
+  <li>$(1, 1)$ 을 밟는 횟수는 $N-1$번입니다.</li>
+  <li>어떤 칸을 밟는 횟수가 $K$번이면, 계속 오른쪽과 아래가 왔다갔다하므로 그중 절반은 오른쪽으로, 절반은 아래로 내려가게 됩니다.
+    <ul>
+      <li>단, $K$가 홀수이면 0번째에 어느 방향이었는지를 보고 한번 더가면 됩니다.</li>
+      <li>즉, <code class="language-plaintext highlighter-rouge">dp[i][j+1], dp[i+1][j]</code> 에 <code class="language-plaintext highlighter-rouge">dp[i][j]/2</code> 를 (필요하다면 1만큼 더) 더해주면 됩니다.</li>
+    </ul>
+  </li>
+  <li>이 아이디어가 굉장히 떠올리기 힘들었습니다. 역시 DP는 어렵네요.</li>
+</ul>
+:ET

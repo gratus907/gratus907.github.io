@@ -1,0 +1,156 @@
+I"<h2 id="what-is-this">What is This?</h2>
+
+<ul>
+  <li>PS에서 쓰는 알고리즘들 외에도 더 theoretical한 자료구조/알고리즘들에 대한 이해가 부족한 것 같아서 공부해 보기로 했습니다. PS에서도 요즘은 더 높은 레벨로 가면 splay tree / link cut tree 같은건 좀 나오는것 같기도 하구요.
+PS틱한 내용들 (DP-optimization이 대표적) 도 섞일 예정입니다.</li>
+  <li>계획 : 고급 자료구조 / 알고리즘 내용들, CLRS에서 아직 제대로 공부하지 않은 부분 몇가지, 계산이론 수업
+MIT 고급 자료구조 6.851 <a href="https://courses.csail.mit.edu/6.851/fall17/lectures/">링크</a> 이나 고급 알고리즘 <a href="http://people.csail.mit.edu/moitra/854.html">링크 1</a> <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-854j-advanced-algorithms-fall-2008/">링크 2</a> 같은 내용들 중 몇가지 재밌어 보이거나 이건 알아야 한다고 추천받은 내용들을 볼 계획입니다.</li>
+  <li>언젠가 다룰 내용들…</li>
+</ul>
+
+<style>
+table th:first-of-type {
+    width: 80%;
+}
+table th:nth-of-type(2) {
+    width: 20%;
+}
+
+</style>
+
+<h3 id="various-topics">Various topics</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: left">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Amortized Analysis</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Hashing</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Network Flows</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Linear Programming</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Divide and conquer optimization</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/DP-DnC-Opt/">Link</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Pollard’s Rho Algorithm</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/Pollards-Rho/">Link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="advanced-data-structures">Advanced Data Structures</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: left">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>Fibonacci Heaps</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/Fibonacci-heaps/">Link</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Splay trees</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="randomized-algorithms">Randomized Algorithms</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: left">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>Karger-Stein Min Cut</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/karger-stein-mincut/">Link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="graph-algorithms">Graph Algorithms</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: left">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><strong>Fixed Subgraph Isomorphism</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/graph-algorithms-lec1/">Link</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Pagerank &amp; Random walk with Restart</strong></td>
+      <td style="text-align: left"><a href="/advanced-algorithms/random-walk-on-graphs/">Link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="string-algorithms">String Algorithms</h3>
+
+<p>Mainly from : SNU 2021 Fall Theory of computation</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Topic</th>
+      <th style="text-align: left">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Aho-Corasick Algorithm</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Boyre-Moore Algorithm</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Baker-Bird Algorithm</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wu-Manber Algorithm</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Suffix Tree</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Suffix Array</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+:ET

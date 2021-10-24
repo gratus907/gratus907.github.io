@@ -1,0 +1,38 @@
+I"<p>List of contests with post links</p>
+
+<h2 id="개인-대회">개인 대회</h2>
+<h3 id="contests">Contests</h3>
+<ul>
+  <li>삼성 SCPC 2021
+    <ul>
+      <li><a href="/cp-rounds/SCPC-2021-Round1/">Round 1</a></li>
+      <li><a href="/cp-rounds/SCPC-2021-Round2/">Round 2</a></li>
+    </ul>
+  </li>
+  <li>Google Codejam
+    <ul>
+      <li><a href="/cp-rounds/Codejam-2021-R2/">Round 2</a></li>
+    </ul>
+  </li>
+  <li><a href="/cp-rounds/snupc-2021/">서울대학교 SNUPC 2021</a></li>
+  <li><a href="/cp-rounds/ChungAngU-NPC2021/">중앙대학교 Newbie Programming Contest 검수후기</a></li>
+</ul>
+
+<h2 id="팀-대회">팀 대회</h2>
+<h3 id="contests-1">Contests</h3>
+<ul>
+  <li>Google Hashcode 2021
+    <ul>
+      <li><a href="/cp-rounds/Hashcode-2021-prep/">준비과정</a>, <a href="/cp-rounds/Hashcode-2021-prelim/">후기</a></li>
+    </ul>
+  </li>
+  <li><a href="/cp-rounds/icpc-2021-prelim/">ICPC Korea First Round 2021</a></li>
+</ul>
+
+<h3 id="team-practice-rounds">Team Practice Rounds</h3>
+<ul>
+  <li>(팀연습) <a href="/cp-rounds/team-practice-sogang-2020/">서강대학교 2020 Div1</a></li>
+  <li>(팀연습) <a href="/cp-rounds/team-practice-gcpc-2020/">ICPC German Regional (GCPC) 2020</a></li>
+  <li>(팀연습) ICPC Benelux Regional (BAPC) 2020</li>
+</ul>
+:ET

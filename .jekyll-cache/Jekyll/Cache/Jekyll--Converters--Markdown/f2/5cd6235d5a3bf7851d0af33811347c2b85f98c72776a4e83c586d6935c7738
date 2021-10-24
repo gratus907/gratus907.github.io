@@ -1,0 +1,51 @@
+I"W<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#normal-equation" id="markdown-toc-normal-equation">Normal Equation</a>    <ul>
+      <li><a href="#noninvertible-case" id="markdown-toc-noninvertible-case">Noninvertible Case</a></li>
+    </ul>
+  </li>
+</ul>
+<hr />
+
+<h3 id="normal-equation">Normal Equation</h3>
+<ul>
+  <li>Iteration을 통해 극소점에 수렴하는 것이 아니라, <strong>Analytically</strong> 최적해 $\theta$를 구하는 방법.</li>
+  <li>ex) $J(\theta) = a\theta^2 + b\theta + c$ ($a &gt; 0$) 를 최소화하는 $\theta$ 는 $-\frac{b}{2a}$ 임을 쉽게 알 수 있다.</li>
+  <li>How to do for vector parameter $J$?</li>
+  <li>=&gt; Vector Calculus. $\pdv{}{\theta_i} J(\theta)$ 가 모두 0이 되는 $\theta$ 를 찾으면 된다.</li>
+  <li>Parameter들을 행렬 $X$로 만들고, 이에 대응하는 값들을 $y$로 만들자.</li>
+  <li>$\theta = (X^T X)^{-1} X^T y$ 가 우리의 <strong>Linear Regression</strong>에 대응함이 알려져 있다.</li>
+  <li>Feature scaling 같은 테크닉 불필요.</li>
+  <li>Gradient Descent에 대비하여..
+    <ul>
+      <li><strong>장점</strong> : $\alpha$를 생각하지 않아도 되고, 반복적으로 적절한 $\alpha$를 찾을 필요가 없다.</li>
+      <li><strong>단점</strong> : 행렬곱셈 및 inverse는 굉장히 느림. 특히 $n$이 크면 행렬곱셈을 쓰기 어렵다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="noninvertible-case">Noninvertible Case</h4>
+<ul>
+  <li>$(X^T X)$가 invertible하지 않으면??</li>
+  <li>Pseudoinverse (octave pinv 함수)</li>
+  <li>크게 두 가지 경우
+    <ul>
+      <li>두 feature가 사실 linear 관계에 있는 경우.
+        <ul>
+          <li>ex) size in feet^2 와 size in m^2</li>
+          <li>Design matrix $X$가 dependent column 가진다.</li>
+          <li>Redundant features -&gt; Throw away.</li>
+        </ul>
+      </li>
+      <li>Too many features.
+        <ul>
+          <li>Data는 적은데 feature는 많은 경우.</li>
+          <li>Feature 몇개 버리기 / 또는 Regularization.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

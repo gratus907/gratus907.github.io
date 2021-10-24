@@ -1,0 +1,117 @@
+I"c!<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#recent-updates" id="markdown-toc-recent-updates">Recent Updates</a></li>
+  <li><a href="#rounds" id="markdown-toc-rounds">Rounds</a>    <ul>
+      <li><a href="#facebook-hackercup-qualification-round" id="markdown-toc-facebook-hackercup-qualification-round">Facebook HackerCup, Qualification Round</a></li>
+    </ul>
+  </li>
+  <li><a href="#problems" id="markdown-toc-problems">Problems</a>    <ul>
+      <li><a href="#boj-1086-박성원" id="markdown-toc-boj-1086-박성원">BOJ 1086 박성원</a></li>
+      <li><a href="#boj-1533-길의-개수" id="markdown-toc-boj-1533-길의-개수">BOJ 1533 길의 개수</a></li>
+      <li><a href="#2009-baltic-olympiad-of-informatics-p2-boj-3356-라디오-전송" id="markdown-toc-2009-baltic-olympiad-of-informatics-p2-boj-3356-라디오-전송">2009 Baltic Olympiad of Informatics P2, BOJ 3356 라디오 전송</a></li>
+      <li><a href="#2013-한국정보올림피아드-지역본선-고등부-5번-boj-7575-바이러스" id="markdown-toc-2013-한국정보올림피아드-지역본선-고등부-5번-boj-7575-바이러스">2013 한국정보올림피아드 지역본선 고등부 5번, BOJ 7575 바이러스</a></li>
+    </ul>
+  </li>
+  <li><a href="#2017-연세대학교-프로그래밍-경진대회-boj-14574-헤븐스-키친" id="markdown-toc-2017-연세대학교-프로그래밍-경진대회-boj-14574-헤븐스-키친">2017 연세대학교 프로그래밍 경진대회, BOJ 14574 헤븐스 키친</a></li>
+  <li><a href="#2016-nordic-collegiate-programming-contest-boj-13355-bless-you-autocorrect" id="markdown-toc-2016-nordic-collegiate-programming-contest-boj-13355-bless-you-autocorrect">2016 Nordic Collegiate Programming Contest, BOJ 13355 Bless You Autocorrect</a></li>
+  <li><a href="#2017-central-european-olympiad-in-informatics-boj-15246-one-way-streets" id="markdown-toc-2017-central-european-olympiad-in-informatics-boj-15246-one-way-streets">2017 Central European Olympiad in Informatics, BOJ 15246 One Way Streets</a></li>
+</ul>
+<hr />
+
+<p>August 16 - August 31, 2021</p>
+
+<p>이 글에 구현코드 링크가 없더라도 <a href="https://github.com/gratus907/Gratus_PS">PS 레포 링크</a> 에 가서 대회 단위로 들어가면 보통 올려놓은 코드를 볼 수 있습니다.</p>
+
+<p>BOJ의 문제 중 <code class="language-plaintext highlighter-rouge">[출처]</code> 에 대회명이 적혀있지 않으면 제 레포에서는 <code class="language-plaintext highlighter-rouge">BOJ Original</code>에 있습니다.</p>
+
+<p>읽는 사람이 문제를 읽고 조금 생각해봤다고 가정하고, 대략적인 아이디어만 간단히 적을 생각입니다 ㅎㅎ</p>
+
+<h2 id="recent-updates">Recent Updates</h2>
+<ul>
+  <li>Hackercup Qual round에 참여했습니다.</li>
+</ul>
+
+<h2 id="rounds">Rounds</h2>
+
+<h3 id="facebook-hackercup-qualification-round">Facebook HackerCup, Qualification Round</h3>
+<ul>
+  <li>Qual round라서 별로 할말은 없는듯 합니다. C2는 재밌지만 구현을 포기했고, C1까지는 재밌게 풀었습니다.</li>
+  <li>FHC는 정말 <strong>해괴한</strong> 채점 방식을 가지고 있습니다. ㅋㅋ…</li>
+</ul>
+
+<h2 id="problems">Problems</h2>
+
+<hr />
+
+<h3 id="boj-1086-박성원">BOJ 1086 박성원</h3>
+<ul>
+  <li>난이도 Platinum V</li>
+  <li>Bitmask DP를 하면 됩니다. <code class="language-plaintext highlighter-rouge">dp[BIT][REM]</code> 을, <code class="language-plaintext highlighter-rouge">BIT</code> 에 해당하는 비트마스크를 붙여 나머지 <code class="language-plaintext highlighter-rouge">REM</code>을 만드는 경우의 수로 정의하고, 아직 쓰지 않은 원소들을 DP로 잘 관리합니다.</li>
+  <li>자세한 것은 코드 참고.</li>
+</ul>
+
+<hr />
+
+<h3 id="boj-1533-길의-개수">BOJ 1533 길의 개수</h3>
+<ul>
+  <li>난이도 Platinum IV</li>
+  <li>가중치 없는 그래프의 인접행렬 <code class="language-plaintext highlighter-rouge">A</code>에 대해, $A^n$을 계산하면, 그 $i, j$ 번째 칸은 $i \to j$ 로 $n$개의 간선을 사용해서 도달하는 방법의 경우의 수에 해당한다는 사실이 잘 알려져 있습니다.</li>
+  <li>가중치가 5 이하이므로, 정점을 복사하는 트릭을 사용합니다. 만약 1번 정점에서 2번 정점으로 3의 시간이 걸린다면, $(1, 0)$ 에서 $(2, 0)$ 으로 그어주는 것이 아니라, $(1, 0)$ 에서 $(2, 2)$ 로, $(2, 2) \to (2, 1) \to (2, 0)$ 으로 가게 해서 3개의 간선을 거치도록 강제합니다.</li>
+  <li>이제 위 사실을 사용할 수 있습니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="2009-baltic-olympiad-of-informatics-p2-boj-3356-라디오-전송">2009 Baltic Olympiad of Informatics P2, BOJ 3356 라디오 전송</h3>
+<ul>
+  <li>난이도 Platinum IV</li>
+  <li>문제의 정의를 잘 읽어보면, KMP 알고리즘의 실패함수를 이용하여 $n - p[n]$ 이 답임을 알 수 있습니다.</li>
+</ul>
+
+<hr />
+
+<h3 id="2013-한국정보올림피아드-지역본선-고등부-5번-boj-7575-바이러스">2013 한국정보올림피아드 지역본선 고등부 5번, BOJ 7575 바이러스</h3>
+<ul>
+  <li>난이도 Platinum V</li>
+  <li>$N$개의 문자열 각각에 대해, 길이가 $K$인 모든 부분 문자열과 그 역 문자열을 저장할 수 있다면</li>
+  <li>이들을 비교해서 쉽게 풀 수 있을 것입니다.</li>
+  <li>시간 복잡도상 이를 직접 비교할 수는 없지만, 해시값을 비교할 수는 있습니다.</li>
+  <li>매우 느리지만 <code class="language-plaintext highlighter-rouge">set_intersection</code>을 쓰면 구현이 매우 쉽고, 이 문제를 통과하기에는 충분합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="2017-연세대학교-프로그래밍-경진대회-boj-14574-헤븐스-키친">2017 연세대학교 프로그래밍 경진대회, BOJ 14574 헤븐스 키친</h2>
+<ul>
+  <li>난이도 Platinum V</li>
+  <li>대결에서 승리한 쪽이 승천해버리기 때문에 한 노드를 두 번 포함할 수 없습니다.</li>
+  <li>즉… 대진표가 <code class="language-plaintext highlighter-rouge">Spanning tree</code>를 이루어야겠습니다.</li>
+  <li>주어진 점수 함수로 complete graph를 만들고, 그 maximum spanning tree를 쓰고 싶습니다.</li>
+  <li>그런데, 이 트리로 올바른 대진표를 만들 수 있을까요?</li>
+  <li>네. DFS를 따라 돌면서, 리프 노드와 리프가 아닌 노드 간의 경기에 대해서는 리프 노드가 승리하고 승천해야 합니다. (리프가 아닌 노드는 나중에 또 써야 하므로). 이제, 새롭게 리프가 된 노드가 있다면 이 노드는 자기 parent 노드와의 대결에서 승리해서 승천해도 됩니다.</li>
+  <li>DFS를 이용하면 쉽게 구현 가능합니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="2016-nordic-collegiate-programming-contest-boj-13355-bless-you-autocorrect">2016 Nordic Collegiate Programming Contest, BOJ 13355 Bless You Autocorrect</h2>
+<ul>
+  <li>난이도 Platinum I</li>
+  <li>솔직히 이정도로 어려운지는 잘 모르겠습니다.</li>
+  <li>Trie를 골자로 한 그래프를 만듭니다. 단, autocomplete 기능을 이용할 수 있으므로 문제의 정의에 합당하게 TAB키를 길이가 1인 간선으로 표현해주고, BACKSPACE키도 길이가 1인 간선으로 표현해 줍니다.</li>
+  <li>이렇게 만든 그래프 위에서 BFS를 돌려서, 모든 노드로 갈 수 있는 최단 경로의 길이를 미리 계산합니다.</li>
+  <li>이제, query string이 주어지면, 이 query string의 어디까지를 trie 위에서 찾을 수 있는지 보고, 그 최단 경로를 따 온 다음, 나머지는 일일히 타이핑해주면 끝입니다.</li>
+  <li>구현량이 많지만 각각을 따로 구현해서 합칠 수 있으므로 별로 어렵지는 않습니다. 저는 구현의 편의를 위해 트라이와 그래프를 따로따로 만들었지만, 구현을 조심해서 한다면 트라이를 따로 만들지 않고 바로 적절히 그래프를 (트라이를 뼈대 삼아) 구현하면 됩니다.</li>
+</ul>
+
+<hr />
+
+<h2 id="2017-central-european-olympiad-in-informatics-boj-15246-one-way-streets">2017 Central European Olympiad in Informatics, BOJ 15246 One Way Streets</h2>
+<ul>
+  <li>난이도 Platinum II</li>
+  <li>IOI를 제외하고 가장 어려운 OI중 하나인 CEOI의 문제입니다. 솔직히 저는 P2보다 훨씬 어렵다고 생각합니다.</li>
+  <li>별도로 포스팅할 예정입니다.</li>
+</ul>
+:ET

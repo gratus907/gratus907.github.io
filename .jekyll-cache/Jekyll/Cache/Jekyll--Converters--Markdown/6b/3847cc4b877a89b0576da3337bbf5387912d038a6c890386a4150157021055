@@ -1,0 +1,64 @@
+I"�<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#풀이" id="markdown-toc-풀이">풀이</a></li>
+  <li><a href="#코드" id="markdown-toc-코드">코드</a></li>
+</ul>
+<hr />
+
+<h2 id="풀이">풀이</h2>
+<p>문제를 간단히 요약하면, 자연수들이 주어질 때 $f(k, I)$ 를 $k$로 나눈 나머지가 $I$인 수들로 정의한다. 이때 이 값을 최대한 크게 하는 문제이다.</p>
+
+<p>단순하게 접근한다면 한 $(k, I)$ 값이 주어졌을 때 $O(n)$에 $f$값을 계산해 볼 수 있지만, 어차피 계속 $k$로 나눈 모듈러값을 쓸 것이므로 잘 계산하면 $O(n)$에 $k$ 하나와 해당하는 모든 $I$값에 대해 함수값을 동시에 계산할 수 있다. 이렇게 계산하면 시간 복잡도는 $O(mn)$ ($m$은 최대 범위) 인데, 이는 아직 시간 초과를 피하기 힘들다.</p>
+
+<p>여기서 비둘기집의 원리를 이용한 최적화를 하는데, $k = 2$인 경우를 생각해 보면, $f(2, 0)$은 주어진 수 중 짝수의 개수, $f(2, 1)$은 홀수의 개수이므로 둘 중 하나는 반드시 $n / 2$ 를 넘게 된다. 따라서, 답의 하한이 $n / 2$임을 알 수 있다.</p>
+
+<p>모든 수가 <strong>다르다</strong> 는 것에 주목하자. $f(k, I)$값이 크려면, $I, k + I, 2k + I, \dots$ 형태의 수들이 많아야 한다. 그런데 만약 $k &gt; 2m / n$ 이면, 모든 수가 $m$ 이하이므로, 이 수들이 $n / 2$ 개 이상 될 수 없다. 따라서 $k$의 값을 $2m / n$ 까지만 보면 충분하고, 이렇게 계산하면 시간 복잡도는 $O(m)$ 이 된다.</p>
+
+<p>$O(n)$에 모든 $I$값에 대해 한번에 계산하는 부분이 조금 어려워서 (memset을 매번 하면 시간이 꼬였었다) 고민을 많이 하다가 따로 풀이를 듣고 알았다. :( 상당히 clever하다는 생각이 들었다.</p>
+
+<h2 id="코드">코드</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;bits/stdc++.h&gt;
+#define ll long long
+#define eps 1e-7
+#define all(x) ((x).begin()),((x).end())
+#define usecppio ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">pii</span> <span class="o">=</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mf">2e6</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1010</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">rem</span><span class="p">[</span><span class="mi">2020202</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">vst</span><span class="p">[</span><span class="mi">2020202</span><span class="p">];</span>
+<span class="kt">int</span> <span class="nf">chk</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">%</span><span class="n">c</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">vst</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">!=</span> <span class="n">c</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">vst</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+            <span class="n">rem</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+            <span class="n">rem</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">rem</span><span class="p">[</span><span class="n">r</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int32_t</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">usecppio</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">mv</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">m</span> <span class="o">/</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">mv</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">chk</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

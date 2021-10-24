@@ -1,0 +1,87 @@
+I"�<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#what-is-machine-learning" id="markdown-toc-what-is-machine-learning">What is Machine Learning?</a>    <ul>
+      <li><a href="#응용-분야" id="markdown-toc-응용-분야">응용 분야</a></li>
+    </ul>
+  </li>
+  <li><a href="#supervised-learning" id="markdown-toc-supervised-learning">Supervised Learning</a></li>
+  <li><a href="#unsupervised-learning" id="markdown-toc-unsupervised-learning">Unsupervised Learning</a></li>
+</ul>
+<hr />
+
+<h3 id="what-is-machine-learning">What is Machine Learning?</h3>
+<ul>
+  <li>A. Samuel (1959) : 컴퓨터가 <code class="language-plaintext highlighter-rouge">explicitly program</code> 되지 않은 내용을 학습하게 하는 분야</li>
+  <li>T. Mitchell (1998) : Task T, Performance measure P, Experience E가 있고, E에 의해 P가 발전하는 Learning problem.</li>
+  <li>Supervised / Unsupervised Learning</li>
+  <li>Reinforcement Learning, Recommenders, …</li>
+</ul>
+
+<h4 id="응용-분야">응용 분야</h4>
+<ul>
+  <li>Web search, photo tagging, etc…</li>
+  <li>컴퓨터에게 제공되는 <strong>새로운 가능성</strong> - 인간의 사고/학습하는 방식 모방하여 작동.
+    <ul>
+      <li>Database mining (web click, medical records, …)
+        <ul>
+          <li>Computational biology, 유전자 분석 등.</li>
+        </ul>
+      </li>
+      <li>직접 프로그래밍할 수 없는 문제들
+        <ul>
+          <li>자율주행 기술 - How?</li>
+          <li>Handwriting recognition</li>
+          <li>Natural Language Processing</li>
+        </ul>
+      </li>
+      <li>Self customizing
+        <ul>
+          <li>개별 유저에 대해 customized된 알고리즘 개발</li>
+        </ul>
+      </li>
+      <li>Understanding Brains / Human Learning</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="supervised-learning">Supervised Learning</h3>
+<ul>
+  <li><strong>올바른 정답</strong> 이 주어지는 Learning problem.</li>
+  <li><strong>올바른 정답</strong> 처럼 행동하는 프로그램 만들기.</li>
+  <li>ex) 주택 가격의 예측. 어떻게 이 문제를 해결할 것인가?
+    <ul>
+      <li>일차함수 피팅? 이차함수 피팅?</li>
+      <li>Regression Problem (연속적인 값 예측하기)</li>
+    </ul>
+  </li>
+  <li>ex) 종양 크기($x$)에 따른 양성 / 악성 ($y$) 예측.
+    <ul>
+      <li>Probability 예측하기.</li>
+      <li>Classification Problem (이산적인 값에 대한 확률)</li>
+      <li>Seperating Line 찾기.</li>
+    </ul>
+  </li>
+  <li>몇개의 Feature에 대해 찾을 것인가?</li>
+  <li>Support Vector Machine - Infinite number of feature에 대해서도 대응할 수 있는 수학적인 방법.</li>
+</ul>
+
+<h3 id="unsupervised-learning">Unsupervised Learning</h3>
+<ul>
+  <li><strong>올바른 정답</strong> 이 주어지지 않는 Learning Problem</li>
+  <li>Clustering algorithm
+    <ul>
+      <li>ex) Google News : 수많은 뉴스를 <strong>AUTOMATICALLY</strong> 각 주제별로 모아서 보여주는 서비스 제공.</li>
+      <li>ex) Genomics : 유전자 정보를 이용한 clustering</li>
+      <li>Astronomical data, SNS Analysis, Computing cluster organizing, Market segmentation …</li>
+    </ul>
+  </li>
+  <li>ex) Cocktail Party Problem : 겹치는 목소리 구분해 내는 문제.
+    <ul>
+      <li>짧고 간결한 코드로 유의미한 결과 도출 가능.</li>
+      <li>이 강의에서는 Octave 이용.</li>
+    </ul>
+  </li>
+</ul>
+:ET

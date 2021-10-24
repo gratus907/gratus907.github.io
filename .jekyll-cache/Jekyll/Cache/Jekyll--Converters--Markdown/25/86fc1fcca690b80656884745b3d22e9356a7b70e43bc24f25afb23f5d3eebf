@@ -1,0 +1,101 @@
+I"�<h2 id="what-is-this">What is This?</h2>
+<p>나름 CS Research를 꿈꾸는데도 전혀 그런쪽으로는 준비가 안 된거 같아서, 지금부터라도 논문읽기나 세미나 참석하고 정리하기를 조금씩 해 보려고 합니다. 재밌어 보이는 것들 / 추천받은 것들 등등… 을 읽어보고 재밌는 주제들이 있으면 여기에 정리할 계획입니다. 개인적인 흥미가 최우선이다보니 막 세세한 결과같은것보단… 핵심적인 아이디어가 재밌는가? 가 가장 중요한것 같습니다.</p>
+
+<p>제가 이 카테고리의 게시글을 작성하는 기본 틀은 다음과 같습니다.</p>
+<ol>
+  <li>Introduction : 소개, 이 논문을 읽게된 계기, Historically 어떤 위치에 있는지.</li>
+  <li>Key ideas : 본문의 Key idea를 적당히 제가 이해한 방식대로 정리합니다.</li>
+  <li>Conclusion : 논문의 결론</li>
+  <li>Thoughts : 읽으면서 들었던 짧은 생각들을 정리합니다. 짧은 생각들은 정말 느낌일수도 있고, 뭔가 오 이런건 왜 안 다루지? 하는 걸수도 있을텐데 <strong>학부생의 법칙</strong> 에 따라, 지금의 제가 논문을 읽고 뭔가 떠오른게 있다면 100% 둘 중 하나입니다. 누군가 이미 해 놨거나, 안 되는 거거나… 하지만 여전히 이런 생각을 해보는 것들은 의미있지 않을까 싶습니다. 궁금했던 점을 다른 논문을 찾아보는 계기로 삼으려고 합니다.</li>
+</ol>
+
+<p>경우에 따라, 어떤 논문 A와 그 후속연구 B, C, D를 한번에 다루기도 할 예정입니다.</p>
+
+<p>Topic (분야) 는, 일반적으로는 <a href="https://arxiv.org/archive/cs">Arxiv의 기준</a>을 따릅니다. Arxiv에 올라와있지 않은 논문은 읽은후에 제가 최대한 비슷하게 분류해 넣었습니다. 
+(아마도) Arxiv 분류 코드 중 제가 보게될 논문들은 이정도가 메인일듯 합니다. 특히 장기적으로는 CC, DM, DS.</p>
+<ul>
+  <li><strong>AI</strong> : Artificial Intelligence</li>
+  <li><strong>CC</strong> : Computational Complexity</li>
+  <li><strong>DM</strong> : Discrete Mathematics</li>
+  <li><strong>DS</strong> : Data structures / Algortihms</li>
+  <li><strong>NA</strong> : Numerical Analysis</li>
+</ul>
+
+<p>그래프에 관한 많은 논문들 (저는 DM이나 DS처럼 받아들이게 되는) 은 실제로는 다음과 같은 Topic으로 많이 올라옵니다. 제가 (아마도) DB management에 관한 뭔가를 읽을 일은 없을 것이므로, 여기 내용들은 거의 100% 그래프에 관한 내용입니다.</p>
+<ul>
+  <li><strong>DB</strong> : Databases</li>
+  <li><strong>SI</strong> : Social and Information Networks</li>
+</ul>
+
+<p>당분간은 수리과학부 졸업논문을 위해 CV, AI 쪽도 많이 보게 될 예정입니다.</p>
+<ul>
+  <li><strong>CV</strong> : Computer Vision</li>
+</ul>
+
+<style>
+table th:first-of-type {
+    width: 70%;
+}
+table th:nth-of-type(2) {
+    width: 10%;
+}
+table th:nth-of-type(3) {
+    width: 20%;
+}
+
+</style>
+
+<p>어떤 한 주제가 있고, 이 주제에 관한 여러 논문이 있는 경우, 그 주제에 대한 개요를 적는 포스팅을 하나씩 더 쓰기도 할 것 같습니다. 이 포스팅은 아래 리뷰 글에서 논문 리뷰 외의 일반적인 개념에 대한 소개를 최소화하기 위해 주로 작성합니다.</p>
+<ul>
+  <li><strong><a href="/cs-adventure/sub-iso-note">Subgraph Isomorphism : Introduction</a></strong></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Title (Link to post)</strong></th>
+      <th><strong>Topic</strong></th>
+      <th><strong>Published</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="/cs-adventure/chan-vese/">Active Contours Without Edges</a></strong></td>
+      <td>NA, CV</td>
+      <td>IEEE TIP<sup id="fnref:ieee-tip" role="doc-noteref"><a href="#fn:ieee-tip" class="footnote" rel="footnote">1</a></sup>, 2001</td>
+    </tr>
+    <tr>
+      <td><strong><a href="/cs-adventure/deltacon/">DELTACON: A Principled Massive-Graph Similarity Function</a></strong></td>
+      <td>SI</td>
+      <td>SDM<sup id="fnref:sdm" role="doc-noteref"><a href="#fn:sdm" class="footnote" rel="footnote">2</a></sup>, 2013</td>
+    </tr>
+    <tr>
+      <td><strong>In-Memory Subgraph Matching: An In-depth Study</strong><sup id="fnref:subiso" role="doc-noteref"><a href="#fn:subiso" class="footnote" rel="footnote">3</a></sup></td>
+      <td>DS, DB</td>
+      <td>SIGMOD<sup id="fnref:sigmod" role="doc-noteref"><a href="#fn:sigmod" class="footnote" rel="footnote">4</a></sup>, 2020</td>
+    </tr>
+    <tr>
+      <td><strong><a href="/cs-adventure/VEQ">Versatile Equivalences : Speeding up Subgraph Query Processing and Subgraph Matching</a></strong></td>
+      <td>DS, DB</td>
+      <td>SIGMOD<sup id="fnref:sigmod:1" role="doc-noteref"><a href="#fn:sigmod" class="footnote" rel="footnote">4</a></sup>, 2021</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:ieee-tip" role="doc-endnote">
+      <p>Transactions on Image Processing <a href="#fnref:ieee-tip" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:sdm" role="doc-endnote">
+      <p>SIAM International Conference on Data Mining <a href="#fnref:sdm" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:subiso" role="doc-endnote">
+      <p>Subgraph Isomorphism 방법들을 비교하고, 이들을 모두 구현하여 통일된 프레임워크 위에서 실험한 논문이라서 별도로 포스팅을 정리하지는 않았습니다. <a href="#fnref:subiso" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:sigmod" role="doc-endnote">
+      <p>Proceedings of the ACM SIGMOD International Conference on Management of Data <a href="#fnref:sigmod" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:sigmod:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>
+:ET

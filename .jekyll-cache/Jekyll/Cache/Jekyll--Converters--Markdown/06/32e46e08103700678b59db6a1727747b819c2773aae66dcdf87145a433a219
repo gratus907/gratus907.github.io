@@ -1,0 +1,65 @@
+I"="<ul>
+  <li><strong>solved ac class 7 essential</strong></li>
+</ul>
+
+<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#풀이" id="markdown-toc-풀이">풀이</a></li>
+  <li><a href="#code" id="markdown-toc-code">Code</a></li>
+</ul>
+
+<h2 id="풀이">풀이</h2>
+<p>Dynamic programming 을 이용해서 어렵지 않게 해결할 수 있다. 다음과 같이 정의하자.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DP[i][j]</code> : 1번부터 $i$번까지의 블록만 고려할 때, $H_A - H_B = j$ 가 되면서 만들 수 있는 $H_A$의 최대 높이</p>
+
+<p>이렇게 정의하면, 크기가 $h$인 다음 블록을 추가할 때, A에 얹는 경우와 B에 얹는 경우를 나누어 생각할 수 있다. A에 얹는 경우에는, 차가 $j + h$ 로 늘어나면서 $H_A$의 크기도 실제로 늘어나고, B에 얹는 경우에는 차가 $j-h$로 줄어들면서 $H_A$의 크기는 그대로 유지된다. 같은 $j$일 때 $H_A$가 크면 자명하게 $H_B$가 커지기 때문에 이렇게 관리해도 충분함을 쉽게 알 수 있다.</p>
+
+<p>다만 $j$의 범위가 $-500,000$ 에서 $500,000$이기 때문에, 실제로는 100만 칸의 DP를 잡아서 $j$ 대신 $j + 5e5$ 로 생각하고 움직이면 된다. 이렇게 관리하면 복잡도 $2 * n * \sum H$ 칸의 DP 테이블을 채우는 것이므로 시간 내에 잘 관리가 된다.</p>
+
+<p>5천만 칸의 int를 잡고 싶지 않다면, 바로 직전 DP 테이블만 있으면 된다는 사실을 이용해서 100만 * 2개만 있으면 된다. 아래 코드는 그렇게 구현되어 있다. 이를 간혹 토글링이라고 부르는데, 구현에서는 토글링을 하지는 않았고 그냥 tmp에다가 매번 <code class="language-plaintext highlighter-rouge">memset</code> 하면서 가는데, 5천만 칸 memset정도는 라이브러리가 매우 빠르므로 그냥 믿어도 충분하다.</p>
+
+<p>구현의 편의상, 0개의 블록을 써서 A = B = 0 을 만들 수 있다고 보는 것이 자연스럽다. 그러나 이는 실제로 불가능한 칸과 실제로 가능한 칸의 구분에 혼란을 주기 때문에, 나는 그냥 편하게 가상의 높이 1을 준 다음 나중에 빼 주는 식으로 구현했다. 결과적으로 다 짜고 보니 굳이 그럴 필요는 없었고, 첫 DP에서만 잘 처리해주는게 더 간단했을것 같기도 하다.</p>
+
+<h2 id="code">Code</h2>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;bits/stdc++.h&gt;
+#define usecppio ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">500000</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">1010101</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1010101</span><span class="p">];</span>
+<span class="kt">int32_t</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">usecppio</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">M</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">h</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">h</span><span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="mh">0x0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">tmp</span><span class="p">));</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="o">*</span><span class="n">M</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">h</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="n">h</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="n">tmp</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">h</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">M</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="k">else</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">dp</span><span class="p">[</span><span class="n">M</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+:ET
