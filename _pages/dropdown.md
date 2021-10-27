@@ -7,7 +7,7 @@ children:
     - title: Algo / DS
       permalink: /ds-alg-note/
     - title: Advanced Algo / DS
-      permalink: /ds-alg-advanced/
+      permalink: /advanced-algorithms/
     - title: CS-Adventure
       permalink: /cs-adventure/
     - title: Competitive Programming
