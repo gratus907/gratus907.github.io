@@ -1,4 +1,4 @@
-I"<h2 id="what-is-this">What is This?</h2>
+I"�<h2 id="what-is-this">What is This?</h2>
 
 <ul>
   <li>PS에서 쓰는 알고리즘들 외에도 더 theoretical한 자료구조/알고리즘들에 대한 이해가 부족한 것 같아서 공부해 보기로 했습니다. PS에서도 요즘은 더 높은 레벨로 가면 splay tree / link cut tree 같은건 좀 나오는것 같기도 하구요.
@@ -30,7 +30,7 @@ table th:nth-of-type(2) {
   <tbody>
     <tr>
       <td style="text-align: left">Amortized Analysis</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left"><a href="/advanced-algorithms/amortized-analysis">Link</a></td>
     </tr>
     <tr>
       <td style="text-align: left">Hashing</td>
@@ -128,11 +128,11 @@ table th:nth-of-type(2) {
   <tbody>
     <tr>
       <td style="text-align: left">Aho-Corasick Algorithm</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left"><a href="/advanced-algorithms/aho-corasick-algorithm/">Link</a></td>
     </tr>
     <tr>
-      <td style="text-align: left">Boyre-Moore Algorithm</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">Boyer-Moore Algorithm</td>
+      <td style="text-align: left"><a href="/advanced-algorithms/boyer-moore/">Link</a></td>
     </tr>
     <tr>
       <td style="text-align: left">Baker-Bird Algorithm</td>

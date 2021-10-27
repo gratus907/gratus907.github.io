@@ -249,7 +249,7 @@ d-appendix a:hover, d-appendix a.footnote-backlink:hover { color: var(--global-h
 
 a { color: purple; }
 
-body { line-height: 1.8; }
+body { line-height: 2; }
 
 code { font-size: 100%; }
 

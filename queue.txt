@@ -1,0 +1,8 @@
+Adv.Alg - Boyer Moore Pattern Matching
+Adv.Alg - Wu Manber Multiple Pattern Matching
+Adv.Alg - Suffix Tree 
+DL - LeNet MNIST 
+DL - Optimizers in Deep Learning
+DL - Dropout 
+DL - BackPropagation
+CS - CombiSeminar

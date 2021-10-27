@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Algo / DS ++ 
-permalink : /ds-alg-advanced/
+permalink : /advanced-algorithms/
 description: Data structures & Algorithms
 img: /assets/img/algorithm-1.png
 importance: 1
@@ -29,14 +29,14 @@ table th:nth-of-type(2) {
 
 ### Various topics
 
-| Topic                               | Link                                       |
-| :---------------------------------- | :----------------------------------------- |
-| Amortized Analysis                  |                                            |
-| Hashing                             |                                            |
-| Network Flows                       |                                            |
-| Linear Programming                  |                                            |
-| **Divide and conquer optimization** | [Link](/advanced-algorithms/DP-DnC-Opt/)   |
-| **Pollard's Rho Algorithm**         | [Link](/advanced-algorithms/Pollards-Rho/) |
+| Topic                               | Link                                            |
+| :---------------------------------- | :---------------------------------------------- |
+| Amortized Analysis                  | [Link](/advanced-algorithms/amortized-analysis) |
+| Hashing                             |                                                 |
+| Network Flows                       |                                                 |
+| Linear Programming                  |                                                 |
+| **Divide and conquer optimization** | [Link](/advanced-algorithms/DP-DnC-Opt/)        |
+| **Pollard's Rho Algorithm**         | [Link](/advanced-algorithms/Pollards-Rho/)      |
 
 ### Advanced Data Structures  
 
@@ -65,8 +65,8 @@ Mainly from : SNU 2021 Fall Theory of computation
 
 | Topic                  | Link |
 | :--------------------- | :--- |
-| Aho-Corasick Algorithm |      |
-| Boyre-Moore Algorithm  |      |
+| Aho-Corasick Algorithm | [Link](/advanced-algorithms/aho-corasick-algorithm/)     |
+| Boyer-Moore Algorithm  | [Link](/advanced-algorithms/boyer-moore-algorithm/)     |
 | Baker-Bird Algorithm   |      |
 | Wu-Manber Algorithm    |      |
 | Suffix Tree            |      |
