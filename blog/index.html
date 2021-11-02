@@ -26,7 +26,12 @@ pagination:
       <li>
         <h3><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
         <p class="post-meta">{{ post.date | date: '%B %-d, %Y' }}</p>
-        <p>{{ post.description }}</p>
+        <a href="{{ site.baseurl | prepend: site.url }}/{{ post.categories }}"> {{ post.categories }}</a>
+        {% if post.parlinks %}
+        {% for par in post.parlinks %}
+          <a href="{{ site.baseurl | prepend: site.url }}/{{ par }}"> {{ par }} </a> 
+        {% endfor %}
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

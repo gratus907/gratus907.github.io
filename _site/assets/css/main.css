@@ -283,4 +283,10 @@ thead { border: solid 2px grey; font-weight: 400; }
 
 .publications ol.bibliography li .links a.btn { margin: 0px; }
 
+div#toc { font-size: 130%; }
+
+code, kbd, pre, samp { font-family: Fira Code,Consolas,"Liberation Mono","Courier New",monospace; }
+
+pre { background-color: #fff7ff; }
+
 /*# sourceMappingURL=main.css.map */

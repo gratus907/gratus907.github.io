@@ -1,0 +1,75 @@
+I"b<div class="projects">
+  
+  <!-- Display categorized projects -->
+    
+      <h2 class="category">SNU</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+            <div class="grid-item">
+  
+  <a href="/image-segmentation-2021/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/image-segmentation.png" alt="project thumbnail" />
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Image Segmentation</h2>
+        <p class="card-text">Project for Bachelor's Thesis is Mathematics, comparing DL/pre-DL image segmentation methods</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+            <div class="grid-item">
+  
+  <a href="/snu-cid-2021/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/molecule-caffeine.png" alt="project thumbnail" />
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Subgraph Isomorphism in Molecule graphs</h2>
+        <p class="card-text">SNU Creative Integrated Design, 2021 Fall</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+        </div>
+      
+    
+      <h2 class="category">Personal</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+        </div>
+      
+    
+
+  
+
+</div>
+:ET

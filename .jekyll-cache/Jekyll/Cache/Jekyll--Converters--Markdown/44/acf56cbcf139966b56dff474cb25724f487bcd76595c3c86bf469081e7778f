@@ -1,0 +1,26 @@
+I"�<p>Thumbnail image source : <a href="https://www.tensorflow.org/tutorials/images/segmentation?hl=ko">Tensorflow Image segmentation</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<h2 id="pre-dl-image-segmentation-methods">Pre-DL Image segmentation methods</h2>
+<p>딥러닝이 본격화되기 이전에는 어떤 방법들이 image segmentation에 사용되었는지 공부했습니다.</p>
+<ul>
+  <li>Chan-Vese Model Contour Detection : <a href="/cs-adventure/chan-vese/">논문 공부 포스팅 링크</a></li>
+</ul>
+
+<h2 id="deep-learning-methdos">Deep Learning methdos</h2>
+<p><a href="https://github.com/gratus907/Image-Segmentation-Study">Github Link</a> 에서 코드를 모두 확인할 수 있습니다.</p>
+
+<p>가볍게 각 모델들을 비교할 것이므로, 작은 데이터셋을 써보려고 합니다. Graz Univ에서 제공하는 <a href="https://www.tugraz.at/index.php?id=22387">드론 항공 사진 데이터셋</a> 을 이용해 보겠습니다. 먼저 데이터를 로딩할 준비를 하고, 기본 세팅들을 합니다.</p>
+<ul>
+  <li><a href="/image-segmentation-2021/preparation/">Preparation 포스팅 링크</a></li>
+</ul>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Ironically, this project will use pytorch. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

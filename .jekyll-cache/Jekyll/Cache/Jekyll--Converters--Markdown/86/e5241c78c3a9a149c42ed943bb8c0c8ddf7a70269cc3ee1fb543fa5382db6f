@@ -1,0 +1,177 @@
+I"{<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#data-preparation" id="markdown-toc-data-preparation">Data preparation</a></li>
+  <li><a href="#dataset" id="markdown-toc-dataset">Dataset</a></li>
+  <li><a href="#evaluation-of-model" id="markdown-toc-evaluation-of-model">Evaluation of Model</a></li>
+</ul>
+<hr />
+
+<p>앞으로 이 프로젝트에서 사용하는 코드는 모두 <a href="https://github.com/gratus907/Image-Segmentation-Study">Github Repo</a> 에 올라갈 예정입니다. 오늘은 먼저, 데이터 등을 준비하는 과정을 진행합니다.</p>
+
+<h2 id="data-preparation">Data preparation</h2>
+<p>TU Graz에서 제공하는 <strong>Drone aerial image</strong> 데이터를 이용하려고 합니다. <a href="https://www.tugraz.at/index.php?id=22387">링크</a> 에서 다운로드받을 수 있습니다. 사진 400장의 데이터셋이지만 굉장히 용량이 크고 (4.1GB, 각 이미지가 무려 <strong>6000 by 4000</strong> 입니다) pixel-accurate한 라벨이 달려있는데다 클래스는 20개로 많지 않아서 적당하다고 생각했습니다. 여기서는 360개를 training에, 40개를 test에 쓰겠습니다.</p>
+
+<p>먼저, 필요한 모듈들을 import해서 때려넣습니다. 별로 좋은 practice는 아니지만, 다양한 모델들을 테스트해보는 의미가 있으므로 코드의 아름다움은 잠시 접어두기로 합시다. Jupyter Notebook이나 Colab을 사용한다면 훨씬 편하게 테스트할 수 있겠지만, 전체를 깃헙에 올려서 바로 볼 수 있게 하기 위해 그냥 일반 파이썬 코딩할때처럼 하겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># basics.py 
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span><span class="p">,</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span> 
+<span class="kn">import</span> <span class="nn">torch</span><span class="p">,</span> <span class="n">torchvision</span><span class="p">,</span> <span class="n">PIL</span><span class="p">.</span><span class="n">Image</span><span class="p">,</span> <span class="n">cv2</span> 
+<span class="kn">import</span> <span class="nn">os</span><span class="p">,</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="n">T</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">]</span>
+<span class="n">std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>device 등은 사실 모든 딥러닝에서 공통적으로 쓰는 GPU 코드이므로 별로 특별한 의미가 있지는 않고, 특이한 점은 mean과 std입니다. 이 값은 RGB 각 채널을 normalize하기 위한 값인데요. 0.5가 아닌 이유는 이 값들이 사실 ImageNet에서 훈련된 결과 값인데, 원칙적으로는 새로운 mean과 std를 train하는 것이 의미가 있겠지만 100만장의 ImageNet 데이터를 믿고 그냥 써도 큰 문제가 없습니다.</p>
+
+<h2 id="dataset">Dataset</h2>
+<p>pytorch에서 custom dataset을 사용할 때는, torch.utils.data.Dataset 클래스를 만들면 됩니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># datautils.py 
+</span><span class="kn">from</span> <span class="nn">basics</span> <span class="kn">import</span> <span class="o">*</span> 
+<span class="k">class</span> <span class="nc">DroneDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_path</span><span class="p">,</span> <span class="n">mask_path</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">img_path</span> <span class="o">=</span> <span class="n">img_path</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">mask_path</span> <span class="o">=</span> <span class="n">mask_path</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">test</span> <span class="o">=</span> <span class="n">test</span>
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">img_path</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.jpg'</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">dsize</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="p">.</span><span class="n">INTER_NEAREST</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">mask_path</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.png'</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">dsize</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="p">.</span><span class="n">INTER_NEAREST</span><span class="p">)</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">T</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">T</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">T</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)])</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">mask</span><span class="p">).</span><span class="nb">long</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">mask</span>
+</code></pre></div></div>
+
+<p>일단은 data augmentation 등은 아무것도 생각하지 말고, 정말 순수한 bare minimum만 생각합니다.</p>
+
+<p>간단히 해석해보면…</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">__init__</code> 는 img_path, mask_path 등을 받아서 이 데이터셋의 위치와, 어떤 transform을 적용할지 (transform이란, 이미지를 텐서로 바꾸는 연산) 기억합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">__getitem__</code>은 <code class="language-plaintext highlighter-rouge">data[3]</code> 과 같이 쓰기 위해서 override하는 method로, 이미지를 잘 읽고 적절하게 변환해서 뱉어줍니다.</li>
+  <li>6000 * 4000은 진짜 좀 너무 크기 때문에, 이미지 크기는 600 * 400으로 줄였습니다. 줄일때는 NEAREST를 써야 mask의 라벨이 이상해지지 않습니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">test</code> 데이터에 대해서는 Image를 그대로 저장하고, <code class="language-plaintext highlighter-rouge">training</code> 데이터에 대해서는 이를 torch tensor로 바꿔서 저장합니다. 이렇게 하는 이유는, 나중에 정성적으로 segmentation의 퀄리티를 확인하고 싶을 때 이미지를 같이 display하려면 test에 대해서는 이미지를 갖고있는게 편하기 때문이</li>
+</ul>
+
+<p>이제 이 파일을 실제 모델에 적용하기 위해, training / test 데이터셋으로 잘라줘야 합니다. 이를 편하게 잘라주는 <code class="language-plaintext highlighter-rouge">sklearn.model_selection.train_test_split</code>이 있습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># datautils.py
+</span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="k">def</span> <span class="nf">import_drone_dataset</span><span class="p">():</span>
+    <span class="n">IMAGE_PATH</span> <span class="o">=</span> <span class="s">"../dataset/semantic_drone_dataset/original_images/"</span>
+    <span class="n">MASK_PATH</span> <span class="o">=</span> <span class="s">"../dataset/semantic_drone_dataset/label_images_semantic/"</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">IMAGE_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'id'</span><span class="p">:</span> <span class="n">name</span><span class="p">},</span> <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'id'</span><span class="p">].</span><span class="n">values</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">DroneDataset</span><span class="p">(</span><span class="n">IMAGE_PATH</span><span class="p">,</span> <span class="n">MASK_PATH</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">test_set</span> <span class="o">=</span> <span class="n">DroneDataset</span><span class="p">(</span><span class="n">IMAGE_PATH</span><span class="p">,</span> <span class="n">MASK_PATH</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span>
+</code></pre></div></div>
+
+<h2 id="evaluation-of-model">Evaluation of Model</h2>
+<p>모델을 만들기 전에 일단 모델이 있다면 어떻게 동작해야 할지를 먼저 생각해 봅니다. 좀 오래된 말이긴 하지만, 머신러닝을 정의하는 방법 중 한가지는 T, P, E 라고 해서…</p>
+<ul>
+  <li><strong>T</strong>ask : 어떤 명확하게 정의되는 작업을 수행하고 싶고,</li>
+  <li><strong>P</strong>erformance Measure : 현재 가지고 있는 프로그램의 성능을 측정하는 방법이 있으며,</li>
+  <li><strong>E</strong>xperience : 데이터로부터 프로그램이 <strong>P</strong>를 발전시키기 위해 노력한다는 것입니다.</li>
+</ul>
+
+<p>우리는 아직 프로그램을 작성하지 않았지만, semantic segmentation이라는 <strong>T</strong>에 집중할 것입니다. <strong>P</strong>를 어떻게 할지는 이 자체로도 독립된 포스팅이 필요한데, mIoU, Hausdorff distance등 재밌는게 많습니다. 이중 가장 생각하기 쉬운 것은 그냥 pixel단위로 맞은 픽셀수 / 전체 픽셀수를 세는 것입니다.</p>
+
+<p>Pytorch에서는 모델이 어떤 input image를 받아서, <code class="language-plaintext highlighter-rouge">model(x)</code> 과 같은 식으로 call해서 inference를 진행합니다. 그 결과를 실제 mask와 비교해서 정확도를 측정해야 합니다.</p>
+
+<p>Bare minimum의 철학에 따라 일단 pixel accuracy만을 구현합니다. 다만 나중에 여러 다른 metric을 구현할 수 있음을 염두에 두고, metrics.py로 따로 파일을 빼겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># metrics.py 
+</span><span class="k">def</span> <span class="nf">pixel_accuracy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">mask</span><span class="p">).</span><span class="nb">int</span><span class="p">()</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">correct</span><span class="p">.</span><span class="nb">sum</span><span class="p">())</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">correct</span><span class="p">.</span><span class="n">numel</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">accuracy</span>
+</code></pre></div></div>
+<p>Pixel accuracy를 계산할때는 backpropagation용 gradient가 필요하지 않으므로 <code class="language-plaintext highlighter-rouge">with torch.no_grad():</code> 로 감싸서 제낍니다.</p>
+
+<p>이제, 편하게 테스트를 여러번 시도하기 위해 테스트를 돌리는 클래스를 따로 만들겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evaluate.py 
+</span><span class="kn">from</span> <span class="nn">basics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">ModelEvaluation</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">test_dataset</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+    
+    <span class="k">def</span> <span class="nf">evaluate_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="p">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">metric</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+            <span class="n">masked</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">masked</span> <span class="o">=</span> <span class="n">masked</span><span class="p">.</span><span class="n">cpu</span><span class="p">().</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">masked</span><span class="p">,</span> <span class="n">acc</span>
+
+    <span class="k">def</span> <span class="nf">evaluate_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">test_dataset</span><span class="p">))):</span>
+            <span class="n">img</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">test_dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">pred</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">evaluate_single</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+            <span class="n">accuracy</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Mean accruacy = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">accuracy</span>
+
+    <span class="k">def</span> <span class="nf">show_qualitative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">):</span>
+        <span class="n">image</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">test_dataset</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+        <span class="n">pred_mask</span><span class="p">,</span> <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">evaluate_single</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="n">inv_normalize</span> <span class="o">=</span> <span class="n">T</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span>
+            <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.485</span><span class="o">/</span><span class="mf">0.229</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.456</span><span class="o">/</span><span class="mf">0.224</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.406</span><span class="o">/</span><span class="mf">0.225</span><span class="p">],</span>
+            <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mf">0.229</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">0.224</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">0.225</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">inv_normalize</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">cpu</span><span class="p">().</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Picture'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Ground truth'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+        <span class="n">ax3</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">)</span>
+        <span class="n">ax3</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Model | score </span><span class="si">{</span><span class="n">score</span><span class="p">:.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">ax3</span><span class="p">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">__init__</code>에서는 어떤 모델을 테스트하는지, 어떤 데이터에 대해 테스트하는지, 그리고 어떤 metric을 사용할 것인지를 정합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">evaluate_single()</code> 은 이미지 한 개를 받아서 이를 normalize한다음 실제로 inference해 봅니다. 결과로 predicted mask와 그 정확도를 반환합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">evaluate_all()</code> 은 평균 정확도를 측정합니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">show_qualitative()</code>는 특정 이미지에 대한 image, ground truth, prediction을 동시에 띄워줍니다. 실제로 이미지를 띄워야 하기 때문에, Dataset을 만들때 ToTensor와 Normalize했던 것을 다시 거꾸로 돌려줘야 합니다. Normalize의 정의를 이용하여 이부분은 적당히 처리해줄 수 있습니다.</li>
+</ul>
+
+<p>다음 포스팅에서는 train을 어떻게 실제로 실행할지와, 이를 이용해서 아주 간단한 모델을 한번 확인해보는 정도를 진행할 예정입니다.</p>
+:ET

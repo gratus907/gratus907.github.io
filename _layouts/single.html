@@ -16,7 +16,12 @@ layout: default
   </header>
 
   <article class="post-content">
-    <a href="{{ site.baseurl | prepend: site.url }}/{{ page.categories }}"> {{ page.categories }} 포스트 목록으로 돌아가기 </a>
+    <a href="{{ site.baseurl | prepend: site.url }}/{{ page.categories }}"> Back to : {{ page.categories }}</a><br/>
+    {% if page.parlinks %}
+    {% for par in page.parlinks %}
+      <a href="{{ site.baseurl | prepend: site.url }}/{{ par }}"> Back to : {{ par }} </a> <br/>
+    {% endfor %}
+    {% endif %}
     {{ content }}
   </article>
 
@@ -41,5 +46,10 @@ layout: default
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   {% endif %}
-  <a href="{{ site.baseurl | prepend: site.url }}/{{ page.categories }}"> {{ page.categories }} 포스트 목록으로 돌아가기 </a>
+  <a href="{{ site.baseurl | prepend: site.url }}/{{ page.categories }}"> Back to : {{ page.categories }}</a><br/>
+  {% if page.parlinks %}
+  {% for par in page.parlinks %}
+    <a href="{{ site.baseurl | prepend: site.url }}/{{ par }}"> Back to : {{ par }} </a> <br/>
+  {% endfor %}
+  {% endif %}
 </div>
