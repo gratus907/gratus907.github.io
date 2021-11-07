@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | LeNet으로 MNIST 풀어보기
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/deep-learning-study/LeNet-MNIST/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX3EZM1ESL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-KX3EZM1ESL');
+</script>
+
+
+
+<!-- Panelbear Analytics - We respect your privacy -->
+<script async src="https://cdn.panelbear.com/analytics.js?site=KX0fnophvY8"></script>
+<script>
+    window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+    panelbear('config', { site: 'KX0fnophvY8' });
+</script>
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/advanced-algorithms/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">LeNet으로 MNIST 풀어보기</h1>
+    <p class="post-meta">November 7, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <a href="http://localhost:4000/deep-learning-study"> Back to : deep-learning-study</a><br>
+    
+    
+    
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#lenet-%EB%AA%A8%EB%8D%B8" id="markdown-toc-lenet-모델">LeNet 모델</a></li>
+  <li><a href="#%EA%B5%AC%ED%98%84" id="markdown-toc-구현">구현</a></li>
+</ul>
+<hr>
+
+<p><strong>심층 신경망의 수학적 기초</strong> 8강 (10월 5일) 에 기반합니다.</p>
+
+<p><a href="/deep-learning-study/mnist-mlp/">MLP로 MNIST 풀어보기</a>의 코드와 <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 내용에 이어지는 포스팅입니다.</p>
+
+<h2 id="lenet-모델">LeNet 모델</h2>
+<p>여기서는 LeNet-5 모델에 대해 간단히 살펴봅니다.</p>
+
+<p>LeNet은 거의 최초의 CNN을 이용한 image classification 모델이라고 할 수 있습니다. Turing award 수상자이며, 사실상 CNN의 아버지 격인 Yann Lecun의 연구팀이 1998년에 개발하였고 그 이름을 따서 LeNet이라는 이름을 갖게 되었습니다. “Gradient Based Learning Applied to Document Recognition” 라는 제목의 논문으로 발표되었는데, 제목에서 알 수 있듯 본래 손글씨로 쓰인 글자를 구분하는 task를 해결하기 위해 개발되었습니다.</p>
+
+<p><img src="../../images/cd97eccdcd206c69165bedbe52ab311cecf6e35e340166c1780794892fed550e.png" alt="picture 1"></p>
+
+<p>이 구조는 LeNet의 전체적인 모델입니다. <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 에 있는 각 레이어별 설명을 모두 이해했다는 가정하에, LeNet의 ‘선택’ 만 살펴보겠습니다.</p>
+<ul>
+  <li>첫 레이어는 $5 \times 5$ Convolution filter 6개를 사용합니다.</li>
+  <li>Subsampling은 average pooling을 사용하고</li>
+  <li>Activation function으로는 tanh의 약간 변형된 형태를 사용합니다.</li>
+  <li>재밌는 점은 C3 Layer가 일반적인 convolution이 아니라는 점입니다. 원본 논문에 의하면, symmetry를 깨기 위해서 S2-&gt;C3 convolution을 할 때, 6개 채널 전부가 아닌 채널 일부만 사용해서 convolution을 수행합니다. 
+<img src="../../images/591aba20e38405a3f2c2fef76a765f3ac12b5b8abc6c3c9c8410ab22f8abc678.png" alt="picture 2">  이와 같이, 0번째 컨볼루션은 0, 1, 2 채널만 쓰고… 하는 방법입니다.</li>
+  <li>Fully connected layer를 2번 탄 다음, 마지막에는 Gaussian connection이라는 조금 복잡한 방법을 사용합니다. 후술할 이유로 인해 자세히 설명하지는 않겠습니다.</li>
+</ul>
+
+<p>그러나 이어진 후속연구에 의해, 꼭 이런 design choice를 지킬 필요가 없음이 알려졌습니다. 구현의 단순함과 성능을 위해 모델을 조금 수정해서 다음과 같이 구현하겠습니다.</p>
+<ul>
+  <li>Subsampling에는 avg pooling이 아닌 max pooling을 사용합니다.</li>
+  <li>Activation으로 ReLU를 사용하겠습니다.</li>
+  <li>굳이 Symmetry를 이런 방법으로 깨지 않아도, initialization을 잘 하면 상관 없다고 합니다. Symmetry-breaking connection은 버리겠습니다.</li>
+  <li>Gaussian connection도 하지 않아도 됩니다. 그냥 Fully connected layer로 충분하다고 합니다.</li>
+</ul>
+
+<h2 id="구현">구현</h2>
+<p>구현은 <a href="/deep-learning-study/mnist-mlp/">MLP로 MNIST 풀어보기</a> 와 크게 다르지 않습니다.</p>
+
+<p>MNIST 데이터 로딩하는 부분의 코드를 그대로 가져옵니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이제, LeNet 모델을 정의합니다. Convolution 연산을 쓴다는것 외에는 여전히 다른점이 없습니다.</p>
+
+<p>모델의 정의가 위 그림과 다른점이 하나 더 있는데, 그림에서는 첫 layer에 패딩을 쓰지 않는 대신 이미지 크기가 32 by 32였지만, 우리가 가진 MNIST 데이터는 28 by 28이기 때문에 첫 레이어에서 패딩 2를 넣어 줍니다. 이후에는 위 설명과 똑같습니다. Optimizer로는 여기서도 SGD를 쓰겠습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LeNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LeNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">C5_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">84</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer1</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">C5_layer</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer1</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">EPOCH</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LeNetModern</span><span class="p">().</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loss_function</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)))</span>
+</code></pre></div></div>
+<p>이렇게 얻은 model의 summary는 다음과 같습니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1            [-1, 6, 28, 28]             156
+              ReLU-2            [-1, 6, 28, 28]               0
+         MaxPool2d-3            [-1, 6, 14, 14]               0
+            Conv2d-4           [-1, 16, 10, 10]           2,416
+              ReLU-5           [-1, 16, 10, 10]               0
+         MaxPool2d-6             [-1, 16, 5, 5]               0
+            Linear-7                  [-1, 120]          48,120
+              ReLU-8                  [-1, 120]               0
+            Linear-9                   [-1, 84]          10,164
+             ReLU-10                   [-1, 84]               0
+           Linear-11                   [-1, 10]             850
+================================================================
+Total params: 61,706
+Trainable params: 61,706
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.00
+Forward/backward pass size (MB): 0.11
+Params size (MB): 0.24
+Estimated Total Size (MB): 0.35
+----------------------------------------------------------------
+</code></pre></div></div>
+<p>6만 개의 parameter를 갖는 매우 작은 모델입니다.</p>
+
+<p>이제 데이터를 이용해서 이 모델을 실제로 훈련합니다. Train 방법도 MLP에서와 똑같습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCH</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span> <span class="p">:</span>
+        <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">images</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">train_loss</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">train_loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">EPOCH</span><span class="si">}</span><span class="s"> : loss </span><span class="si">{</span><span class="n">train_loss</span><span class="p">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">optimizer.zero_grad()</code> 로 기존 MLP 모델에 남아있던 gradient 값들을 다 날리고</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">train_loss</code> 는 현재 시점에 모델이 이미지를 받아서 추측을 해보고 그 loss function 값을 확인하고,</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">.backward()</code> 로 현재 시점의 gradient를 계산하고</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">optimizer.step()</code> 으로 실제 optimization (여기선 SGD)를 수행합니다.</li>
+</ul>
+
+<p>거의 같은 방법으로, Test set에 대해서 실제 정확도를 확인합니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_loss</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">test_loader</span> <span class="p">:</span>
+    <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">images</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+    <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="p">).</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">labels</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'''[Test set]</span><span class="se">\n</span><span class="s">Average loss: </span><span class="si">{</span><span class="n">test_loss</span> <span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, 
+Accuracy: </span><span class="si">{</span><span class="n">correct</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span><span class="si">}</span><span class="s"> (</span><span class="si">{</span><span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%)'''</span><span class="p">)</span>
+</code></pre></div></div>
+<p>저는 20번의 epoch (대략 1분 정도의 training) 후에 98.25%의 정확도를 얻을 수 있었습니다.</p>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://gratus907-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+  <a href="http://localhost:4000/deep-learning-study"> Back to : deep-learning-study</a><br>
+  
+  
+  
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: November 07, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

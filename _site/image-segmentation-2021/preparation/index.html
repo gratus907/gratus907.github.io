@@ -12,7 +12,7 @@
   Gratus907's Study Note
 
 
-  | Semantic Segmentation with Pytorch - Preperation
+  | Semantic Segmentation with Pytorch - Preparation
 
 </title>
 <meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
@@ -294,7 +294,7 @@
 <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Semantic Segmentation with Pytorch - Preperation</h1>
+    <h1 class="post-title">Semantic Segmentation with Pytorch - Preparation</h1>
     <p class="post-meta">November 1, 2021</p>
   </header>
 
@@ -318,7 +318,7 @@ Contents
 <p>앞으로 이 프로젝트에서 사용하는 코드는 모두 <a href="https://github.com/gratus907/Image-Segmentation-Study" target="_blank" rel="noopener noreferrer">Github Repo</a> 에 올라갈 예정입니다. 오늘은 먼저, 데이터 등을 준비하는 과정을 진행합니다.</p>
 
 <h2 id="data-preparation">Data preparation</h2>
-<p>TU Graz에서 제공하는 <strong>Drone aerial image</strong> 데이터를 이용하려고 합니다. <a href="https://www.tugraz.at/index.php?id=22387" target="_blank" rel="noopener noreferrer">링크</a> 에서 다운로드받을 수 있습니다. 사진 400장의 데이터셋이지만 굉장히 용량이 크고 (4.1GB, 각 이미지가 무려 <strong>6000 by 4000</strong> 입니다) pixel-accurate한 라벨이 달려있는데다 클래스는 20개로 많지 않아서 적당하다고 생각했습니다. 여기서는 360개를 training에, 40개를 test에 쓰겠습니다.</p>
+<p>TU Graz에서 제공하는 <strong>Drone aerial image</strong> 데이터를 이용하려고 합니다. <a href="https://www.tugraz.at/index.php?id=22387" target="_blank" rel="noopener noreferrer">링크</a> 에서 다운로드받을 수 있습니다. 사진 400장의 데이터셋이지만 굉장히 용량이 크고 (4.1GB, 각 이미지가 무려 <strong>6000 by 4000</strong> 입니다) pixel-accurate한 라벨이 달려있는데다 클래스는 23개로 많지 않아서 적당하다고 생각했습니다. 여기서는 360개를 training에, 40개를 test에 쓰겠습니다.</p>
 
 <p>먼저, 필요한 모듈들을 import해서 때려넣습니다. 별로 좋은 practice는 아니지만, 다양한 모델들을 테스트해보는 의미가 있으므로 코드의 아름다움은 잠시 접어두기로 합시다. Jupyter Notebook이나 Colab을 사용한다면 훨씬 편하게 테스트할 수 있겠지만, 전체를 깃헙에 올려서 바로 볼 수 있게 하기 위해 그냥 일반 파이썬 코딩할때처럼 하겠습니다.</p>
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># basics.py 
@@ -536,7 +536,7 @@ Contents
 
     
     
-    Last updated: November 03, 2021.
+    Last updated: November 07, 2021.
     
   </div>
 </footer>

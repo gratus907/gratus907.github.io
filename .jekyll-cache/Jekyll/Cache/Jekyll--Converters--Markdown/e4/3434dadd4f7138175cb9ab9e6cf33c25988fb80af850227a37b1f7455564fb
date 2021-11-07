@@ -1,0 +1,107 @@
+I"?<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#lenet-모델" id="markdown-toc-lenet-모델">LeNet 모델</a></li>
+  <li><a href="#구현" id="markdown-toc-구현">구현</a></li>
+</ul>
+<hr />
+
+<p><strong>심층 신경망의 수학적 기초</strong> 8강 (10월 5일) 에 기반합니다.</p>
+
+<p><a href="/deep-learning-study/mnist-mlp/">MLP로 MNIST 풀어보기</a>의 코드와 <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 내용에 이어지는 포스팅입니다.</p>
+
+<h2 id="lenet-모델">LeNet 모델</h2>
+<p>여기서는 LeNet-5 모델에 대해 간단히 살펴봅니다.</p>
+
+<p>LeNet은 거의 최초의 CNN을 이용한 image classification 모델이라고 할 수 있습니다. Turing award 수상자이며, 사실상 CNN의 아버지 격인 Yann Lecun의 연구팀이 1998년에 개발하였고 그 이름을 따서 LeNet이라는 이름을 갖게 되었습니다. “Gradient Based Learning Applied to Document Recognition” 라는 제목의 논문으로 발표되었는데, 제목에서 알 수 있듯 본래 손글씨로 쓰인 글자를 구분하는 task를 해결하기 위해 개발되었습니다.</p>
+
+<p><img src="../../images/cd97eccdcd206c69165bedbe52ab311cecf6e35e340166c1780794892fed550e.png" alt="picture 1" /></p>
+
+<p>이 구조는 LeNet의 전체적인 모델입니다. <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 에 있는 각 레이어별 설명을 모두 이해했다는 가정하에, LeNet의 ‘선택’ 만 살펴보겠습니다.</p>
+<ul>
+  <li>첫 레이어는 $5 \times 5$ Convolution filter 6개를 사용합니다.</li>
+  <li>Subsampling은 average pooling을 사용하고</li>
+  <li>Activation function으로는 tanh의 약간 변형된 형태를 사용합니다.</li>
+  <li>재밌는 점은 C3 Layer가 일반적인 convolution이 아니라는 점입니다. 원본 논문에 의하면, symmetry를 깨기 위해서 S2-&gt;C3 convolution을 할 때, 6개 채널 전부가 아닌 채널 일부만 사용해서 convolution을 수행합니다. 
+<img src="../../images/591aba20e38405a3f2c2fef76a765f3ac12b5b8abc6c3c9c8410ab22f8abc678.png" alt="picture 2" />  이와 같이, 0번째 컨볼루션은 0, 1, 2 채널만 쓰고… 하는 방법입니다.</li>
+  <li>Fully connected layer를 2번 탄 다음, 마지막에는 Gaussian connection이라는 조금 복잡한 방법을 사용합니다. 후술할 이유로 인해 자세히 설명하지는 않겠습니다.</li>
+</ul>
+
+<p>그러나 이어진 후속연구에 의해, 꼭 이런 design choice를 지킬 필요가 없음이 알려졌습니다. 구현의 단순함과 성능을 위해 모델을 조금 수정해서 다음과 같이 구현하겠습니다.</p>
+<ul>
+  <li>Subsampling에는 avg pooling이 아닌 max pooling을 사용합니다.</li>
+  <li>Activation으로 ReLU를 사용하겠습니다.</li>
+  <li>굳이 Symmetry를 이런 방법으로 깨지 않아도, initialization을 잘 하면 상관 없다고 합니다. Symmetry-breaking connection은 버리겠습니다.</li>
+  <li>Gaussian connection도 하지 않아도 됩니다. 그냥 Fully connected layer로 충분하다고 합니다.</li>
+</ul>
+
+<h2 id="구현">구현</h2>
+<p>구현은 <a href="/deep-learning-study/mnist-mlp/">MLP로 MNIST 풀어보기</a> 와 크게 다르지 않습니다.</p>
+
+<p>MNIST 데이터 로딩하는 부분의 코드를 그대로 가져옵니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'./mnist_data/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_set</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이제, LeNet 모델을 정의합니다. Convolution 연산을 쓴다는것 외에는 여전히 다른점이 없습니다.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LeNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LeNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">C5_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span> <span class="mi">120</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">84</span><span class="p">),</span>
+            <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer1</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">C5_layer</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer1</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc_layer2</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">EPOCH</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LeNetModern</span><span class="p">().</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">loss_function</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)))</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">optimizer.zero_grad()</code> 로 기존 MLP 모델에 남아있던 gradient 값들을 다 날리고</li>
+  <li><code class="language-plaintext highlighter-rouge">train_loss</code> 는 현재 시점에 모델이 이미지를 받아서 추측을 해보고 그 loss function 값을 확인하고,</li>
+  <li><code class="language-plaintext highlighter-rouge">.backward()</code> 로 현재 시점의 gradient를 계산하고</li>
+  <li><code class="language-plaintext highlighter-rouge">optimizer.step()</code> 으로 실제 optimization (여기선 SGD)를 수행합니다.</li>
+</ul>
+:ET

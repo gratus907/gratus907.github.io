@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Semantic Segmentation with Pytorch - Preperation
+title: Semantic Segmentation with Pytorch - Preparation
 categories: image-segmentation-2021
 parlinks : [deep-learning-study]
 comments : true
@@ -15,7 +15,7 @@ Contents
 앞으로 이 프로젝트에서 사용하는 코드는 모두 [Github Repo](https://github.com/gratus907/Image-Segmentation-Study) 에 올라갈 예정입니다. 오늘은 먼저, 데이터 등을 준비하는 과정을 진행합니다. 
 
 ## Data preparation
-TU Graz에서 제공하는 **Drone aerial image** 데이터를 이용하려고 합니다. [링크](https://www.tugraz.at/index.php?id=22387) 에서 다운로드받을 수 있습니다. 사진 400장의 데이터셋이지만 굉장히 용량이 크고 (4.1GB, 각 이미지가 무려 **6000 by 4000** 입니다) pixel-accurate한 라벨이 달려있는데다 클래스는 20개로 많지 않아서 적당하다고 생각했습니다. 여기서는 360개를 training에, 40개를 test에 쓰겠습니다. 
+TU Graz에서 제공하는 **Drone aerial image** 데이터를 이용하려고 합니다. [링크](https://www.tugraz.at/index.php?id=22387) 에서 다운로드받을 수 있습니다. 사진 400장의 데이터셋이지만 굉장히 용량이 크고 (4.1GB, 각 이미지가 무려 **6000 by 4000** 입니다) pixel-accurate한 라벨이 달려있는데다 클래스는 23개로 많지 않아서 적당하다고 생각했습니다. 여기서는 360개를 training에, 40개를 test에 쓰겠습니다. 
 
 먼저, 필요한 모듈들을 import해서 때려넣습니다. 별로 좋은 practice는 아니지만, 다양한 모델들을 테스트해보는 의미가 있으므로 코드의 아름다움은 잠시 접어두기로 합시다. Jupyter Notebook이나 Colab을 사용한다면 훨씬 편하게 테스트할 수 있겠지만, 전체를 깃헙에 올려서 바로 볼 수 있게 하기 위해 그냥 일반 파이썬 코딩할때처럼 하겠습니다. 
 ```py 

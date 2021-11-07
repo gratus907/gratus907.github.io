@@ -1,0 +1,36 @@
+I"�
+<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#lenet-모델" id="markdown-toc-lenet-모델">LeNet 모델</a></li>
+</ul>
+<hr />
+
+<p><strong>심층 신경망의 수학적 기초</strong> 8강 (10월 5일) 에 기반합니다.</p>
+
+<p><a href="/deep-learning-study/mnist-mlp/">MLP로 MNIST 풀어보기</a> 와 <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 에 기반합니다.</p>
+
+<h2 id="lenet-모델">LeNet 모델</h2>
+<p>여기서는 LeNet-5 모델에 대해 간단히 살펴봅니다.</p>
+
+<p>LeNet은 거의 최초의 CNN을 이용한 image classification 모델이라고 할 수 있습니다. Turing award 수상자이며, 사실상 CNN의 아버지 격인 Yann Lecun의 연구팀이 1998년에 개발하였고 그 이름을 따서 LeNet이라는 이름을 갖게 되었습니다. “Gradient Based Learning Applied to Document Recognition” 라는 제목의 논문으로 발표되었는데, 제목에서 알 수 있듯 본래 손글씨로 쓰인 글자를 구분하는 task를 해결하기 위해 개발되었습니다.</p>
+
+<p><img src="../../images/cd97eccdcd206c69165bedbe52ab311cecf6e35e340166c1780794892fed550e.png" alt="picture 1" /></p>
+
+<p>이 구조는 LeNet의 전체적인 모델입니다. <a href="/deep-learning-study/convolutionary-neural-networks/">CNN 기초</a> 에 있는 각 레이어별 설명을 모두 이해했다는 가정하에, LeNet의 ‘선택’ 만 살펴보겠습니다.</p>
+<ul>
+  <li>첫 레이어는 $5 \times 5$ Convolution filter 6개를 사용합니다.</li>
+  <li>Subsampling은 average pooling을 사용하고</li>
+  <li>Activation function으로는 tanh의 약간 변형된 형태를 사용합니다.</li>
+  <li>재밌는 점은 C3 Layer가 일반적인 convolution이 아니라는 점입니다. 원본 논문에 의하면, symmetry를 깨기 위해서 S2-&gt;C3 convolution을 할 때, 6개 채널 전부가 아닌 채널 일부만 사용해서 convolution을 수행합니다.</li>
+  <li>Fully connected layer를 2번 탄 다음, 마지막에는 Gaussian connection이라는 조금 복잡한 방법을 사용합니다. 후술할 이유로 인해 자세히 설명하지는 않겠습니다.</li>
+</ul>
+
+<p>그러나 이어진 후속연구에 의해, 꼭 이런 design choice를 지킬 필요가 없음이 알려졌습니다. 구현의 단순함과 성능을 위해 모델을 조금 수정해서 다음과 같이 구현하겠습니다.</p>
+<ul>
+  <li>Subsampling에는 avg pooling이 아닌 max pooling을 사용합니다.</li>
+  <li>Activation으로 ReLU를 사용하겠습니다.</li>
+  <li>굳이 Symmetry를 이런 방법으로 깨지 않아도, initialization을 잘 하면 상관 없다고 합니다.</li>
+</ul>
+:ET
