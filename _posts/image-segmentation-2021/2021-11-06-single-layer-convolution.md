@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Semantic Segmentation with Pytorch - Single Layer Model
+title: Image Segmentation - Single Layer Model
 categories: image-segmentation-2021
 parlinks : [deep-learning-study]
 comments : true

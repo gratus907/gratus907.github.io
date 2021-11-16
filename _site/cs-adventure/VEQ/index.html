@@ -359,7 +359,7 @@ $D(u, v)$ 가 1일 필요충분조건 : $u$의 모든 자식 노드 $u_c$에 대
 <p>또한, 이 DP를 최대한 잘 줄이기 위해, query DAG를 여러개 쓰면 더 좋은 결과를 얻을 수 있습니다. 실제로는 $q_D, q_D^{-1}, q_D$ 순서로 반복하면서 쓰면 되는데, 논문에 의하면 3번만 하면 더이상 큰 의미 없다고 합니다.</p>
 
 <h2 id="adaptive-matching-order--static-equivalence">Adaptive Matching Order : Static Equivalence</h2>
-<p>Adaptive Matching Order란, Matching order를 미리 정하지 않고, 백트래킹 하는 중에 다이나믹하게 정해 나가겠다는 의미입니다. 현재까지 찾은 partial embedding $M$에 대해, $M$에 이미 포함된 정점과 이웃한 정점들을 extendable하다고 정의하고, 이때 Candidate set $C(u)$에 들어 있는 정점들 중 partial embedding $M$을 고려할 때 $u$와 매칭 가능한 정점들을 $C_M(u)$ 라고 정의하겠습니다. (즉, $C(u)$에 있더라도, 이미 $M$에서 이웃들을 매칭했을 때 $u_c$를 $v_c$에다가 대고 매치했다면, $v_c$와 이웃하는 점만 남기고 나머지는 날리겠다는 말입니다)</p>
+<p>Adaptive Matching Order란, Matching order를 미리 정하지 않고, 백트래킹 하는 중에 다이나믹하게 정해 나가겠다는 의미입니다. 현재까지 찾은 partial embedding $M$에 대해, $M$에 이미 포함된 정점과 이웃한 정점들을 extendable하다고 정의하고, 이때 Candidate Set $C(u)$에 들어 있는 정점들 중 partial embedding $M$을 고려할 때 $u$와 매칭 가능한 정점들을 $C_M(u)$ 라고 정의하겠습니다. (즉, $C(u)$에 있더라도, 이미 $M$에서 이웃들을 매칭했을 때 $u_c$를 $v_c$에다가 대고 매치했다면, $v_c$와 이웃하는 점만 남기고 나머지는 날리겠다는 말입니다)</p>
 
 <p>Extendable vertex중 하나를 택해서 다음 정점으로 삼고 backtracking해야 합니다. CFL-Match와 DAF의 경우 이부분에서 vertex를 core-forest-leaf 또는 core-leaf로 나눠서 매칭하는 전략을 쓰는데, 이 논문에서는 이와 같은 decomposition전략이 leaf가 적을 때 느려서 별로 좋지 않다고 주장합니다.</p>
 
@@ -396,7 +396,7 @@ $D(u, v)$ 가 1일 필요충분조건 : $u$의 모든 자식 노드 $u_c$에 대
 \(\bigcup_{(u', v') \in O_M(u, v_i)} \pi(u', v')\)
 직관적으로 이는, $v_i$와 equivalent하지 않은 모든 매핑들에 대해서, 그 equivalence class들을 모은 것입니다.</p>
 
-<p>이를 이용하여, Equivalence set $\pi_M(u, v_i)$를 정의합니다.</p>
+<p>이를 이용하여, Equivalence Set $\pi_M(u, v_i)$를 정의합니다.</p>
 <ul>
   <li>한번이라도 이 서브트리에서 성공한 사례가 있는 경우, $\pi^{-}(u, v_i) - \delta_M(u, v_i)$를 씁니다.</li>
   <li>모두 실패한 경우, $\pi^{-}(u, v_i)$를 씁니다.</li>
@@ -409,7 +409,7 @@ $D(u, v)$ 가 1일 필요충분조건 : $u$의 모든 자식 노드 $u_c$에 대
 <p style="text-align: center;">
 <img src="/images/89c1e22afed14b52504b0155821bff13faec7d6422f021a7f423b42fdb77d10f.png" alt="figure" width="90%">
 </p>
-<p>$\pi_M(u_2, v_3)$ 을 생각해 보겠습니다. (이 equivalence set을 완전히 아는 것은 $u_2 \to v_3$ 쪽의 서브트리를 모두 돌고 난 뒤입니다) 트리를 관찰해 보면, $v_3$ 와 매칭되고 싶어해서 conflict를 내는 노드 $u_5$ 가 보입니다. 따라서, $I_M(u_2, v_3) = \set{(u_5, v_3)}$ 입니다. Conflict가 발생한 적이 있으므로, $\pi^{-}(u_2, v_3)$ 을 계산할 때 $\pi(u_2, v_3)$ 와 $\pi(u_5, v_3)$의 intersection을 구합니다. 이는 figure 5를 보고 구하면 $\set{v_4}$고, 서브트리에서 성공해본 적이 없으므로 $\pi_M(u_2, v_3) = \pi^{-}(u_2, v_3) = \set{v_4}$ 입니다. 그러므로 $v_3 \equiv v_4$ 이고, $u_2 \to v_3$에서 성공해 본 적이 없으므로 $u_2 \to v_4$도 성공하는 임베딩이 없음을 알게 되어 탐색하지 않고 prune할수 있습니다.</p>
+<p>$\pi_M(u_2, v_3)$ 을 생각해 보겠습니다. (이 equivalence Set을 완전히 아는 것은 $u_2 \to v_3$ 쪽의 서브트리를 모두 돌고 난 뒤입니다) 트리를 관찰해 보면, $v_3$ 와 매칭되고 싶어해서 conflict를 내는 노드 $u_5$ 가 보입니다. 따라서, $I_M(u_2, v_3) = \Set{(u_5, v_3)}$ 입니다. Conflict가 발생한 적이 있으므로, $\pi^{-}(u_2, v_3)$ 을 계산할 때 $\pi(u_2, v_3)$ 와 $\pi(u_5, v_3)$의 intersection을 구합니다. 이는 figure 5를 보고 구하면 $\Set{v_4}$고, 서브트리에서 성공해본 적이 없으므로 $\pi_M(u_2, v_3) = \pi^{-}(u_2, v_3) = \Set{v_4}$ 입니다. 그러므로 $v_3 \equiv v_4$ 이고, $u_2 \to v_3$에서 성공해 본 적이 없으므로 $u_2 \to v_4$도 성공하는 임베딩이 없음을 알게 되어 탐색하지 않고 prune할수 있습니다.</p>
 
 <p>이 $\pi_M(u, v)$가 subtree equivalence의 필요충분이라는 증명은 proceeding에 발표된 버전에서는 빠져 있는데, 이후에 증명하게 된다면 채워 넣겠습니다. 직관적으로는, 이후의 서브트리 매칭 시도에서 생기는 모든 conflict와 equivalence를 기억해서 반영하고 있기 때문에 증명은 technical하겠지만 그렇게 이상하지는 않은것 같습니다.</p>
 
@@ -467,7 +467,7 @@ $D(u, v)$ 가 1일 필요충분조건 : $u$의 모든 자식 노드 $u_c$에 대
 
     
     
-    Last updated: November 07, 2021.
+    Last updated: November 16, 2021.
     
   </div>
 </footer>

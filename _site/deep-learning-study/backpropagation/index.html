@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>
+
+  Gratus907's Study Note
+
+
+  | Autodiff/Backpropagation
+
+</title>
+<meta name="description" content="Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+">
+
+<!-- Open Graph -->
+
+
+<!-- Bootstrap & MDB -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" integrity="sha512-RO38pBRxYH3SoOprtPTD86JFOclM51/XTIdEPh5j8sj4tp8jmQIx26twG52UaLi//hQldfrh7e51WzP9wuP32Q==" crossorigin="anonymous" />
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.0/css/academicons.min.css" integrity="sha512-W4yqoT1+8NLkinBLBZko+dFB2ZbHsYLDdr50VElllRcNt2Q4/GSs6u71UHKxB7S6JEMCp5Ve4xjh3eGQl/HRvg==" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+<!-- Code Syntax Highlighting -->
+<link rel="stylesheet" href="https://gitcdn.link/repo/jwarby/jekyll-pygments-themes/master/github.css" />
+
+<!-- Styles -->
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="canonical" href="/deep-learning-study/backpropagation/">
+
+<!-- JQuery -->
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+
+<!-- Theming-->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX3EZM1ESL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-KX3EZM1ESL');
+</script>
+
+
+
+<!-- Panelbear Analytics - We respect your privacy -->
+<script async src="https://cdn.panelbear.com/analytics.js?site=KX0fnophvY8"></script>
+<script>
+    window.panelbear = window.panelbear || function() { (window.panelbear.q = window.panelbear.q || []).push(arguments); };
+    panelbear('config', { site: 'KX0fnophvY8' });
+</script>
+
+
+<script async src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script >
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
+        packages: {'[+]': ['physics']}
+      },
+      loader: {
+        load: ["input/tex", "output/chtml", '[tex]/physics']
+      },
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  <p style="display: none;">$$
+      \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+      \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+      \newcommand{\N}{\mathbb{N}}
+      \newcommand{\R}{\mathbb{R}}
+      \newcommand{\Z}{\mathbb{Z}}
+      \newcommand{\Q}{\mathbb{Q}}
+      \newcommand{\C}{\mathbb{C}}
+      \renewcommand{\L}{\mathcal{L}}
+      \newcommand{\x}{\times}
+      \newcommand{\contra}{\scalebox{1.5}{$\lightning$}}
+      \newcommand{\inner}[2]{\left\langle #1 , #2 \right\rangle}
+      \newcommand{\st}{\text{ such that }}
+      \newcommand{\for}{\text{ for }}
+      \newcommand{\Setcond}[2]{ \left\{\, #1 \mid #2 \, \right\}}
+      \newcommand{\setcond}[2]{\Setcond{#1}{#2}}
+      \newcommand{\seq}[1]{ \left\langle #1 \right\rangle}
+      \newcommand{\Set}[1]{ \left\{ #1 \right\}}
+      \newcommand{\set}[1]{ \set{#1} }
+      \newcommand{\sgn}{\text{sign}}
+      \newcommand{\halfline}{\vspace{0.5em}}
+      \newcommand{\diag}{\text{diag}}
+  
+      \newcommand{\legn}[2]{\left(\frac{#1}{#2}\right)} 
+      \newcommand{\ord}{\text{ord}}
+      \newcommand{\di}{\mathrel{|}} 
+      \newcommand{\gen}[1] 
+      \newcommand{\irr}{\mathrm{irr }}
+      \renewcommand{\deg}{\mathrm{deg }}
+      \newcommand{\nsgeq}{\trianglelefteq}
+      \newcommand{\nsg}{\triangleleft}
+      
+      \newcommand{\argmin}{\mathrm{argmin}}
+      \newcommand{\argmax}{\mathrm{argmax}}
+      \newcommand{\minimize}{\mathrm{minimize}}
+      \newcommand{\maximize}{\mathrm{maximize}}
+      \newcommand{\subto}{\mathrm{subject\ to}}
+      \newcommand{\DKL}[2]{D_{\mathrm{KL}}\left(#1 \di\di #2\right)}
+      \newcommand{\ReLU}{\mathrm{ReLU}}
+      
+      \newcommand{\E}{\mathbb{E}}
+      \newcommand{\expect}[1]{\E\left[#1\right]}
+      \newcommand{\expectwith}[2]{\E_{#1}\left[#2\right]}
+      \renewcommand{\P}{\mathbb{P}}
+      \newcommand{\uniform}[2]{\mathrm{Uniform}\left(#1 \dots #2\right)}
+      \newcommand{\gdist}[2]{\mathcal{N}\left(#1, #2\right)}
+      $$</p>
+  
+  </head>
+
+  <body class=" sticky-bottom-footer">
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Nav Bar -->
+    <nav id="navbar" class="navbar navbar-light navbar-expand-sm sticky-top">
+    <div class="container">
+      
+      <a class="navbar-brand title font-weight-lighter" href="http://localhost:4000/">
+       Gratus907's Study Note
+      </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/">
+              Home
+              
+            </a>
+          </li>
+          
+          <!-- Blog -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/blog/">
+              Posts
+              
+            </a>
+          </li>
+          
+          <!-- Other pages -->
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/about-me/">
+                About me
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/study-note/">
+                Notes
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item ">
+              <a class="nav-link" href="/projects/">
+                Projects
+                
+              </a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                분류
+                
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              
+              
+                <a class="dropdown-item" href="/ds-alg-note/">Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/advanced-algorithms/">Advanced Algo / DS</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cs-adventure/">CS-Adventure</a>
+              
+              
+              
+                <a class="dropdown-item" href="/cp-rounds/">Competitive Programming</a>
+              
+              
+              
+                <a class="dropdown-item" href="/deep-learning-study/">Deep Learning Study</a>
+              
+              
+              </div>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+    <!-- Content -->
+    
+    <div class="container mt-5">
+      
+
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Autodiff/Backpropagation</h1>
+    <p class="post-meta">November 16, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <a href="http://localhost:4000/deep-learning-study"> Back to : deep-learning-study</a><br>
+    
+    
+    
+    <div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#introduction" id="markdown-toc-introduction">Introduction</a></li>
+  <li><a href="#backpropagation" id="markdown-toc-backpropagation">Backpropagation</a></li>
+  <li><a href="#notes" id="markdown-toc-notes">Notes</a></li>
+</ul>
+<hr>
+
+<p>이 글은 심층신경망 수업에서 공부한 내용에 기반하지만, 제가 나름대로 이해한 바를 덧붙여서 작성했습니다. 특히, 설명하는 방법이 조금 다릅니다.</p>
+
+<h2 id="introduction">Introduction</h2>
+<p>Multi layer perceptron이 되었든, Convolutionary neural network가 되었든 기본적인 틀은 logistic regression과 다를 것이 없습니다.</p>
+
+<p>설명의 편의를 위해 이 글에서는 MLP에 대해 설명하겠지만, CNN도 사실은 별로 다르지 않습니다.</p>
+<ul>
+  <li>MLP는 결국, 다음과 같은 형태의 함수로 나타나는 회귀 모형이라고 볼 수 있습니다.
+\(\begin{align*}
+  y_L &amp;= W_L y_{L-1} + b_L \\
+  y_{L - 1} &amp;= \sigma(W_{L-1} y_{L - 2} + b_{L - 1}) \\
+  \cdots &amp; \cdots \\
+  y_2 &amp;= \sigma (W_2 y_1 + b_2) \\
+  y_1 &amp;= \sigma (W_1 x + b_1)
+\end{align*}\)</li>
+  <li>여기서 $W_i, b_i$ 들은 모두 trainable weight 이고, $\sigma$는 어떤 activation function 입니다.</li>
+  <li>우리는, $y_L$의 참값 (이라고 말하면 좀 애매하지만…) 을 반환하는 함수 $\tilde{y_L} = f(x)$ 가 존재한다고 생각합니다. 이를 최대한 <strong>근사</strong> 하는 것이 목표입니다. 즉, 저 위 형태의 함수 ($W_i, b_i$ 를 이용하여 표현되는 함수) 를 <strong>표현 가능하다</strong> 라고 정의하면, <strong>Ground-truth 함수에 가장 가까운 표현가능한 함수</strong> 를 찾고 싶습니다.</li>
+  <li>그러나 우리는 ground truth를 모두 아는게 아니라, 몇몇 데이터 $x^1, x^2, \dots$ 에 대해 알고 있습니다.<br>
+따라서, 어떤 Loss function을 정의하여
+\(\sum_{i = 1}^{n} \mathcal{L}(y_L^{i}, \tilde{y_L}^{i})\)
+을 정의한 다음, 이 $\mathcal{L}$ 이 어떤 실제 $\tilde{y_L}^i$ 과 $y_L^i$ 간의 거리를 제시하므로, 이를 가능한 최소화하는 방향으로 나아가려고 합니다.</li>
+  <li>그러므로, 우리는 여기서 SGD 또는 그 비슷한 알고리즘들을 사용합니다. 즉, $W_k, b_k$ 행렬 또는 벡터에 들어 있는 각 변수 $W_k(i, j)$ 나 $b_k(i)$ 를 이용해서 전체 공간에서의 Loss function을 그려놓고, 그 minimum을 (iterative하게) 찾을 수 있기를 바랍니다.</li>
+  <li>SGD나 다른 방법을 쓰려면, 결국은 이런 느낌의 편미분계수들을 꼭 알아야 합니다. 
+\(\pdv{\mathcal{L}}{W_k(i, j)} \quad \quad \pdv{\mathcal{L}}{b_k(i)}\)</li>
+</ul>
+
+<p>모델이 간단하면 뭐 직접 미분한다고 치지만, 위에 있는 MLP 식 같이 생긴 복잡한 함수를 어떻게 미분할 수 있을까요?</p>
+
+<h2 id="backpropagation">Backpropagation</h2>
+<p>위 형태를 잘 보면, 합성함수 형태임을 알 수 있습니다. 합성함수의 미분은 Chain rule을 이용해서 수행할 수 있습니다.<br>
+$x \in \R^m, y \in \R^n$, $g : \R^m \to \R^n, f : \R^n \to \R$ 정도의 세팅을 생각해 봅시다. $\mathbf{y} = g(\mathbf{x}), z = \mathbf{y}$ 라 할 때, 다음이 성립합니다.
+\(\pdv{z}{x_i} = \sum_{j} \pdv{z}{y_j} \pdv{y_j}{x_i}\)
+이 방법을 이용해서, 우리는 전체 $P$개의 모든 파라미터에 대해 $\pdv{\mathcal{L}}{w_i}$ 를 구해야 합니다.</p>
+
+<p>이를 계산하기 위해, 먼저 Computational graph를 만듭니다. Computational graph란, 아래와 같이 각 값들을 노드로, 계산에 필요한 dependency들을 edge로 연결해서 그래프 형태로 만든 것입니다.
+<img src="../../images/40cd6084bc0a4674ff1e61d062fc8f8900db1c435a6b86e723fa32965d94d37f.png" alt="picture 3"><br>
+(사진출처 : 서울대학교 심층신경망의 수학적 기초 강의자료)</p>
+
+<p>여기서, ‘변수를 다른 변수로 미분한 미분계수’ 들을 구하고, ‘최종 결과를 변수로 미분한 미분계수’ 를 그 결과로 얻을 것입니다. 구체적으로,</p>
+<ol>
+  <li>각 edge에 대해, 변수를 변수로 미분한 중간 미분계수를 edge에 적어넣고,</li>
+  <li>마지막에, root 노드 (i.e, 계산의 최종값) 에서 출발해서, 임의의 노드까지 가는 경로를 모두 따라가면서 곱해서 더하면 ‘최종결과를 변수로 미분한’ 미분계수를 얻습니다.</li>
+</ol>
+
+<p>즉, 알고리즘의 언어로 말하자면 DAG 위에서 depth가 낮은 노드부터 거꾸로 올라가면서 edge의 값을 계산하고 (DP), 돌아올때는 topological order로 계산하겠다는 의미입니다.</p>
+
+<p>이 사진에 있는 함수를 직접 계산하면서 과정을 따라가 보겠습니다.</p>
+<ul>
+  <li>step이 낮은 것부터 올라갑니다. 즉, 처음에는 step 1인 $a$-노드의 미분계수들을 계산하기 위해 $\pdv{a}{x}$ 를 구하며, 이 값은 $1/x$ 이므로 1/3입니다. 여기서 주목할 점은, 일반적인 symbolic differntiation을 수행할 때는 $1/x$를 들고 가지만, 우리는 어차피 최종적으로 수치연산을 할 것이므로 $1/3$ 이라는 사실만 기억하면 $1/x$ 라는 값은 잊어버려도 됩니다. 이 값은 edge에 적어 넣습니다. 또한 이후에 $a$값도 필요하기 때문에 $a = \log 3$ 이라는 결과를 노드에 적어넣습니다. 이제, step 1까지 왔습니다.</li>
+  <li>step 2에 해당하는 $b$를 구해야 합니다. $\pdv{b}{a} = y, \pdv{b}{y} = a$ 이며, 이는 각각 $a, y$의 <strong>이미 계산한 노드값</strong> 을 참조해서 계산할 수 있습니다. 각각 $2, \log 3$ 이 될 것이며, 이를 edge에 적어 넣습니다. $b$ 는 $2 \log 3$ 이고. 이건 노드에 적어넣습니다.</li>
+  <li>step 3에 해당하는 $\pdv{c}{b}$ 는 $\frac{1}{2\sqrt{b}} = \frac{1}{2\sqrt{\log 3}}$ 입니다. $c = \sqrt{log 3}$ 입니다.</li>
+  <li>step 4는 마지막으로, $\pdv{f}{c} = 1$, $\pdv{f}{b} = 1$ 이며, $f$ 의 최종적인 값은 $\sqrt{2 \log 3} + 2 \log 3$ 입니다.</li>
+</ul>
+
+<p>여기까지가 지금 1 과정이 끝난 것입니다. 이를 “Forward pass” 등으로 부릅니다. 여기까지 계산한 결과는 아래와 같습니다.
+<img src="../../images/de99a2ba80e6f53a603bb8047d889a83d9d279550c8e053d5f4ad9f2479dd270.png" alt="picture 4"><br>
+이제, 다시 거꾸로 돌아가면서 계산합니다.</p>
+<ul>
+  <li>$\pdv{f}{c} = 1$. 이번에는, $c$에 해당하는 노드에 이 값을 적어넣습니다.</li>
+  <li>$\pdv{c}{b} = \frac{1}{2 \sqrt{2 \log 3}}$ 이며, $\pdv{f}{b}$ 는 여기에 따로 $b$가 $f$에 영향을 미치는 1이 있으므로 (가장 아래 edge), $\pdv{f}{b} = \frac{1}{2 \sqrt{2 \log 3}} + 1$ 입니다. 마찬가지로 $b$ 노드에 적어 넣습니다.</li>
+  <li>같은 방법으로 뒤로 계속 달립니다. $\pdv{f}{a} = \frac{1}{\sqrt{2 \log 3}} + 2$.</li>
+  <li>결국 다 계산하면, $\pdv{f}{x} = \frac{1}{3\sqrt{2\log 3}} + \frac{2}{3}$ 과 $\pdv{f}{y} = \sqrt{\frac{\log 3}{8}} + \log 3$ 이 남을 것입니다. 
+이 방법을 Backpropagation이라고 부릅니다.</li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+<ul>
+  <li>Autodiff란, 사실은 forward autodiff 등 몇가지 방법이 더 있습니다. 그중 가장 대표적인 방법인 backpropagation을 소개했는데, 사실 생각해 보면 반대로 forward pass만으로 계산하는 방법이 있습니다. 
+위 과정에서 위로 올라가는 DP를 할 때, $\pdv{b}{a}$ 같은 값들을 계산해서 edge에 적어놓고, 바로 $b$ 노드에는 $\pdv{b}{x}, \pdv{b}{y}$ 를 그자리에서 계산해서 (앞서 $\pdv{a}{x}$ 도 노드에 적어놨을 것이므로) 기억하는 방법이 있습니다.
+이렇게 계산하면 한번 forward를 달릴 때 모든 계산이 끝납니다.</li>
+  <li>그럼에도 불구하고, 실제로 사용하는 deep learning에서의 gradient 계산은 대부분 backpropagation입니다. 그 이유는, 지금 위 예시에서는 알 수 없는 부분이긴 하지만 MLP를 다시 생각해 보면 대부분의 연산이 행렬곱이므로 위 예시와는 달리 각 edge에 스칼라값이 아니라 행렬이 쓰여지게 됩니다. 이게 왜 의미가 있냐면, 결국은 ‘행렬들을 순서대로 많이’ 곱해야 한다는 얘기고… 행렬 여러개를 곱할 때는 작은 행렬부터 곱하고 그 결과를 큰 행렬과 곱하는 것이 대체로 보다 효율적입니다. (이 표현은 완벽하게 정확하지는 않지만, 행렬의 크기가 단조증가한다면 참입니다. 사실은 이 자체가 <strong>행렬 곱셈 순서</strong> 라는 (백준에도 있는..ㅋㅋ) 매우 유명한 DP 문제입니다.) 그런데 MLP든 CNN이든, 네트워크 끝쪽 (출력에 가까운 쪽) 으로 향하면서 점점 feature의 개수를 줄여나가는 것이 일반적이며, 따라서 backpropagation 방법으로 뒤에서부터 곱하면서 오는게 행렬 곱셈을 더 빨리 할 수 있기 때문입니다.</li>
+  <li>Torch 등 딥러닝 라이브러리들은 이 backpropagation을 자동으로 잘 따라가 주기 때문에 일반적으로는 걱정할 필요가 없지만, 새로운 loss function을 정의할 때는 항상 미분가능한지를 생각해야 합니다.</li>
+</ul>
+
+<hr>
+<p><strong>Reference</strong></p>
+<ul>
+  <li>서울대학교 심층신경망의 수학적 기초 강의자료 (<a href="http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html" target="_blank" rel="noopener noreferrer">링크</a>)</li>
+  <li>Ian Goodfellow, Yoshua Bengio, &amp; Aaron Courville (2016). Deep Learning. MIT Press.</li>
+</ul>
+
+  </article>
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://gratus907-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+  <a href="http://localhost:4000/deep-learning-study"> Back to : deep-learning-study</a><br>
+  
+  
+  
+</div>
+
+    </div>
+
+    <!-- Footer -->
+
+    
+<footer class="sticky-bottom mt-5">
+  <div class="container">
+    © Copyright 2021 Wonseok  Shin.
+    Powered by <a href="http://jekyllrb.com/" target="_blank" rel="noopener noreferrer">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.
+
+    
+    
+    Last updated: November 16, 2021.
+    
+  </div>
+</footer>
+
+
+
+  </body>
+
+  <!-- Bootsrap & MDB scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js" integrity="sha512-Mug9KHKmroQFMLm93zGrjhibM2z2Obg9l6qFG2qKjXEXkMp/VDkI4uju9m4QKPjWSwQ6O2qzZEnJDEeCw0Blcw==" crossorigin="anonymous"></script>
+
+  
+<!-- Mansory & imagesLoaded -->
+<script defer src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script defer src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script defer src="/assets/js/mansory.js" type="text/javascript"></script>
+
+
+  
+
+
+<!-- Medium Zoom JS -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/assets/js/zoom.js"></script>
+
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+</html>

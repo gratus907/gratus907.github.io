@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Semantic Segmentation with Pytorch - Preparation
+title: Image Segmentation - Preparation
 categories: image-segmentation-2021
 parlinks : [deep-learning-study]
 comments : true
