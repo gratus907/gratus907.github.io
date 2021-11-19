@@ -26,9 +26,15 @@ category: Computer Science
 ------ 
 
 # Postings
-## Basics
+## Basics / Theory
+MLP, CNN 등을 관통하는 
 - [Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)
 - [Stochastic Gradient Descent](/deep-learning-study/sgd/)
+- [Backpropagation](/deep-learning-study/backpropagation)
+- [Overfitting/Underfitting]
+- [Regularization : Dropout, Weight-decay]
+- [Batch Normalization]
+- [Universal Approximation Theorem]
 
 ## Shallow Neural Networks 
 - [Introduction to Shallow Neural Networks](/deep-learning-study/shallow-nn/)
@@ -41,6 +47,17 @@ category: Computer Science
 
 ## Convolutionary Neural networks
 - [Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/) : CNN 개요.
-  
+- [LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST) : CNN으로 MNIST 풀어보기 
+
+ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다. 
+- [CNN Architecture : AlexNet]
+- [CNN Architecture : VGGNet]
+- [CNN Architecture : GoogLeNet]
+- [CNN Architecture : ResNet]
+
 ## Computer Vision
 - [Semantic Segmentation 개요](/deep-learning-study/semantic-segmentation/) : Semantic segmentation 문제 정의, 개요
+- [Fully Convolutional Networks]
+- [Encoder-Decoder, U-Net]
+- [Dilated Convolutions, DeepLab]
+- 
