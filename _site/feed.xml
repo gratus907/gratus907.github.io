@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-17T14:30:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+=======
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-18T14:09:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+>>>>>>> Stashed changes
 </subtitle><entry><title type="html">Autodiff/Backpropagation</title><link href="http://localhost:4000/deep-learning-study/backpropagation/" rel="alternate" type="text/html" title="Autodiff/Backpropagation" /><published>2021-11-16T00:00:00+09:00</published><updated>2021-11-16T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/backpropagation</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/backpropagation/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
