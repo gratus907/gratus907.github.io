@@ -1,0 +1,15 @@
+I"�<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#풀이" id="markdown-toc-풀이">풀이</a></li>
+</ul>
+<hr />
+
+<p><a href="https://www.acmicpc.net/problem/17532">문제 링크</a></p>
+
+<h2 id="풀이">풀이</h2>
+<p>결국 주어진 문제는, 어떤 트리가 주어질 때, 트리에서 최대 $K$개의 path를 택하여 그 path들의 union의 길이의 합을 최대화하는 문제입니다.</p>
+
+<p>$O(NK)$ 트리 DP를 먼저 생각해 볼 수 있습니다.</p>
+:ET

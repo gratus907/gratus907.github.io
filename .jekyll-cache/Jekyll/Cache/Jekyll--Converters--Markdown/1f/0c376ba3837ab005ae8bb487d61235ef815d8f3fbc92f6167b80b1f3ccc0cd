@@ -1,0 +1,96 @@
+I"�0<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#풀이" id="markdown-toc-풀이">풀이</a></li>
+  <li><a href="#구현" id="markdown-toc-구현">구현</a></li>
+</ul>
+<hr />
+
+<p><a href="https://www.acmicpc.net/problem/17532">문제 링크</a><br />
+난이도 : solved.ac 기준 Platinum 4.</p>
+
+<h2 id="풀이">풀이</h2>
+<p>결국 주어진 문제는, 어떤 트리가 주어질 때, 트리에서 최대 $K$개의 path를 택하여 그 path들의 union을 최대화하는 문제입니다.</p>
+
+<p>문제의 특성 상, 트리 DP를 먼저 생각해 볼 수 있습니다.<br />
+<code class="language-plaintext highlighter-rouge">dp[i][j]</code> : $i$번째 노드를 루트로 하는 subtree에 대해, $j$개의 path를 택했을 때의 최댓값</p>
+
+<p>이 DP를 계산하는 방법을 생각해 봅시다. 만약 내 child node에 대해 모든 dp값을 알고 있다면, 내 child node 들에 대해 각 노드당 몇개의 chain을 사용할지를 정해야 합니다. 이는 굳이 열심히 복잡도를 계산해 보지 않더라도, 적어도 $O(NK)$ 칸의 DP를 모두 채워야 하기 때문에 전혀 답이 없습니다. 예를 들어 3개의 자식노드를 가진 노드에 대해 <code class="language-plaintext highlighter-rouge">dp[i][5]</code>를 계산하려면, 5를 3개로 분할하는 모든 경우에 대해 각각 dp값을 더해서 확인해야 하기 때문에 exponential한 시간이 걸릴 것입니다.</p>
+
+<p>대신해서, 이렇게 생각해 봅시다. 이하, 한줄로 쭉 연결된 path를 경로 또는 체인으로 표현하겠습니다.</p>
+<ul>
+  <li>만약 최종적인 답이, 트리에서 가장 긴 경로 (루트-리프 중 가장 긴 경로)를 포함하지 않는다면 적당한 경로 하나를 빼고 대신에 이 가장 긴 경로를 집어넣으면 더 좋은 답이 됩니다.</li>
+  <li>이를 귀납적으로 반복 적용하면, 무조건 현재 남아 있는 가장 긴 경로를 택해야 한다는 것입니다.</li>
+  <li>단, path의 길이의 합이 아니라 union에 포함된 노드 수를 세기 때문에, 이미 한번 방문된 노드는 더이상 path의 길이에 의미가 없습니다.</li>
+</ul>
+
+<p>path의 개수는 너무 많고, 우리는 어차피 어떤 노드를 정하면 거기서부터 리프까지 달려가는게 최대한 이득이기 때문에, “어떤 노드를 골라서” 그 노드를 루트로 하는 서브트리에서 가장 깊이 들어가 있는 리프까지의 경로를 택한다고 생각해도 충분합니다. 즉, 트리를 서로 disjoint한 path로 잘라서 생각합니다.</p>
+
+<p>이제, 미리 모든 path를 priority queue에 넣어놓고, 이를 고르는 식으로 돌립니다. 단, 이미 방문한 노드는 다시 고르지 않도록 조정하면 됩니다. 아래 구현이 충분히 직관적으로 읽힌다고 생각해서, 더이상 설명은 생략하겠습니다.</p>
+
+<h2 id="구현">구현</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;bits/stdc++.h&gt;
+#define usecppio ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">;</span>
+<span class="n">vector</span> <span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">T</span><span class="p">[</span><span class="mi">101010</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">depth</span><span class="p">[</span><span class="mi">101010</span><span class="p">];</span>
+<span class="kt">bool</span> <span class="n">vst</span><span class="p">[</span><span class="mi">101010</span><span class="p">];</span>
+<span class="k">struct</span> <span class="nc">path</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">head</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">tail</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="k">const</span> <span class="n">path</span> <span class="o">&amp;</span><span class="n">o</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="n">o</span><span class="p">.</span><span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span> <span class="n">pq</span><span class="p">;</span>
+<span class="n">path</span> <span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">depth</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">depth</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">path</span> <span class="n">longest_path</span><span class="p">;</span>
+    <span class="n">longest_path</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">longest_path</span><span class="p">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+    <span class="n">longest_path</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">c</span> <span class="o">:</span> <span class="n">T</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">p</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+        <span class="n">path</span> <span class="n">child_path</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">child_path</span><span class="p">.</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">longest_path</span><span class="p">.</span><span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">longest_path</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">child_path</span><span class="p">.</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">longest_path</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">child_path</span><span class="p">.</span><span class="n">tail</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">longest_path</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">longest_path</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">parent</span><span class="p">[</span><span class="mi">101010</span><span class="p">];</span>
+<span class="kt">int32_t</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">usecppio</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">N</span> <span class="o">&gt;&gt;</span> <span class="n">K</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span><span class="p">;</span> <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">dfs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="n">and</span> <span class="n">K</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">longest</span> <span class="o">=</span> <span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+        <span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">vst</span><span class="p">[</span><span class="n">longest</span><span class="p">.</span><span class="n">head</span><span class="p">])</span> <span class="k">continue</span><span class="p">;</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">longest</span><span class="p">.</span><span class="n">length</span><span class="p">;</span>
+        <span class="n">K</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">longest</span><span class="p">.</span><span class="n">tail</span><span class="p">;</span> <span class="n">cur</span> <span class="o">!=</span> <span class="n">longest</span><span class="p">.</span><span class="n">head</span><span class="p">;</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">cur</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">vst</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">vst</span><span class="p">[</span><span class="n">longest</span><span class="p">.</span><span class="n">head</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

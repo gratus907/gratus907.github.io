@@ -259,6 +259,8 @@ body { font-weight: 400; }
 
 h1, h2, h3, h4, h5, h6 { margin-top: 2em; font-weight: 400; margin-bottom: 0.8rem; }
 
+h1 { font-size: 2em; font-weight: 500; }
+
 img { max-width: 100%; }
 
 .publications ol.bibliography li .author > em { font-weight: bold; }
@@ -285,7 +287,7 @@ thead { border: solid 2px grey; font-weight: 400; }
 
 div#toc { font-size: 130%; }
 
-code, kbd, pre, samp { font-family: Fira Code,Consolas,"Liberation Mono","Courier New",monospace; }
+code, kbd, pre, samp { font-family: Consolas,"Liberation Mono","Courier New",monospace; }
 
 pre { background-color: #fff7ff; }
 
