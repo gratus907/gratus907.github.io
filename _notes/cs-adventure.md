@@ -50,12 +50,13 @@ table th:nth-of-type(3) {
 어떤 한 주제가 있고, 이 주제에 관한 여러 논문이 있는 경우, 그 주제에 대한 개요를 적는 포스팅을 하나씩 더 쓰기도 할 것 같습니다. 이 포스팅은 아래 리뷰 글에서 논문 리뷰 외의 일반적인 개념에 대한 소개를 최소화하기 위해 주로 작성합니다.
 - **[Subgraph Isomorphism : Introduction](/cs-adventure/sub-iso-note)**
 
-| **Title (Link to post)**                                                                                          | **Topic**  | **Published**                 |
-| ------------------------------------------------------------------------------------------------------------- | ------ | ------------------------- |
-| **[Active Contours Without Edges](/cs-adventure/chan-vese/)**                                                 | NA, CV | IEEE TIP[^ieee-tip], 2001 |
-| **[DELTACON: A Principled Massive-Graph Similarity Function](/cs-adventure/deltacon/)**                       | SI     | SDM[^sdm], 2013           |
-| **In-Memory Subgraph Matching: An In-depth Study**[^subiso]                                                   | DS, DB | SIGMOD[^sigmod], 2020     |
-| **[Versatile Equivalences : Speeding up Subgraph Query Processing and Subgraph Matching](/cs-adventure/VEQ)** | DS, DB | SIGMOD[^sigmod], 2021     |
+| **Title (Link to post)**                                                                                      | **Topic** | **Published**             |
+| ------------------------------------------------------------------------------------------------------------- | --------- | ------------------------- |
+| **[Active Contours Without Edges](/cs-adventure/chan-vese/)**                                                 | NA, CV    | IEEE TIP[^ieee-tip], 2001 |
+| **[DELTACON: A Principled Massive-Graph Similarity Function](/cs-adventure/deltacon/)**                       | SI        | SDM[^sdm], 2013           |
+| **In-Memory Subgraph Matching: An In-depth Study**[^subiso]                                                   | DS, DB    | SIGMOD[^sigmod], 2020     |
+| **[Versatile Equivalences : Speeding up Subgraph Query Processing and Subgraph Matching](/cs-adventure/VEQ)** | DS, DB    | FOCS[^focs], 1996         |
+| **[All Pairs Almost Shortest Paths](/cs-adventure/APASP)**                                                    | DS        | SIGMOD[^sigmod], 2021     |
 
 
 [^ieee-tip]: Transactions on Image Processing

@@ -27,10 +27,11 @@ category: Computer Science
 
 # Postings
 ## Basics / Theory
-MLP, CNN 등을 관통하는 
+MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 이야기
 - [Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)
 - [Stochastic Gradient Descent](/deep-learning-study/sgd/)
 - [Backpropagation](/deep-learning-study/backpropagation)
+- [Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)
 - [Overfitting/Underfitting]
 - [Regularization : Dropout, Weight-decay]
 - [Batch Normalization]
@@ -60,4 +61,3 @@ ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image class
 - [Fully Convolutional Networks]
 - [Encoder-Decoder, U-Net]
 - [Dilated Convolutions, DeepLab]
-- 
