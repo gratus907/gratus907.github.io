@@ -1,0 +1,29 @@
+I"�<div id="toc">
+Contents
+</div>
+<ul id="markdown-toc">
+  <li><a href="#gradient-descent" id="markdown-toc-gradient-descent">Gradient Descent</a></li>
+  <li><a href="#stochastic-gradient-descent" id="markdown-toc-stochastic-gradient-descent">Stochastic Gradient Descent</a></li>
+</ul>
+<hr />
+
+<ul>
+  <li>많은 딥러닝 문헌에서 $x^i$를 $i$번째 데이터를 의미하는데 쓰고, $x_i$는 $x$벡터의 $i$번째 인덱스를 의미하는데 씁니다. 그러나 이렇게하면 제곱이랑 헷갈린다는 문제가 있어서, 여기서는 최대한 $i$번째 데이터를 $x_i$로 쓰고, 그 벡터의 원소는 $x_i(j)$ 로 쓰겠습니다.</li>
+</ul>
+
+<p>딥러닝의 문제는 수학적 관점에서 환원하면 결국 다음과 같이 요약할 수 있습니다.</p>
+<ul>
+  <li>미지의 함수 $f$에 대해 알고자 하는데,</li>
+  <li>모든 지점이 아닌 어떤 지점 $x_i$ 들에서만 그 값 $f(x_i) = y_i$ 를 알고 있고,</li>
+  <li>그래서 어떤 페널티 $\ell$ 을 정의해서, $\sum_i \ell(f(x_i), g(x_i))$가 작은 $g$를 $f$의 근사-함수로 생각하고 싶습니다.</li>
+  <li>그런데 이 $g$를 모든 함수의 공간에서 최적화하는 것은 일반적으로 가능하지 않으므로,</li>
+  <li>어떤 parameter $\theta$ 에 의해 표현되는 함수공간의 부분집합 $g_\theta$만을 생각하며,</li>
+  <li>$\minimize \sum_i \ell(f(x_i), g_\theta(x_i))$ by moving $\theta$로 생각합니다.</li>
+</ul>
+
+<p>그런데 $f(x_i)$는 이미 알고 있으므로, 결국은 $\ell$ 이라는 함수는 $\theta$에만 의존하게 됩니다. 따라서, 우리는 $\ell(\theta)$를 최소화하는 $\theta$를 찾는 것을 목표로 합니다. 다시 이를 일반화해서, $\theta \in \R^n$ 으로 생각하면, $\ell : \R^n \to \R$ 함수의 최적화 문제가 됩니다.</p>
+
+<h2 id="gradient-descent">Gradient Descent</h2>
+<p>이 글에서는 독자가 gradient descent를 이해하고 있다고 가정하지만, 혹시 아니라면 <a href="/deep-learning-study/opt-and-gd">Gradient Descent에 대한 포스팅</a> 를 참고해 주세요.</p>
+<h2 id="stochastic-gradient-descent">Stochastic Gradient Descent</h2>
+:ET
