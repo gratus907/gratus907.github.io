@@ -1,5 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-21T06:06:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
-</subtitle><entry><title type="html">Optimizers for Deep Learning</title><link href="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/" rel="alternate" type="text/html" title="Optimizers for Deep Learning" /><published>2021-11-20T00:00:00+09:00</published><updated>2021-11-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/optimizer-for-deep-learning</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/">&lt;div id=&quot;toc&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-24T03:36:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+</subtitle><entry><title type="html">논문읽기 : All Pairs Almost Shortest Path</title><link href="http://localhost:4000/cs-adventure/APASP/" rel="alternate" type="text/html" title="논문읽기 : All Pairs Almost Shortest Path" /><published>2021-11-22T00:00:00+09:00</published><updated>2021-11-22T00:00:00+09:00</updated><id>http://localhost:4000/cs-adventure/APASP</id><content type="html" xml:base="http://localhost:4000/cs-adventure/APASP/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#motivation&quot; id=&quot;markdown-toc-motivation&quot;&gt;Motivation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#introduction&quot; id=&quot;markdown-toc-introduction&quot;&gt;Introduction&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#at-a-glance&quot; id=&quot;markdown-toc-at-a-glance&quot;&gt;At a glance&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dominating-set&quot; id=&quot;markdown-toc-dominating-set&quot;&gt;Dominating Set&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#on52-complexity-2-error&quot; id=&quot;markdown-toc-on52-complexity-2-error&quot;&gt;$O(n^{5/2})$ complexity, 2-error&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;이번에 공부해볼 논문은 &lt;strong&gt;All Pairs Almost Shortest Path&lt;/strong&gt; 입니다.&lt;/p&gt;
+
+&lt;p&gt;D. Dor, S. Halperin and U. Zwick, “All pairs almost shortest paths,” Proceedings of 37th Conference on Foundations of Computer Science, 1996, pp. 452-461, doi: 10.1109/SFCS.1996.548504.&lt;/p&gt;
+
+&lt;p&gt;1996년도 논문으로, 이후에도 많은 논문들이 이 논문에서 제시한 bound를 더 내리는 등 더 contribution이 있지만, 아이디어가 흥미롭고 이후 논문들의 기반이 되는 연구입니다.&lt;/p&gt;
+
+&lt;p&gt;연도에 대해 언급하는 이후는 이후 25년간 알고리즘 분야의 발전으로 현재에는 다른 문제들의 복잡도가 약간씩 달라졌기 때문입니다.&lt;/p&gt;
+
+&lt;p&gt;그래프 문제에서 흔히 그렇듯, $G = (V, E)$에 대해 $\abs{V} = n$, $\abs{E} = m$으로 쓰되, $O(V)$ 와 같이 notation을 abuse하겠습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;All Pairs Shortest Path (이하 APSP) 란, 단순하게 어떤 그래프 $G = (V, E)$ 가 주어졌을 때, 각 vertex에서 다른 vertex로 가는 최단 경로의 길이를 모두 알아내는 문제입니다. 당연하게도, 실용적으로 많은 쓰임이 있습니다.&lt;/p&gt;
+
+&lt;p&gt;우리는 우선 논문을 따라, Undirected의 경우만 고려합니다. 이때 경로의 길이는 지나가는 edge의 개수가 될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;다음 세 가지 알고리즘이 가장 먼저 고려할 만 합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Floyd-Warshal Algorithm : $O(V^3)$ 시간에 APSP를 해결하는 알고리즘입니다. 구현이 매우 쉽고, 간단한 Dynamic programming의 원리를 따르기 때문에 이해하기 쉽습니다.&lt;/li&gt;
+  &lt;li&gt;Dijkstra (or any SSSP) : 다익스트라 알고리즘은 한 정점으로부터 다른 모든 정점까지의 거리를 찾는 Single Source Shortest Path (이하 SSSP) 문제를 $O(E + V \log V)$ 또는 $O(E \log V)$ 시간에 해결합니다. (Fibonacci heap의 사용 여부에 따라 다름) 자명하게, 모든 정점에서 출발하는 각 SSSP를 해결하면 되기 때문에 우리는 $O(VE + V^2 \log V)$ 정도 시간에는 APSP를 해결할 수 있습니다. 이 방법은 sparse graph에 대해서는 매우 빠르지만, dense graph에 대해서는 $E = O(V^2)$ 까지 가능하기 때문에 $O(V^3)$ 입니다.&lt;/li&gt;
+  &lt;li&gt;Matrix Multiplication : Floyd-Warshall의 inner loop이 행렬곱셈이랑 비슷하게 생겼음을 활용합니다. 행렬곱셈과 거의 비슷한 알고리즘을 이용하면, Adjacency matrix $A$를 repeated squaring하여 이 문제를 $O(V^3 \log V)$ 에 풀 수 있습니다. 더 느려 보이는 이 방법을 언급하는 이유는, 행렬곱셈에 쓰는 빠른 알고리즘들 중 일부가[^1] 이 ‘유사-행렬곱셈’에도 똑같이 적용가능하기 때문입니다. 스트라센을 쓰면 $O(V^{2.807} \log V)$ 이 되고 이는 위 두 방법보다 worst-case에 더 빠릅니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이 논문에서는, “약간의 오차를 허용하면” 이보다 빠른 알고리즘이 존재함을 보입니다. 정확히는, 모든 정점쌍 $(v_i, v_j)$에 대해, $d(v_i, v_j) + 2$ 를 넘지 않는 값을 반환하는 알고리즘을 논의하고, 이를 확장하여 $k$만큼의 오차를 허용하되 그만큼 빨라지는 알고리즘을 논의합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;h3 id=&quot;at-a-glance&quot;&gt;At a glance&lt;/h3&gt;
+&lt;p&gt;이 알고리즘의 큰 아이디어는 다음과 같습니다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Dijkstra 알고리즘은 sparse graph에 대해 &lt;strong&gt;꽤&lt;/strong&gt; 빠릅니다.&lt;/li&gt;
+  &lt;li&gt;그래프의 성질을 &lt;strong&gt;거의&lt;/strong&gt; 보존하면서 원래의 그래프보다 sparse한 auxillary graph 위에서 Dijkstra를 돌리고 싶습니다.&lt;/li&gt;
+  &lt;li&gt;Unweighted graph에 대해서는 특히, dijkstra를 일반적인 BFS로 대체할 수 있습니다.
+    &lt;h3 id=&quot;dominating-set&quot;&gt;Dominating Set&lt;/h3&gt;
+    &lt;p&gt;어떤 parameter $s$에 대해,&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;그래프 $(V, E)$에서, 어떤 정점의 부분집합 $S$가 다른 부분집합 $T$를 dominate 한다는 것은, $T$의 모든 vertex가 $S$의 vertex중 하나 이상과 edge로 연결되어 있는 것으로 정의합니다. 즉, 아래 그림에서 빨간색으로 색칠된 vertex는 그래프 전체를 dominate합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../images/82987572ed763cc4b5c4051dafdd2f09f351a476aeca2d83fdbf6ca5632322ea.png&quot; alt=&quot;image&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;일반적인 그래프에 대해 minimal dominating set을 찾는 것은 매우 잘 알려진 NP-Hard 문제입니다. 그러나, 우리는 좀 특수한 경우만 논의합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dominate(G, s)&lt;/strong&gt; : $G$에서, degree가 $s$이상인 정점들을 모은 부분집합을 dominate하는 적당히 작은 dominating set을 찾는다.&lt;/p&gt;
+
+&lt;p&gt;여기서 &lt;strong&gt;적당히 작은&lt;/strong&gt; 이란, $O\left(\frac{n \log n}{s}\right)$를 목표로 합니다. Aingworth et al[^2]에서는 이를 위해 다음의 알고리즘을 제시하고 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;각 vertex에 대해 neighbor set을 생각하면, dominating set을 찾는 것은 set cover를 찾는 것과 같은 문제입니다.&lt;/li&gt;
+  &lt;li&gt;각 집합 $S_i$의 원소는 $\Set{1, \cdots, n}$ 범위 내에 있고, 전체 원소의 합은 $2m$개 입니다.&lt;/li&gt;
+  &lt;li&gt;Greedy 알고리즘을 생각합니다. 각 스텝마다, ‘현재까지 cover되지 않은 가장 많은 element를 새로 cover하는’ 집합을 택합니다.&lt;/li&gt;
+  &lt;li&gt;이 알고리즘은 잘 생각해보면 $m$에 대해 선형으로 구현가능합니다.
+    &lt;ul&gt;
+      &lt;li&gt;각 $x \in \Set{1, \cdots, n}$에 대해, $x$를 포함하는 모든 집합의 리스트 $L$ 를 관리하고, 동시에 현재 남은 covering power (현재 uncovered인 vertex 개수) 가 $i$인 집합의 리스트 $A[i]$를 관리합니다. 이때 각 원소의 remaining covering power를 $P[i]$라고 하겠습니다.&lt;/li&gt;
+      &lt;li&gt;식으로 쓰면 복잡해지므로, pseudocode를 이용해서 표현해 보겠습니다.
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cur = maximum of |S| among sets
+while cur &amp;gt; 0:
+    if A[cur] empty : cur -= 1, continue
+    X = choose one with maximum P
+    for t in X:
+        if t is uncovered:
+            mark t as covered
+            for each Y containing t:
+                remove Y from A[P[Y]]
+                add Y to A[P[Y]-1]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시간 복잡도 증명 (위 알고리즘이 $O(\sum \abs{S})$) 임을 증명)
+    &lt;ul&gt;
+      &lt;li&gt;A를 관리하는 - 즉, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Y&lt;/code&gt;를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A[P[Y]]&lt;/code&gt;에서 꺼내서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A[P[Y]-1]&lt;/code&gt; 로 옮기는 decrease 연산이 $O(1)$에 시행가능하다면, 각 집합이 모두 그 크기만큼 decrease되어야 하므로 전체 복잡도는 각 집합의 원소의 개수의 합입니다. Bucket Queue 같은 자료구조를 이용하면 이게 가능함이 알려져 있습니다. (CLRS, 35-2-3).&lt;/li&gt;
+      &lt;li&gt;그런데, 각 vertex의 neighbor 개수의 합은 결국 edge를 두번씩 센 것이므로 $2m$ 입니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;$\log$ approximation
+    &lt;ul&gt;
+      &lt;li&gt;먼저 이 알고리즘이 얼마나 좋은 approximation을 제공하는지 생각해 봅니다. Optimal solution이 $k$개의 부분집합을 사용한다고 가정합니다. 전체 cover할 원소가 $n = n_0$개이고, 집합을 하나씩 택한후 각 step에서 “남은 cover해야할 원소의 수” 를 $n_i$라 합시다.&lt;/li&gt;
+      &lt;li&gt;비둘기집의 원리에 따라, 어떤 집합은 $n / k$개보다 많은 원소를 cover해야만 합니다. WLOG, 이를 $S_1$로 택하면 $n_1 \leq (n - n/k) = n\left(1-\frac{1}{k}\right)$ 입니다.&lt;/li&gt;
+      &lt;li&gt;다시 비둘기집의 원리에 따라, $n_1/(k-1)$ 개보다 많은 원소를 cover하는 집합이 존재해야 하고, 
+\(n_2 \leq n_1\left(1-\frac{1}{k}\right)\left(1-\frac{1}{k-1}\right)\leq n\left(1-\frac{1}{k}\right)^2\)&lt;/li&gt;
+      &lt;li&gt;Greedy set cover의 결과가 $u$개의 집합을 쓴다면, $u$번을 반복하여, $n_u \leq n\left(1-\frac{1}{k}\right)^u &amp;lt; 1$
+이를 다시 정리하여 다음을 얻습니다. 
+\(\left(1-\frac{1}{k}\right)^{k \cdot u/k} &amp;lt; \frac{1}{n}\)
+$(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$을 얻습니다.&lt;/li&gt;
+      &lt;li&gt;즉, Greedy set cover의 결과는 optimal결과보다 $\log n$배 이상 나쁘지 않습니다!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;다만 위 알고리즘은 전체 graph의 dominating set을 제공합니다. 따라서, dummy vertex $s$개를 생성한 다음 degree가 $s$ 미만인 모든 vertex들에 대해 이들을 dummy vertex에 연결해 버리면 전체 edge는 최대 $ns$개 증가하고, 모든 vertex가 $s$이상의 degree를 가집니다. dummy vertex들은 어차피 high-degree vertex와는 연결되지 않으므로, dominating set에서 이를 마지막에 제거해도 됩니다. 이렇게 하면…&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Dominate(G, s)&lt;/strong&gt; 의 결과값은 $O\left(\frac{n \log n}{s}\right)$개 이하의 dominating set을 찾아주고, 그 수행시간은 $O(m + ns)$ 입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;on52-complexity-2-error&quot;&gt;$O(n^{5/2})$ complexity, 2-error&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;$s = (m / n)^{1/2}$ 라 하고, degree가 $s$ 미만인 vertex 집합 $V_1$ 과 이상인 집합 $V_2$로 $V$를 나눕니다.&lt;/li&gt;
+  &lt;li&gt;Low-degree vertex를 touch하는 edge의 집합을 $E_2$라 합시다. 이때, 이들의 개수는 $ns$개 이하입니다. (Low degree인 정점 최대 $V$개, 각각의 degree 최대 $s$)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Dominate(G, s)&lt;/strong&gt; 를 돌립니다. 이 집합은 $O((n \log n) / s)$ 개 이하이므로, $O((n^{3/2} \log n) / m^{1/2})$ 개 이하의 정점으로 구성된 집합입니다.&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;[^1] : 이론적으로 가장 빠른 알고리즘 (Coppersmith-Winograd), 실용적으로 빠른 알고리즘 (Strassen)이 이 min-plus-mm에도 적용가능함이 알려져 있습니다.&lt;/p&gt;</content><author><name></name></author><category term="cs-adventure" /><summary type="html">Contents</summary></entry><entry><title type="html">Optimizers for Deep Learning</title><link href="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/" rel="alternate" type="text/html" title="Optimizers for Deep Learning" /><published>2021-11-20T00:00:00+09:00</published><updated>2021-11-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/optimizer-for-deep-learning</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -241,7 +355,7 @@ Contents
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;\n&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="problem-solving" /><summary type="html">Contents</summary></entry><entry><title type="html">Autodiff/Backpropagation</title><link href="http://localhost:4000/deep-learning-study/backpropagation/" rel="alternate" type="text/html" title="Autodiff/Backpropagation" /><published>2021-11-16T00:00:00+09:00</published><updated>2021-11-16T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/backpropagation</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/backpropagation/">&lt;div id=&quot;toc&quot;&gt;
 Contents
@@ -381,8 +495,8 @@ Contents
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchvision&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchvision.transforms&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'./mnist_data/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'./mnist_data/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;./mnist_data/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;./mnist_data/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cuda&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;cpu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -491,8 +605,8 @@ Estimated Total Size (MB): 0.35
     &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view_as&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'''[Test set]&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Average loss: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;, 
-Accuracy: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;%)'''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&apos;[Test set]&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Average loss: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;, 
+Accuracy: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;%)&apos;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;저는 20번의 epoch (대략 1분 정도의 training) 후에 98.25%의 정확도를 얻을 수 있었습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Image Segmentation - Single Layer Model</title><link href="http://localhost:4000/image-segmentation-2021/single-layer-convolution/" rel="alternate" type="text/html" title="Image Segmentation - Single Layer Model" /><published>2021-11-06T00:00:00+09:00</published><updated>2021-11-06T00:00:00+09:00</updated><id>http://localhost:4000/image-segmentation-2021/single-layer-convolution</id><content type="html" xml:base="http://localhost:4000/image-segmentation-2021/single-layer-convolution/">&lt;div id=&quot;toc&quot;&gt;
 Contents
@@ -610,7 +724,7 @@ Estimated Total Size (MB): 86.98
               &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Loss &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
               &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Accr &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
               &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Time &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; min&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'train_loss'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_losses&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'train_acc'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;train_loss&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_losses&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;train_acc&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Total training time &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; minutes taken&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -689,10 +803,10 @@ Contents
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__getitem__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;.jpg&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cvtColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COLOR_BGR2RGB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;interpolation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INTER_NEAREST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mask_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMREAD_GRAYSCALE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mask_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;.png&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMREAD_GRAYSCALE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;interpolation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INTER_NEAREST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
         &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Compose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
@@ -721,9 +835,9 @@ Contents
     &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filenames&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMAGE_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filenames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;.&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DroneDataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMAGE_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MASK_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DroneDataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IMAGE_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MASK_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt;
@@ -799,12 +913,12 @@ Contents
         &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Picture'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Picture&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Ground truth'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Ground truth&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_axis_off&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;ax3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ax3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Model | score &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Model | score &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;ax3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_axis_off&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -815,7 +929,58 @@ Contents
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show_qualitative()&lt;/code&gt; 는 결과의 정성적 평가를 위한 것으로, 특정 이미지에 대한 image, ground truth, prediction을 동시에 띄워줍니다. 실제로 이미지를 띄워야 하기 때문에, Dataset을 만들때 ToTensor와 Normalize했던 것을 다시 거꾸로 돌려줘야 합니다. Normalize의 정의를 이용하여 이부분은 적당히 처리해줄 수 있습니다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;다음 포스팅에서는 train을 어떻게 실제로 실행할지와, 이를 이용해서 아주 간단한 모델을 한번 확인해보는 정도를 진행할 예정입니다.&lt;/p&gt;</content><author><name></name></author><category term="image-segmentation-2021" /><summary type="html">Contents 앞으로 이 프로젝트에서 사용하는 코드는 모두 Github Repo 에 올라갈 예정입니다. 오늘은 먼저, 데이터 등을 준비하는 과정을 진행합니다.</summary></entry><entry><title type="html">Aho-Corasick Multiple Pattern Matching</title><link href="http://localhost:4000/advanced-algorithms/aho-corasick-algorithm/" rel="alternate" type="text/html" title="Aho-Corasick Multiple Pattern Matching" /><published>2021-10-27T00:00:00+09:00</published><updated>2021-10-27T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/aho-corasick-algorithm</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/aho-corasick-algorithm/">&lt;div id=&quot;toc&quot;&gt;
+&lt;p&gt;다음 포스팅에서는 train을 어떻게 실제로 실행할지와, 이를 이용해서 아주 간단한 모델을 한번 확인해보는 정도를 진행할 예정입니다.&lt;/p&gt;</content><author><name></name></author><category term="image-segmentation-2021" /><summary type="html">Contents 앞으로 이 프로젝트에서 사용하는 코드는 모두 Github Repo 에 올라갈 예정입니다. 오늘은 먼저, 데이터 등을 준비하는 과정을 진행합니다.</summary></entry><entry><title type="html">Boyer-Moore Heuristic Pattern Matching</title><link href="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/" rel="alternate" type="text/html" title="Boyer-Moore Heuristic Pattern Matching" /><published>2021-10-27T00:00:00+09:00</published><updated>2021-10-27T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/boyer-moore-algorithm</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#motivation&quot; id=&quot;markdown-toc-motivation&quot;&gt;Motivation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#algorithm--bad-character-heuristic&quot; id=&quot;markdown-toc-algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#algorithm--good-suffix-heuristic&quot; id=&quot;markdown-toc-algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#boyer-moore-horspool-algorithm&quot; id=&quot;markdown-toc-boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;(아직 작성 중인 글입니다)&lt;/p&gt;
+
+&lt;p&gt;이 글은 KMP 알고리즘과 Trie 자료구조에 대한 이해를 선행으로 요구합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Boyer-Moore 알고리즘이 해결하는 문제는 KMP와 똑같이, 어떤 $n$글자의 긴 텍스트 $T$에 대해, 짧은 $m$글자의 패턴 $P$를 매칭하는 것입니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;가장 Naive하게 $T$의 모든 위치에 대해 $m$글자를 매칭해보는 알고리즘은 $O(nm)$ 입니다.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm&quot;&gt;KMP 알고리즘&lt;/a&gt; 은 (언젠가 작성할 계획은 있지만 우선순위는 낮습니다) 이를 $O(n + m)$ 으로 줄인 엄청난 성과를 보입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Boyer-Moore 알고리즘은 worst case에서는 $O(nm)$이지만, string이 랜덤하게 주어진다면 평균 $O(n / m)$ 복잡도를 보입니다.&lt;/p&gt;
+
+&lt;p&gt;기본적으로, 이 알고리즘은 패턴을 &lt;strong&gt;오른쪽부터 왼쪽으로&lt;/strong&gt; 매칭하고, 문자열 자체는 (즉 매칭하는 위치 자체는) &lt;strong&gt;왼쪽에서 오른쪽으로&lt;/strong&gt; 봅니다. 이 방향의 차이에 주목할 필요가 있습니다. KMP의 경우는 패턴과 텍스트 모두 좌 -&amp;gt; 우 로 매칭합니다. 가능한한 ‘첫’, ‘두번째’ 와 같은 말은 오른쪽에서 왼쪽으로 매칭하는 실제 세팅에, ‘1번’, ‘2번’ 등의 말은 진짜 인덱스를 의미하도록 작성했습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/h2&gt;
+&lt;p&gt;텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacbcadc&lt;/code&gt; 에서 패턴 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭한다고 생각해 봅시다. 이때, 뒤에서부터 앞으로 매칭을 시도하는 것은 텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacb&lt;/code&gt; 와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭하는 것입니다. 여기서 첫 글자 (패턴을 &lt;strong&gt;오른쪽부터&lt;/strong&gt; 읽으므로 텍스트와 패턴의 첫 글자는 각각 6번 위치인 b와 a입니다!) 를 매칭하려고 시도했을 때, a를 찾아야 하는데 b를 찾았으므로 실패했습니다.&lt;/p&gt;
+
+&lt;p&gt;Naive matching은 여기서 포기하고 다음 위치인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bcacbc&lt;/code&gt;와의 매칭을 시도하겠지만, Boyer-Moore의 알고리즘은 여기서 “그럼 만약, 이 6번위치의 b를 꼭 써야 한다면, 어디까지 내가 패턴을 밀어야 b를 쓸 수 있느냐?” 라는 질문을 던집니다. 생각해보면 텍스트를 기준으로 패턴을 한칸 밀어봤자, 패턴의 5번 글자인 d와 b를 매칭하게 될 것이고 이는 어차피 실패할 것이기 때문입니다. 패턴의 맨 뒤를 기준으로 3글자를 밀어야 b를 텍스트 6번 b에 맞출 수 있으므로, 이만큼을 push해 버릴 수 있습니다. 여기서 이 ‘b’ 를 &lt;strong&gt;Bad Character&lt;/strong&gt; 라고 부를 것입니다.&lt;/p&gt;
+
+&lt;p&gt;이를 좀더 정리하면…&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bad character가 패턴에 아예 등장하지 않으면, 패턴을 확 밀어서 아예 넘어가도 됩니다.&lt;/li&gt;
+  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 왼쪽이면, 그만큼을 밀어도 됩니다.&lt;/li&gt;
+  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 오른쪽이면 얻을 수 있는 정보가 없습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/h2&gt;
+&lt;p&gt;이 방법은 자세히 설명하지 않을 것입니다. (이유는 후술합니다) Good suffix란, 어떻게 보면 위 Bad character의 3번 경우에 얻는 정보가 없음을 거꾸로 이용하는 방법인데요. 3번 경우는 아마도 꽤 많은 글자들이 맞은 다음 처음으로 bad character를 만난 상황일 것입니다. 즉 pattern의 꽤 긴 suffix가 이미 맞고 있는 상황이라는 의미가 됩니다. 이 Good suffix를 패턴에서 다시 맞추려면 얼만큼 이동해야 하는지를 미리 모두 precomputation해 두면, 그만큼을 점프할 수 있습니다. 당연히 맞는 suffix가 길수록 이 suffix를 다시 맞추기가 어려울 것이므로, 꽤 멀리 점프할 수 있을 것 같습니다. 이 precomputation은 “Pattern의 길이 k인 suffix가 다시 suffix로 등장하는 pattern의 prefix 위치” 를 마킹하면 되고, KMP의 실패함수와 매우 유사한 방법으로 구할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/h2&gt;
+&lt;p&gt;Horspool의 알고리즘은 위 Boyer-Moore에서 Good suffix heuristic을 아예 포기하고, Bad character는 항상 현재 매칭 위치의 마지막 글자만 고려합니다. 이렇게 해도 평균 시간 복잡도 $O(n / m)$ 비슷한 시간을 유지할 수 있음이 알려져 있지만, 그 증명 과정은 엄청난 수식과 고통스러운 증명 (부등식 줄이기)을 요구합니다. 다만, 충분히 랜덤한 텍스트에 대해서는 B-M-H가 굉장히 빠름이 잘 알려져 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Horspool은 굉장히 쉽게 구현할 수 있습니다. 먼저 각 character에 대해 패턴의 오른쪽 끝에서 가장 가까운 (하지만 오른쪽 끝은 아닌) 등장 위치를 계산해 두고, bad character에 걸리면 그만큼 push하면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;여기서는 정말 러프한 증명…도 아니고 argument를 하나 소개하고 마치겠습니다. 알파벳 $q$글자 중 랜덤하게 생성된 string $P, T$에서의 Horspool 알고리즘을 가정하겠습니다. 이중 한 글자가 패턴의 오른쪽 끝에서 얼마나 멀리 있을지 그 기댓값을 생각해 봅시다. 알파벳 $x$를 이용하여 $k$길이 이상의 jump를 허용하기 위해서는 뒤에서 $k-1$개의 글자는 $x$가 아닌 다른 글자여야 하므로, 점프 길이가 $k$ 이상일 확률은 $\left(1-\frac{1}{q}\right)^{k-1}$ 입니다. $r = \left(1-\frac{1}{q}\right)$ 로 쓰면 편하게 이를 $r^{k-1}$ 로 쓸 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;$\expect{X} = \sum_{k = 1}^{\infty} \P(X \geq k)$ 의 공식을 이용합니다. $k \geq m+1$의 확률은 0이므로, 
+\(\expect{\text{jump length}} = \sum_{j = 1}^{m} r^{j-1} = \frac{r^m - 1}{r - 1}= q(1 - r^m)\)&lt;/p&gt;
+
+&lt;p&gt;따라서, $m$이 충분히 크면 대충 $q$ 정도의 shift는 기대할 수 있으므로, $O(n / q)$ 정도의 퍼포먼스는 기대해 볼 수 있습니다. 당연히 이는 각 글자가 iid random이라는 이루어지지 않는 가정이 들어갔을 뿐만 아니라, 각 위치에서 bad character를 만나는 데 걸리는 매칭개수도 무시하고 있지만, 간단한 argument로는 그럭저럭 기능합니다.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Aho-Corasick Multiple Pattern Matching</title><link href="http://localhost:4000/advanced-algorithms/aho-corasick-algorithm/" rel="alternate" type="text/html" title="Aho-Corasick Multiple Pattern Matching" /><published>2021-10-27T00:00:00+09:00</published><updated>2021-10-27T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/aho-corasick-algorithm</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/aho-corasick-algorithm/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -884,58 +1049,7 @@ Contents
 &lt;p&gt;따라서, 종합하면 간단하게는 $O(qM + n)$ 시간과 $O(qM)$ 공간을 이용하여 multiple pattern matching을 할 수 있게 됩니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;구현&quot;&gt;구현&lt;/h2&gt;
-&lt;p&gt;추가 예정.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Boyer-Moore Heuristic Pattern Matching</title><link href="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/" rel="alternate" type="text/html" title="Boyer-Moore Heuristic Pattern Matching" /><published>2021-10-27T00:00:00+09:00</published><updated>2021-10-27T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/boyer-moore-algorithm</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#motivation&quot; id=&quot;markdown-toc-motivation&quot;&gt;Motivation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#algorithm--bad-character-heuristic&quot; id=&quot;markdown-toc-algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#algorithm--good-suffix-heuristic&quot; id=&quot;markdown-toc-algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#boyer-moore-horspool-algorithm&quot; id=&quot;markdown-toc-boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;(아직 작성 중인 글입니다)&lt;/p&gt;
-
-&lt;p&gt;이 글은 KMP 알고리즘과 Trie 자료구조에 대한 이해를 선행으로 요구합니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;Boyer-Moore 알고리즘이 해결하는 문제는 KMP와 똑같이, 어떤 $n$글자의 긴 텍스트 $T$에 대해, 짧은 $m$글자의 패턴 $P$를 매칭하는 것입니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;가장 Naive하게 $T$의 모든 위치에 대해 $m$글자를 매칭해보는 알고리즘은 $O(nm)$ 입니다.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm&quot;&gt;KMP 알고리즘&lt;/a&gt; 은 (언젠가 작성할 계획은 있지만 우선순위는 낮습니다) 이를 $O(n + m)$ 으로 줄인 엄청난 성과를 보입니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Boyer-Moore 알고리즘은 worst case에서는 $O(nm)$이지만, string이 랜덤하게 주어진다면 평균 $O(n / m)$ 복잡도를 보입니다.&lt;/p&gt;
-
-&lt;p&gt;기본적으로, 이 알고리즘은 패턴을 &lt;strong&gt;오른쪽부터 왼쪽으로&lt;/strong&gt; 매칭하고, 문자열 자체는 (즉 매칭하는 위치 자체는) &lt;strong&gt;왼쪽에서 오른쪽으로&lt;/strong&gt; 봅니다. 이 방향의 차이에 주목할 필요가 있습니다. KMP의 경우는 패턴과 텍스트 모두 좌 -&amp;gt; 우 로 매칭합니다. 가능한한 ‘첫’, ‘두번째’ 와 같은 말은 오른쪽에서 왼쪽으로 매칭하는 실제 세팅에, ‘1번’, ‘2번’ 등의 말은 진짜 인덱스를 의미하도록 작성했습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/h2&gt;
-&lt;p&gt;텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacbcadc&lt;/code&gt; 에서 패턴 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭한다고 생각해 봅시다. 이때, 뒤에서부터 앞으로 매칭을 시도하는 것은 텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacb&lt;/code&gt; 와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭하는 것입니다. 여기서 첫 글자 (패턴을 &lt;strong&gt;오른쪽부터&lt;/strong&gt; 읽으므로 텍스트와 패턴의 첫 글자는 각각 6번 위치인 b와 a입니다!) 를 매칭하려고 시도했을 때, a를 찾아야 하는데 b를 찾았으므로 실패했습니다.&lt;/p&gt;
-
-&lt;p&gt;Naive matching은 여기서 포기하고 다음 위치인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bcacbc&lt;/code&gt;와의 매칭을 시도하겠지만, Boyer-Moore의 알고리즘은 여기서 “그럼 만약, 이 6번위치의 b를 꼭 써야 한다면, 어디까지 내가 패턴을 밀어야 b를 쓸 수 있느냐?” 라는 질문을 던집니다. 생각해보면 텍스트를 기준으로 패턴을 한칸 밀어봤자, 패턴의 5번 글자인 d와 b를 매칭하게 될 것이고 이는 어차피 실패할 것이기 때문입니다. 패턴의 맨 뒤를 기준으로 3글자를 밀어야 b를 텍스트 6번 b에 맞출 수 있으므로, 이만큼을 push해 버릴 수 있습니다. 여기서 이 ‘b’ 를 &lt;strong&gt;Bad Character&lt;/strong&gt; 라고 부를 것입니다.&lt;/p&gt;
-
-&lt;p&gt;이를 좀더 정리하면…&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Bad character가 패턴에 아예 등장하지 않으면, 패턴을 확 밀어서 아예 넘어가도 됩니다.&lt;/li&gt;
-  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 왼쪽이면, 그만큼을 밀어도 됩니다.&lt;/li&gt;
-  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 오른쪽이면 얻을 수 있는 정보가 없습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/h2&gt;
-&lt;p&gt;이 방법은 자세히 설명하지 않을 것입니다. (이유는 후술합니다) Good suffix란, 어떻게 보면 위 Bad character의 3번 경우에 얻는 정보가 없음을 거꾸로 이용하는 방법인데요. 3번 경우는 아마도 꽤 많은 글자들이 맞은 다음 처음으로 bad character를 만난 상황일 것입니다. 즉 pattern의 꽤 긴 suffix가 이미 맞고 있는 상황이라는 의미가 됩니다. 이 Good suffix를 패턴에서 다시 맞추려면 얼만큼 이동해야 하는지를 미리 모두 precomputation해 두면, 그만큼을 점프할 수 있습니다. 당연히 맞는 suffix가 길수록 이 suffix를 다시 맞추기가 어려울 것이므로, 꽤 멀리 점프할 수 있을 것 같습니다. 이 precomputation은 “Pattern의 길이 k인 suffix가 다시 suffix로 등장하는 pattern의 prefix 위치” 를 마킹하면 되고, KMP의 실패함수와 매우 유사한 방법으로 구할 수 있습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/h2&gt;
-&lt;p&gt;Horspool의 알고리즘은 위 Boyer-Moore에서 Good suffix heuristic을 아예 포기하고, Bad character는 항상 현재 매칭 위치의 마지막 글자만 고려합니다. 이렇게 해도 평균 시간 복잡도 $O(n / m)$ 비슷한 시간을 유지할 수 있음이 알려져 있지만, 그 증명 과정은 엄청난 수식과 고통스러운 증명 (부등식 줄이기)을 요구합니다. 다만, 충분히 랜덤한 텍스트에 대해서는 B-M-H가 굉장히 빠름이 잘 알려져 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Horspool은 굉장히 쉽게 구현할 수 있습니다. 먼저 각 character에 대해 패턴의 오른쪽 끝에서 가장 가까운 (하지만 오른쪽 끝은 아닌) 등장 위치를 계산해 두고, bad character에 걸리면 그만큼 push하면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;여기서는 정말 러프한 증명…도 아니고 argument를 하나 소개하고 마치겠습니다. 알파벳 $q$글자 중 랜덤하게 생성된 string $P, T$에서의 Horspool 알고리즘을 가정하겠습니다. 이중 한 글자가 패턴의 오른쪽 끝에서 얼마나 멀리 있을지 그 기댓값을 생각해 봅시다. 알파벳 $x$를 이용하여 $k$길이 이상의 jump를 허용하기 위해서는 뒤에서 $k-1$개의 글자는 $x$가 아닌 다른 글자여야 하므로, 점프 길이가 $k$ 이상일 확률은 $\left(1-\frac{1}{q}\right)^{k-1}$ 입니다. $r = \left(1-\frac{1}{q}\right)$ 로 쓰면 편하게 이를 $r^{k-1}$ 로 쓸 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;$\expect{X} = \sum_{k = 1}^{\infty} \P(X \geq k)$ 의 공식을 이용합니다. $k \geq m+1$의 확률은 0이므로, 
-\(\expect{\text{jump length}} = \sum_{j = 1}^{m} r^{j-1} = \frac{r^m - 1}{r - 1}= q(1 - r^m)\)&lt;/p&gt;
-
-&lt;p&gt;따라서, $m$이 충분히 크면 대충 $q$ 정도의 shift는 기대할 수 있으므로, $O(n / q)$ 정도의 퍼포먼스는 기대해 볼 수 있습니다. 당연히 이는 각 글자가 iid random이라는 이루어지지 않는 가정이 들어갔을 뿐만 아니라, 각 위치에서 bad character를 만나는 데 걸리는 매칭개수도 무시하고 있지만, 간단한 argument로는 그럭저럭 기능합니다.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Amortized Analysis</title><link href="http://localhost:4000/advanced-algorithms/amortized-analysis/" rel="alternate" type="text/html" title="Amortized Analysis" /><published>2021-10-24T00:00:00+09:00</published><updated>2021-10-24T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/amortized-analysis</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/amortized-analysis/">&lt;div id=&quot;toc&quot;&gt;
+&lt;p&gt;추가 예정.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Amortized Analysis</title><link href="http://localhost:4000/advanced-algorithms/amortized-analysis/" rel="alternate" type="text/html" title="Amortized Analysis" /><published>2021-10-24T00:00:00+09:00</published><updated>2021-10-24T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/amortized-analysis</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/amortized-analysis/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -1055,101 +1169,4 @@ Contents
   &lt;li&gt;Splay Tree 와 같은 자료구조의 복잡도 분석.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Convolutionary Neural Networks : Introduction</title><link href="http://localhost:4000/deep-learning-study/convolutionary-neural-networks/" rel="alternate" type="text/html" title="Convolutionary Neural Networks : Introduction" /><published>2021-10-17T00:00:00+09:00</published><updated>2021-10-17T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/convolutionary-neural-networks</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/convolutionary-neural-networks/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#convolution&quot; id=&quot;markdown-toc-convolution&quot;&gt;Convolution&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#pooling&quot; id=&quot;markdown-toc-pooling&quot;&gt;Pooling&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#convolutionary-neural-network&quot; id=&quot;markdown-toc-convolutionary-neural-network&quot;&gt;Convolutionary Neural Network&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#why-cnn&quot; id=&quot;markdown-toc-why-cnn&quot;&gt;Why CNN?&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#next-posts&quot; id=&quot;markdown-toc-next-posts&quot;&gt;Next posts&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;심층 신경망의 수학적 기초&lt;/strong&gt; 7강 (9월 28일) 에 기반합니다.&lt;/p&gt;
-
-&lt;p&gt;매우 유명한 &lt;a href=&quot;https://cs231n.github.io/convolutional-networks/&quot;&gt;Standford CS231n 자료&lt;/a&gt; 도 참고하면 좋습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;convolution&quot;&gt;Convolution&lt;/h2&gt;
-&lt;p&gt;Convolution은 수학적으로 굉장히 다양한 대상들에 대해서 잘 정의된 연산인데, 우리는 $n$차원 텐서 (배열) 에 대해서만 생각하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;다음 그림과 같이, Convolution은 Filter 또는 Kernel 이라는 (그림의 노란색 행렬) 을 “밀면서” 내적을 반복해서 새로운 행렬을 얻는 연산입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../images/86b0e614b1f1445063f784261b4925e98524f0af7c7c3ec0692c3662bb9e631d.png&quot; alt=&quot;picture 1&quot; /&gt;&lt;br /&gt;
-&lt;a href=&quot;https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53&quot;&gt;이미지 출처 : towardsdatascience.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;일반적으로, 이미지 처리에서 CNN을 가장 많이 쓰기 때문에 CNN의 입력은 3차원 텐서 (배열) 로 가정하고, filter도 3차원 텐서 (배열) 로 가정합니다. 이미지가 2차원임에도 3차원 텐서를 쓰는 이유는 이 텐서의 정체를 보면 알 수 있습니다. 보통은 세 차원을 Channel * Width * Height 으로 부르는데, Channel은 초기 입력 단계에서는 &lt;strong&gt;R G B&lt;/strong&gt; 의 색 정보를 나타냅니다.&lt;/p&gt;
-
-&lt;p&gt;그래서, 3차원 텐서지만 실재로는 여러 채널이 있는 W * H 크기의 행렬의 묶음으로 생각하면 됩니다. $C * W * H$ 입력 이미지에 대해 $C * 3 * 3$ 필터를 쓰게 되면 실제로 공간적으로 필터를 밀어 볼 수 있는 방향은 (가로, 세로) 방향으로만 밀면 되므로, $(W - 2) * (H - 2)$ 크기의 결과를 얻습니다. 그러나 우리는 여러 정보를 동시에 인코딩해서 가져가고 싶기 때문에, 실제로는 동시에 $D$개의 $C * 3 * 3$ 필터를 사용합니다.&lt;/p&gt;
-
-&lt;p&gt;이렇게 해서 얻어진 각 행렬들을 모두 연결하면, $D * (W - 2) * (H - 2)$ 크기의 output을 얻습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Padding :&lt;/strong&gt; 우리가 $W * H$ 크기의 이미지를 가지고 있고, 이 이미지에 $3 * 3$ filter를 convolution하면, $(W - 2) * (H - 2)$ 크기가 된다는 것은 쉽게 알 수 있습니다. 이는 맨 외곽 칸까지 밀게 되면 필터가 이미지 바깥으로 일부가 나가버리기 때문인데, 이를 보정하기 위해 이미지의 맨 외곽선을 0으로 쭉 한칸 더 만들어 주는 방법이 있습니다. 이를 Padding이라고 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Stride :&lt;/strong&gt; Filter를 평면상에서 “민다” 고 표현했는데, 위 설명은 매번 “한 칸 씩” 미는 경우를 생각하고 있습니다. 꼭 그럴 필요는 없고, $s$칸씩 한번에 밀 수도 있습니다. 그렇게 하면 당연히 출력의 크기는 더 줄어들게 됩니다. 이 $s$를 Stride라 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Bias :&lt;/strong&gt; Convolution한 결과물 전체에 어떤 특정한 상수값을 더해줄 수도 있고, 이를 bias라고 부릅니다.&lt;/p&gt;
-
-&lt;p&gt;여기까지 내용의 요약이 다음 image에 잘 드러나 있습니다. &lt;a href=&quot;https://cs231n.github.io/convolutional-networks/&quot;&gt;이미지 출처인 Standford CS231n 자료&lt;/a&gt; 에서는 저 필터가 진짜 움직이는걸 볼 수 있으니 한번쯤 보면 이해하기 좋은 것 같습니다. 그림에는 3개 채널의 5 by 5 이미지에, padding 1을 주었고, 3채널 by 3 by 3 크기의 필터를 쓰며, stride = 2 인 케이스를 보여주고 있습니다. 아래에는 bias도 포함되어 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../images/67486f42036dc6a5e62931ee5ca802f2c420dc43111f872087eacb39a9417a1c.png&quot; alt=&quot;picture 2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;입력이 $C_i * W_i * H_i$ 이고, padding이 $p$, stride가 $s$이며, 크기가 $C_i * F * F$ 인 필터 $K$개를 쓴다고 하면, convolution을 한번 하고 나면 다음과 같이 계산되는 $C_o * W_o * H_o$ 출력을 얻습니다. 
-\(C_o = K \quad \quad W_o = \floor{\frac{W_i - F + 2P}{S} + 1} \quad \quad H_o = \floor{\frac{H_i - F + 2P}{S} + 1}\)&lt;/p&gt;
-
-&lt;h2 id=&quot;pooling&quot;&gt;Pooling&lt;/h2&gt;
-&lt;p&gt;CNN은 보통 큰 이미지 데이터를 대상으로 하며, 최초에는 이미지를 분류하는 목적으로 개발되었습니다. 그렇다 보니, 이미지 전체의 수만 픽셀의 데이터를 전부 보기보다는 그 특징을 잡아내는 것이 필요합니다. 또한 만약 신경망에서 잡아낼 수 있는 특징을 크게 훼손하지 않으면서 돌아다니는 데이터의 양을 줄일 수 있다면, training 및 inference 시간을 크게 개선할 수 있을 것입니다.&lt;/p&gt;
-
-&lt;p&gt;이를 위해 pooling이라는 연산을 수행합니다. pooling은 단순히 지금 보고 있는 부분의 max나 avg를 택하는 연산인데, 다음 그림을 보면 쉽게 이해할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../images/f0d16cb834ed161fb9bc6d2930499da42a45d639ef36dcdd8cc51ea8b2f9a0d6.png&quot; alt=&quot;picture 3&quot; /&gt;&lt;br /&gt;
-[이미지 출처 : Stanford CS231n]&lt;/p&gt;
-
-&lt;p&gt;위 그림에서 볼 수 있듯, pooling도 convolution처럼 filter라는 표현을 자주 쓰며, stride와 padding을 줄 수 있습니다. 다만 convolution처럼 뭔가를 train할 필요는 없고, 그냥 그 연산을 수행한다고 생각하면 됩니다. 가장 일반적인 형태의 pooling은 2 by 2 필터에 stride 2로 연산하는 것으로, 2 * 2 정사각형에서 max 또는 avg 하나씩을 남김으로서 데이터의 양을 1/4로 줄입니다.&lt;/p&gt;
-
-&lt;p&gt;Pooling은 각 채널별로 독립적으로 실행할 수 있으므로, 2D 에서만 생각해도 충분합니다. 3D pooling도 똑같이 정의하면 생각할 수는 있겠지만요.&lt;/p&gt;
-
-&lt;h2 id=&quot;convolutionary-neural-network&quot;&gt;Convolutionary Neural Network&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;/deep-learning-study/multilayer-perceptron&quot;&gt;Multi Layer Perceptron&lt;/a&gt; 에서는, Linear Layer - Activation - Linear Layer - Activation - … 의 형태로 깊게 이어진 신경망을 구축했고 이를 Multi-Layer Perceptron이라고 불렀습니다.&lt;/p&gt;
-
-&lt;p&gt;Convolutinary Neural Network, CNN도 큰 틀에서는 비슷합니다. 다만, 좀더 복잡한 아이디어들이 들어가 있습니다.&lt;/p&gt;
-
-&lt;p&gt;가장 기본적인 CNN은 크게 Convolution, Pooling, Activation의 세가지 Layer를 잘 반복해서 구성됩니다.&lt;/p&gt;
-
-&lt;p&gt;Convolution은 앞서 설명한 convolution 연산을 적당한 필터에 대해서 수행하는 것으로, MLP에서 weight 행렬이 train의 대상인 것처럼 여기서는 필터 전체가 training의 대상입니다.&lt;/p&gt;
-
-&lt;p&gt;Activation은 MLP에서처럼 모든 항에 적당한 activation function을 씌워서 신경망에 non-linearity를 제공하는 것입니다. 역시 MLP에서와 마찬가지로 ReLU, sigmoid, tanh 같은 함수들을 쓸 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Pooling은 앞서 설명한 pooling을 수행하는 layer입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;why-cnn&quot;&gt;Why CNN?&lt;/h2&gt;
-&lt;p&gt;CNN의 효용에 대해 얘기하려면 기존의 MLP의 특징을 먼저 이야기할 필요가 있습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;장점 : 간단하고, 이론적으로 굉장히 general합니다. 모든 연속함수를 어떤 정해진 구간에서는 충분히 큰 MLP로 approximate 가능하다는 굉장한 정리가 있는데 (Universal Approximation Theorem) 제가 찾아본 증명은 실해석학 수준의 해석학 지식을 (Hahn-Banach, Riesz Repr thm) 요구하기 때문에 다룰 수가 없습니다.&lt;/li&gt;
-  &lt;li&gt;단점 : Parameter가 매우 많아서, overfitting의 문제와 training speed 문제가 발생합니다.&lt;/li&gt;
-  &lt;li&gt;단점 : Computer vision에 쓰기에는 shift invariance 같은 것을 잘 처리하지 못한다는 심각한 문제가 있습니다. 특히 image classification 같은 경우, 이미지의 일부를 shift해도 그대로 같은 이미지인데 MLP는 이를 처리하기 어렵습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Convolution은 그 자체로 shift invaraince를 가지기 때문에, 단점 2번을 잘 해결합니다. 또한, 단점 1번의 경우, Convolution의 파라미터가 꽤 많아 보이지만 $W * H$ 이미지를 던져주고 $W * H$ 출력을 만들기 위해서 Linear layer는 파라미터 $W^2H^2$ 개가 필요합니다. 입출력이 200 by 200이면 이 값이 16억인데, convolution은 파라미터가 훨씬 적습니다.&lt;/p&gt;
-
-&lt;p&gt;자연스러운 질문은, 파라미터가 그렇게 적으면 충분히 general하게 학습하지 못하는게 아니냐는 의문이 들 수 있습니다. &lt;a href=&quot;https://arxiv.org/abs/1804.10306&quot;&gt;2018년 논문&lt;/a&gt; 에 따르면 수학적으로는 CNN도 universal approximation theorem이 있다고 하는데, 굳이 이런 놀라운 수학적 결과를 들이밀지 않더라도 이미지 처리에서 CNN이 그동안 보여준 놀라운 성과를 보면 이정도 파라미터로도 Convolution 자체가 어떤 이미지를 ‘대략적으로’ 보는 느낌이 굉장히 직관적으로 좋아서, 잘 작동하는 것으로 보입니다.&lt;/p&gt;
-
-&lt;p&gt;또한, CNN은 MLP보다 같은 크기에서 훨씬 깊은 네트워크를 만들 수 있습니다 (레이어당 파라미터가 적으므로) 이 점도 장점이 될 수 있겠습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;next-posts&quot;&gt;Next posts&lt;/h2&gt;
-&lt;p&gt;CNN의 여러 Model들에 대해 살펴볼 계획입니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;LeNet&lt;/li&gt;
-  &lt;li&gt;AlexNet&lt;/li&gt;
-  &lt;li&gt;VGGNet&lt;/li&gt;
-  &lt;li&gt;GoogLeNet&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/deep-learning-study/semantic-segmentation&quot;&gt;Semantic Segmentation&lt;/a&gt; 에서 다룰 모델들.
-    &lt;ul&gt;
-      &lt;li&gt;U-Net&lt;/li&gt;
-      &lt;li&gt;FCN&lt;/li&gt;
-      &lt;li&gt;DeepLab&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents Convolution Pooling Convolutionary Neural Network Why CNN? Next posts 심층 신경망의 수학적 기초 7강 (9월 28일) 에 기반합니다. 매우 유명한 Standford CS231n 자료 도 참고하면 좋습니다. Convolution Convolution은 수학적으로 굉장히 다양한 대상들에 대해서 잘 정의된 연산인데, 우리는 $n$차원 텐서 (배열) 에 대해서만 생각하겠습니다. 다음 그림과 같이, Convolution은 Filter 또는 Kernel 이라는 (그림의 노란색 행렬) 을 “밀면서” 내적을 반복해서 새로운 행렬을 얻는 연산입니다. 이미지 출처 : towardsdatascience.com 일반적으로, 이미지 처리에서 CNN을 가장 많이 쓰기 때문에 CNN의 입력은 3차원 텐서 (배열) 로 가정하고, filter도 3차원 텐서 (배열) 로 가정합니다. 이미지가 2차원임에도 3차원 텐서를 쓰는 이유는 이 텐서의 정체를 보면 알 수 있습니다. 보통은 세 차원을 Channel * Width * Height 으로 부르는데, Channel은 초기 입력 단계에서는 R G B 의 색 정보를 나타냅니다. 그래서, 3차원 텐서지만 실재로는 여러 채널이 있는 W * H 크기의 행렬의 묶음으로 생각하면 됩니다. $C * W * H$ 입력 이미지에 대해 $C * 3 * 3$ 필터를 쓰게 되면 실제로 공간적으로 필터를 밀어 볼 수 있는 방향은 (가로, 세로) 방향으로만 밀면 되므로, $(W - 2) * (H - 2)$ 크기의 결과를 얻습니다. 그러나 우리는 여러 정보를 동시에 인코딩해서 가져가고 싶기 때문에, 실제로는 동시에 $D$개의 $C * 3 * 3$ 필터를 사용합니다. 이렇게 해서 얻어진 각 행렬들을 모두 연결하면, $D * (W - 2) * (H - 2)$ 크기의 output을 얻습니다. Padding : 우리가 $W * H$ 크기의 이미지를 가지고 있고, 이 이미지에 $3 * 3$ filter를 convolution하면, $(W - 2) * (H - 2)$ 크기가 된다는 것은 쉽게 알 수 있습니다. 이는 맨 외곽 칸까지 밀게 되면 필터가 이미지 바깥으로 일부가 나가버리기 때문인데, 이를 보정하기 위해 이미지의 맨 외곽선을 0으로 쭉 한칸 더 만들어 주는 방법이 있습니다. 이를 Padding이라고 합니다. Stride : Filter를 평면상에서 “민다” 고 표현했는데, 위 설명은 매번 “한 칸 씩” 미는 경우를 생각하고 있습니다. 꼭 그럴 필요는 없고, $s$칸씩 한번에 밀 수도 있습니다. 그렇게 하면 당연히 출력의 크기는 더 줄어들게 됩니다. 이 $s$를 Stride라 합니다. Bias : Convolution한 결과물 전체에 어떤 특정한 상수값을 더해줄 수도 있고, 이를 bias라고 부릅니다. 여기까지 내용의 요약이 다음 image에 잘 드러나 있습니다. 이미지 출처인 Standford CS231n 자료 에서는 저 필터가 진짜 움직이는걸 볼 수 있으니 한번쯤 보면 이해하기 좋은 것 같습니다. 그림에는 3개 채널의 5 by 5 이미지에, padding 1을 주었고, 3채널 by 3 by 3 크기의 필터를 쓰며, stride = 2 인 케이스를 보여주고 있습니다. 아래에는 bias도 포함되어 있습니다. 입력이 $C_i * W_i * H_i$ 이고, padding이 $p$, stride가 $s$이며, 크기가 $C_i * F * F$ 인 필터 $K$개를 쓴다고 하면, convolution을 한번 하고 나면 다음과 같이 계산되는 $C_o * W_o * H_o$ 출력을 얻습니다. \(C_o = K \quad \quad W_o = \floor{\frac{W_i - F + 2P}{S} + 1} \quad \quad H_o = \floor{\frac{H_i - F + 2P}{S} + 1}\) Pooling CNN은 보통 큰 이미지 데이터를 대상으로 하며, 최초에는 이미지를 분류하는 목적으로 개발되었습니다. 그렇다 보니, 이미지 전체의 수만 픽셀의 데이터를 전부 보기보다는 그 특징을 잡아내는 것이 필요합니다. 또한 만약 신경망에서 잡아낼 수 있는 특징을 크게 훼손하지 않으면서 돌아다니는 데이터의 양을 줄일 수 있다면, training 및 inference 시간을 크게 개선할 수 있을 것입니다. 이를 위해 pooling이라는 연산을 수행합니다. pooling은 단순히 지금 보고 있는 부분의 max나 avg를 택하는 연산인데, 다음 그림을 보면 쉽게 이해할 수 있습니다. [이미지 출처 : Stanford CS231n] 위 그림에서 볼 수 있듯, pooling도 convolution처럼 filter라는 표현을 자주 쓰며, stride와 padding을 줄 수 있습니다. 다만 convolution처럼 뭔가를 train할 필요는 없고, 그냥 그 연산을 수행한다고 생각하면 됩니다. 가장 일반적인 형태의 pooling은 2 by 2 필터에 stride 2로 연산하는 것으로, 2 * 2 정사각형에서 max 또는 avg 하나씩을 남김으로서 데이터의 양을 1/4로 줄입니다. Pooling은 각 채널별로 독립적으로 실행할 수 있으므로, 2D 에서만 생각해도 충분합니다. 3D pooling도 똑같이 정의하면 생각할 수는 있겠지만요. Convolutionary Neural Network Multi Layer Perceptron 에서는, Linear Layer - Activation - Linear Layer - Activation - … 의 형태로 깊게 이어진 신경망을 구축했고 이를 Multi-Layer Perceptron이라고 불렀습니다. Convolutinary Neural Network, CNN도 큰 틀에서는 비슷합니다. 다만, 좀더 복잡한 아이디어들이 들어가 있습니다. 가장 기본적인 CNN은 크게 Convolution, Pooling, Activation의 세가지 Layer를 잘 반복해서 구성됩니다. Convolution은 앞서 설명한 convolution 연산을 적당한 필터에 대해서 수행하는 것으로, MLP에서 weight 행렬이 train의 대상인 것처럼 여기서는 필터 전체가 training의 대상입니다. Activation은 MLP에서처럼 모든 항에 적당한 activation function을 씌워서 신경망에 non-linearity를 제공하는 것입니다. 역시 MLP에서와 마찬가지로 ReLU, sigmoid, tanh 같은 함수들을 쓸 수 있습니다. Pooling은 앞서 설명한 pooling을 수행하는 layer입니다. Why CNN? CNN의 효용에 대해 얘기하려면 기존의 MLP의 특징을 먼저 이야기할 필요가 있습니다. 장점 : 간단하고, 이론적으로 굉장히 general합니다. 모든 연속함수를 어떤 정해진 구간에서는 충분히 큰 MLP로 approximate 가능하다는 굉장한 정리가 있는데 (Universal Approximation Theorem) 제가 찾아본 증명은 실해석학 수준의 해석학 지식을 (Hahn-Banach, Riesz Repr thm) 요구하기 때문에 다룰 수가 없습니다. 단점 : Parameter가 매우 많아서, overfitting의 문제와 training speed 문제가 발생합니다. 단점 : Computer vision에 쓰기에는 shift invariance 같은 것을 잘 처리하지 못한다는 심각한 문제가 있습니다. 특히 image classification 같은 경우, 이미지의 일부를 shift해도 그대로 같은 이미지인데 MLP는 이를 처리하기 어렵습니다. Convolution은 그 자체로 shift invaraince를 가지기 때문에, 단점 2번을 잘 해결합니다. 또한, 단점 1번의 경우, Convolution의 파라미터가 꽤 많아 보이지만 $W * H$ 이미지를 던져주고 $W * H$ 출력을 만들기 위해서 Linear layer는 파라미터 $W^2H^2$ 개가 필요합니다. 입출력이 200 by 200이면 이 값이 16억인데, convolution은 파라미터가 훨씬 적습니다. 자연스러운 질문은, 파라미터가 그렇게 적으면 충분히 general하게 학습하지 못하는게 아니냐는 의문이 들 수 있습니다. 2018년 논문 에 따르면 수학적으로는 CNN도 universal approximation theorem이 있다고 하는데, 굳이 이런 놀라운 수학적 결과를 들이밀지 않더라도 이미지 처리에서 CNN이 그동안 보여준 놀라운 성과를 보면 이정도 파라미터로도 Convolution 자체가 어떤 이미지를 ‘대략적으로’ 보는 느낌이 굉장히 직관적으로 좋아서, 잘 작동하는 것으로 보입니다. 또한, CNN은 MLP보다 같은 크기에서 훨씬 깊은 네트워크를 만들 수 있습니다 (레이어당 파라미터가 적으므로) 이 점도 장점이 될 수 있겠습니다. Next posts CNN의 여러 Model들에 대해 살펴볼 계획입니다. LeNet AlexNet VGGNet GoogLeNet Semantic Segmentation 에서 다룰 모델들. U-Net FCN DeepLab</summary></entry></feed>
+&lt;hr /&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry></feed>
