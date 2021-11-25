@@ -1,16 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-24T04:36:09+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
-</subtitle><entry><title type="html">논문읽기 : All Pairs Almost Shortest Path</title><link href="http://localhost:4000/cs-adventure/APASP/" rel="alternate" type="text/html" title="논문읽기 : All Pairs Almost Shortest Path" /><published>2021-11-22T00:00:00+09:00</published><updated>2021-11-22T00:00:00+09:00</updated><id>http://localhost:4000/cs-adventure/APASP</id><content type="html" xml:base="http://localhost:4000/cs-adventure/APASP/">&lt;div id=&quot;toc&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-11-25T19:38:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+</subtitle><entry><title type="html">CNN Architecture - AlexNet (2012)</title><link href="http://localhost:4000/deep-learning-study/AlexNet/" rel="alternate" type="text/html" title="CNN Architecture - AlexNet (2012)" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/AlexNet</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/AlexNet/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#motivation&quot; id=&quot;markdown-toc-motivation&quot;&gt;Motivation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#introduction&quot; id=&quot;markdown-toc-introduction&quot;&gt;Introduction&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#at-a-glance&quot; id=&quot;markdown-toc-at-a-glance&quot;&gt;At a glance&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#dominating-set&quot; id=&quot;markdown-toc-dominating-set&quot;&gt;Dominating Set&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#architecture&quot; id=&quot;markdown-toc-architecture&quot;&gt;Architecture&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-gpu-training&quot; id=&quot;markdown-toc-2-gpu-training&quot;&gt;2-GPU Training&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#usage-of-relu&quot; id=&quot;markdown-toc-usage-of-relu&quot;&gt;Usage of ReLU&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#local-response-normalization&quot; id=&quot;markdown-toc-local-response-normalization&quot;&gt;Local Response Normalization&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#overlapping-pooling&quot; id=&quot;markdown-toc-overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#on32m12-log-n-complexity-2-error&quot; id=&quot;markdown-toc-on32m12-log-n-complexity-2-error&quot;&gt;$O(n^{3/2}m^{1/2} \log n)$ complexity, 2-error&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#on73-log2-n-complexity-2-error&quot; id=&quot;markdown-toc-on73-log2-n-complexity-2-error&quot;&gt;$O(n^{7/3} \log^2 n)$ complexity, 2-error&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#training&quot; id=&quot;markdown-toc-training&quot;&gt;Training&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#regularization-techniques&quot; id=&quot;markdown-toc-regularization-techniques&quot;&gt;Regularization Techniques&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#optimization&quot; id=&quot;markdown-toc-optimization&quot;&gt;Optimization&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;AlexNet은 2012년 Imagenet challenge를 큰 격차로 우승하면서, image classification task를 통해 Deep neural network &amp;amp; GPU-computing의 시대를 연 모델이라는 평가를 받는 그런 아키텍쳐입니다. 이번 포스팅에서는 그런 AlexNet의 원본 논문을 따라가면서, 메인 아이디어들에 대해 살펴봅니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;../../images/8190f2b2db0f7eb370af157be64544adbe4c13e88488ef86e8d2bf9a60d90be2.png&quot; alt=&quot;picture 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;기본적으로 AlexNet의 구조는 LeNet과 많이 다르지 않습니다. 보다 큰 이미지를 처리하기 위해 좀더 깊어진 구조라고 생각할 수 있는데요. Convolution layer 5개와 Fully connected layer 2개로 구성되어 있습니다. LeNet에서 본것처럼 Convolution layer들이 주변을 보면서 feature를 추출하고, 그 추출한 특징들을 마지막 linear layer에서 어떻게 합칠지를 고민해서 하나의 결과를 낸다고 생각할 수 있겠습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-gpu-training&quot;&gt;2-GPU Training&lt;/h3&gt;
+&lt;p&gt;AlexNet은 몇가지 특이한 점이 있는데, 눈에 보이는 가장 큰 특징 중 하나는 위 그림에서 보듯 네트워크 전체를 두개로 나눠서 구현해놨다는 점입니다. 이는 당시 (2012) GPU 메모리가 3GB정도로 현재에 비해 부족했기 때문에 GPU 2개에 네트워크를 반씩 나눠서 돌리면서, 필요한 때만 서로간에 communicate하도록 한 것인데요. 지금에 와서는 GPU의 성능이 비약적으로 향상됨에 따라 굳이 이렇게 두개로 나누지 않아도 충분히 구현할 수 있습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;usage-of-relu&quot;&gt;Usage of ReLU&lt;/h3&gt;
+&lt;p&gt;LeNet에서도 그렇고, 이전까지의 많은 Neural network들은 activation function으로 $\tanh$ 나 sigmoid (어차피 거의 비슷하므로 sigmoid로 통칭하겠습니다) 같은 smooth한 함수를 사용했습니다. 그러나 AlexNet에서는 ReLU를 사용하면 훨씬 빠르게 training이 가능함을 주장하고 있으며, 이를 실험을 통해 확인하였습니다. 이부분에 대해서는 다양한 이야기와 생각해볼 이슈들이 있는데, ReLU는 계산 자체가 빠르게 가능한데다 양쪽에서 vanishing gradient 문제가 발생하는 sigmoid에 비해 이런 문제들이 덜하다는 장점을 직관적으로 생각해 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;AlexNet 논문에서는 이를 non-saturating이라고 부르고 있으며, 이후 많은 논문에서도 ReLU를 사용하여 이러한 이점을 얻고자 하고 있습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;local-response-normalization&quot;&gt;Local Response Normalization&lt;/h3&gt;
+&lt;p&gt;Sigmoid의 경우 각 뉴런의 입력이 0 주위로 모아져야 learning의 효율이 발휘되기 때문에 (끝쪽으로 갈수록 미분계수가 0에 가까워서 아무 일도 일어나지 않음), 많은 네트워크들이 input normalization을 통해 이를 맞춰주려고 했습니다. ReLU는 0 이하만 아니라면 입력값에 따라 미분계수가 줄어들거나 하지는 않으므로 이게 꼭 필요하지는 않지만, AlexNet 논문에서는 Local normalization이라는 방법을 적용할 때 효율이 좋았다고 합니다. 다만, 이 방법은 이후 Batch normalization 등 다양한 방법들이 제시되고 이러한 방법들의 효율이 더욱 우수함이 밝혀짐에 따라 이후의 연구에서 더이상 계승되지 않았기 때문에 자세히 다루지는 않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;간단하게만 말하자면, convolution layer 한번이 필터를 여러개 쓰는 상황에서 적용하는 normalization입니다. 예를 들어 보자면 총 96개의 필터 (커널) 을 쓰는 상황에서 뭐 17번 필터의 결과값이 있을텐데, 이 값을 13번, 14번, …, 21번까지의 필터의 결과값을 이용하여 normalize하는 것입니다 (좌우로 4개씩 쓰는건 그냥 임의로 정한 값입니다) 이 방법은 실제 뇌에서의 신경생리학에 있어서 측면 억제 (lateral inhibition) 로부터 motivation을 얻은 방법이라고 합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/h3&gt;
+&lt;p&gt;AlexNet에서는 일부 pooling을 서로 살짝 겹치게 수행하는데, 이 방법을 통해 overfitting을 크게 줄일 수 있다고 합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;training&quot;&gt;Training&lt;/h2&gt;
+&lt;h3 id=&quot;regularization-techniques&quot;&gt;Regularization Techniques&lt;/h3&gt;
+&lt;p&gt;Regularization에 사용되는 여러 방법들에 대해서는 따로 포스팅했습니다. &lt;a href=&quot;/deep-learning-study/regularization&quot;&gt;Regularization methods&lt;/a&gt;을 참고해주세요 :)&lt;/p&gt;
+
+&lt;p&gt;AlexNet은 이전 LeNet에 비해 훨씬 더 큰 모델로, 파라미터의 개수가 훨씬 더 많기 때문에 overfitting의 우려가 큽니다. 이에 대응하기 위해, LeNet과 비교해 보면 훨씬 Regularization에 공을 들이는 것을 알 수 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2012년 당시에는 최신 테크닉이었던 (그러나, 이후에는 Batch normalization등의 활용으로 인해 그 효용이 많이 줄어든) dropout을 적용합니다. 구체적으로 fully-connected layer 중 앞 두 칸에 $p = 0.5$입니다.&lt;/li&gt;
+  &lt;li&gt;SGD에 Weight decay 0.0005를 적용합니다. 논문에서는 그 이유를 명확하게 밝히고 있지는 않으나, 단순히 regularization일 뿐 아니라 실제로 training에 반드시 필요하다고 주장하고 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;optimization&quot;&gt;Optimization&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;SGD with Momentum 0.9, weight decay 0.0005.&lt;/li&gt;
+  &lt;li&gt;Learning rate는 0.01로 시작해서, loss가 줄어들지 않는 것 같아 보일때마다 1/10으로 줄이는 방법을 사용했습니다.&lt;/li&gt;
+  &lt;li&gt;“Adjusted Manually”…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/deep-learning-study/alexnet-cifar10&quot;&gt;AlexNet으로 CIFAR10 풀어보기&lt;/a&gt; 로 이어집니다&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Pytorch-Cifar10</title><link href="http://localhost:4000/deep-learning-study/pytorch-cifar10/" rel="alternate" type="text/html" title="Pytorch-Cifar10" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/pytorch-cifar10</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/pytorch-cifar10/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#data&quot; id=&quot;markdown-toc-data&quot;&gt;Data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#models&quot; id=&quot;markdown-toc-models&quot;&gt;Models&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;ImageNet Challenge를 따라가며, CNN의 가장 큰 태스크중 하나였던 &lt;strong&gt;이미지 분류&lt;/strong&gt;에 사용되는 모델들의 구현을 공부합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;data&quot;&gt;Data&lt;/h2&gt;
+&lt;p&gt;CIFAR10은 32 x 32의 매우 작은 이미지 6만개로 구성된 데이터셋으로, 이미지 분류에서 MNIST보다는 어렵고 Imagenet보다는 쉬운, 적당한 연습용 데이터셋으로 생각할 수 있습니다. 각 이미지는 10개 중 하나의 클래스로 라벨링이 되어있습니다.&lt;/p&gt;
+
+&lt;p&gt;여기서는 5만개를 training에, 1만개를 test에 사용할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;Data augmentation은 다음과 같이 수행합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;가로세로 4만큼의 패딩&lt;/li&gt;
+  &lt;li&gt;Random crop (32 by 32). Padding된 다음 자르는거라 이미지 위치가 정가운데가 아니게 만드는 효과가 있습니다.&lt;/li&gt;
+  &lt;li&gt;Random flip&lt;/li&gt;
+  &lt;li&gt;Normalization (Imagenet weight)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;models&quot;&gt;Models&lt;/h2&gt;
+&lt;p&gt;코드는 &lt;a href=&quot;https://github.com/gratus907/Pytorch-Cifar10&quot;&gt;Github repository&lt;/a&gt; 에 업로드됩니다.&lt;/p&gt;
+
+&lt;style&gt;
+table th:first-of-type {
+    width: 15%;
+}
+table th:nth-of-type(2) {
+    width: 50%;
+}
+table th:nth-of-type(3) {
+    width: 15%;
+}
+table {
+    width : 80%;
+}
+table td, table th {
+    font-weight : 500;
+}
+&lt;/style&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;strong&gt;Model Name&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Post Link&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;Result&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;LeNet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;-&lt;/td&gt;
+      &lt;td&gt;71.95%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;AlexNet&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;/deep-learning-study/AlexNet/&quot;&gt;AlexNet : Explained&lt;/a&gt; &lt;br /&gt; &lt;a href=&quot;/deep-leanrning-study/AlexNet-Cifar10&quot;&gt;AlexNet on Cifar10&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">논문읽기 : All Pairs Almost Shortest Path</title><link href="http://localhost:4000/cs-adventure/APASP/" rel="alternate" type="text/html" title="논문읽기 : All Pairs Almost Shortest Path" /><published>2021-11-22T00:00:00+09:00</published><updated>2021-11-22T00:00:00+09:00</updated><id>http://localhost:4000/cs-adventure/APASP</id><content type="html" xml:base="http://localhost:4000/cs-adventure/APASP/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#introduction&quot; id=&quot;markdown-toc-introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#key-ideas&quot; id=&quot;markdown-toc-key-ideas&quot;&gt;Key ideas&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#at-a-glance&quot; id=&quot;markdown-toc-at-a-glance&quot;&gt;At a glance&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dominating-set&quot; id=&quot;markdown-toc-dominating-set&quot;&gt;Dominating Set&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#on32m12-log-n-complexity-2-error&quot; id=&quot;markdown-toc-on32m12-log-n-complexity-2-error&quot;&gt;$O(n^{3/2}m^{1/2} \log n)$ complexity, 2-error&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#on73-log2-n-complexity-2-error&quot; id=&quot;markdown-toc-on73-log2-n-complexity-2-error&quot;&gt;$O(n^{7/3} \log^2 n)$ complexity, 2-error&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#further--time-accuracy-tradeoff&quot; id=&quot;markdown-toc-further--time-accuracy-tradeoff&quot;&gt;Further : Time-Accuracy Tradeoff&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#thoughts&quot; id=&quot;markdown-toc-thoughts&quot;&gt;Thoughts&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
 
@@ -24,7 +154,7 @@ Contents
 
 &lt;p&gt;그래프 문제에서 흔히 그렇듯, $G = (V, E)$에 대해 $\abs{V} = n$, $\abs{E} = m$으로 쓰되, $O(V)$ 와 같이 notation을 abuse하겠습니다.&lt;/p&gt;
 
-&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;All Pairs Shortest Path (이하 APSP) 란, 단순하게 어떤 그래프 $G = (V, E)$ 가 주어졌을 때, 각 vertex에서 다른 vertex로 가는 최단 경로의 길이를 모두 알아내는 문제입니다. 당연하게도, 실용적으로 많은 쓰임이 있습니다.&lt;/p&gt;
 
 &lt;p&gt;우리는 우선 논문을 따라, Undirected의 경우만 고려합니다. 이때 경로의 길이는 지나가는 edge의 개수가 될 것입니다.&lt;/p&gt;
@@ -33,12 +163,12 @@ Contents
 &lt;ul&gt;
   &lt;li&gt;Floyd-Warshal Algorithm : $O(V^3)$ 시간에 APSP를 해결하는 알고리즘입니다. 구현이 매우 쉽고, 간단한 Dynamic programming의 원리를 따르기 때문에 이해하기 쉽습니다.&lt;/li&gt;
   &lt;li&gt;Dijkstra (or any SSSP) : 다익스트라 알고리즘은 한 정점으로부터 다른 모든 정점까지의 거리를 찾는 Single Source Shortest Path (이하 SSSP) 문제를 $O(E + V \log V)$ 또는 $O(E \log V)$ 시간에 해결합니다. (Fibonacci heap의 사용 여부에 따라 다름) 자명하게, 모든 정점에서 출발하는 각 SSSP를 해결하면 되기 때문에 우리는 $O(VE + V^2 \log V)$ 정도 시간에는 APSP를 해결할 수 있습니다. 이 방법은 sparse graph에 대해서는 매우 빠르지만, dense graph에 대해서는 $E = O(V^2)$ 까지 가능하기 때문에 $O(V^3)$ 입니다.&lt;/li&gt;
-  &lt;li&gt;Matrix Multiplication : Floyd-Warshall의 inner loop이 행렬곱셈이랑 비슷하게 생겼음을 활용합니다. 행렬곱셈과 거의 비슷한 알고리즘을 이용하면, Adjacency matrix $A$를 repeated squaring하여 이 문제를 $O(V^3 \log V)$ 에 풀 수 있습니다. 더 느려 보이는 이 방법을 언급하는 이유는, 행렬곱셈에 쓰는 빠른 알고리즘들 중 일부가[^1] 이 ‘유사-행렬곱셈’에도 똑같이 적용가능하기 때문입니다. 스트라센을 쓰면 $O(V^{2.807} \log V)$ 이 되고 이는 위 두 방법보다 worst-case에 더 빠릅니다.&lt;/li&gt;
+  &lt;li&gt;Matrix Multiplication : Floyd-Warshall의 inner loop이 행렬곱셈이랑 비슷하게 생겼음을 활용합니다. 행렬곱셈과 거의 비슷한 알고리즘을 이용하면, Adjacency matrix $A$를 repeated squaring하여 이 문제를 $O(V^3 \log V)$ 에 풀 수 있습니다. 더 느려 보이는 이 방법을 언급하는 이유는, 행렬곱셈에 쓰는 빠른 알고리즘들 중 일부가&lt;sup id=&quot;fnref:matmul&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:matmul&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; 이 ‘유사-행렬곱셈’에도 똑같이 적용가능하기 때문입니다. 스트라센을 쓰면 $O(V^{2.807} \log V)$ 이 되고 이는 위 두 방법보다 worst-case에 더 빠릅니다.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;이 논문에서는, “약간의 오차를 허용하면” 이보다 빠른 알고리즘이 존재함을 보입니다. 정확히는, 모든 정점쌍 $(v_i, v_j)$에 대해, $d(v_i, v_j) + 2$ 를 넘지 않는 값을 반환하는 알고리즘을 논의하고, 이를 확장하여 $k$만큼의 오차를 허용하되 그만큼 빨라지는 알고리즘을 논의합니다.&lt;/p&gt;
 
-&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;h2 id=&quot;key-ideas&quot;&gt;Key ideas&lt;/h2&gt;
 &lt;h3 id=&quot;at-a-glance&quot;&gt;At a glance&lt;/h3&gt;
 &lt;p&gt;이 알고리즘의 큰 아이디어는 다음과 같습니다.&lt;/p&gt;
 &lt;ol&gt;
@@ -56,7 +186,7 @@ Contents
 
 &lt;p&gt;&lt;strong&gt;Dominate(G, s)&lt;/strong&gt; : $G$에서, degree가 $s$이상인 정점들을 모은 부분집합을 dominate하는 적당히 작은 dominating set을 찾는다.&lt;/p&gt;
 
-&lt;p&gt;여기서 &lt;strong&gt;적당히 작은&lt;/strong&gt; 이란, $O\left(\frac{n \log n}{s}\right)$를 목표로 합니다. Aingworth et al[^2]에서는 이를 위해 다음의 알고리즘을 제시하고 있습니다.&lt;/p&gt;
+&lt;p&gt;여기서 &lt;strong&gt;적당히 작은&lt;/strong&gt; 이란, $O\left(\frac{n \log n}{s}\right)$를 목표로 합니다. 이를 위해 다음의 그리디가 잘 알려져 있습니다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;각 vertex에 대해 neighbor set을 생각하면, dominating set을 찾는 것은 set cover를 찾는 것과 같은 문제입니다.&lt;/li&gt;
   &lt;li&gt;각 집합 $S_i$의 원소는 $\Set{1, \cdots, n}$ 범위 내에 있고, 전체 원소의 합은 $2m$개 입니다.&lt;/li&gt;
@@ -102,8 +232,8 @@ $(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$�
   &lt;li&gt;&lt;strong&gt;Dominate(G, s)&lt;/strong&gt; 의 결과값은 $O\left(\frac{n \log n}{s}\right)$개 이하의 dominating set을 찾아주고, 그 수행시간은 $O(m + ns)$ 입니다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;on32m12-log-n-complexity-2-error&quot;&gt;$O(n^{3/2}m^{1/2} \log n)$ complexity, 2-error&lt;/h2&gt;
-&lt;p&gt;이 알고리즘은 Aingworth et al. [^aingworth] 에서 제시된, $\tilde{O}(n^{5/2})$ 알고리즘입니다.&lt;/p&gt;
+&lt;h3 id=&quot;on32m12-log-n-complexity-2-error&quot;&gt;$O(n^{3/2}m^{1/2} \log n)$ complexity, 2-error&lt;/h3&gt;
+&lt;p&gt;이 알고리즘은 Aingworth et al. &lt;sup id=&quot;fnref:aingworth&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:aingworth&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; 에서 제시된, $\tilde{O}(n^{5/2})$ 알고리즘을 약간 개선한 알고리즘입니다.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;$s = (m / n)^{1/2}$ 라 하고, degree가 $s$ 이상인 vertex 집합 $V_1$ 과 미만인 집합 $V_2$로 $V$를 나눕니다.&lt;/li&gt;
   &lt;li&gt;Low-degree vertex를 touch하는 edge의 집합을 $E_2$라 합시다. 이때, 이들의 개수는 $ns$개 이하입니다. (Low degree인 정점 최대 $V$개, 각각의 degree 최대 $s$)&lt;/li&gt;
@@ -140,7 +270,7 @@ $(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$�
   &lt;li&gt;정점쌍 $(u, v)$에 대해 $u \to v$의 최단경로가 High-degree 정점을 지나지 않는다면, 최단경로가 통째로 $E_2$에 들어있고, 다익스트라 알고리즘이 정확한 경로를 반환합니다.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;on73-log2-n-complexity-2-error&quot;&gt;$O(n^{7/3} \log^2 n)$ complexity, 2-error&lt;/h2&gt;
+&lt;h3 id=&quot;on73-log2-n-complexity-2-error&quot;&gt;$O(n^{7/3} \log^2 n)$ complexity, 2-error&lt;/h3&gt;
 &lt;p&gt;알고리즘 자체는 거의 똑같지만, 이번에는 세조각으로 나눕니다. degree가 $n^{1/3}$ 이상, $n^{2/3}$ 이상인 점을 각각 MID, HIGH라 하고, MID와 HIGH의 dominating set을 찾습니다. (이렇게 표현하기는 했지만, MID는 HIGH를 &lt;strong&gt;포함&lt;/strong&gt; 합니다. MID이상, HIGH이상이라고 생각해주세요!)&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;MID의 dominating set $D_M$ 은 $O(n^{2/3} \log n)$ 크기이고, 구하는데는 $O(m + n^{4/3})$ 시간이 걸립니다.&lt;/li&gt;
@@ -159,13 +289,54 @@ $(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$�
 
 &lt;p&gt;같은 방법으로 2-error를 보입니다.&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;만약 최단경로가 HIGH를 아예 안 지난다면,&lt;/li&gt;
+  &lt;li&gt;만약 최단경로가 HIGH의 정점을 하나라도 지난다면, 그중 마지막을 $w$라 하고 $D_H$에서 $w$를 dominate하는 $w’$를 고릅니다.
+    &lt;ul&gt;
+      &lt;li&gt;$\delta(u, w’)$ 는 $w’ \in D_H$ 이므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w')&lt;/code&gt;에 의한 정확한 거리를 압니다. 이는 $\delta(u, w) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
+      &lt;li&gt;$\delta(w’, v)$ 는 역시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w')&lt;/code&gt;에 의해 정확한 거리를 알고, $\delta(w, v) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
+      &lt;li&gt;따라서, 이를 값은 $\delta(u, w) + 2 + \delta(w, v)$ 보다 작거나 같습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;만약 최단경로가 HIGH는 아예 안 지나지만, MID를 지난다면, 그중 마지막을 $w$라 하고 $D_M$에서 $w$를 dominate하는 $w’$를 고릅니다.
+    &lt;ul&gt;
+      &lt;li&gt;$\delta(u, w’)$ 에 대한 근사값은 $D_M$에서의 BFS(두번째 BFS) 도중에 비슷하게 찾을 수 있습니다. 그러나, 이번에는 $D_M$이 전체 그래프에 대고 BFS를 한 결과가 아니기 때문에 이게 정확하다는 보장이 없어서, $\delta_2(u, w’)$라고 쓰겠습니다. HIGH를 아예 안 지나는 경로가 최단임을 가정에서 보장했으므로 $\delta_2(u, w) = \delta(u, w)$ 이고, 결과적으로 $\delta_2(u, w’)$ 값은 $1 + \delta(w, u)$ 이하입니다.&lt;/li&gt;
+      &lt;li&gt;$\delta(w’, w)$ 는 1이고&lt;/li&gt;
+      &lt;li&gt;$\delta(w, v)$ 는 모두 low-touching 임이 보장되므로 다익스트라의 결과로 정확한 값을 구할 수 있습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;따라서, 이 알고리즘은 $O(n^{7/3} \log^2 n)$ 시간에 2-error approximation을 보장합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;further--time-accuracy-tradeoff&quot;&gt;Further : Time-Accuracy Tradeoff&lt;/h3&gt;
+&lt;p&gt;이를 이용하여, 2조각이나 3조각이 아닌 더 많은 조각으로 자르면 시간 복잡도가 더 낮아지는 대신 에러를 더 허용하게 됩니다. 구체적으로,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;첫번째 알고리즘을 확장, $s_i = (m / n)^{1-i/k}$을 이용하여 계산하는 알고리즘은 $\tilde{O}(n^{2-1/k}m^{1/k})$ 시간에 $2(k-1)$ 에러를 허용하고,&lt;/li&gt;
+  &lt;li&gt;두번째 알고리즘을 확장, $s_i = n^{1-i/k}$를 이용하여 $D_{j} \times D_{j’}$ 같은 간선들을 추가해서 다익스트라를 쓰는 알고리즘은 $\tilde{O}(n^{2+1/k})$ 시간에 작동하는 대신 $2(\floor{k/3} + 1)$ 에러를 허용하게 됩니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이를 합쳐서, $u$만큼의 에러 바운드를 고정하고 싶으면, 첫번째 경우의 $k = u/2 + 1$ 또는 두번째 경우에서 $k = 3u - 2$를 사용, 
+\(\min(\tilde{O}(n^{2-\frac{2}{u+2}}m^{\frac{2}{u+2}}), \tilde{O}(n^{2+\frac{2}{3u-2}}))\)
+이정도 시간복잡도에 최대 $u$만큼의 에러를 허용하는 APSP를 풀 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;thoughts&quot;&gt;Thoughts&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;지나치게 난해하지 않은 아이디어 (그래프의 edge를 HIGH-LOW로 나눈 다음, 이 위에서 경우에 따라 알고리즘을 바꿔끼움으로써 복잡도 개선하는 아이디어는 의외로 많이 보입니다) 를 이용하여 복잡도를 내리는 부분이 인상적이었습니다.&lt;/li&gt;
+  &lt;li&gt;그래프가 dense하다면 최단경로가 생각보다 짧고, 그래프가 sparse하다면 $n$번의 다익스트라가 $O(nm)$으로 빠르기 때문에 이 알고리즘이 실용적으로 쓰이려면 $m$이 특정한 범위에 있고, 그래프가 꽤 커야 할 것 같습니다. 이론적인 복잡도 분석 측면에서 보다 큰 의미가 있는 듯 합니다.&lt;/li&gt;
+  &lt;li&gt;이 논문의 Journal full version에는 weighted graph에서 최단경로의 3배 이하를 estimate하는 spanner에 대한 알고리즘이 추가로 논의되는것 같습니다. weighted graph는 이상한 케이스를 만들기가 쉽기 떄문에 이부분도 상당히 재밌을것 같습니다.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;[^aingworth] : Aingworth 
-[^1] : 이론적으로 가장 빠른 알고리즘 (Coppersmith-Winograd), 실용적으로 빠른 알고리즘 (Strassen)이 이 min-plus-mm에도 적용가능함이 알려져 있습니다.&lt;/p&gt;</content><author><name></name></author><category term="cs-adventure" /><summary type="html">Contents</summary></entry><entry><title type="html">Optimizers for Deep Learning</title><link href="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/" rel="alternate" type="text/html" title="Optimizers for Deep Learning" /><published>2021-11-20T00:00:00+09:00</published><updated>2021-11-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/optimizer-for-deep-learning</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/">&lt;div id=&quot;toc&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:matmul&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;이론적으로 가장 빠른 알고리즘 (Coppersmith-Winograd), 실용적으로 빠른 알고리즘 (Strassen)이 이 min-plus-mm에도 적용가능함이 알려져 있습니다. &lt;a href=&quot;#fnref:matmul&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:aingworth&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;D. Aingworth, C. Chekuri, and R. Motwani. Fast estimation of diameter and shortest paths (without matrix multiplication). SODA 1996 &lt;a href=&quot;#fnref:aingworth&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><category term="cs-adventure" /><summary type="html">Contents</summary></entry><entry><title type="html">Optimizers for Deep Learning</title><link href="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/" rel="alternate" type="text/html" title="Optimizers for Deep Learning" /><published>2021-11-20T00:00:00+09:00</published><updated>2021-11-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/optimizer-for-deep-learning</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/optimizer-for-deep-learning/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -1050,175 +1221,4 @@ Contents
 &lt;p&gt;따라서, 종합하면 간단하게는 $O(qM + n)$ 시간과 $O(qM)$ 공간을 이용하여 multiple pattern matching을 할 수 있게 됩니다.&lt;/p&gt;
 
 &lt;h2 id=&quot;구현&quot;&gt;구현&lt;/h2&gt;
-&lt;p&gt;추가 예정.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Boyer-Moore Heuristic Pattern Matching</title><link href="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/" rel="alternate" type="text/html" title="Boyer-Moore Heuristic Pattern Matching" /><published>2021-10-27T00:00:00+09:00</published><updated>2021-10-27T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/boyer-moore-algorithm</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/boyer-moore-algorithm/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#motivation&quot; id=&quot;markdown-toc-motivation&quot;&gt;Motivation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#algorithm--bad-character-heuristic&quot; id=&quot;markdown-toc-algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#algorithm--good-suffix-heuristic&quot; id=&quot;markdown-toc-algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#boyer-moore-horspool-algorithm&quot; id=&quot;markdown-toc-boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;(아직 작성 중인 글입니다)&lt;/p&gt;
-
-&lt;p&gt;이 글은 KMP 알고리즘과 Trie 자료구조에 대한 이해를 선행으로 요구합니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
-&lt;p&gt;Boyer-Moore 알고리즘이 해결하는 문제는 KMP와 똑같이, 어떤 $n$글자의 긴 텍스트 $T$에 대해, 짧은 $m$글자의 패턴 $P$를 매칭하는 것입니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;가장 Naive하게 $T$의 모든 위치에 대해 $m$글자를 매칭해보는 알고리즘은 $O(nm)$ 입니다.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm&quot;&gt;KMP 알고리즘&lt;/a&gt; 은 (언젠가 작성할 계획은 있지만 우선순위는 낮습니다) 이를 $O(n + m)$ 으로 줄인 엄청난 성과를 보입니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Boyer-Moore 알고리즘은 worst case에서는 $O(nm)$이지만, string이 랜덤하게 주어진다면 평균 $O(n / m)$ 복잡도를 보입니다.&lt;/p&gt;
-
-&lt;p&gt;기본적으로, 이 알고리즘은 패턴을 &lt;strong&gt;오른쪽부터 왼쪽으로&lt;/strong&gt; 매칭하고, 문자열 자체는 (즉 매칭하는 위치 자체는) &lt;strong&gt;왼쪽에서 오른쪽으로&lt;/strong&gt; 봅니다. 이 방향의 차이에 주목할 필요가 있습니다. KMP의 경우는 패턴과 텍스트 모두 좌 -&amp;gt; 우 로 매칭합니다. 가능한한 ‘첫’, ‘두번째’ 와 같은 말은 오른쪽에서 왼쪽으로 매칭하는 실제 세팅에, ‘1번’, ‘2번’ 등의 말은 진짜 인덱스를 의미하도록 작성했습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;algorithm--bad-character-heuristic&quot;&gt;Algorithm : Bad Character Heuristic&lt;/h2&gt;
-&lt;p&gt;텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacbcadc&lt;/code&gt; 에서 패턴 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭한다고 생각해 봅시다. 이때, 뒤에서부터 앞으로 매칭을 시도하는 것은 텍스트 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;abcacb&lt;/code&gt; 와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;acbcda&lt;/code&gt;를 매칭하는 것입니다. 여기서 첫 글자 (패턴을 &lt;strong&gt;오른쪽부터&lt;/strong&gt; 읽으므로 텍스트와 패턴의 첫 글자는 각각 6번 위치인 b와 a입니다!) 를 매칭하려고 시도했을 때, a를 찾아야 하는데 b를 찾았으므로 실패했습니다.&lt;/p&gt;
-
-&lt;p&gt;Naive matching은 여기서 포기하고 다음 위치인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bcacbc&lt;/code&gt;와의 매칭을 시도하겠지만, Boyer-Moore의 알고리즘은 여기서 “그럼 만약, 이 6번위치의 b를 꼭 써야 한다면, 어디까지 내가 패턴을 밀어야 b를 쓸 수 있느냐?” 라는 질문을 던집니다. 생각해보면 텍스트를 기준으로 패턴을 한칸 밀어봤자, 패턴의 5번 글자인 d와 b를 매칭하게 될 것이고 이는 어차피 실패할 것이기 때문입니다. 패턴의 맨 뒤를 기준으로 3글자를 밀어야 b를 텍스트 6번 b에 맞출 수 있으므로, 이만큼을 push해 버릴 수 있습니다. 여기서 이 ‘b’ 를 &lt;strong&gt;Bad Character&lt;/strong&gt; 라고 부를 것입니다.&lt;/p&gt;
-
-&lt;p&gt;이를 좀더 정리하면…&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Bad character가 패턴에 아예 등장하지 않으면, 패턴을 확 밀어서 아예 넘어가도 됩니다.&lt;/li&gt;
-  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 왼쪽이면, 그만큼을 밀어도 됩니다.&lt;/li&gt;
-  &lt;li&gt;Bad character가 패턴에서 &lt;strong&gt;가장 오른쪽에&lt;/strong&gt; 등장하는 위치가 현재 보고있는 bad character의 패턴에서의 위치보다 오른쪽이면 얻을 수 있는 정보가 없습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;algorithm--good-suffix-heuristic&quot;&gt;Algorithm : Good Suffix Heuristic&lt;/h2&gt;
-&lt;p&gt;이 방법은 자세히 설명하지 않을 것입니다. (이유는 후술합니다) Good suffix란, 어떻게 보면 위 Bad character의 3번 경우에 얻는 정보가 없음을 거꾸로 이용하는 방법인데요. 3번 경우는 아마도 꽤 많은 글자들이 맞은 다음 처음으로 bad character를 만난 상황일 것입니다. 즉 pattern의 꽤 긴 suffix가 이미 맞고 있는 상황이라는 의미가 됩니다. 이 Good suffix를 패턴에서 다시 맞추려면 얼만큼 이동해야 하는지를 미리 모두 precomputation해 두면, 그만큼을 점프할 수 있습니다. 당연히 맞는 suffix가 길수록 이 suffix를 다시 맞추기가 어려울 것이므로, 꽤 멀리 점프할 수 있을 것 같습니다. 이 precomputation은 “Pattern의 길이 k인 suffix가 다시 suffix로 등장하는 pattern의 prefix 위치” 를 마킹하면 되고, KMP의 실패함수와 매우 유사한 방법으로 구할 수 있습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;boyer-moore-horspool-algorithm&quot;&gt;Boyer-Moore-Horspool Algorithm&lt;/h2&gt;
-&lt;p&gt;Horspool의 알고리즘은 위 Boyer-Moore에서 Good suffix heuristic을 아예 포기하고, Bad character는 항상 현재 매칭 위치의 마지막 글자만 고려합니다. 이렇게 해도 평균 시간 복잡도 $O(n / m)$ 비슷한 시간을 유지할 수 있음이 알려져 있지만, 그 증명 과정은 엄청난 수식과 고통스러운 증명 (부등식 줄이기)을 요구합니다. 다만, 충분히 랜덤한 텍스트에 대해서는 B-M-H가 굉장히 빠름이 잘 알려져 있습니다.&lt;/p&gt;
-
-&lt;p&gt;Horspool은 굉장히 쉽게 구현할 수 있습니다. 먼저 각 character에 대해 패턴의 오른쪽 끝에서 가장 가까운 (하지만 오른쪽 끝은 아닌) 등장 위치를 계산해 두고, bad character에 걸리면 그만큼 push하면 됩니다.&lt;/p&gt;
-
-&lt;p&gt;여기서는 정말 러프한 증명…도 아니고 argument를 하나 소개하고 마치겠습니다. 알파벳 $q$글자 중 랜덤하게 생성된 string $P, T$에서의 Horspool 알고리즘을 가정하겠습니다. 이중 한 글자가 패턴의 오른쪽 끝에서 얼마나 멀리 있을지 그 기댓값을 생각해 봅시다. 알파벳 $x$를 이용하여 $k$길이 이상의 jump를 허용하기 위해서는 뒤에서 $k-1$개의 글자는 $x$가 아닌 다른 글자여야 하므로, 점프 길이가 $k$ 이상일 확률은 $\left(1-\frac{1}{q}\right)^{k-1}$ 입니다. $r = \left(1-\frac{1}{q}\right)$ 로 쓰면 편하게 이를 $r^{k-1}$ 로 쓸 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;$\expect{X} = \sum_{k = 1}^{\infty} \P(X \geq k)$ 의 공식을 이용합니다. $k \geq m+1$의 확률은 0이므로, 
-\(\expect{\text{jump length}} = \sum_{j = 1}^{m} r^{j-1} = \frac{r^m - 1}{r - 1}= q(1 - r^m)\)&lt;/p&gt;
-
-&lt;p&gt;따라서, $m$이 충분히 크면 대충 $q$ 정도의 shift는 기대할 수 있으므로, $O(n / q)$ 정도의 퍼포먼스는 기대해 볼 수 있습니다. 당연히 이는 각 글자가 iid random이라는 이루어지지 않는 가정이 들어갔을 뿐만 아니라, 각 위치에서 bad character를 만나는 데 걸리는 매칭개수도 무시하고 있지만, 간단한 argument로는 그럭저럭 기능합니다.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry><entry><title type="html">Amortized Analysis</title><link href="http://localhost:4000/advanced-algorithms/amortized-analysis/" rel="alternate" type="text/html" title="Amortized Analysis" /><published>2021-10-24T00:00:00+09:00</published><updated>2021-10-24T00:00:00+09:00</updated><id>http://localhost:4000/advanced-algorithms/amortized-analysis</id><content type="html" xml:base="http://localhost:4000/advanced-algorithms/amortized-analysis/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#amortized-analysis&quot; id=&quot;markdown-toc-amortized-analysis&quot;&gt;Amortized Analysis&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#three-frameworks&quot; id=&quot;markdown-toc-three-frameworks&quot;&gt;Three frameworks&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#aggregate-method&quot; id=&quot;markdown-toc-aggregate-method&quot;&gt;Aggregate Method&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#accounting-method&quot; id=&quot;markdown-toc-accounting-method&quot;&gt;Accounting Method&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#potential-method&quot; id=&quot;markdown-toc-potential-method&quot;&gt;Potential Method&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#dynamic-table&quot; id=&quot;markdown-toc-dynamic-table&quot;&gt;Dynamic table&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#application&quot; id=&quot;markdown-toc-application&quot;&gt;Application&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;계산이론&lt;/strong&gt; 수업에서 배운 내용 정리. CLRS CH 17.&lt;/p&gt;
-
-&lt;h2 id=&quot;amortized-analysis&quot;&gt;Amortized Analysis&lt;/h2&gt;
-&lt;p&gt;우리는 일반적으로 어떤 알고리즘을 분석할 때, $O$, $\Theta$ 같은 asymptotic을 사용해서 분석합니다. 예를 들어, 연산 한번에 $O(n)$ 시간이 들고 그 연산을 $m$번 해야 한다면 전체 시간 복잡도는 $O(nm)$이 될 것입니다.&lt;/p&gt;
-
-&lt;p&gt;이 방법은 유용하지만 어떤 알고리즘들은 이렇게 단순하게 분석할 수 없습니다. 대표적인 예시가 C++의 vector (dynamic array)입니다.&lt;/p&gt;
-
-&lt;p&gt;vector의 모든 연산을 분석하지는 않더라도, 우리는 일단 이 연산을 원합니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;맨 뒤에 push하는 연산이 $O(1)$ 비슷한 시간에 작동하기를 원합니다.&lt;/li&gt;
-  &lt;li&gt;맨 뒤에서 pop하는 연산이 $O(1)$ 비슷한 시간에 작동하기를 원합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;즉 우리는 일단은 stack 형태로 생각할 것입니다. 그러나…&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;연속한 메모리만 사용하여, 바로 index를 확인할 수 있어야 합니다. stack을 링크드 리스트로 구현하면 위 두가지를 지키기 쉽지만, 대신에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vec[17]&lt;/code&gt; 같은 것을 바로 확인할 수가 없습니다. 동적 배열은 이것이 가능해야 합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;그런데, 이 두 조건은 뭔가 이상합니다. 배열의 원소들이 연속한 메모리를 점유해야 한다면 계속 push를 하다가 언젠가는 더이상 그 위치의 메모리를 쓸 수 없게 되고, 그러면 모든 원소들을 어딘가로 옮겨야 하므로 그때 들어있는 원소의 개수만큼의 시간이 소요될 것입니다. 그러므로, 연속한 메모리를 점유하기 위해선 반드시 $O(n)$ 시간이 걸리는 push가 존재합니다.&lt;/p&gt;
-
-&lt;p&gt;이를 해결하기 위해, vector는 대략 다음과 같은 방법을 씁니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;size와 capacity를 분리합니다. size는 진짜 현재 들어 있는 원소의 개수를, capacity는 할당된 메모리를 말합니다.&lt;/li&gt;
-  &lt;li&gt;만약 capacity가 다 차지 않았다면 push가 $O(1)$에 기능하게 하는 것은 쉽습니다.&lt;/li&gt;
-  &lt;li&gt;capacity가 다 찼다면, 현재 모든 원소들을 새로운 곳으로 옮기되, capacity가 현재 크기 +1이 아니라 현재의 두 배가 되게 잡습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이렇게 하면, move 하는 연산이 가끔씩만 일어나기 때문에, &lt;strong&gt;평균적&lt;/strong&gt;으로는 빠릅니다. 이와 같이, 매 operation의 cost를 생각하는 대신, 여러 operation의 cost를 묶어서 그 평균을 계산하는 방법을 amortized analysis라고 부릅니다.&lt;/p&gt;
-
-&lt;p&gt;주의할 점은, amortized analysis는 average case와는 다르다는 점입니다. 알고리즘 분석은 대부분 worst case를 기준으로 하는데 (최근에는 average case도 많이 나오긴 합니다), amortized worst case 도 생각할 수 있습니다. 한국어로 이를 자연스럽게 바꾸자면, “최악의 경우에도 각 연산은 평균 $O(1)$ 에 작동한다” 입니다. “평균적인 경우에 평균 $O(1)$” 이나, “평균적인 경우에 한번당 $O(1)$” 과는 다른 말입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;three-frameworks&quot;&gt;Three frameworks&lt;/h2&gt;
-&lt;p&gt;Amortized analysis를 하는 방법에는 크게 3가지가 있습니다.&lt;/p&gt;
-&lt;h3 id=&quot;aggregate-method&quot;&gt;Aggregate Method&lt;/h3&gt;
-&lt;p&gt;$n$번의 연산에 걸리는 시간을 모두 더한 다음, $n$으로 나눕니다. 가장 단순한 방법입니다. 이를 앞서 제시한 vector에 적용해 보겠습니다.&lt;/p&gt;
-
-&lt;p&gt;벡터에 $n$개의 원소를 집어넣는다고 하겠습니다. $n = 2^k$ 일 때는 $2^k$ 의 시간이 들고, 그 외에는 1의 시간이 든다고 가정하면, 전체 시간은 
-\(T(n) = n + \sum_{k = 1}^{\log_2 n} 2^k\)
-이렇게 될 것입니다. 뒷부분의 $2^k$들의 합을 전부 취하면 $2n$ 이하임을 바로 알 수 있고, 이는 즉 $n$번의 연산이 총합 $3n$ 이상 걸리지 않는다는 것입니다. 따라서 개별 연산은 평균 $O(1)$입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;accounting-method&quot;&gt;Accounting Method&lt;/h3&gt;
-&lt;p&gt;어떤 연산의 실제 cost와는 별개로, 이 연산의 가격을 조금 넉넉하게 할당한 다음, 비싼 연산을 할 때 앞에 쟁여놓은 (?) 여분을 가져다 쓴다고 생각하는 방법입니다.&lt;/p&gt;
-
-&lt;p&gt;역시 vector에 적용해 보겠습니다. $n$개의 원소를 집어넣는데, 개당 보통은 1이 들지만 일단 3이 든다고 생각하겠습니다. Expansion 직후에 남은 credit은 고려하지 않고, 지금 $2^k$개의 원소가 들어있는 테이블에 추가로 $n$개를 집어넣는다고 생각합니다. 이때, 개별 연산을 넉넉하게 3의 시간이 든다고 하면, $2n$어치가 남습니다. 예외적으로, $n$개를 집어넣다가 원소가 $2^{k+1}$ 개가 되면 연산이 실제로는 $2^{k+1}$ 시간이 들게 되는데, 이는 우리가 가정한 cost 3보다 큽니다.&lt;/p&gt;
-
-&lt;p&gt;그러나, 여기까지 오는 길에 우리는 실제로는 1만큼이 걸리는 연산을 3이라고 넉넉하게 잡으면서 $2^k$ 개를 넣어 왔습니다. 즉 $2^{k+1}$ 만큼 여분의 credit이 남았을 것입니다. 이를 이용하여 테이블 확장에 필요한 시간을 지불한다고 생각할 수 있습니다. 이와 같이 적당한 여분을 둔 다음 이를 나중에 사용하는 방법을 Accounting method라 합니다.&lt;/p&gt;
-
-&lt;p&gt;이 방법은 약간 애매한데, 처음에 3이라는 애매한 숫자를 어떻게 잡을지를 알려면 대충 평균적인 연산의 가격을 찍을 수 있어야 합니다. 그래서 증명하기는 어렵지 않지만, 처음 수치를 제시하는 조금…뭐랄까요, 비정형적입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;potential-method&quot;&gt;Potential Method&lt;/h3&gt;
-&lt;p&gt;이 글을 쓰게 된 이유이자, amortized analysis의 핵심입니다.&lt;/p&gt;
-
-&lt;p&gt;이 자료구조의 상태를 나타내는 어떤 potential function $\phi(T)$ 를 생각합니다. 즉, 현재 벡터의 상태를 수치로 환산한다는 것입니다. 이때, 다음과 같은 조건을 만족하고자 합니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;초기 상태에 0. 즉, $\phi(T_0) = 0$&lt;/li&gt;
-  &lt;li&gt;언제나 $\phi(T_i) \geq 0$. 
-(사실 2번 조건은 조금 relax할 수 있지만, 아무튼…)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이제, 각 연산은 cost가 들 뿐만 아니라, potential function을 변화시킬 것입니다. $i$번째 연산이 potential function을 변화시키는 양을 $\Delta \phi _i $라 쓰면, 다음이 성립합니다. 
-\(\phi_n = \phi_0 + \Delta \phi_1 + \cdots \Delta \phi_{n}\)
-어떤 연산의 amortized cost $c_i$를, 실제 cost $r_i$에 potential function 변화량 $\Delta \phi_i$를 더한 값으로 생각합니다. 즉, $c_i = r_i + \Delta \phi_i$.&lt;/p&gt;
-
-&lt;p&gt;$c_i$의 총합과 $r_i$의 총합을 비교하면…
-\(\sum c_i = \sum r_i + \sum \Delta \phi_i = \sum r_i + \phi_n - \phi_0 \geq \sum r_i\)
-($\phi_n \geq \phi_0 = 0$ 이므로) 따라서, $c_i$의 합을 어느 이하로 바운드를 잡아주면 이 바운드가 실제 cost의 합의 bound가 됩니다.&lt;/p&gt;
-
-&lt;p&gt;vector에 적용해 보겠습니다. vector의 potential은 현재 들어있는 원소의 개수 $n_i$ 와 vector의 크기 $s_i$에 대해, $2n_i - s_i$ 로 정의하기로 하겠습니다. 초기에 벡터에 들어있는 원소가 없을때 약간 정의가 애매한데, 초기의 size를 0으로 잡으면 이 potential function이 위 조건 두개를 만족함을 알 수 있습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;$r_i$가 size를 변화시키지 않는 연산이라면, 실제 cost가 1이고 potential의 변화는 $s$가 그대로인 채 $n$이 1만큼 증가하여 $\Delta \phi = 2$ 입니다.&lt;/li&gt;
-  &lt;li&gt;$r_i$가 size를 변화시킨다면, $n$은 1만큼 증가하는데 $s$가 2배로 증가합니다. 이전에 $s_{i-1} = n_{i-1}$ 이었을 것이므로, 
-\((2n_i - s_i) - (2n_{i-1} - s_{i-1}) = (2n_{i-1} + 2 - 2s_{i-1}) - s_{i-1} = 2 - s_{i-1}\)
-따라서 $\Delta \phi$ 는 $2 - s_{i-1}$ 입니다. 그런데, 옮겨야 하는 원소는 $s_{i-1}$ 개이고, 새로 추가하는 1개를 고려하면 실제 cost는 $1 + s_{i-1}$ 입니다. 따라서 $c_i = 3$입니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이 두 경우 모두 amortized cost가 $O(1)$ 이므로 전체도 amortized $O(1)$ 입니다.&lt;/p&gt;
-
-&lt;p&gt;일반적으로 $c_i$의 합에 대해 뭔가를 논의하는 것이 쉽도록 $\phi$를 잘 잡는 것을 목표로 합니다. 이 경우는 worst case에도 연산이 한가지밖에 없어서 aggregate로 쉽게 풀 수 있지만, 여기에 delete만 추가하더라도 aggregate로는 분석하기가 굉장히 어렵습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;dynamic-table&quot;&gt;Dynamic table&lt;/h2&gt;
-&lt;p&gt;만약 위 vector에 pop도 지원해야 한다면 어떨까요? 사실 pop은 많이 하더라도 메모리를 침범하지 않아서 그대로 하더라도 시간 복잡도는 유지됩니다. 그런데, 100만개를 넣었다가 다시 100만개를 뺐는데 vector가 그대로 100만칸을 먹고 있는 것은 뭔가 모양새가 나쁩니다. 이 경우에는 table의 크기에 비해 실제 원소의 개수 - 이를 &lt;strong&gt;load factor&lt;/strong&gt; 라고 부릅니다 - 가 너무 나빠서, 메모리 효율이 떨어지는 경우입니다.&lt;/p&gt;
-
-&lt;p&gt;이를 해결하기 위해서는, 원소의 개수가 1/2 이하가 되면 테이블 크기를 반으로 줄이는 방법을 가장 먼저 생각할 수 있습니다. 그러나 이렇게 하면, 원소의 개수를 1/2개 근처로 유지하면서 push와 pop을 반복하면 테이블의 축소와 확대가 여러번 일어나게 만들 수 있고, 축소/확대는 $O(n)$ 연산이므로 &lt;strong&gt;비싼 연산을 가끔씩만 한다는 사실을 이용한다&lt;/strong&gt; 는 amortized 의 개념이 적용되지 않습니다. 실제로 이러면 &lt;strong&gt;worst case amortized&lt;/strong&gt; $O(n)$ 이 됩니다. (Amortized는 average를 내기는 하지만, average case (축소/확대가 랜덤하게 발생) 를 분석하는 것이 아니라 worst case의 average도 분석할 수 있음을 잘 보여주는 사례입니다)&lt;/p&gt;
-
-&lt;p&gt;Load factor를 적절히 유지하면서 amortized $O(1)$을 적용하는 방법은, load factor를 최하 1/4까지 허용하여, 1/4 이하가 되면 테이블 크기를 반으로 줄이는 것입니다.&lt;/p&gt;
-
-&lt;p&gt;이 방법이 amortized complexity $O(1)$ 을 유지한다는 것을 aggregate 같은 방법으로 보이려고 하면 매우 어렵습니다. 어떤 sequence로 연산이 주어지더라도 - 라는 개념을 적용하기가 어렵기 때문입니다. 대신에 potential function으로 다음과 같은 함수를 생각하면
-\(\phi = \max(2n_i - s_i, s_i/2 - n_i)\)
-이를 잘 이용하여 amortized cost를 바운드할 수 있습니다. 위 함수는 load factor가 1/2 이상일 때와 미만일 때 구간에 따라 정의된 함수이므로, 총 8가지 경우를 분석해야 합니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;load factor 1/2 (이상, 이하) 일 때 이를 유지하면서 삽입/삭제하는 경우 4가지&lt;/li&gt;
-  &lt;li&gt;load factor 1/2 이하에서 이상으로, 이상에서 이하로 넘어가는 삽입과 삭제 2가지&lt;/li&gt;
-  &lt;li&gt;load factor 1/4 이상에서 이하로 떨어져서 축소를 시행하는 삭제&lt;/li&gt;
-  &lt;li&gt;load factor 1에서 추가 삽입으로 인해 확대를 시행하는 삽입
-정말 하나씩 다 분석하는 것이므로 자세한 과정은 생략합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;application&quot;&gt;Application&lt;/h2&gt;
-&lt;p&gt;복잡한 연산을 다양하게 수행하는 자료구조에서 매우 유용합니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;피보나치 힙 (예전에 제가 쓴 글도 &lt;a href=&quot;/advanced-algorithms/Fibonacci-heaps&quot;&gt;여기&lt;/a&gt; 있습니다.) 을 이용하여 다익스트라 알고리즘의 시간 복잡도를 $O(V \log V)$ 로 내리기&lt;/li&gt;
-  &lt;li&gt;Splay Tree 와 같은 자료구조의 복잡도 분석.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry></feed>
+&lt;p&gt;추가 예정.&lt;/p&gt;</content><author><name></name></author><category term="advanced-algorithms" /><summary type="html">Contents</summary></entry></feed>

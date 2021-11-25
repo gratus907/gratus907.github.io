@@ -50,11 +50,13 @@ MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 �
 - [Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/) : CNN 개요.
 - [LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST) : CNN으로 MNIST 풀어보기 
 
-ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다. 
+ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
+[CIFAR10에서의 결과 정리](/deep-learning-study/pytorch-cifar10)
 - [CNN Architecture : AlexNet]
 - [CNN Architecture : VGGNet]
 - [CNN Architecture : GoogLeNet]
 - [CNN Architecture : ResNet]
+- [CNN Architecture : SENet]
 
 ## Computer Vision
 - [Semantic Segmentation 개요](/deep-learning-study/semantic-segmentation/) : Semantic segmentation 문제 정의, 개요
