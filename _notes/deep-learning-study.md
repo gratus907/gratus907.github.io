@@ -52,7 +52,8 @@ MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 �
 
 ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
 [CIFAR10에서의 결과 정리](/deep-learning-study/pytorch-cifar10)
-- [CNN Architecture : AlexNet]
+- [CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)
+- [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
 - [CNN Architecture : VGGNet]
 - [CNN Architecture : GoogLeNet]
 - [CNN Architecture : ResNet]

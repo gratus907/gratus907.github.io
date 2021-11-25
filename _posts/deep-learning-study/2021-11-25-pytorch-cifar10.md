@@ -14,6 +14,8 @@ Contents
 
 ImageNet Challenge를 따라가며, CNN의 가장 큰 태스크중 하나였던 **이미지 분류**에 사용되는 모델들의 구현을 공부합니다. 
 
+코드는 [Github repository](https://github.com/gratus907/Pytorch-Cifar10) 에 업로드됩니다.
+
 ## Data
 CIFAR10은 32 x 32의 매우 작은 이미지 6만개로 구성된 데이터셋으로, 이미지 분류에서 MNIST보다는 어렵고 Imagenet보다는 쉬운, 적당한 연습용 데이터셋으로 생각할 수 있습니다. 각 이미지는 10개 중 하나의 클래스로 라벨링이 되어있습니다.
 
@@ -26,17 +28,16 @@ Data augmentation은 다음과 같이 수행합니다.
   - Normalization (Imagenet weight)
 
 ## Models
-코드는 [Github repository](https://github.com/gratus907/Pytorch-Cifar10) 에 업로드됩니다.
 
 <style>
 table th:first-of-type {
     width: 15%;
 }
 table th:nth-of-type(2) {
-    width: 50%;
+    width: 40%;
 }
 table th:nth-of-type(3) {
-    width: 15%;
+    width: 25%;
 }
 table {
     width : 80%;
@@ -46,9 +47,9 @@ table td, table th {
 }
 </style>
 
-| **Model Name** | **Post Link**                                                                                                         | **Result** |
-| -------------- | --------------------------------------------------------------------------------------------------------------------- | ---------- |
-| **LeNet**      | -                                                                                                                     | 71.95% (200 epoch)     |
-| **AlexNet**    | [AlexNet : Explained](/deep-learning-study/AlexNet/) <br> [AlexNet on Cifar10](/deep-leanrning-study/AlexNet-Cifar10) | 85.03% (50 epoch)          |
+| **Model Name** | **Post Link**                                                                                                         | **Result**        |
+| -------------- | --------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| **LeNet**      | -                                                                                                                     | 66.77% (50 epoch) |
+| **AlexNet**    | [AlexNet : Explained](/deep-learning-study/AlexNet/) <br> [AlexNet on Cifar10](/deep-leanrning-study/alexnet-cifar10) | 85.03% (50 epoch) |
 
 ------
