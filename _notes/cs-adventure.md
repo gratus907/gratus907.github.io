@@ -55,13 +55,13 @@ table th:nth-of-type(3) {
 | **[Active Contours Without Edges](/cs-adventure/chan-vese/)**                                                 | NA, CV    | IEEE TIP[^ieee-tip], 2001 |
 | **[DELTACON: A Principled Massive-Graph Similarity Function](/cs-adventure/deltacon/)**                       | SI        | SDM[^sdm], 2013           |
 | **In-Memory Subgraph Matching: An In-depth Study**[^subiso]                                                   | DS, DB    | SIGMOD[^sigmod], 2020     |
-| **[Versatile Equivalences : Speeding up Subgraph Query Processing and Subgraph Matching](/cs-adventure/VEQ)** | DS, DB    | FOCS[^focs], 1996         |
-| **[All Pairs Almost Shortest Paths](/cs-adventure/APASP)**                                                    | DS        | SIGMOD[^sigmod], 2021     |
+| **[Versatile Equivalences : Speeding up Subgraph Query Processing and Subgraph Matching](/cs-adventure/VEQ)** | DS, DB    | SIGMOD[^sigmod], 2021     |
+| **[All Pairs Almost Shortest Paths](/cs-adventure/APASP)**                                                    | DS        | FOCS[^focs], 1996         |
 
 
 [^ieee-tip]: Transactions on Image Processing
 [^sdm]: SIAM International Conference on Data Mining
-[^sigmod]: Proceedings of the ACM SIGMOD International Conference on Management of Data
-
+[^sigmod]: ACM SIGMOD International Conference on Management of Data
+[^focs]: Annual Symposium on Foundations of Computer Science
 
 [^subiso]: Subgraph Isomorphism 방법들을 비교하고, 이들을 모두 구현하여 통일된 프레임워크 위에서 실험한 논문이라서 별도로 포스팅을 정리하지는 않았습니다.
