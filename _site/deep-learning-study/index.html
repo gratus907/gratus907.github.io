@@ -316,7 +316,7 @@
 
 <p>강의와 책의 내용을 제가 적당히 제 공부한 방향에 맞게 재구성한 부분들이 많아, 순서가 특정 자료를 따르지 않습니다.</p>
 
-<p>재밌게도 제가 이 블로그에 쓰기 시작한 글은 -습니다로, 필기노트를 $\LaTeX$로 정리하고 그걸 다시 pandoc으로 마크다운 변환한 포스팅들은 -다로 끝납니다. 이걸 모두 언젠가는 -습니다로 통일하겠다는 원대한 꿈이 있지만 당분간은 쉽지 않을 예정입니다.</p>
+<p>재밌게도 제가 이 블로그에 쓰기 시작한 글은 -습니다로, 필기노트를 $\LaTeX$로 정리하고 그걸 다시 pandoc으로 마크다운 변환한 포스팅들은 -다로 끝납니다. 이걸 모두 언젠가는 통일하겠다는 원대한 꿈이 있지만 당분간은 쉽지 않을 예정입니다.</p>
 
 <p><strong>참고</strong> 3번 수업의 경우 $\LaTeX$ 로 필기노트를 관리하고 있습니다. 언젠가 여건이 허락한다면 이 노트를 여기에 올릴텐데, pandoc으로 쓴 포스팅은 그쪽이 좀더 깔끔하게 보일 것 같습니다. 최종적으로는 매우 유명한 <a href="https://web.evanchen.cc/coursework.html" target="_blank" rel="noopener noreferrer">Evan Chen Notes</a> 같은 결과물을 목표하고 있는데, 다양한 이슈들이 있습니다. 가장 먼저, 이 자료를 공개해도 되는지의 문제가 있는데, 원본 강의자료가 <a href="http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html" target="_blank" rel="noopener noreferrer">교수님의 개인 웹사이트</a> 에 어떤 로그인이나 학교 계정 요구 없이 올라와 있으므로 (아마도) 괜찮을 것으로 생각하고 있습니다. 특히 마크다운 버전은 제 edit이 좀 헤비하게 들어갈 거라서 아마 큰 문제는 없는 것으로 알고 있는데, $\LaTeX$ scribe note는 강의 필기한 거라서 괜찮은지 사실 잘 모르겠습니다.</p>
 
@@ -328,10 +328,9 @@
 <ul>
   <li><a href="/deep-learning-study/opt-and-gd/">Introduction to Optimization / Gradient Descent</a></li>
   <li><a href="/deep-learning-study/sgd/">Stochastic Gradient Descent</a></li>
-  <li><a href="/deep-learning-study/backpropagation">Backpropagation</a></li>
+  <li><a href="/deep-learning-study/backpropagation/">Backpropagation</a></li>
   <li><a href="/deep-learning-study/optimizer-for-deep-learning">Optimizers for Deep Learning</a></li>
-  <li>[Overfitting/Underfitting]</li>
-  <li>[Regularization : Dropout, Weight-decay]</li>
+  <li><a href="/deep-learning-study/overfitting-and-regularization/">Overfitting and Regularization : Dropout, Weight decay, Data Augmentation</a></li>
   <li>[Batch Normalization]</li>
   <li>[Universal Approximation Theorem]</li>
 </ul>
@@ -357,28 +356,44 @@
 <ul>
   <li>
 <a href="/deep-learning-study/convolutionary-neural-networks/">Convolutionary Neural Networks</a> : CNN 개요.</li>
-  <li>
-<a href="/deep-learning-study/LeNet-MNIST">LeNet으로 MNIST 풀어보기</a> : CNN으로 MNIST 풀어보기</li>
+  <li><a href="/deep-learning-study/LeNet-MNIST">LeNet으로 MNIST 풀어보기</a></li>
 </ul>
 
 <p>ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다. <br>
 <a href="/deep-learning-study/pytorch-cifar10">CIFAR10에서의 결과 정리</a></p>
 <ul>
-  <li><a href="/deep-learning-study/AlexNet/">CNN Architecture : AlexNet</a></li>
-  <li><a href="/deep-learning-study/alexnet-cifar10/">AlexNet으로 CIFAR10 풀어보기</a></li>
-  <li>[CNN Architecture : VGGNet]</li>
-  <li>[CNN Architecture : GoogLeNet]</li>
-  <li>[CNN Architecture : ResNet]</li>
+  <li>
+<a href="/deep-learning-study/AlexNet/">CNN Architecture : AlexNet</a>
+    <ul>
+      <li><a href="/deep-learning-study/alexnet-cifar10/">AlexNet으로 CIFAR10 풀어보기</a></li>
+    </ul>
+  </li>
+  <li><a href="/deep-learning-study/VGGNet/">CNN Architecture : VGGNet</a></li>
+  <li><a href="/deep-learning-study/GoogLeNet/">CNN Architecture : GoogLeNet</a></li>
+  <li><a href="/deep-learning-study/ResNet/">CNN Architecture : ResNet</a></li>
   <li>[CNN Architecture : SENet]</li>
 </ul>
 
 <h2 id="computer-vision">Computer Vision</h2>
+<p><a href="/deep-learning-study/semantic-segmentation/">Semantic Segmentation 개요</a> : Semantic segmentation 문제 정의, 개요</p>
 <ul>
-  <li>
-<a href="/deep-learning-study/semantic-segmentation/">Semantic Segmentation 개요</a> : Semantic segmentation 문제 정의, 개요</li>
   <li>[Fully Convolutional Networks]</li>
   <li>[Encoder-Decoder, U-Net]</li>
   <li>[Dilated Convolutions, DeepLab]</li>
+</ul>
+
+<h2 id="unsupervised-learning">Unsupervised Learning</h2>
+<ul>
+  <li>[Principal Component Analysis]</li>
+  <li>[Auto-Encoders]</li>
+</ul>
+
+<h2 id="generative-models">Generative Models</h2>
+<p>[Generative Models : Framework]</p>
+<ul>
+  <li>[Flow Models]</li>
+  <li>[Variational AutoEncoder]</li>
+  <li>[Generative Adversarial Network]</li>
 </ul>
 
   </article>
@@ -397,7 +412,7 @@
 
     
     
-    Last updated: November 26, 2021.
+    Last updated: December 13, 2021.
     
   </div>
 </footer>

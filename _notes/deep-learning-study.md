@@ -19,7 +19,7 @@ category: Computer Science
 
 강의와 책의 내용을 제가 적당히 제 공부한 방향에 맞게 재구성한 부분들이 많아, 순서가 특정 자료를 따르지 않습니다.
 
-재밌게도 제가 이 블로그에 쓰기 시작한 글은 -습니다로, 필기노트를 $\LaTeX$로 정리하고 그걸 다시 pandoc으로 마크다운 변환한 포스팅들은 -다로 끝납니다. 이걸 모두 언젠가는 -습니다로 통일하겠다는 원대한 꿈이 있지만 당분간은 쉽지 않을 예정입니다.
+재밌게도 제가 이 블로그에 쓰기 시작한 글은 -습니다로, 필기노트를 $\LaTeX$로 정리하고 그걸 다시 pandoc으로 마크다운 변환한 포스팅들은 -다로 끝납니다. 이걸 모두 언젠가는 통일하겠다는 원대한 꿈이 있지만 당분간은 쉽지 않을 예정입니다.
 
 **참고** 3번 수업의 경우 $\LaTeX$ 로 필기노트를 관리하고 있습니다. 언젠가 여건이 허락한다면 이 노트를 여기에 올릴텐데, pandoc으로 쓴 포스팅은 그쪽이 좀더 깔끔하게 보일 것 같습니다. 최종적으로는 매우 유명한 [Evan Chen Notes](https://web.evanchen.cc/coursework.html) 같은 결과물을 목표하고 있는데, 다양한 이슈들이 있습니다. 가장 먼저, 이 자료를 공개해도 되는지의 문제가 있는데, 원본 강의자료가 [교수님의 개인 웹사이트](http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html) 에 어떤 로그인이나 학교 계정 요구 없이 올라와 있으므로 (아마도) 괜찮을 것으로 생각하고 있습니다. 특히 마크다운 버전은 제 edit이 좀 헤비하게 들어갈 거라서 아마 큰 문제는 없는 것으로 알고 있는데, $\LaTeX$ scribe note는 강의 필기한 거라서 괜찮은지 사실 잘 모르겠습니다. 
 
@@ -30,10 +30,9 @@ category: Computer Science
 MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 이야기
 - [Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)
 - [Stochastic Gradient Descent](/deep-learning-study/sgd/)
-- [Backpropagation](/deep-learning-study/backpropagation)
+- [Backpropagation](/deep-learning-study/backpropagation/)
 - [Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)
-- [Overfitting/Underfitting]
-- [Regularization : Dropout, Weight-decay]
+- [Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)
 - [Batch Normalization]
 - [Universal Approximation Theorem]
 
@@ -48,19 +47,30 @@ MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 �
 
 ## Convolutionary Neural networks
 - [Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/) : CNN 개요.
-- [LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST) : CNN으로 MNIST 풀어보기 
+- [LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST) 
 
 ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
 [CIFAR10에서의 결과 정리](/deep-learning-study/pytorch-cifar10)
 - [CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)
-- [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
-- [CNN Architecture : VGGNet]
-- [CNN Architecture : GoogLeNet]
-- [CNN Architecture : ResNet]
+  - [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
+- [CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)
+- [CNN Architecture : GoogLeNet](/deep-learning-study/GoogLeNet/)
+- [CNN Architecture : ResNet](/deep-learning-study/ResNet/)
 - [CNN Architecture : SENet]
 
+
 ## Computer Vision
-- [Semantic Segmentation 개요](/deep-learning-study/semantic-segmentation/) : Semantic segmentation 문제 정의, 개요
+[Semantic Segmentation 개요](/deep-learning-study/semantic-segmentation/) : Semantic segmentation 문제 정의, 개요
 - [Fully Convolutional Networks]
 - [Encoder-Decoder, U-Net]
 - [Dilated Convolutions, DeepLab]
+
+## Unsupervised Learning
+- [Principal Component Analysis]
+- [Auto-Encoders]
+
+## Generative Models
+[Generative Models : Framework] 
+- [Flow Models]
+- [Variational AutoEncoder]
+- [Generative Adversarial Network]

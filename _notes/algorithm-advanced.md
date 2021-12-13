@@ -30,7 +30,7 @@ table th:nth-of-type(2) {
 ### Various topics
 
 | Topic                               | Link                                            |
-| :---------------------------------- | :---------------------------------------------- |
+|-------------------------------------|-------------------------------------------------|
 | Amortized Analysis                  | [Link](/advanced-algorithms/amortized-analysis) |
 | Hashing                             |                                                 |
 | Network Flows                       |                                                 |
@@ -41,21 +41,21 @@ table th:nth-of-type(2) {
 ### Advanced Data Structures  
 
 | Topic               | Link                                          |
-| :------------------ | :-------------------------------------------- |
+|---------------------|-----------------------------------------------|
 | **Fibonacci Heaps** | [Link](/advanced-algorithms/Fibonacci-heaps/) |
 | Splay trees         |                                               |
 
 ### Randomized Algorithms
 
 | Topic                    | Link                                              |
-| :----------------------- | :------------------------------------------------ |
+|--------------------------|---------------------------------------------------|
 | **Karger-Stein Min Cut** | [Link](/advanced-algorithms/karger-stein-mincut/) |
 
 
 ### Graph Algorithms
 
 | Topic                                   | Link                                                |
-| :-------------------------------------- | :-------------------------------------------------- |
+|-----------------------------------------|-----------------------------------------------------|
 | **Fixed Subgraph Isomorphism**          | [Link](/advanced-algorithms/graph-algorithms-lec1/) |
 | **Pagerank & Random walk with Restart** | [Link](/advanced-algorithms/random-walk-on-graphs/) |
 
@@ -63,13 +63,13 @@ table th:nth-of-type(2) {
 
 Mainly from : SNU 2021 Fall Theory of computation
 
-| Topic                  | Link |
-| :--------------------- | :--- |
-| Aho-Corasick Algorithm | [Link](/advanced-algorithms/aho-corasick-algorithm/)     |
-| Boyer-Moore Algorithm  | [Link](/advanced-algorithms/boyer-moore-algorithm/)     |
-| Baker-Bird Algorithm   |      |
-| Wu-Manber Algorithm    |      |
-| Suffix Tree            |      |
-| Suffix Array           |      |
+| Topic                  | Link                                                 |
+|------------------------|------------------------------------------------------|
+| Aho-Corasick Algorithm | [Link](/advanced-algorithms/aho-corasick-algorithm/) |
+| Boyer-Moore Algorithm  | [Link](/advanced-algorithms/boyer-moore-algorithm/)  |
+| Baker-Bird Algorithm   |                                                      |
+| Wu-Manber Algorithm    |                                                      |
+| Suffix Tree            |                                                      |
+| Suffix Array           |                                                      |
 
 

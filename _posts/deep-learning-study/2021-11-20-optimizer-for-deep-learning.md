@@ -48,7 +48,7 @@ Gradient Descent는 한 스텝 한 스텝이 너무 느리기 떄문에 (모든 
 $$i(k) \sim \uniform{1}{N},\quad \theta^{k+1} = \theta^k - \alpha \nabla{f_{i(k)}(\theta^k)}$$
 
 여기서 $\nabla f_{i(k)}$ 대신 다른 적당한 $g_k$를 잡아도 되는데 (Batched-gradient), 대신 $g_k$는 $\nabla F(x^k)$ 의 **Unbiased Estimator** 여야 합니다. 또한 좀더 식을 간단하게 쓰기 위해, 앞으로 $i(k)$ 의 선택은 논의하지 않겠습니다. 이건 그냥 랜덤하게 돌리면 됩니다. 즉, 위 SGD를 다시 쓸 때,  
-$$\theta^{k+1} = x^k - \alpha g^k(\theta^k)$$
+$$\theta^{k+1} = \theta^k - \alpha g^k$$
 이렇게만 쓰더라도, $g^k$를 랜덤하게 골라진 index $i(k)$에 대한 (또는, batch를 사용하는 경우 batch-gradient) $\nabla f_i(k)$의 값으로 읽어주면 됩니다. Batch에 대한 자세한 얘기는 위에 링크걸린 SGD 포스팅을 읽어주세요.
 
 여기서 다른건 대부분 큰 문제가 없는데, $\alpha$, learning rate의 선택이 문제입니다. Learning rate가 너무 크거나 작으면 최적화가 잘 이루어지지 않습니다.

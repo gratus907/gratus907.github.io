@@ -1,7 +1,5 @@
-DL - LeNet MNIST 
-DL - Optimizers in Deep Learning
 DL - Dropout 
 DL - BackPropagation
 CS - CombiSeminar
-Adv.Alg - Wu Manber Multiple Pattern Matching
 Adv.Alg - Suffix Tree 
+Adv.Alg - Lempel-Ziv Compression
