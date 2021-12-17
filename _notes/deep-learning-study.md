@@ -54,8 +54,8 @@ ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image class
 - [CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)
   - [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
 - [CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)
-- [CNN Architecture : GoogLeNet](/deep-learning-study/GoogLeNet/)
-- [CNN Architecture : ResNet](/deep-learning-study/ResNet/)
+- [CNN Architecture : GoogLeNet]
+- [CNN Architecture : ResNet]
 - [CNN Architecture : SENet]
 
 
@@ -66,8 +66,8 @@ ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image class
 - [Dilated Convolutions, DeepLab]
 
 ## Unsupervised Learning
+- [Unsupervised Learning, AutoEncoders](/deep-learning-study/autoencoders/)
 - [Principal Component Analysis]
-- [Auto-Encoders]
 
 ## Generative Models
 [Generative Models : Framework] 

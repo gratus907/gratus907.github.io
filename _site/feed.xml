@@ -1,5 +1,128 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-17T20:29:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
 </subtitle><entry><title type="html">Overfitting and Regularization</title><link href="http://localhost:4000/deep-learning-study/overfitting-and-regularization/" rel="alternate" type="text/html" title="Overfitting and Regularization" /><published>2021-12-11T00:00:00+09:00</published><updated>2021-12-11T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/overfitting-and-regularization</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/overfitting-and-regularization/">&lt;div id=&quot;toc&quot;&gt;
+=======
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-14T05:09:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+</subtitle><entry><title type="html">Unsupervised Learning, Autoencoders</title><link href="http://localhost:4000/deep-learning-study/autoencoders/" rel="alternate" type="text/html" title="Unsupervised Learning, Autoencoders" /><published>2021-12-14T00:00:00+09:00</published><updated>2021-12-14T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/autoencoders</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/autoencoders/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#unsupervised-learning&quot; id=&quot;markdown-toc-unsupervised-learning&quot;&gt;Unsupervised Learning&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#autoencoder&quot; id=&quot;markdown-toc-autoencoder&quot;&gt;Autoencoder&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;unsupervised-learning&quot;&gt;Unsupervised Learning&lt;/h2&gt;
+&lt;p&gt;Unsupervised (또는, Self-supervised) 의 의미는, &lt;strong&gt;정답이 제공되지 않는&lt;/strong&gt; 머신 러닝 상황을 말합니다. 이게 무슨 말인지 알아보기 위해, 이전에 알아본 supervised learning의 기본 프레임으로 돌아가보겠습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;미지의 함수 $f$에 대해 알고자 하는데,&lt;/li&gt;
+  &lt;li&gt;모든 지점이 아닌 어떤 지점 $x_i$ 들에서만 그 값 $f(x^i) = y^i$ 를 알고 있고,&lt;/li&gt;
+  &lt;li&gt;그래서 어떤 페널티 $\ell$ 을 정의해서, $\sum_i \ell(f(x^i), g(x^i))$가 작은 $g$를 $f$의 근사-함수로 생각하고 싶습니다.&lt;/li&gt;
+  &lt;li&gt;그런데 이 $g$를 모든 함수의 공간에서 최적화하는 것은 일반적으로 가능하지 않으므로,&lt;/li&gt;
+  &lt;li&gt;어떤 parameter $\theta$ 에 의해 표현되는 함수공간의 부분집합 $g_\theta$만을 생각하며,&lt;/li&gt;
+  &lt;li&gt;$\minimize \sum_i \ell(f(x^i), g_\theta(x^i))$ by moving $\theta$로 생각합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;여기서, ‘supervision’ 은 정답 $f(x^i) = y^i$ 를 말합니다. 이를 이미 알고 있는 경우 (예를 들어, Imagenet 데이터는 사람을 잔뜩 고용해서 이미지를 실제로 구분했습니다) 도 있지만, 많은 경우에 이 데이터를 모으는 과정 자체가 매우 비싸거나 불가능합니다. 이런 경우에는, 이 프레임을 과감히 포기하고, supervision 없이 데이터 자체의 내부적인 구조를 학습하도록 하고자 합니다.&lt;/p&gt;
+
+&lt;p&gt;즉, unsupervised learning이란:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;데이터 $X_1, \dots X_n$ 이 주어질 때,&lt;/li&gt;
+  &lt;li&gt;그 내부의 어떤 &lt;strong&gt;구조&lt;/strong&gt;화가 얼만큼 진행되었는지를 실용적으로 유의미한 어떤 loss function $\mathcal{L}(\theta)$ 의 학습가능한 형태로 만들어서&lt;/li&gt;
+  &lt;li&gt;이를 최적화하는 방향으로 생각합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Supervised learning과는 달리, 이 프레임만 읽어서는 무엇을 하고 싶은지가 별로 명확하지 않습니다. 그래서 대표적인 예시인 Autoencoder를 직접 살펴보고자 합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;autoencoder&quot;&gt;Autoencoder&lt;/h2&gt;
+&lt;p&gt;Autoencoder란 간단히 압축처럼 생각하는 것이 가장 편하게 이해할 수 있는 방법입니다. 우리는 어떤 함수 $E_\theta$ 와 $D_\phi$를 만들어서, $E_\theta$ 가 모델의 어떤 특징을 &lt;strong&gt;인코딩&lt;/strong&gt; 하고, $D_\phi$ 가 반대로 이를 &lt;strong&gt;디코딩&lt;/strong&gt; 하도록 하고자 합니다. 즉… $\R^n$ 에서, $\R^m$ 으로 가는 함수 $E_\theta$와, (수학적으로 존재하지 않는) 그 역함수 비슷한 $D_\phi$를 만들고자 합니다.&lt;/p&gt;
+
+&lt;p&gt;이때, 다음과 같은 값을 생각합니다.
+\(\mathcal{L}(\theta, \phi) = \expect{\norm{X - D_\phi(E_\theta(X))}^2}\)
+이 값이 작다는 것은, $D(E(X))$ 가 $X$를 거의 그대로 가져간다는 의미입니다. 다시 말해, $E(X)$는 일종의 &lt;strong&gt;압축&lt;/strong&gt; 을 수행하고, $D$는 이 압축을 해제하는 함수가 됩니다.&lt;/p&gt;
+
+&lt;p&gt;여전히, 우리는 expectation을 직접 최적화할 수 없고, 데이터만을 이용해서 뭔가를 해야 하므로, 
+\(\mathcal{L}(\theta, \phi) = \frac{1}{N} \sum_{i = 1}^{N} \norm{X_i - D_\phi(E_\theta(X_i))}^2\)
+이 값을 대신 최적화한 다음, $\theta, \phi$가 잘 최적화되어 실제로는 expectation이 작기를 기대합니다. 이는 사실 위에서 설명한 supervised learning의 원리에서도 적용했던 방법 (충분히 많은 데이터를 통해 최적화하면 &lt;strong&gt;아마도&lt;/strong&gt; 작동할 것이다) 이므로, 이러한 논증은 (비교적) 합리적이라고 할 수 있겠습니다.&lt;/p&gt;
+
+&lt;p&gt;이걸로 뭘 할 수 있을지는 굉장히 다양합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Encoder는 일종의 압축 알고리즘이므로, 충분히 잘 훈련한 autoencoder를 그냥 이미지 압축같은거에 써도 됩니다.&lt;/li&gt;
+  &lt;li&gt;데이터의 noise를 제거할 수 있습니다. Encoder-Decoder는 아마도 데이터의 inherent한 구조를 반영하고 있을 것이므로, noise는 encoding과정에 별로 유의미하게 반영되지 않을 것이며, decoding할 때 그 noise가 줄어들 것이라고 생각할 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;데이터의 anomally를 잡아낼 수 있습니다. 이미 충분히 잘 훈련한 Encoder-Decoder에 대해, $\norm{X - D_\phi(E_\theta(X))}^2$가 다른 데이터에 비해 특이하게 큰 뭔가가 있다면, 이 데이터에는 &lt;strong&gt;다른 값들과 다른 어떤 요소&lt;/strong&gt; 가 있다고 생각할 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;Label은 없지만, 비슷한 것들끼리 묶는것은 가능합니다. K-means같은 clustering.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;참고로, classical machine learning의 대표적인 알고리즘 중 하나인 PCA(Principal Component Analysis)는 $E$로 $y = Ax$를, $D$로 $y = A^T x$를 쓰는 autoencoder라고 생각할 수 있습니다. 이는 나중에 PCA정도는 따로 포스팅할 예정이므로 그때 추가하겠습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">CNN Architecture - VGGNet (2014)</title><link href="http://localhost:4000/deep-learning-study/VGGNet/" rel="alternate" type="text/html" title="CNN Architecture - VGGNet (2014)" /><published>2021-12-13T00:00:00+09:00</published><updated>2021-12-13T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/VGGNet</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/VGGNet/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#architecture&quot; id=&quot;markdown-toc-architecture&quot;&gt;Architecture&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#very-deep-cnn&quot; id=&quot;markdown-toc-very-deep-cnn&quot;&gt;Very Deep CNN&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#training&quot; id=&quot;markdown-toc-training&quot;&gt;Training&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#regularization&quot; id=&quot;markdown-toc-regularization&quot;&gt;Regularization&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#optimization&quot; id=&quot;markdown-toc-optimization&quot;&gt;Optimization&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#initialization&quot; id=&quot;markdown-toc-initialization&quot;&gt;Initialization&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#결과와-의의&quot; id=&quot;markdown-toc-결과와-의의&quot;&gt;결과와 의의&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;VGGNet은 2014 ImageNet Challenge에서 2위의 성적을 거둔 모델로, &lt;strong&gt;깊은 네트워크&lt;/strong&gt; 를 쌓았을때의 효용을 보여준 모델입니다. 역시 &lt;a href=&quot;/deep-learning-study/AlexNet&quot;&gt;AlexNet 포스팅&lt;/a&gt; 때처럼 논문을 따라가면서 메인 아이디어를 살펴보겠습니다.&lt;/p&gt;
+&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
+&lt;p&gt;VGGNet은 레이어 개수에 따라 11, 13, 16, 19 등으로 나누어집니다. 이는 실제로 &lt;strong&gt;Convolution Layer&lt;/strong&gt;가 11개에서 19개까지 있는 모델로, 크게는 (Conv-ReLU)-(Conv-ReLU)-(maxpool) 을 반복하는 식으로 구성됩니다.
+&lt;img src=&quot;../../images/e8c6095a3de9c6520b217e1cdbbba24a55ff01ee9da5a58ef2c073a314aa3202.png&quot; alt=&quot;drawing&quot; width=&quot;85%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이 그림은 VGG-13의 그림인데, 정확한 11, 13, 16, 19의 구조는 다음과 같습니다. 중간에 ReLU가 매 conv 뒤에 들어가있지만 표시는 안되어 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../images/b61f8a33132897fbda7e600dc158dea5be4104709e9bfc6462e0900cec2fddff.png&quot; alt=&quot;drawing&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다양한 VGGNet의 버전들은 큰 틀에서는 비슷하기 때문에, 다음에 Pytorch 구현 코드를 볼 때 다시 살펴볼 예정입니다.&lt;/p&gt;
+
+&lt;p&gt;VGGNet 논문의 Contribution 두 가지를 정리하자면,&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;CNN을 깊이 쌓을 수 있다면 유의미한 성능 향상이 있다&lt;/strong&gt; 는 것을 보였고&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;잘 훈련하면 이렇게 깊은 CNN도 훈련할 수 있다&lt;/strong&gt; 라는 것을 보였습니다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;각 Contribution을 살펴보겠습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;very-deep-cnn&quot;&gt;Very Deep CNN&lt;/h2&gt;
+&lt;p&gt;VGGNet은 메인으로 3 by 3 convolution만 사용합니다. 그 이유를 저자들은 다음과 같이 제시합니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;7 by 7 convolution 하나를 쓰는 것과, 3 by 3 convolution을 세번 쓰는 것은 같은 receptive field를 가집니다. (즉, 입력의 같은 영역이 반영됩니다) 이는 직접 receptive field를 확인해보면 알 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;그런데, 파라미터의 개수는 49 : 27로 대략 절반선까지 줄어듭니다.&lt;/li&gt;
+  &lt;li&gt;그러면서, 3번의 레이어 사이사이에는 ReLU가 들어가기 때문에 전체 함수가 더 non-linear해집니다.&lt;/li&gt;
+  &lt;li&gt;경우에 따라 1 by 1 convolution도 쓰긴 하는데 (VGG16), 이것도 적은 수의 파라미터만으로 nonlinearity를 추가하기 위해서입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;그외에, Convolution을 깊게 들어가서 마지막에 Fully Connected Layer로 실제 classification을 추가하는 것은 AlexNet과 동일합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;training&quot;&gt;Training&lt;/h2&gt;
+&lt;h3 id=&quot;regularization&quot;&gt;Regularization&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Regularization으로는 적절한 data augmentation과 함께, $5 \times 10^{-4}$ 의 weight decay를 사용합니다.&lt;/li&gt;
+  &lt;li&gt;Fully connected layer에서는 $p = 0.5$로 dropout도 적용합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;optimization&quot;&gt;Optimization&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;SGD with Momentum. Initial LR 0.01, Momentum 0.9&lt;/li&gt;
+  &lt;li&gt;Validation accuracy가 정체되면 LR을 1/10으로 깎는 식으로 진행합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;initialization&quot;&gt;Initialization&lt;/h3&gt;
+&lt;p&gt;VGGNet의 재밌는 점 중 하나는, training 과정에서 너무 깊은 19레이어 CNN을 한번에 training할 수 없기 때문에, 11-Layer 버전을 훈련한 후 이 위에서 레이어를 하나씩 추가해가면서 training했다는 점입니다. 이는 따져보면, pre-train 된 모델을 이용하여 initialize를 잘 하는 느낌으로 생각할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;결과와-의의&quot;&gt;결과와 의의&lt;/h2&gt;
+&lt;p&gt;VGGNet은 2014 Imagenet Challenge에서 top-5 error 6.8% 정도로, AlexNet의 16%에 비해 큰 성능 향상을 이루었습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2014년 1위였던 GoogLeNet이 6.7%로 거의 똑같은 정확도를 갖는데, 이는 나중에 포스팅하겠지만 VGG보다 훨씬 복잡한 내부 구조를 가지고 있습니다.&lt;/li&gt;
+  &lt;li&gt;그래서, 이후 딥러닝 연구에서 실험이나 다른 용도로 쓰기에 VGGNet이 좀더 용이합니다. 대표적으로, Semantic Segmentation 모델중 하나인 FCN은 VGGNet의 구조를 활용하여 이미지의 특징을 추출합니다.&lt;/li&gt;
+  &lt;li&gt;Initialization을 통해 훈련을 더 잘 하는 방법, 큰 convolution 하나보다 작은 convolution 여러개를 쓰는 것의 이점 등을 보여주었습니다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Overfitting and Regularization</title><link href="http://localhost:4000/deep-learning-study/overfitting-and-regularization/" rel="alternate" type="text/html" title="Overfitting and Regularization" /><published>2021-12-11T00:00:00+09:00</published><updated>2021-12-11T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/overfitting-and-regularization</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/overfitting-and-regularization/">&lt;div id=&quot;toc&quot;&gt;
+>>>>>>> 4bc915d6db2efd49a5a86cfc29d5b169aaeb538f
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -293,7 +416,66 @@ Estimated Total Size (MB): 51.76
       &lt;p&gt;GTX 1070Ti 하나를 사용했습니다. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Pytorch-Cifar10</title><link href="http://localhost:4000/deep-learning-study/pytorch-cifar10/" rel="alternate" type="text/html" title="Pytorch-Cifar10" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/pytorch-cifar10</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/pytorch-cifar10/">&lt;div id=&quot;toc&quot;&gt;
+&lt;/div&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">CNN Architecture - AlexNet (2012)</title><link href="http://localhost:4000/deep-learning-study/AlexNet/" rel="alternate" type="text/html" title="CNN Architecture - AlexNet (2012)" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/AlexNet</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/AlexNet/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#architecture&quot; id=&quot;markdown-toc-architecture&quot;&gt;Architecture&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#2-gpu-training&quot; id=&quot;markdown-toc-2-gpu-training&quot;&gt;2-GPU Training&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#usage-of-relu&quot; id=&quot;markdown-toc-usage-of-relu&quot;&gt;Usage of ReLU&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#local-response-normalization&quot; id=&quot;markdown-toc-local-response-normalization&quot;&gt;Local Response Normalization&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#overlapping-pooling&quot; id=&quot;markdown-toc-overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#training&quot; id=&quot;markdown-toc-training&quot;&gt;Training&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#regularization-techniques&quot; id=&quot;markdown-toc-regularization-techniques&quot;&gt;Regularization Techniques&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#optimization&quot; id=&quot;markdown-toc-optimization&quot;&gt;Optimization&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;AlexNet은 2012년 Imagenet challenge를 큰 격차로 우승하면서, image classification task를 통해 Deep neural network &amp;amp; GPU-computing의 시대를 연 모델이라는 평가를 받는 그런 아키텍쳐입니다. 이번 포스팅에서는 그런 AlexNet의 원본 논문을 따라가면서, 메인 아이디어들에 대해 살펴봅니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;../../images/8190f2b2db0f7eb370af157be64544adbe4c13e88488ef86e8d2bf9a60d90be2.png&quot; alt=&quot;picture 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;기본적으로 AlexNet의 구조는 LeNet과 많이 다르지 않습니다. 보다 큰 이미지를 처리하기 위해 좀더 깊어진 구조라고 생각할 수 있는데요. Convolution layer 5개와 Fully connected layer 2개로 구성되어 있습니다. LeNet에서 본것처럼 Convolution layer들이 주변을 보면서 feature를 추출하고, 그 추출한 특징들을 마지막 linear layer에서 어떻게 합칠지를 고민해서 하나의 결과를 낸다고 생각할 수 있겠습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-gpu-training&quot;&gt;2-GPU Training&lt;/h3&gt;
+&lt;p&gt;AlexNet은 몇가지 특이한 점이 있는데, 눈에 보이는 가장 큰 특징 중 하나는 위 그림에서 보듯 네트워크 전체를 두개로 나눠서 구현해놨다는 점입니다. 이는 당시 (2012) GPU 메모리가 3GB정도로 현재에 비해 부족했기 때문에 GPU 2개에 네트워크를 반씩 나눠서 돌리면서, 필요한 때만 서로간에 communicate하도록 한 것인데요. 지금에 와서는 GPU의 성능이 비약적으로 향상됨에 따라 굳이 이렇게 두개로 나누지 않아도 충분히 구현할 수 있습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;usage-of-relu&quot;&gt;Usage of ReLU&lt;/h3&gt;
+&lt;p&gt;LeNet에서도 그렇고, 이전까지의 많은 Neural network들은 activation function으로 $\tanh$ 나 sigmoid (어차피 거의 비슷하므로 sigmoid로 통칭하겠습니다) 같은 smooth한 함수를 사용했습니다. 그러나 AlexNet에서는 ReLU를 사용하면 훨씬 빠르게 training이 가능함을 주장하고 있으며, 이를 실험을 통해 확인하였습니다. 이부분에 대해서는 다양한 이야기와 생각해볼 이슈들이 있는데, ReLU는 계산 자체가 빠르게 가능한데다 양쪽에서 vanishing gradient 문제가 발생하는 sigmoid에 비해 이런 문제들이 덜하다는 장점을 직관적으로 생각해 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;AlexNet 논문에서는 이를 non-saturating이라고 부르고 있으며, 이후 많은 논문에서도 ReLU를 사용하여 이러한 이점을 얻고자 하고 있습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;local-response-normalization&quot;&gt;Local Response Normalization&lt;/h3&gt;
+&lt;p&gt;Sigmoid의 경우 각 뉴런의 입력이 0 주위로 모아져야 learning의 효율이 발휘되기 때문에 (끝쪽으로 갈수록 미분계수가 0에 가까워서 아무 일도 일어나지 않음), 많은 네트워크들이 input normalization을 통해 이를 맞춰주려고 했습니다. ReLU는 0 이하만 아니라면 입력값에 따라 미분계수가 줄어들거나 하지는 않으므로 이게 꼭 필요하지는 않지만, AlexNet 논문에서는 Local normalization이라는 방법을 적용할 때 효율이 좋았다고 합니다. 다만, 이 방법은 이후 Batch normalization 등 다양한 방법들이 제시되고 이러한 방법들의 효율이 더욱 우수함이 밝혀짐에 따라 이후의 연구에서 더이상 계승되지 않았기 때문에 자세히 다루지는 않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;간단하게만 말하자면, convolution layer 한번이 필터를 여러개 쓰는 상황에서 적용하는 normalization입니다. 예를 들어 보자면 총 96개의 필터 (커널) 을 쓰는 상황에서 뭐 17번 필터의 결과값이 있을텐데, 이 값을 13번, 14번, …, 21번까지의 필터의 결과값을 이용하여 normalize하는 것입니다 (좌우로 4개씩 쓰는건 그냥 임의로 정한 값입니다) 이 방법은 실제 뇌에서의 신경생리학에 있어서 측면 억제 (lateral inhibition) 로부터 motivation을 얻은 방법이라고 합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/h3&gt;
+&lt;p&gt;AlexNet에서는 일부 pooling을 서로 살짝 겹치게 수행하는데, 이 방법을 통해 overfitting을 크게 줄일 수 있다고 합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;training&quot;&gt;Training&lt;/h2&gt;
+&lt;h3 id=&quot;regularization-techniques&quot;&gt;Regularization Techniques&lt;/h3&gt;
+&lt;p&gt;AlexNet은 이전 LeNet에 비해 훨씬 더 큰 모델로, 파라미터의 개수가 훨씬 더 많기 때문에 overfitting의 우려가 큽니다. 이에 대응하기 위해, LeNet과 비교해 보면 훨씬 Regularization에 공을 들이는 것을 알 수 있습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2012년 당시에는 최신 테크닉이었던 (그러나, 이후에는 Batch normalization등의 활용으로 인해 그 효용이 많이 줄어든) dropout을 적용합니다. 구체적으로 fully-connected layer 중 앞 두 칸에 $p = 0.5$입니다.&lt;/li&gt;
+  &lt;li&gt;SGD에 Weight decay 0.0005를 적용합니다. 논문에서는 그 이유를 명확하게 밝히고 있지는 않으나, 단순히 regularization일 뿐 아니라 실제로 training에 반드시 필요하다고 주장하고 있습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;optimization&quot;&gt;Optimization&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;SGD with Momentum 0.9, weight decay 0.0005.&lt;/li&gt;
+  &lt;li&gt;Learning rate는 0.01로 시작해서, loss가 줄어들지 않는 것 같아 보일때마다 1/10으로 줄이는 방법을 사용했습니다.&lt;/li&gt;
+  &lt;li&gt;“Adjusted Manually”…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/deep-learning-study/alexnet-cifar10&quot;&gt;AlexNet으로 CIFAR10 풀어보기&lt;/a&gt; 로 이어집니다&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Pytorch-Cifar10</title><link href="http://localhost:4000/deep-learning-study/pytorch-cifar10/" rel="alternate" type="text/html" title="Pytorch-Cifar10" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/pytorch-cifar10</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/pytorch-cifar10/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -361,68 +543,7 @@ table td, table th {
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;hr /&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">CNN Architecture - AlexNet (2012)</title><link href="http://localhost:4000/deep-learning-study/AlexNet/" rel="alternate" type="text/html" title="CNN Architecture - AlexNet (2012)" /><published>2021-11-25T00:00:00+09:00</published><updated>2021-11-25T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/AlexNet</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/AlexNet/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#architecture&quot; id=&quot;markdown-toc-architecture&quot;&gt;Architecture&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#2-gpu-training&quot; id=&quot;markdown-toc-2-gpu-training&quot;&gt;2-GPU Training&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#usage-of-relu&quot; id=&quot;markdown-toc-usage-of-relu&quot;&gt;Usage of ReLU&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#local-response-normalization&quot; id=&quot;markdown-toc-local-response-normalization&quot;&gt;Local Response Normalization&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#overlapping-pooling&quot; id=&quot;markdown-toc-overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#training&quot; id=&quot;markdown-toc-training&quot;&gt;Training&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#regularization-techniques&quot; id=&quot;markdown-toc-regularization-techniques&quot;&gt;Regularization Techniques&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#optimization&quot; id=&quot;markdown-toc-optimization&quot;&gt;Optimization&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#code&quot; id=&quot;markdown-toc-code&quot;&gt;Code&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;AlexNet은 2012년 Imagenet challenge를 큰 격차로 우승하면서, image classification task를 통해 Deep neural network &amp;amp; GPU-computing의 시대를 연 모델이라는 평가를 받는 그런 아키텍쳐입니다. 이번 포스팅에서는 그런 AlexNet의 원본 논문을 따라가면서, 메인 아이디어들에 대해 살펴봅니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;../../images/8190f2b2db0f7eb370af157be64544adbe4c13e88488ef86e8d2bf9a60d90be2.png&quot; alt=&quot;picture 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기본적으로 AlexNet의 구조는 LeNet과 많이 다르지 않습니다. 보다 큰 이미지를 처리하기 위해 좀더 깊어진 구조라고 생각할 수 있는데요. Convolution layer 5개와 Fully connected layer 2개로 구성되어 있습니다. LeNet에서 본것처럼 Convolution layer들이 주변을 보면서 feature를 추출하고, 그 추출한 특징들을 마지막 linear layer에서 어떻게 합칠지를 고민해서 하나의 결과를 낸다고 생각할 수 있겠습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-gpu-training&quot;&gt;2-GPU Training&lt;/h3&gt;
-&lt;p&gt;AlexNet은 몇가지 특이한 점이 있는데, 눈에 보이는 가장 큰 특징 중 하나는 위 그림에서 보듯 네트워크 전체를 두개로 나눠서 구현해놨다는 점입니다. 이는 당시 (2012) GPU 메모리가 3GB정도로 현재에 비해 부족했기 때문에 GPU 2개에 네트워크를 반씩 나눠서 돌리면서, 필요한 때만 서로간에 communicate하도록 한 것인데요. 지금에 와서는 GPU의 성능이 비약적으로 향상됨에 따라 굳이 이렇게 두개로 나누지 않아도 충분히 구현할 수 있습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;usage-of-relu&quot;&gt;Usage of ReLU&lt;/h3&gt;
-&lt;p&gt;LeNet에서도 그렇고, 이전까지의 많은 Neural network들은 activation function으로 $\tanh$ 나 sigmoid (어차피 거의 비슷하므로 sigmoid로 통칭하겠습니다) 같은 smooth한 함수를 사용했습니다. 그러나 AlexNet에서는 ReLU를 사용하면 훨씬 빠르게 training이 가능함을 주장하고 있으며, 이를 실험을 통해 확인하였습니다. 이부분에 대해서는 다양한 이야기와 생각해볼 이슈들이 있는데, ReLU는 계산 자체가 빠르게 가능한데다 양쪽에서 vanishing gradient 문제가 발생하는 sigmoid에 비해 이런 문제들이 덜하다는 장점을 직관적으로 생각해 볼 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;AlexNet 논문에서는 이를 non-saturating이라고 부르고 있으며, 이후 많은 논문에서도 ReLU를 사용하여 이러한 이점을 얻고자 하고 있습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;local-response-normalization&quot;&gt;Local Response Normalization&lt;/h3&gt;
-&lt;p&gt;Sigmoid의 경우 각 뉴런의 입력이 0 주위로 모아져야 learning의 효율이 발휘되기 때문에 (끝쪽으로 갈수록 미분계수가 0에 가까워서 아무 일도 일어나지 않음), 많은 네트워크들이 input normalization을 통해 이를 맞춰주려고 했습니다. ReLU는 0 이하만 아니라면 입력값에 따라 미분계수가 줄어들거나 하지는 않으므로 이게 꼭 필요하지는 않지만, AlexNet 논문에서는 Local normalization이라는 방법을 적용할 때 효율이 좋았다고 합니다. 다만, 이 방법은 이후 Batch normalization 등 다양한 방법들이 제시되고 이러한 방법들의 효율이 더욱 우수함이 밝혀짐에 따라 이후의 연구에서 더이상 계승되지 않았기 때문에 자세히 다루지는 않겠습니다.&lt;/p&gt;
-
-&lt;p&gt;간단하게만 말하자면, convolution layer 한번이 필터를 여러개 쓰는 상황에서 적용하는 normalization입니다. 예를 들어 보자면 총 96개의 필터 (커널) 을 쓰는 상황에서 뭐 17번 필터의 결과값이 있을텐데, 이 값을 13번, 14번, …, 21번까지의 필터의 결과값을 이용하여 normalize하는 것입니다 (좌우로 4개씩 쓰는건 그냥 임의로 정한 값입니다) 이 방법은 실제 뇌에서의 신경생리학에 있어서 측면 억제 (lateral inhibition) 로부터 motivation을 얻은 방법이라고 합니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;overlapping-pooling&quot;&gt;Overlapping Pooling&lt;/h3&gt;
-&lt;p&gt;AlexNet에서는 일부 pooling을 서로 살짝 겹치게 수행하는데, 이 방법을 통해 overfitting을 크게 줄일 수 있다고 합니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;training&quot;&gt;Training&lt;/h2&gt;
-&lt;h3 id=&quot;regularization-techniques&quot;&gt;Regularization Techniques&lt;/h3&gt;
-&lt;p&gt;Regularization에 사용되는 여러 방법들에 대해서는 따로 포스팅했습니다. &lt;a href=&quot;/deep-learning-study/regularization&quot;&gt;Regularization methods&lt;/a&gt;을 참고해주세요 :)&lt;/p&gt;
-
-&lt;p&gt;AlexNet은 이전 LeNet에 비해 훨씬 더 큰 모델로, 파라미터의 개수가 훨씬 더 많기 때문에 overfitting의 우려가 큽니다. 이에 대응하기 위해, LeNet과 비교해 보면 훨씬 Regularization에 공을 들이는 것을 알 수 있습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;2012년 당시에는 최신 테크닉이었던 (그러나, 이후에는 Batch normalization등의 활용으로 인해 그 효용이 많이 줄어든) dropout을 적용합니다. 구체적으로 fully-connected layer 중 앞 두 칸에 $p = 0.5$입니다.&lt;/li&gt;
-  &lt;li&gt;SGD에 Weight decay 0.0005를 적용합니다. 논문에서는 그 이유를 명확하게 밝히고 있지는 않으나, 단순히 regularization일 뿐 아니라 실제로 training에 반드시 필요하다고 주장하고 있습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;optimization&quot;&gt;Optimization&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;SGD with Momentum 0.9, weight decay 0.0005.&lt;/li&gt;
-  &lt;li&gt;Learning rate는 0.01로 시작해서, loss가 줄어들지 않는 것 같아 보일때마다 1/10으로 줄이는 방법을 사용했습니다.&lt;/li&gt;
-  &lt;li&gt;“Adjusted Manually”…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;/deep-learning-study/alexnet-cifar10&quot;&gt;AlexNet으로 CIFAR10 풀어보기&lt;/a&gt; 로 이어집니다&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">논문읽기 : All Pairs Almost Shortest Path</title><link href="http://localhost:4000/cs-adventure/APASP/" rel="alternate" type="text/html" title="논문읽기 : All Pairs Almost Shortest Path" /><published>2021-11-22T00:00:00+09:00</published><updated>2021-11-22T00:00:00+09:00</updated><id>http://localhost:4000/cs-adventure/APASP</id><content type="html" xml:base="http://localhost:4000/cs-adventure/APASP/">&lt;div id=&quot;toc&quot;&gt;
+&lt;hr /&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">논문읽기 : All Pairs Almost Shortest Path</title><link href="http://localhost:4000/cs-adventure/APASP/" rel="alternate" type="text/html" title="논문읽기 : All Pairs Almost Shortest Path" /><published>2021-11-22T00:00:00+09:00</published><updated>2021-11-22T00:00:00+09:00</updated><id>http://localhost:4000/cs-adventure/APASP</id><content type="html" xml:base="http://localhost:4000/cs-adventure/APASP/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -551,9 +672,9 @@ $(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$�
     &lt;ul&gt;
       &lt;li&gt;마지막으로 지나는 high-점을 $w$라 합시다. 이제, $w \to v$의 최단경로는 모두 low-degree 정점만으로 구성되어 있고, 이는 다시 $G_2(u)$ 에 통째로 들어갑니다. 이는 $G_2(u)$를 만들때, low-degree 정점을 한번이라도 터치하는 모든 간선들을 때려넣었기 때문입니다.&lt;/li&gt;
       &lt;li&gt;$w’$ 를 $w$를 dominate하는 $D$의 정점이라고 하겠습니다. $(w, w’)$ 간선 또한 $G_2(u)$ 에 들어갑니다.&lt;/li&gt;
-      &lt;li&gt;$w’ \in D$ 이므로, $(u, w’) \in G_2(u)$이고, 이 간선의 가중치 $\delta(u, w’)$는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w&apos;)&lt;/code&gt;에서 구한 값이므로 &lt;strong&gt;정확&lt;/strong&gt;합니다.&lt;/li&gt;
+      &lt;li&gt;$w’ \in D$ 이므로, $(u, w’) \in G_2(u)$이고, 이 간선의 가중치 $\delta(u, w’)$는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w')&lt;/code&gt;에서 구한 값이므로 &lt;strong&gt;정확&lt;/strong&gt;합니다.&lt;/li&gt;
       &lt;li&gt;Dominating은 바로 연결되어 있다는 뜻이므로, $\delta(u, w’) \leq \delta(u, w) + 1$ 입니다.&lt;/li&gt;
-      &lt;li&gt;다익스트라 알고리즘에 의해 구해지는 거리를 $\hat{\delta}$ 이라 하면, $\hat{\delta}(u, v)$ 는 다음을 만족합니다. \(\hat{\delta}(u, w&apos;) + \hat{\delta}(w&apos;, w) + \hat{\delta}(w, v)\)&lt;/li&gt;
+      &lt;li&gt;다익스트라 알고리즘에 의해 구해지는 거리를 $\hat{\delta}$ 이라 하면, $\hat{\delta}(u, v)$ 는 다음을 만족합니다. \(\hat{\delta}(u, w') + \hat{\delta}(w', w) + \hat{\delta}(w, v)\)&lt;/li&gt;
       &lt;li&gt;그런데…$\hat{\delta}(u, w’)$ 은 BFS에서 구한 weight가 넘어오므로 정확하고, 이는 다시 $\delta(u, w) + 1$ 이하입니다.&lt;/li&gt;
       &lt;li&gt;$\hat{\delta}(w’, w)$는 어차피 1입니다.&lt;/li&gt;
       &lt;li&gt;$\hat{\delta}(w, v)$ 는 다시 실제 최단경로가 $G_2(u)$에 들어있으므로 정확합니다.&lt;/li&gt;
@@ -586,8 +707,8 @@ $(1-x)^{1/x} \leq 1/e$ 이므로, 이를 잘 정리하면 $u &amp;lt; k \log n$�
 &lt;ul&gt;
   &lt;li&gt;만약 최단경로가 HIGH의 정점을 하나라도 지난다면, 그중 마지막을 $w$라 하고 $D_H$에서 $w$를 dominate하는 $w’$를 고릅니다.
     &lt;ul&gt;
-      &lt;li&gt;$\delta(u, w’)$ 는 $w’ \in D_H$ 이므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w&apos;)&lt;/code&gt;에 의한 정확한 거리를 압니다. 이는 $\delta(u, w) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
-      &lt;li&gt;$\delta(w’, v)$ 는 역시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w&apos;)&lt;/code&gt;에 의해 정확한 거리를 알고, $\delta(w, v) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
+      &lt;li&gt;$\delta(u, w’)$ 는 $w’ \in D_H$ 이므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w')&lt;/code&gt;에 의한 정확한 거리를 압니다. 이는 $\delta(u, w) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
+      &lt;li&gt;$\delta(w’, v)$ 는 역시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BFS(w')&lt;/code&gt;에 의해 정확한 거리를 알고, $\delta(w, v) + 1$ 보다 작거나 같습니다.&lt;/li&gt;
       &lt;li&gt;따라서, 이를 값은 $\delta(u, w) + 2 + \delta(w, v)$ 보다 작거나 같습니다.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
@@ -873,7 +994,7 @@ Contents
         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;&apos;\n&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="problem-solving" /><summary type="html">Contents</summary></entry><entry><title type="html">Autodiff/Backpropagation</title><link href="http://localhost:4000/deep-learning-study/backpropagation/" rel="alternate" type="text/html" title="Autodiff/Backpropagation" /><published>2021-11-16T00:00:00+09:00</published><updated>2021-11-16T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/backpropagation</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/backpropagation/">&lt;div id=&quot;toc&quot;&gt;
 Contents
@@ -964,312 +1085,4 @@ $x \in \R^m, y \in \R^n$, $g : \R^m \to \R^n, f : \R^n \to \R$ 정도의 세팅�
 &lt;ul&gt;
   &lt;li&gt;서울대학교 심층신경망의 수학적 기초 강의자료 (&lt;a href=&quot;http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html&quot;&gt;링크&lt;/a&gt;)&lt;/li&gt;
   &lt;li&gt;Ian Goodfellow, Yoshua Bengio, &amp;amp; Aaron Courville (2016). Deep Learning. MIT Press.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">LeNet으로 MNIST 풀어보기</title><link href="http://localhost:4000/deep-learning-study/LeNet-MNIST/" rel="alternate" type="text/html" title="LeNet으로 MNIST 풀어보기" /><published>2021-11-07T00:00:00+09:00</published><updated>2021-11-07T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/LeNet-MNIST</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/LeNet-MNIST/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#lenet-모델&quot; id=&quot;markdown-toc-lenet-모델&quot;&gt;LeNet 모델&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#구현&quot; id=&quot;markdown-toc-구현&quot;&gt;구현&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;심층 신경망의 수학적 기초&lt;/strong&gt; 8강 (10월 5일) 에 기반합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/deep-learning-study/mnist-mlp/&quot;&gt;MLP로 MNIST 풀어보기&lt;/a&gt;의 코드와 &lt;a href=&quot;/deep-learning-study/convolutionary-neural-networks/&quot;&gt;CNN 기초&lt;/a&gt; 내용에 이어지는 포스팅입니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;lenet-모델&quot;&gt;LeNet 모델&lt;/h2&gt;
-&lt;p&gt;여기서는 LeNet-5 모델에 대해 간단히 살펴봅니다.&lt;/p&gt;
-
-&lt;p&gt;LeNet은 거의 최초의 CNN을 이용한 image classification 모델이라고 할 수 있습니다. Turing award 수상자이며, 사실상 CNN의 아버지 격인 Yann Lecun의 연구팀이 1998년에 개발하였고 그 이름을 따서 LeNet이라는 이름을 갖게 되었습니다. “Gradient Based Learning Applied to Document Recognition” 라는 제목의 논문으로 발표되었는데, 제목에서 알 수 있듯 본래 손글씨로 쓰인 글자를 구분하는 task를 해결하기 위해 개발되었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;../../images/cd97eccdcd206c69165bedbe52ab311cecf6e35e340166c1780794892fed550e.png&quot; alt=&quot;picture 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 구조는 LeNet의 전체적인 모델입니다. &lt;a href=&quot;/deep-learning-study/convolutionary-neural-networks/&quot;&gt;CNN 기초&lt;/a&gt; 에 있는 각 레이어별 설명을 모두 이해했다는 가정하에, LeNet의 ‘선택’ 만 살펴보겠습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;첫 레이어는 $5 \times 5$ Convolution filter 6개를 사용합니다.&lt;/li&gt;
-  &lt;li&gt;Subsampling은 average pooling을 사용하고&lt;/li&gt;
-  &lt;li&gt;Activation function으로는 tanh의 약간 변형된 형태를 사용합니다.&lt;/li&gt;
-  &lt;li&gt;재밌는 점은 C3 Layer가 일반적인 convolution이 아니라는 점입니다. 원본 논문에 의하면, symmetry를 깨기 위해서 S2-&amp;gt;C3 convolution을 할 때, 6개 채널 전부가 아닌 채널 일부만 사용해서 convolution을 수행합니다. 
-&lt;img src=&quot;../../images/591aba20e38405a3f2c2fef76a765f3ac12b5b8abc6c3c9c8410ab22f8abc678.png&quot; alt=&quot;picture 2&quot; /&gt;  이와 같이, 0번째 컨볼루션은 0, 1, 2 채널만 쓰고… 하는 방법입니다.&lt;/li&gt;
-  &lt;li&gt;Fully connected layer를 2번 탄 다음, 마지막에는 Gaussian connection이라는 조금 복잡한 방법을 사용합니다. 후술할 이유로 인해 자세히 설명하지는 않겠습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;그러나 이어진 후속연구에 의해, 꼭 이런 design choice를 지킬 필요가 없음이 알려졌습니다. 구현의 단순함과 성능을 위해 모델을 조금 수정해서 다음과 같이 구현하겠습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Subsampling에는 avg pooling이 아닌 max pooling을 사용합니다.&lt;/li&gt;
-  &lt;li&gt;Activation으로 ReLU를 사용하겠습니다.&lt;/li&gt;
-  &lt;li&gt;굳이 Symmetry를 이런 방법으로 깨지 않아도, initialization을 잘 하면 상관 없다고 합니다. Symmetry-breaking connection은 버리겠습니다.&lt;/li&gt;
-  &lt;li&gt;Gaussian connection도 하지 않아도 됩니다. 그냥 Fully connected layer로 충분하다고 합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;구현&quot;&gt;구현&lt;/h2&gt;
-&lt;p&gt;구현은 &lt;a href=&quot;/deep-learning-study/mnist-mlp/&quot;&gt;MLP로 MNIST 풀어보기&lt;/a&gt; 와 크게 다르지 않습니다.&lt;/p&gt;
-
-&lt;p&gt;MNIST 데이터 로딩하는 부분의 코드를 그대로 가져옵니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.nn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.optim&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Optimizer&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.utils.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchvision&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchvision.transforms&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;./mnist_data/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MNIST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;./mnist_data/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transforms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cuda&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;cpu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제, LeNet 모델을 정의합니다. Convolution 연산을 쓴다는것 외에는 여전히 다른점이 없습니다.&lt;/p&gt;
-
-&lt;p&gt;모델의 정의가 위 그림과 다른점이 하나 더 있는데, 그림에서는 첫 layer에 패딩을 쓰지 않는 대신 이미지 크기가 32 by 32였지만, 우리가 가진 MNIST 데이터는 28 by 28이기 때문에 첫 레이어에서 패딩 2를 넣어 줍니다. 이후에는 위 설명과 똑같습니다. Optimizer로는 여기서도 SGD를 쓰겠습니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;LeNet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LeNet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReLU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_layer1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxPool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReLU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_layer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MaxPool2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stride&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C5_layer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReLU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc_layer1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;84&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReLU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc_layer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Linear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;84&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        
-    
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_layer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool_layer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C5_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc_layer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fc_layer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;learning_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;EPOCH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LeNetModern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;loss_function&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CrossEntropyLoss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SGD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;learning_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torchsummary&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt; 
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;28&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;이렇게 얻은 model의 summary는 다음과 같습니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;----------------------------------------------------------------
-        Layer (type)               Output Shape         Param #
-================================================================
-            Conv2d-1            [-1, 6, 28, 28]             156
-              ReLU-2            [-1, 6, 28, 28]               0
-         MaxPool2d-3            [-1, 6, 14, 14]               0
-            Conv2d-4           [-1, 16, 10, 10]           2,416
-              ReLU-5           [-1, 16, 10, 10]               0
-         MaxPool2d-6             [-1, 16, 5, 5]               0
-            Linear-7                  [-1, 120]          48,120
-              ReLU-8                  [-1, 120]               0
-            Linear-9                   [-1, 84]          10,164
-             ReLU-10                   [-1, 84]               0
-           Linear-11                   [-1, 10]             850
-================================================================
-Total params: 61,706
-Trainable params: 61,706
-Non-trainable params: 0
-----------------------------------------------------------------
-Input size (MB): 0.00
-Forward/backward pass size (MB): 0.11
-Params size (MB): 0.24
-Estimated Total Size (MB): 0.35
-----------------------------------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;6만 개의 parameter를 갖는 매우 작은 모델입니다.&lt;/p&gt;
-
-&lt;p&gt;이제 데이터를 이용해서 이 모델을 실제로 훈련합니다. Train 방법도 MLP에서와 똑같습니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EPOCH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zero_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Epoch &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epoch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EPOCH&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; : loss &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;optimizer.zero_grad()&lt;/code&gt; 로 기존 MLP 모델에 남아있던 gradient 값들을 다 날리고&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;train_loss&lt;/code&gt; 는 현재 시점에 모델이 이미지를 받아서 추측을 해보고 그 loss function 값을 확인하고,&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.backward()&lt;/code&gt; 로 현재 시점의 gradient를 계산하고&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;optimizer.step()&lt;/code&gt; 으로 실제 optimization (여기선 SGD)를 수행합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;거의 같은 방법으로, Test set에 대해서 실제 정확도를 확인합니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;keepdim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view_as&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&apos;&apos;[Test set]&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Average loss: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;, 
-Accuracy: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;100.&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;correct&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;test_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;%)&apos;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;저는 20번의 epoch (대략 1분 정도의 training) 후에 98.25%의 정확도를 얻을 수 있었습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Image Segmentation - Single Layer Model</title><link href="http://localhost:4000/image-segmentation-2021/single-layer-convolution/" rel="alternate" type="text/html" title="Image Segmentation - Single Layer Model" /><published>2021-11-06T00:00:00+09:00</published><updated>2021-11-06T00:00:00+09:00</updated><id>http://localhost:4000/image-segmentation-2021/single-layer-convolution</id><content type="html" xml:base="http://localhost:4000/image-segmentation-2021/single-layer-convolution/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#model-만들기&quot; id=&quot;markdown-toc-model-만들기&quot;&gt;Model 만들기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#training&quot; id=&quot;markdown-toc-training&quot;&gt;Training&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#results&quot; id=&quot;markdown-toc-results&quot;&gt;Results&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;이번 포스팅에서는 구현이 &lt;strong&gt;어떤 식으로&lt;/strong&gt; 동작해야 하는지를 대충 알아보기 위해, 생각할 수 있는 가장 단순한 모델인 &lt;strong&gt;1-layer convolution&lt;/strong&gt;을 이용해 semantic segmentation을 시도합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/image-segmentation-2021/preparation&quot;&gt;Preparation post&lt;/a&gt; 에서 이어집니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;model-만들기&quot;&gt;Model 만들기&lt;/h2&gt;
-&lt;p&gt;Pytorch에서 model은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;torch.nn.Module&lt;/code&gt; 형태의 클래스로 만들 수 있습니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# models/single_conv.py
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch.nn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SingleConvolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SingleConvolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Conv2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kernel_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReLU&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conv_layer1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;우리는 RGB 3개 채널을 갖는 이미지를 받아서, 23개 클래스 중 하나를 구분할 것입니다. 즉, 입력은 $3 \times W \times H$ 형태일 것이며, 출력은 각 $(i, j)$ 마다 23개의 클래스에 대한 probability를 출력해야 합니다. ($23 \times W \times H$)&lt;/p&gt;
-
-&lt;p&gt;우리가 생각할 수 있는 가장 간단한 형태의 모델은 단 한 번의 convolution layer로 구성된 모델일 것입니다. 이 모델은 $3 \times f \times f$ 크기의 convolution filter 23개가 각 클래스에 대응하며, 각 filter는 trainable weight과 bias를 갖습니다. 즉 파라미터는 여기서 $27 \times 23$개의 weight과 23개의 bias로 총 644개가 됩니다. 각 클래스의 확률값은 convolution연산과 ReLU 한번으로 바로 결과값이 도출됩니다.&lt;/p&gt;
-
-&lt;p&gt;이 모델을 정의하는 것까지를 코드로 옮기면 다음과 같습니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# main.py
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;basics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datautils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;metrics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;evaluate&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;train&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
-
-&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;import_drone_dataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SingleConvolution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;여기서 batch size는 GPU 메모리에 들어가는 한 많이 욱여넣는 것이 일반적입니다. 저는 1070Ti를 쓰기 때문에 6정도는 괜찮은것 같습니다. 다른 함수들은 앞서 Prep에서 준비한 함수들입니다. summary가 반환하는 결과가 아래와 같이 나타납니다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;----------------------------------------------------------------
-        Layer (type)               Output Shape         Param #
-================================================================
-            Conv2d-1         [-1, 23, 600, 400]             644
-              ReLU-2         [-1, 23, 600, 400]               0
-================================================================
-Total params: 644
-Trainable params: 644
-Non-trainable params: 0
-----------------------------------------------------------------
-Input size (MB): 2.75
-Forward/backward pass size (MB): 84.23
-Params size (MB): 0.00
-Estimated Total Size (MB): 86.98
-----------------------------------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;우리가 예상했던 대로 644개의 trainable param을 갖는 것을 볼 수 있습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;training&quot;&gt;Training&lt;/h2&gt;
-&lt;p&gt;이제 모델을 정의했다면, 이 모델의 633개의 parameter를 실제로 train해 줘야 합니다. Train은 크게 두 과정으로 이루어집니다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Forward pass로 훈련용 데이터를 먹여서, 최종 결과를 도출한 다음, 이 결과를 ground truth와 비교해서 얼마나 다른지 (loss function)의 값을 측정&lt;/li&gt;
-  &lt;li&gt;그 값을 최소화하는 방향으로 뭔가 optimization 알고리즘을 적용.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;전체적인 CNN 모델 훈련의 이론에 대해서 다룬 포스팅들과, LeNet을 이용해서 pytorch에서 classification 하는 포스팅 (&lt;a href=&quot;/deep-learning-study/LeNet-MNIST&quot;&gt;LeNet으로 MNIST 풀어보기&lt;/a&gt;)가 있으므로 이쪽을 참고해 주세요.&lt;/p&gt;
-
-&lt;p&gt;여기서의 훈련과정은 LeNet MNIST훈련과 크게 다르지 않습니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# train.py
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;basics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; 
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;metrics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataLoader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;loss_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;acc_metric&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel_accuracy&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_losses&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;train_acc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;EPOCH &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; training begins...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;train_start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;train_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; 
-        &lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tqdm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; 
-            &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;train_accuracy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;acc_metric&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zero_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Train epoch &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; / &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Loss &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Accr &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_accuracy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-              &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Training Time &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; min&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;train_loss&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_losses&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;train_acc&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train_acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Total training time &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; minutes taken&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;history&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;LeNet으로 MNIST 풀어보는 포스팅에서 다뤘던 것과 거의 같습니다. 여러 모델에 대해 실험하기 위해 함수로 만들었다는 정도만 차이가 있습니다. 달라지는 부분이 거의 없으므로, LeNet 포스팅을 참조해 주세요.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;train data를 로딩할 data loader를 받고&lt;/li&gt;
-  &lt;li&gt;몇 epoch 돌릴지를 파라미터로 받고&lt;/li&gt;
-  &lt;li&gt;어떤 loss function을 어떤 optimizer로 훈련하고&lt;/li&gt;
-  &lt;li&gt;어떤 방법으로 accuracy를 측정할지 (사실 훈련 자체에는 상관이 없는데, 눈으로 보기 위해서입니다) 정합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이제, 마지막으로 이 모두를 합쳐서 최종 로직을 작성합니다.&lt;/p&gt;
-&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# main.py
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_loader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;loss_func&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CrossEntropyLoss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;optim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Adam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.003&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;evaluator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ModelEvaluation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixel_accuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;evaluator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;evaluate_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;이 모델에 뭔가 노력을 기울이는 것은 의미가 없으므로, 아무렇게나 5 epoch를 돌립니다. loss function과 optimizer도 일반적인 Cross Entropy Loss 와 Adam을 그대로 집어넣습니다. 이렇게 좀 기다려 보면…&lt;/p&gt;
-
-&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;../../images/5016c106c073b550e189e3d0242abd0ba532280a4eed9c4c27025aed43c46510.png&quot; alt=&quot;picture 2&quot; /&gt;&lt;br /&gt;
-이 결과는 8번 이미지에 대한 결과입니다. 모델이 대부분을 void로 잡아내긴 했는데, 뭔가 이미지의 큰 청크들에 대해 분명 trivial하지 않게 뭔가를 잡아낸 것 같아 보입니다.&lt;/p&gt;
-
-&lt;p&gt;이는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;show_qualitative&lt;/code&gt;로 뽑은 결과인데, evaluate한 결과는 평균 pixel accuracy 47%정도가 나왔습니다. 이 프로젝트는 앞으로 다양한 방법을 이용해 이를 85% 내지는 그 이상으로 올릴 계획입니다.&lt;/p&gt;</content><author><name></name></author><category term="image-segmentation-2021" /><summary type="html">Contents</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry></feed>

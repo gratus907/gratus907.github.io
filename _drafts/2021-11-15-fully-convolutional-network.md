@@ -27,6 +27,7 @@ LeNet을 시작으로 여러 CNN 모델들은 기존의 방법들로는 도저�
 
 이 그림에서 볼 수 있듯, semantic 또는 instance segmentation은 classification과는 다르게, 고양이가 **있는지** 뿐 아니라 **어디에** 있는지를 알아야 합니다. 그런데, LeNet 같은 CNN의 구조를 보면...
 
+
 ![picture 2](../../images/cd97eccdcd206c69165bedbe52ab311cecf6e35e340166c1780794892fed550e.png)  
 
 마지막에 Fully connected layer를 다는게 일반적인데 (당연히, 이미지의 '전체' 를 보고 어떤 이미지인지 알고 싶은 것이므로 자연스럽습니다), 이렇게 하면 이미지에서 고양이가 원래 어디에 있었는지에 대한 spatial information을 다 날려 보리게 됩니다. 그래서, 더이상 linear layer는 쓸 수 없습니다.
