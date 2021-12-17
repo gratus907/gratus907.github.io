@@ -25,6 +25,9 @@ Supervised by : [**AIGenDrug Co.Ltd**](https://www.aigendrug.com/)
 - 분자의 "부분구조" 를 그래프의 "부분그래프" 로 생각할 수 있습니다. 
 - 약물의 화학적 성질에는 부분구조가 매우 큰 영향을 미칩니다. 따라서, 어떤 분자가 이러이러한 부분구조를 갖는 부분이 있는지를 빠르게 찾을 수 있다면 많은 도움이 될 것입니다. 
 - 그러나, 그래프 A에 그래프 B가 부분그래프로써 존재하는지를 찾는 것 (Subgraph Isomorphism Problem) NP-Complete 문제로 일반적으로 해결하기 매우 어렵습니다. 이를 빠르게 수행하는 기존의 알고리즘들을 비교하고, 가능하다면 개선하고자 합니다.
+- 이들을 개선할 수 있다면, 미리 사전에 $Q_1, \dots Q_n$ 을 정해놨을 때, 어떤 임의의 분자에 대해 $Q_1, \dots Q_n$을 subgraph로 갖는지 여부를 bit vector 로 만들어서, 이를 이 분자의 feature vector로 쓸 수 있습니다.
+- Feature vector 가 있다면, classification을 시도해 볼 수 있습니다!
+- 프로젝트의 자세한 결과를 공개해도 되는지는 별로 확신이 없으므로 자세한 수치적 결과는 가급적 언급하지 않고, 좀 abstract하게만 말하겠습니다. 
 
 ### September 2021 : Literature review
 다른 창의통합설계 주제가 대부분 어떤 서비스의 개발 또는 딥러닝 모델 개발에 중점을 두는 것과는 달리, 저희는 일종의 연구 과제이기 때문에 특별히 extensive한 선행연구 조사가 필요합니다.
@@ -58,7 +61,13 @@ Edge-label을 허용하지 않는 알고리즘의 경우, edge 중간에 노드�
 ### October 2021 : Filtering Methods
 Subgraph matching, 특히 이런 heavily labeled subgraph matching에서, 매칭이 성공할 확률은 굉장히 낮습니다. 저희가 받은 데이터셋에서 전체 매칭의 성공률은 5% 미만입니다. 
 
-그런데, label이 정말 헤비하게 붙어있는 이런 그래프의 경우에는 특히 "매칭해보지 않고도 알 수 있는 실패" 들이 있습니다. 예를 들어, 라벨이 $x$인 노드의 개수를 세었을 때, 항상 데이터에서가 쿼리에서보다 많아야 합니다. 이를 이용하면 Neighbor-Label-Frequency나 Edge-Incidence 같은 적당한 지표들을 이용해서 생각보다 많은 케이스들을 쳐낼 수 있습니다. 이런 지표들이 Chemical data에 대해 얼마나 도움이 되는지를 실험했고, 70-80% 정도의 케이스들을 쳐낼 수 있음을 알게 되었습니다. 이들은 $O(n + m)$, $O(n^2)$ 정도의 비교적 
+그런데, label이 정말 헤비하게 붙어있는 이런 그래프의 경우에는 특히 "매칭해보지 않고도 알 수 있는 실패" 들이 있습니다. 예를 들어, 라벨이 $x$인 노드의 개수를 세었을 때, 항상 데이터에서가 쿼리에서보다 많아야 합니다. 이를 이용하면 Neighbor-Label-Frequency나 Edge-Incidence 같은 적당한 지표들을 이용해서 생각보다 많은 케이스들을 쳐낼 수 있습니다. 
+
+이런 지표들이 Chemical data에 대해 얼마나 도움이 되는지를 실험했고, 70-80% 정도의 케이스들을 쳐낼 수 있음을 알게 되었습니다. 이들은 $O(n + m)$, $O(n^2)$ 정도의 비교적 computationally cheap 한 연산이기 때문에 실제 매칭 대신에 이런걸로 넘어갈 수 있다면 전체 성능에 큰 향상을 가져올 수 있습니다. 
+
+### November-December 2021 : Classifcation 
+[2017년에 Bioinformatics에 발표된 GIST 연구팀의 논문](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-017-1638-4)은 저희가 이 fingerprint 정보를 이용하여 무엇을 하면 좋을지에 대한 이정표가 되었습니다. 적절한 fingerprinting으로 화합물을 $\R^n$ 공간에 임베딩한 후, 그 위에서 SVM과 Random forest를 이용하여 간독성 유무를 판정하는 식입니다.
+- 이 논문에서는 binary 정보만으로는 정보가 부족했다고 여겼기에, Bayesian statistics에 기반한 weighting scheme을 만들어서 
 
 ------
 [^1]: 제가 학부생 연구참여 프로그램을 수행했던 곳이기도 합니다
