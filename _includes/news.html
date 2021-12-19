@@ -15,11 +15,11 @@
     }
 </style>
 <div class="news">
-  <h2>News</h2>
+  <a href="/news/"><h2>News</h2></a>
   {% if site.news  %}
     <div class="table-responsive">
       <table class="table table-sm table-borderless">
-      {% assign news = site.news | reverse %}
+      {% assign news = site.news | where: "on-home", "true" | reverse %}
       {% for item in news limit: site.news_limit %}
         <tr>
           <th scope="row">{{ item.date | date: "%b %-d, %Y" }}</th>

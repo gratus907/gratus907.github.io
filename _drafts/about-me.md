@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-permalink: /about-me/
+permalink: /about-me-old/
 description: Not-so-formal Curriculum Vitae
 nav: true
 ---

@@ -175,6 +175,20 @@
             </a>
           </li>
           
+          <li class="nav-item active">
+            <a class="nav-link" href="/about-me/">
+              About me
+              
+              <span class="sr-only">(current)</span>
+              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/news/">
+              Recent Updates
+              
+            </a>
+          </li>
           <!-- Other pages -->
           
           
@@ -185,17 +199,6 @@
           
           
           
-          
-          
-          
-          <li class="nav-item active">
-              <a class="nav-link" href="/about-me/">
-                About me
-                
-                <span class="sr-only">(current)</span>
-                
-              </a>
-          </li>
           
           
           
@@ -220,6 +223,8 @@
                 
               </a>
           </li>
+          
+          
           
           
           
@@ -297,7 +302,7 @@
 
   <header class="post-header">
     <h1 class="post-title">About me</h1>
-    <p class="post-description">Not-so-formal Curriculum Vitae</p>
+    <p class="post-description">My resume. Here you can find what activity I do now, what I did before, my education and more. CSS style inspired by José M. Requena Plens</p>
   </header>
   <div style="display:None;">
     <span id="busuanzi_container_site_pv">
@@ -305,132 +310,472 @@
     </span>
   </div>
   <article>
-    <h3 id="profile">Profile</h3>
-<ul>
-  <li>서울대학교 컴퓨터공학부 학부생 (18학번) 신원석입니다.</li>
-  <li>Email : gratus907@snu.ac.kr</li>
-  <li>Website : 이 블로그와 tistory 블로그 가 있습니다. 장기적으로 이쪽으로 모두 옮길 계획에 있습니다.</li>
-</ul>
+    <!-- Place PDF download link at the top right. -->
+<!--<div class="row" style="margin-top: -3.5em;">
+	<a class="ml-auto mr-2" href="/assets/pdf/vitae.pdf" target="_blank">
+	  <img height="60px" src="/assets/img/pdf_icon.svg">
+	</a>
+</div>-->
+<style>
+    h1.cv, h2.cv, h3.cv, h4.cv, h5.cv, h6 {
+        margin-top:0em
+    }
+    table {
+        width:60%;
+        border:0px;
+        border-collapse: separate;
+        font-weight : 400;
+    }
+    table th {
+        font-size:1rem;
+        border: 0px;
+        padding : 0px;
+    }
+    thead {
+        border: 0px;
+    }
+</style>
 
-<h3 id="education">Education</h3>
-<ul>
-  <li>서울대학교 (2018.3 ~ 현재)
-    <ul>
-      <li>주전공 : 컴퓨터공학부 (전공학점 : 3.92 / 4.3)</li>
-      <li>복수전공 : 수리과학부 (전공학점 : 4.06 / 4.3)</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="publications">Publications</h3>
-<p><a href="/publications/">Link to publication list</a></p>
-
-<h2 id="awards">Awards</h2>
-<ul>
-  <li>한국컴퓨터종합학술대회 2021 최우수논문상 (컴퓨터이론 분야) <sup id="fnref:kcc" role="doc-noteref"><a href="#fn:kcc" class="footnote" rel="footnote">1</a></sup>
-</li>
-</ul>
-
-<h2 id="experience">Experience</h2>
-<ul>
-  <li>서울대학교 학부생 연구참여 프로그램 (2020.8 ~ 2021.4)
-    <ul>
-      <li>컴퓨터공학부 Computer Theory Lab (컴퓨터 이론 연구실)</li>
-      <li>Subgraph Isomorphism 알고리즘의 Adaptive Matching Order 개선</li>
-      <li>결과는 2021년 KCC에 제출하였고, 최우수논문상을 수상하였습니다.</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="projects">Projects</h3>
-<p><a href="/projects/">List of my projects</a></p>
-
-<ul>
-  <li>FRIDGE : Ingredient management &amp; Recipe recommendation webapp (SNU SWPP, 4인 1팀)
-    <ul>
-      <li>사용자의 냉장고에 든 식재료를 관리하고, 레시피를 검색하고, 적절한 레시피를 추천하는 웹앱 개발.</li>
-      <li>프런트엔드로 React/Redux, 백엔드로 Django를 사용했습니다.</li>
-      <li>Contribution : 강화학습의 원리에 기반한 추천 알고리즘과 백엔드의 주요 로직을 작성했습니다.</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="teaching--teaching-assistant">Teaching / Teaching Assistant</h3>
-<ul>
-  <li>2020 겨울계절학기 ‘컴퓨팅의 기초 : 처음 만나는 컴퓨팅’ Tutor</li>
-  <li>2021 1학기 ‘공학수학 1’ Teaching Assistant</li>
-  <li>2021 2학기 ‘알고리즘’ Teaching Assistant</li>
-</ul>
-
-<h3 id="skills">Skills</h3>
-<ul>
-  <li>C/C++ : 주 사용 언어로, Competitive programming을 통해 주로 익혔습니다.</li>
-  <li>Java : 자료구조, 알고리즘, 데이터베이스 등 과목을 통해 익혔습니다.</li>
-  <li>Python : Django webapp (FRIDGE), 컴퓨팅 기초 튜터로 데이터 분석 라이브러리 사용법을 튜터링하기도 했습니다.</li>
-  <li>Linux : 개인적으로 Ubuntu Linux를 2년 이상 사용해 왔고, Guardian 활동을 통해 공부했습니다.</li>
-  <li>(Human) Language : Korean (Mother Tongue), English (Fluent)</li>
-</ul>
-
-<h3 id="competitive-programming">Competitive Programming</h3>
-<p>다양한 국내외 프로그래밍 대회에 참여하고 있고, 알고리즘을 재밌게 공부하고 있습니다.</p>
-<ul>
-  <li>Codeforces : gratus907 (max rating 2100+)</li>
-  <li>Baekjoon OJ : gratus907</li>
-  <li>AtCoder : Gratus</li>
-</ul>
-
-<h4 id="global">Global</h4>
-<ul>
-  <li>Google Hash Code 2021 : 글로벌 211등 (글로벌 참여팀 약 1만 팀 중 상위 2%)</li>
-  <li>Google Hash Code 2020 : 글로벌 468등 (글로벌 참여팀 약 1만 팀 중 상위 5%)</li>
-  <li>Google Codejam 2021 : Round 3 진출, 504등</li>
-</ul>
-
-<h4 id="domestic">Domestic</h4>
-<ul>
-  <li>ICPC 2021 한국 인터넷예선 : 18위 (Team : Little Piplup) <sup id="fnref:icpc" role="doc-noteref"><a href="#fn:icpc" class="footnote" rel="footnote">2</a></sup>
-</li>
-  <li>SNUPC 2021 : Div.2 6위 <sup id="fnref:snupc" role="doc-noteref"><a href="#fn:snupc" class="footnote" rel="footnote">3</a></sup>
-</li>
-  <li>ICPC 2020 한국 인터넷예선 : 26위 (Team : Swift Turtwig) <sup id="fnref:icpc:1" role="doc-noteref"><a href="#fn:icpc" class="footnote" rel="footnote">2</a></sup>
-</li>
-  <li>UCPC 2019 : 31위 (Team : Little Piplup) <sup id="fnref:ucpc" role="doc-noteref"><a href="#fn:ucpc" class="footnote" rel="footnote">4</a></sup>
-</li>
-  <li>SNUPC 2020 : Div.2 7위 <sup id="fnref:snupc:1" role="doc-noteref"><a href="#fn:snupc" class="footnote" rel="footnote">3</a></sup>
-</li>
-  <li>SNUPC 2019 : Div.2 9위 <sup id="fnref:snupc:2" role="doc-noteref"><a href="#fn:snupc" class="footnote" rel="footnote">3</a></sup>
-</li>
-</ul>
-
-<h4 id="기타-관련-경험">기타 관련 경험</h4>
-<ul>
-  <li>2021 신촌지역 연합 프로그래밍 캠프 문제 검수 참여</li>
-  <li>2020 중앙대학교 프로그래밍 대회 문제 검수 참여</li>
-</ul>
-
-<h3 id="personal">Personal</h3>
-<ul>
-  <li>새 취미로 체스를 즐기고 있습니다. <a href="https://lichess.org/" target="_blank" rel="noopener noreferrer">Lichess profile link</a> <a href="https://www.chess.com/member/wonseokshin" target="_blank" rel="noopener noreferrer">Chess.com profile link</a>
-</li>
-</ul>
-
-<hr>
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:kcc" role="doc-endnote">
-      <p><strong>K</strong>orea <strong>C</strong>omputer <strong>C</strong>ongress, Annual conference held by Korean Institute of Information Scientists and Engineers <a href="#fnref:kcc" class="reversefootnote" role="doc-backlink">↩</a></p>
-    </li>
-    <li id="fn:icpc" role="doc-endnote">
-      <p><strong>I</strong>nternational <strong>C</strong>ollegiate <strong>P</strong>rogramming <strong>C</strong>ontest. Team (3) competition <a href="#fnref:icpc" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:icpc:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a></p>
-    </li>
-    <li id="fn:snupc" role="doc-endnote">
-      <p><strong>S</strong>eoul <strong>N</strong>ational <strong>U</strong>niversity <strong>P</strong>rogramming <strong>C</strong>ontest. Individual. <a href="#fnref:snupc" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:snupc:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a> <a href="#fnref:snupc:2" class="reversefootnote" role="doc-backlink">↩<sup>3</sup></a></p>
-    </li>
-    <li id="fn:ucpc" role="doc-endnote">
-      <p>ICPC-style contest prepared by programming clubs in Korea. Team (3) competition <a href="#fnref:ucpc" class="reversefootnote" role="doc-backlink">↩</a></p>
-    </li>
-  </ol>
+<div class="cv">
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">General Information</h3>
+            
+			<div>
+			
+				<table class="table-sm table-borderless">
+					
+						<tr>
+							<td class="cv p-0 pr-2 font-weight-bold text-left"><b>Full Name</b></td>
+							<td class="cv p-0 pl-2 font-weight-light text-left">Wonseok Shin</td>
+						</tr>
+					
+						<tr>
+							<td class="cv p-0 pr-2 font-weight-bold text-left"><b>Contact</b></td>
+							<td class="cv p-0 pl-2 font-weight-light text-left">gratus907@snu.ac.kr</td>
+						</tr>
+					
+				</table>
+			
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Education</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                <span class="badge abbr abbrcv">
+                                    2018 -
+                                </span>
+                                
+                                
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								<h6 class="title font-weight-bold ml-1 ml-md-4">Seoul National University - Bachelor in Computer Science and Engineering, Mathematical Sciences</h6>
+								
+								
+									<ul class="items">
+										
+										    <li>
+												
+													<span class="item">Major in Computer Science and Engineering</span>
+												
+											</li>
+										
+										    <li>
+												
+													<span class="item">Double major in Mathematical Sciences</span>
+												
+											</li>
+										
+									</ul>
+								
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Experience</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                <span class="badge abbr abbrcv">
+                                    2020.08-2021.04
+                                </span>
+                                
+                                
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								<h6 class="title font-weight-bold ml-1 ml-md-4">Undergraduate Research Opportunity Program</h6>
+								
+								
+									<ul class="items">
+										
+										    <li>
+												
+													<span class="item">SNU Computer Theory Lab (Advisor : Professor Kunsoo Park)</span>
+												
+											</li>
+										
+										    <li>
+												
+													<span class="item">Improved Adaptive Matching Order for Subgraph Isomorphism</span>
+												
+											</li>
+										
+									</ul>
+								
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<div>
+			
+                <style> 
+                a {
+                    color : #B509AC;
+                } 
+                </style>
+			    <h3 class="cv"><a href="/publications/">List of publications (Link) </a></h3>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Projects</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                <span class="badge abbr abbrcv">
+                                    2021.09-2021.12
+                                </span>
+                                
+                                
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								<h6 class="title font-weight-bold ml-1 ml-md-4">Efficient Subgraph Matching for Drug Hepatotoxicity Prediction</h6>
+								
+								
+									<ul class="items">
+										
+										    <li>
+												
+													<span class="item">SNU Creative Integrated Design course project (Capstone)</span>
+												
+											</li>
+										
+									</ul>
+								
+								
+							</div>
+						</div>
+					</li>
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                <span class="badge abbr abbrcv">
+                                    2020.09-2020.12
+                                </span>
+                                
+                                
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								<h6 class="title font-weight-bold ml-1 ml-md-4">FRIDGE - Recipe recommendation &amp; Fridge management webapp</h6>
+								
+								
+									<ul class="items">
+										
+										    <li>
+												
+													<span class="item">SNU Principles and Practices of Software Design course project</span>
+												
+											</li>
+										
+									</ul>
+								
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Honors and Awards</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                
+                                
+                                <b>Awards</b>
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								
+								
+									<ul class="items">
+										
+											<li>
+												
+													<span class="item">2021 한국컴퓨터종합학술대회 최우수논문상 (컴퓨터이론 분야)</span>
+												
+											</li>
+										
+									</ul>
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Teaching</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                
+                                
+                                <b>TA/Tutor</b>
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								
+								
+									<ul class="items">
+										
+											<li>
+												
+													<span class="item">21 Fall, <u>Algorithms</u> Teaching Assistant</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">21 Spring, <u>Engineering Mathematics I</u> Teaching Assistant</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">20-21 Winter, <u>Introduction to Computing - First Course in Computing</u> Tutor</span>
+												
+											</li>
+										
+									</ul>
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Programming Competitions</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                
+                                
+                                <b>Global</b>
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								
+								
+									<ul class="items">
+										
+											<li>
+												
+													<span class="item">Google Hash Code 2021 글로벌 211등 (글로벌 참여팀 약 1만 팀 중 상위 2%)</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">Google Hash Code 2020 글로벌 468등 (글로벌 참여팀 약 1만 팀 중 상위 5%)</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">Google Codejam 2021 Round 3 진출, 504등</span>
+												
+											</li>
+										
+									</ul>
+								
+							</div>
+						</div>
+					</li>
+				
+					<li class="cardcv list-group-item list-group-item-cv">
+						<div class="row">
+                            <div class="col-xs-2 cl-sm-2 col-md-auto text-center colcv" style="width: 100px;">
+                                
+                                
+                                
+                                <b>Domestic</b>
+                                
+                            </div>
+							<div class="col-xs-10 cl-sm-10 col-md mt-2 mt-md-0">
+								
+								
+								
+									<ul class="items">
+										
+											<li>
+												
+													<span class="item">ICPC 2021 한국 인터넷예선 18위 (Team Little Piplup)</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">ICPC 2020 한국 인터넷예선 26위 (Team Swift Turtwig)</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">SNUPC 2021 Div.2 6위</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">SNUPC 2020 Div.2 7위</span>
+												
+											</li>
+										
+											<li>
+												
+													<span class="item">SNUPC 2019 Div.2 9위</span>
+												
+											</li>
+										
+									</ul>
+								
+							</div>
+						</div>
+					</li>
+				
+				</ul>
+            
+            
+			</div>
+		</div>
+	
+		<div class="cardcv mt-3 p-3">
+            
+			<h3 class="cv">Skills</h3>
+            
+			<div>
+			
+				<ul class="list-group list-group-flush">
+				
+					<li class="cardcv list-group-item list-group-item-cv list_cv">
+<b>Languages</b>: Korean (native), English</li>
+				
+					<li class="cardcv list-group-item list-group-item-cv list_cv">
+<b>Programming languages</b>: C++, Python</li>
+				
+					<li class="cardcv list-group-item list-group-item-cv list_cv">
+<b>Tools</b>: Git, LaTeX</li>
+				
+				</ul>
+			
+            
+			</div>
+		</div>
+	
 </div>
 
   </article>
@@ -449,7 +794,7 @@
 
     
     
-    Last updated: December 18, 2021.
+    Last updated: December 19, 2021.
     
   </div>
 </footer>

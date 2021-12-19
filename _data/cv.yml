@@ -1,0 +1,81 @@
+- title: General Information
+  type: map
+  contents:
+  - name: Full Name
+    value: Wonseok Shin
+  - name: Contact
+    value: gratus907@snu.ac.kr
+
+- title: Education
+  type: table
+  contents:
+  - title: Seoul National University - Bachelor in Computer Science and Engineering, Mathematical Sciences
+    year: 2018 -
+    badge: 2018 -
+    description:
+      - Major in Computer Science and Engineering
+      - Double major in Mathematical Sciences
+
+- title: Experience
+  type: table 
+  contents: 
+  - title: Undergraduate Research Opportunity Program
+    year: 20-21
+    badge: 2020.08-2021.04
+    description:
+      - 'SNU Computer Theory Lab (Advisor : Professor Kunsoo Park)'
+      - Improved Adaptive Matching Order for Subgraph Isomorphism
+
+- title: Publications
+  type: table-publications
+  
+- title: Projects
+  type: table 
+  contents:
+  - title: Efficient Subgraph Matching for Drug Hepatotoxicity Prediction
+    badge: 2021.09-2021.12
+    description:
+      - SNU Creative Integrated Design course project (Capstone)
+  - title: FRIDGE - Recipe recommendation & Fridge management webapp
+    badge: 2020.09-2020.12
+    description:
+      - SNU Principles and Practices of Software Design course project
+
+- title: Honors and Awards
+  type: table 
+  contents: 
+  - subtype: Awards
+    items:
+    - 2021 한국컴퓨터종합학술대회 최우수논문상 (컴퓨터이론 분야) 
+
+- title: Teaching
+  type: table
+  contents:
+  - subtype: TA/Tutor
+    items:
+    - '21 Fall, <u>Algorithms</u> Teaching Assistant'
+    - '21 Spring, <u>Engineering Mathematics I</u> Teaching Assistant'
+    - '20-21 Winter, <u>Introduction to Computing - First Course in Computing</u> Tutor'
+
+- title: Programming Competitions
+  type: table
+  contents: 
+    - subtype: Global
+      items:
+      - Google Hash Code 2021 글로벌 211등 (글로벌 참여팀 약 1만 팀 중 상위 2%)
+      - Google Hash Code 2020 글로벌 468등 (글로벌 참여팀 약 1만 팀 중 상위 5%)
+      - Google Codejam 2021 Round 3 진출, 504등
+    - subtype: Domestic
+      items:
+      - ICPC 2021 한국 인터넷예선 18위 (Team Little Piplup)
+      - ICPC 2020 한국 인터넷예선 26위 (Team Swift Turtwig)
+      - SNUPC 2021 Div.2 6위 
+      - SNUPC 2020 Div.2 7위
+      - SNUPC 2019 Div.2 9위
+
+- title: Skills
+  type: list
+  contents:
+  - '<b>Languages</b>: Korean (native), English'
+  - '<b>Programming languages</b>: C++, Python'
+  - '<b>Tools</b>: Git, LaTeX'
