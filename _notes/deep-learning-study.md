@@ -25,7 +25,13 @@ category: Computer Science
 
 ------ 
 
+
+
 # Postings
+가능한한 포스팅을 읽는 순서를 DAG로 유지하려고 노력했습니다. 현재까지 작성완료된 포스팅은 볼드체로 표시되어 있습니다.
+
+![Image](/assets/img/deep-learning.jpg)
+
 ## Basics / Theory
 MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 이야기
 - [Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)
@@ -33,7 +39,7 @@ MLP, CNN 등 모델에 대한 얘기가 아닌, 전체적인 이론에 대한 �
 - [Backpropagation](/deep-learning-study/backpropagation/)
 - [Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)
 - [Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)
-- [Batch Normalization]
+- [Batch Normalization](/deep-learning-study/batch-normalization/)
 - [Universal Approximation Theorem]
 
 ## Shallow Neural Networks 

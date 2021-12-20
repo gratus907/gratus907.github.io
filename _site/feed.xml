@@ -1,5 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-19T18:26:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
-</subtitle><entry><title type="html">Unsupervised Learning, Autoencoders</title><link href="http://localhost:4000/deep-learning-study/autoencoders/" rel="alternate" type="text/html" title="Unsupervised Learning, Autoencoders" /><published>2021-12-14T00:00:00+09:00</published><updated>2021-12-14T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/autoencoders</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/autoencoders/">&lt;div id=&quot;toc&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-20T05:41:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+</subtitle><entry><title type="html">Batch Normalization</title><link href="http://localhost:4000/deep-learning-study/batch-normalization/" rel="alternate" type="text/html" title="Batch Normalization" /><published>2021-12-20T00:00:00+09:00</published><updated>2021-12-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/batch-normalization</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/batch-normalization/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#internal-covariate-shift&quot; id=&quot;markdown-toc-internal-covariate-shift&quot;&gt;Internal Covariate Shift&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#batch-normalization&quot; id=&quot;markdown-toc-batch-normalization&quot;&gt;Batch Normalization&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#experimental-result&quot; id=&quot;markdown-toc-experimental-result&quot;&gt;Experimental Result&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#후속연구--real-effect-of-bn&quot; id=&quot;markdown-toc-후속연구--real-effect-of-bn&quot;&gt;후속연구 : Real effect of BN?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;이 글은 ICML 2015에서 발표된 &lt;a href=&quot;https://arxiv.org/abs/1502.03167&quot;&gt;ICML 2015에서 발표된 Ioffe, Szegedy의 논문&lt;/a&gt; 과 제가 수강했던 심층신경망 강의에 기반합니다.&lt;/p&gt;
+
+&lt;p&gt;ICML 2015 논문에서는 딥러닝에서 training을 가속하기 위한 방법으로, Batch normalization이라는 기법을 제시했습니다. 이 글에서는 그 기법에 대해 살펴봅니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;internal-covariate-shift&quot;&gt;Internal Covariate Shift&lt;/h2&gt;
+&lt;p&gt;언제나, 어떤 새로운 기법이 제시되기 위해서는 그 이전 방법 (또는 그 기법이 없을 때) 에 비해 무언가가 나아져야 하고, 그러기 위해서는 어떤 문제가 있는지를 알아야 합니다. 깊은 신경망 네트워크에서 가장 흔히 발생하는 문제 중 하나는 &lt;strong&gt;Vanishing Gradient&lt;/strong&gt; 입니다.&lt;/p&gt;
+
+&lt;p&gt;Vanishing Gradient란, sigmoid 같은 함수를 activation function으로 쓸 때, 입력값이 굉장히 크면 기울기가 너무 작아져서 training이 정상적으로 진행되지 않는 상황을 말합니다. 이 문제 때문에 중간에 한번이라도 값이 튀어서 $x$의 절댓값이 지나치게 커지면, 그 위치에서 아무리 gradient를 구해도 그 값이 너무 작기 때문에 빠져나오지 못하고 갇혀버리게 됩니다. 이 문제를 해결하기 위해 크게 두 가지가 제시되었습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Sigmoid같은 함수를 쓰지 말고, ReLU를 쓰자. ReLU는 $x$가 커져도 기울기가 0이 되지 않고, 대신에 음수가 되면 0이 된다는 단점이 있습니다. 이를 보완할 Leaky ReLU같은 activation function을 고려할 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;만약 입력값이 계속 -1~1, 또는 0~1 정도 범위 사이를 왔다갔다 한다는 것을 보장할 수 있다면, 사실 sigmoid를 써도 됩니다. 즉, 어떤 식으로든 입력을 stabilize할 수 있으면 좋을 것 같습니다.
+    &lt;ul&gt;
+      &lt;li&gt;글로 다룬 적은 없지만, 이 문제 때문에 딥러닝은 (Convex한 함수의 최적화와는 다르게) initialization을 잘 해야 합니다. Initialization을 어떻게 할지에 대해서도 많은 논문들이 있습니다.&lt;/li&gt;
+      &lt;li&gt;오늘 다룰 방법도 이 관점에서 문제를 살펴봅니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ioffe와 Szegedy는 (이하, 저자들은) 초기에 입력이 좋은 상태 (-1~1 정도 구간 사이에 존재) 하는 상황으로 시작하더라도 나중에 뉴런들을 거치다 보면 이 분포가 변화함을 관찰하였으며, 이를 &lt;strong&gt;Internal Covariate Shift&lt;/strong&gt; 라고 불렀습니다. 즉, 초기에는 평균 0, 분산 1인 아름다운 데이터를 들고 시작하더라도 중간에 평균과 분산이 틀어지며, 이를 교정하고 싶다는 것입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;batch-normalization&quot;&gt;Batch Normalization&lt;/h2&gt;
+&lt;p&gt;통계학과 기존의 머신러닝에서는 이미 &lt;strong&gt;서로 다른 범위의 데이터를&lt;/strong&gt; 다룰 때, 정규화라는 기법을 이용해 왔습니다. 예를들어 어떤 동물종 A와 B의 개체수에 따른 회귀모형을 만들고자 할 때, A는 1~100 정도 분포하고 B는 1~10,000 정도 분포한다면 B의 차이에 비해 A의 차이가 너무 작아져서 A에 따른 변화가 올바르게 반영되지 못할 것입니다. 이를 막기 위해, 보통은 평균이 0이고 분산이 1이 되도록 전체 값을 맞춰준다거나 하는 정규화를 수행합니다. 이때, 데이터 $x_1, \dots x_n$에 대해 정규화는 다음과 같이 쉽게 수행할 수 있습니다.
+\(y_i = \frac{x_i - \expect{x}}{\sqrt{\var[x]}}\)
+이 방법은 쉬운 정규화지만, 약간 문제가 있습니다. 정규화 때문에 혹시 네트워크가 표현가능한 함수의 집합 (이를 Representation power라 합니다) 이 줄어들지 않느냐는 것입니다. 예를 들어 sigmoid가 -1, 1 구간에서 거의 linear하고 양쪽부분에서 nonlinear한데 모든 중간 레이어값을 어거지로 이렇게 중간에 밀어넣는게 올바르냐? 는 말에 선뜻 답하기가 어렵습니다.&lt;/p&gt;
+
+&lt;p&gt;그래서 저자들은 새로운 방법으로, 다음과 같은 normalization을 제안합니다. 
+\(y_i = \gamma_i \frac{x_i - \expect{x}}{\sqrt{\var[x]}} + \beta_i\)
+이때, $\gamma_i$ 와 $\beta_i$는 trainable parameter입니다.&lt;/p&gt;
+
+&lt;p&gt;이제 방법을 생각하고 나면, 또다른 문제가 있습니다. Stochastic optimization을 하는 우리의 특성상, batch 한번을 이용해서 gradient update를 하고나면 평균과 표준편차가 달라집니다. 전체 데이터가 1만개고 batch가 100개씩이라고 하면, 100개를 이용해서 레이어의 각 파라미터를 한번 바꾸고 나면 1만개의 입력을 넣고 돌려서 새로운 평균을 구해야 한다는 것입니다. 이럴거면 애초에 batch를 잡아서 stochastic하게 뭔가를 하는 의미가 없어져 버립니다.&lt;/p&gt;
+
+&lt;p&gt;그래서 저자들은 실제 평균과 표준편차를 구해서 쓰는게 아니라, batch별로 평균과 표준편차를 구해서 그 값들만 활용하는 방법을 제시합니다. 즉… Tensor $X$를 $B \times N$ 로 볼 때,
+\(\begin{align*}
+    \mu[:] &amp;amp;= \frac{1}{B} \sum_{b = 1}^{B} X[b, :] \\
+    \sigma^2[:] &amp;amp;= \frac{1}{B} \sum_{b = 1}^{B} (X[b, :] - \mu[:])^2 + \epsilon \\
+    \text{BN}_{\beta, \gamma}(X)[b, :] &amp;amp;= \gamma[:] \odot \frac{X[b, :] - \mu[:]}{\sigma[:]} + \beta[:]
+\end{align*}\)
+이렇게 됩니다. $\epsilon$은 floating point error를 피하기 위해 집어넣은 적당히 작은 수이므로 수학적으로는 고려하지 않아도 됩니다.&lt;/p&gt;
+
+&lt;p&gt;Convolution 연산에서도 거의 같습니다. 다만, Convolution의 경우 어떤 spatial locality를 유지한다는 성질을 유지하고 싶기 때문에 (이 정보가 어디서 왔는지를 어느정도는 보존하면서 가고 싶기 때문에) H, W 방향으로는 정규화하지 않고, C방향만 이용해서 수행합니다. 즉, tensor $X$를 $B \times C \times H \times W$ 로 볼 때, 
+\(\begin{align*}
+    \mu[:] &amp;amp;= \frac{1}{BHW} \sum_{b = 1}^{B} \sum_{i = 1}^{H} \sum_{j = 1}^{W} X[b, :, i, j] \\
+    \sigma^2[:] &amp;amp;= \frac{1}{BHW} \sum_{b = 1}^{B} \sum_{i = 1}^{H} \sum_{j = 1}^{W} (X[b, :, i, j] - \mu[:])^2 + \epsilon^2 \\
+    \text{BN}_{\beta, \gamma}(X)[b, :, i, j] &amp;amp;= \gamma[:] \odot \frac{X[b, :, i, j] - \mu[:]}{\sigma[:]} + \beta[:]
+\end{align*}\)&lt;/p&gt;
+
+&lt;h2 id=&quot;experimental-result&quot;&gt;Experimental Result&lt;/h2&gt;
+&lt;p&gt;저자들은 다음과 같은 사항들을 &lt;strong&gt;실험적으로&lt;/strong&gt; 확인했습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Dropout과 Batch norm은 둘 다 쓸 필요는 없습니다. BN 자체가 어느정도의 regularizaiton효과가 있기 때문이라고 합니다.&lt;/li&gt;
+  &lt;li&gt;BN이 있기 때문에, learning rate를 좀더 크게 잡을 수 있습니다. 같은 원리로, momentum을 늘리거나 lr decay를 줄일 수도 있겠습니다.&lt;/li&gt;
+  &lt;li&gt;ReLU가 아닌 tanh, sigmoid 등의 함수도 activation으로 쓸 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;Local Response Normalization 이라는 방법을 &lt;a href=&quot;/deep-learning-study/AlexNet&quot;&gt;AlexNet 포스팅&lt;/a&gt;에서 언급했지만 더이상 쓰이지 않는다고 말했었는데, 그 이유가 여기에 있습니다. BN을 사용하면 Local Response Normalization은 굳이 필요하지 않다고 합니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;또한, &lt;a href=&quot;/deep-learning-study/VGGNet&quot;&gt;VGGNet 포스팅&lt;/a&gt;에서도 “VGGNet은 깊어서 training이 어렵기 때문에 11레이어 훈련하고 거기에 2개 얹고…하는 식으로 training한다” 는 말을 언급한 적이 있는데, BN을 사용하면 이것도 굳이 그렇게 하지 않아도 그냥 바로 16레이어를 훈련할 수 있습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;후속연구--real-effect-of-bn&quot;&gt;후속연구 : Real effect of BN?&lt;/h2&gt;
+&lt;p&gt;MIT의 연구팀 (Santurkar et al) 은 2018년 &lt;a href=&quot;https://arxiv.org/abs/1805.11604&quot;&gt;NeurlPS에 발표된 연구&lt;/a&gt;에서, BN의 저자들이 주장한 Internal Covariate Shift (이하 ICS)에 대한 부분을 반박했습니다. 보다 정확히는, 이 논문의 요점을 정리하자면…&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ICS를 교정한다고 실제로 performance가 높아진다는 근거는 별로 없다. BN의 저자들이 (BN이 ICS를 교정하며) (그래서 performance가 높아진다) 라고 주장했지만, concrete evidence가 있는것은 아니다.&lt;/li&gt;
+  &lt;li&gt;In fact, BN이 ICS를 정말 교정하는 것도 사실 아니다. 실험 결과는 BN이 ICS 교정과 별로 상관이 없는것 같다.&lt;/li&gt;
+  &lt;li&gt;그럼에도 불구하고 BN이 performance를 개선하는건 사실이다.&lt;/li&gt;
+  &lt;li&gt;사실 BN의 진짜 효과는, loss function의 surface를 smooth하게 만드는 효과가 있다. 또한, 다른 regularization 방법들도 수학적으로 분석해보면 그런 효과가 있다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이정도로 요약할 수 있습니다. 즉, Loss function이 좀더 좋은 형태로 잡히기 때문에 BN을 써야 하긴 하지만, 그게 ICS 때문은 아니라는 것입니다. 이 논문은 다양한 실험결과와 함께 이론적으로도 분석하고 있는데, 이론적 기반을 먼저 갖춘상태로 정확히 필요한 것이 무엇인지를 잡아내서 실험을 설계하면 보다 원하는 결과를 쉽고 정확하게 얻을 수 있다는 점과, 우리가 잘 알려진 기법들에 대해서도 수학적/통계학적으로 명확하게 이해하고 있는 것은 아니라는 것을 보여주는 예시라고 할 수 있겠습니다.&lt;/p&gt;
+
+&lt;p&gt;그럼에도, 이후의 많은 딥러닝 모델들 - 특히 CNN들에 대해서, Batch Normalization은 거의 필수적인 것으로 받아들여지고 있을 만큼 성능 개선 효과가 뚜렷하기에 원 저자들의 연구가 빛이 바래는 것은 아닙니다. 2014년 이후의 Deep CNN 모델들은 BN의 효과 덕분에 훈련이 가능해졌다고 해도 과언이 아니니까요. 앞으로는 이런 방법들을 적용한, 더 깊은 network들에 대해 좀더 살펴보겠습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Unsupervised Learning, Autoencoders</title><link href="http://localhost:4000/deep-learning-study/autoencoders/" rel="alternate" type="text/html" title="Unsupervised Learning, Autoencoders" /><published>2021-12-14T00:00:00+09:00</published><updated>2021-12-14T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/autoencoders</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/autoencoders/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -991,93 +1071,4 @@ Contents
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="problem-solving" /><summary type="html">Contents</summary></entry><entry><title type="html">Autodiff/Backpropagation</title><link href="http://localhost:4000/deep-learning-study/backpropagation/" rel="alternate" type="text/html" title="Autodiff/Backpropagation" /><published>2021-11-16T00:00:00+09:00</published><updated>2021-11-16T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/backpropagation</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/backpropagation/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#introduction&quot; id=&quot;markdown-toc-introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#backpropagation&quot; id=&quot;markdown-toc-backpropagation&quot;&gt;Backpropagation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#notes&quot; id=&quot;markdown-toc-notes&quot;&gt;Notes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;이 글은 심층신경망 수업에서 공부한 내용에 기반하지만, 제가 나름대로 이해한 바를 덧붙여서 작성했습니다. 특히, 설명하는 방법이 조금 다릅니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Multi layer perceptron이 되었든, Convolutionary neural network가 되었든 기본적인 틀은 logistic regression과 다를 것이 없습니다.&lt;/p&gt;
-
-&lt;p&gt;설명의 편의를 위해 이 글에서는 MLP에 대해 설명하겠지만, CNN도 사실은 별로 다르지 않습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;MLP는 결국, 다음과 같은 형태의 함수로 나타나는 회귀 모형이라고 볼 수 있습니다.
-\(\begin{align*}
-  y_L &amp;amp;= W_L y_{L-1} + b_L \\
-  y_{L - 1} &amp;amp;= \sigma(W_{L-1} y_{L - 2} + b_{L - 1}) \\
-  \cdots &amp;amp; \cdots \\
-  y_2 &amp;amp;= \sigma (W_2 y_1 + b_2) \\
-  y_1 &amp;amp;= \sigma (W_1 x + b_1)
-\end{align*}\)&lt;/li&gt;
-  &lt;li&gt;여기서 $W_i, b_i$ 들은 모두 trainable weight 이고, $\sigma$는 어떤 activation function 입니다.&lt;/li&gt;
-  &lt;li&gt;우리는, $y_L$의 참값 (이라고 말하면 좀 애매하지만…) 을 반환하는 함수 $\tilde{y_L} = f(x)$ 가 존재한다고 생각합니다. 이를 최대한 &lt;strong&gt;근사&lt;/strong&gt; 하는 것이 목표입니다. 즉, 저 위 형태의 함수 ($W_i, b_i$ 를 이용하여 표현되는 함수) 를 &lt;strong&gt;표현 가능하다&lt;/strong&gt; 라고 정의하면, &lt;strong&gt;Ground-truth 함수에 가장 가까운 표현가능한 함수&lt;/strong&gt; 를 찾고 싶습니다.&lt;/li&gt;
-  &lt;li&gt;그러나 우리는 ground truth를 모두 아는게 아니라, 몇몇 데이터 $x^1, x^2, \dots$ 에 대해 알고 있습니다.&lt;br /&gt;
-따라서, 어떤 Loss function을 정의하여
-\(\sum_{i = 1}^{n} \mathcal{L}(y_L^{i}, \tilde{y_L}^{i})\)
-을 정의한 다음, 이 $\mathcal{L}$ 이 어떤 실제 $\tilde{y_L}^i$ 과 $y_L^i$ 간의 거리를 제시하므로, 이를 가능한 최소화하는 방향으로 나아가려고 합니다.&lt;/li&gt;
-  &lt;li&gt;그러므로, 우리는 여기서 SGD 또는 그 비슷한 알고리즘들을 사용합니다. 즉, $W_k, b_k$ 행렬 또는 벡터에 들어 있는 각 변수 $W_k(i, j)$ 나 $b_k(i)$ 를 이용해서 전체 공간에서의 Loss function을 그려놓고, 그 minimum을 (iterative하게) 찾을 수 있기를 바랍니다.&lt;/li&gt;
-  &lt;li&gt;SGD나 다른 방법을 쓰려면, 결국은 이런 느낌의 편미분계수들을 꼭 알아야 합니다. 
-\(\pdv{\mathcal{L}}{W_k(i, j)} \quad \quad \pdv{\mathcal{L}}{b_k(i)}\)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;모델이 간단하면 뭐 직접 미분한다고 치지만, 위에 있는 MLP 식 같이 생긴 복잡한 함수를 어떻게 미분할 수 있을까요?&lt;/p&gt;
-
-&lt;h2 id=&quot;backpropagation&quot;&gt;Backpropagation&lt;/h2&gt;
-&lt;p&gt;위 형태를 잘 보면, 합성함수 형태임을 알 수 있습니다. 합성함수의 미분은 Chain rule을 이용해서 수행할 수 있습니다.&lt;br /&gt;
-$x \in \R^m, y \in \R^n$, $g : \R^m \to \R^n, f : \R^n \to \R$ 정도의 세팅을 생각해 봅시다. $\mathbf{y} = g(\mathbf{x}), z = \mathbf{y}$ 라 할 때, 다음이 성립합니다.
-\(\pdv{z}{x_i} = \sum_{j} \pdv{z}{y_j} \pdv{y_j}{x_i}\)
-이 방법을 이용해서, 우리는 전체 $P$개의 모든 파라미터에 대해 $\pdv{\mathcal{L}}{w_i}$ 를 구해야 합니다.&lt;/p&gt;
-
-&lt;p&gt;이를 계산하기 위해, 먼저 Computational graph를 만듭니다. Computational graph란, 아래와 같이 각 값들을 노드로, 계산에 필요한 dependency들을 edge로 연결해서 그래프 형태로 만든 것입니다.
-&lt;img src=&quot;../../images/40cd6084bc0a4674ff1e61d062fc8f8900db1c435a6b86e723fa32965d94d37f.png&quot; alt=&quot;picture 3&quot; /&gt;&lt;br /&gt;
-(사진출처 : 서울대학교 심층신경망의 수학적 기초 강의자료)&lt;/p&gt;
-
-&lt;p&gt;여기서, ‘변수를 다른 변수로 미분한 미분계수’ 들을 구하고, ‘최종 결과를 변수로 미분한 미분계수’ 를 그 결과로 얻을 것입니다. 구체적으로,&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;각 edge에 대해, 변수를 변수로 미분한 중간 미분계수를 edge에 적어넣고,&lt;/li&gt;
-  &lt;li&gt;마지막에, root 노드 (i.e, 계산의 최종값) 에서 출발해서, 임의의 노드까지 가는 경로를 모두 따라가면서 곱해서 더하면 ‘최종결과를 변수로 미분한’ 미분계수를 얻습니다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;즉, 알고리즘의 언어로 말하자면 DAG 위에서 depth가 낮은 노드부터 거꾸로 올라가면서 edge의 값을 계산하고 (DP), 돌아올때는 topological order로 계산하겠다는 의미입니다.&lt;/p&gt;
-
-&lt;p&gt;이 사진에 있는 함수를 직접 계산하면서 과정을 따라가 보겠습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;step이 낮은 것부터 올라갑니다. 즉, 처음에는 step 1인 $a$-노드의 미분계수들을 계산하기 위해 $\pdv{a}{x}$ 를 구하며, 이 값은 $1/x$ 이므로 1/3입니다. 여기서 주목할 점은, 일반적인 symbolic differntiation을 수행할 때는 $1/x$를 들고 가지만, 우리는 어차피 최종적으로 수치연산을 할 것이므로 $1/3$ 이라는 사실만 기억하면 $1/x$ 라는 값은 잊어버려도 됩니다. 이 값은 edge에 적어 넣습니다. 또한 이후에 $a$값도 필요하기 때문에 $a = \log 3$ 이라는 결과를 노드에 적어넣습니다. 이제, step 1까지 왔습니다.&lt;/li&gt;
-  &lt;li&gt;step 2에 해당하는 $b$를 구해야 합니다. $\pdv{b}{a} = y, \pdv{b}{y} = a$ 이며, 이는 각각 $a, y$의 &lt;strong&gt;이미 계산한 노드값&lt;/strong&gt; 을 참조해서 계산할 수 있습니다. 각각 $2, \log 3$ 이 될 것이며, 이를 edge에 적어 넣습니다. $b$ 는 $2 \log 3$ 이고. 이건 노드에 적어넣습니다.&lt;/li&gt;
-  &lt;li&gt;step 3에 해당하는 $\pdv{c}{b}$ 는 $\frac{1}{2\sqrt{b}} = \frac{1}{2\sqrt{\log 3}}$ 입니다. $c = \sqrt{log 3}$ 입니다.&lt;/li&gt;
-  &lt;li&gt;step 4는 마지막으로, $\pdv{f}{c} = 1$, $\pdv{f}{b} = 1$ 이며, $f$ 의 최종적인 값은 $\sqrt{2 \log 3} + 2 \log 3$ 입니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;여기까지가 지금 1 과정이 끝난 것입니다. 이를 “Forward pass” 등으로 부릅니다. 여기까지 계산한 결과는 아래와 같습니다.
-&lt;img src=&quot;../../images/de99a2ba80e6f53a603bb8047d889a83d9d279550c8e053d5f4ad9f2479dd270.png&quot; alt=&quot;picture 4&quot; /&gt;&lt;br /&gt;
-이제, 다시 거꾸로 돌아가면서 계산합니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;$\pdv{f}{c} = 1$. 이번에는, $c$에 해당하는 노드에 이 값을 적어넣습니다.&lt;/li&gt;
-  &lt;li&gt;$\pdv{c}{b} = \frac{1}{2 \sqrt{2 \log 3}}$ 이며, $\pdv{f}{b}$ 는 여기에 따로 $b$가 $f$에 영향을 미치는 1이 있으므로 (가장 아래 edge), $\pdv{f}{b} = \frac{1}{2 \sqrt{2 \log 3}} + 1$ 입니다. 마찬가지로 $b$ 노드에 적어 넣습니다.&lt;/li&gt;
-  &lt;li&gt;같은 방법으로 뒤로 계속 달립니다. $\pdv{f}{a} = \frac{1}{\sqrt{2 \log 3}} + 2$.&lt;/li&gt;
-  &lt;li&gt;결국 다 계산하면, $\pdv{f}{x} = \frac{1}{3\sqrt{2\log 3}} + \frac{2}{3}$ 과 $\pdv{f}{y} = \sqrt{\frac{\log 3}{8}} + \log 3$ 이 남을 것입니다. 
-이 방법을 Backpropagation이라고 부릅니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;notes&quot;&gt;Notes&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Autodiff란, 사실은 forward autodiff 등 몇가지 방법이 더 있습니다. 그중 가장 대표적인 방법인 backpropagation을 소개했는데, 사실 생각해 보면 반대로 forward pass만으로 계산하는 방법이 있습니다. 
-위 과정에서 위로 올라가는 DP를 할 때, $\pdv{b}{a}$ 같은 값들을 계산해서 edge에 적어놓고, 바로 $b$ 노드에는 $\pdv{b}{x}, \pdv{b}{y}$ 를 그자리에서 계산해서 (앞서 $\pdv{a}{x}$ 도 노드에 적어놨을 것이므로) 기억하는 방법이 있습니다.
-이렇게 계산하면 한번 forward를 달릴 때 모든 계산이 끝납니다.&lt;/li&gt;
-  &lt;li&gt;그럼에도 불구하고, 실제로 사용하는 deep learning에서의 gradient 계산은 대부분 backpropagation입니다. 그 이유는, 지금 위 예시에서는 알 수 없는 부분이긴 하지만 MLP를 다시 생각해 보면 대부분의 연산이 행렬곱이므로 위 예시와는 달리 각 edge에 스칼라값이 아니라 행렬이 쓰여지게 됩니다. 이게 왜 의미가 있냐면, 결국은 ‘행렬들을 순서대로 많이’ 곱해야 한다는 얘기고… 행렬 여러개를 곱할 때는 작은 행렬부터 곱하고 그 결과를 큰 행렬과 곱하는 것이 대체로 보다 효율적입니다. (이 표현은 완벽하게 정확하지는 않지만, 행렬의 크기가 단조증가한다면 참입니다. 사실은 이 자체가 &lt;strong&gt;행렬 곱셈 순서&lt;/strong&gt; 라는 (백준에도 있는..ㅋㅋ) 매우 유명한 DP 문제입니다.) 그런데 MLP든 CNN이든, 네트워크 끝쪽 (출력에 가까운 쪽) 으로 향하면서 점점 feature의 개수를 줄여나가는 것이 일반적이며, 따라서 backpropagation 방법으로 뒤에서부터 곱하면서 오는게 행렬 곱셈을 더 빨리 할 수 있기 때문입니다.&lt;/li&gt;
-  &lt;li&gt;Torch 등 딥러닝 라이브러리들은 이 backpropagation을 자동으로 잘 따라가 주기 때문에 일반적으로는 걱정할 필요가 없지만, 새로운 loss function을 정의할 때는 항상 미분가능한지를 생각해야 합니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;서울대학교 심층신경망의 수학적 기초 강의자료 (&lt;a href=&quot;http://www.math.snu.ac.kr/~ernestryu/courses/deep_learning.html&quot;&gt;링크&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;Ian Goodfellow, Yoshua Bengio, &amp;amp; Aaron Courville (2016). Deep Learning. MIT Press.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="problem-solving" /><summary type="html">Contents</summary></entry></feed>
