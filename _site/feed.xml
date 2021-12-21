@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-20T05:41:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-21T00:09:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Gratus907’s Study Note</title><subtitle>Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
 </subtitle><entry><title type="html">Batch Normalization</title><link href="http://localhost:4000/deep-learning-study/batch-normalization/" rel="alternate" type="text/html" title="Batch Normalization" /><published>2021-12-20T00:00:00+09:00</published><updated>2021-12-20T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/batch-normalization</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/batch-normalization/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
@@ -79,7 +79,92 @@ Contents
 
 &lt;p&gt;이정도로 요약할 수 있습니다. 즉, Loss function이 좀더 좋은 형태로 잡히기 때문에 BN을 써야 하긴 하지만, 그게 ICS 때문은 아니라는 것입니다. 이 논문은 다양한 실험결과와 함께 이론적으로도 분석하고 있는데, 이론적 기반을 먼저 갖춘상태로 정확히 필요한 것이 무엇인지를 잡아내서 실험을 설계하면 보다 원하는 결과를 쉽고 정확하게 얻을 수 있다는 점과, 우리가 잘 알려진 기법들에 대해서도 수학적/통계학적으로 명확하게 이해하고 있는 것은 아니라는 것을 보여주는 예시라고 할 수 있겠습니다.&lt;/p&gt;
 
-&lt;p&gt;그럼에도, 이후의 많은 딥러닝 모델들 - 특히 CNN들에 대해서, Batch Normalization은 거의 필수적인 것으로 받아들여지고 있을 만큼 성능 개선 효과가 뚜렷하기에 원 저자들의 연구가 빛이 바래는 것은 아닙니다. 2014년 이후의 Deep CNN 모델들은 BN의 효과 덕분에 훈련이 가능해졌다고 해도 과언이 아니니까요. 앞으로는 이런 방법들을 적용한, 더 깊은 network들에 대해 좀더 살펴보겠습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">Unsupervised Learning, Autoencoders</title><link href="http://localhost:4000/deep-learning-study/autoencoders/" rel="alternate" type="text/html" title="Unsupervised Learning, Autoencoders" /><published>2021-12-14T00:00:00+09:00</published><updated>2021-12-14T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/autoencoders</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/autoencoders/">&lt;div id=&quot;toc&quot;&gt;
+&lt;p&gt;그럼에도, 이후의 많은 딥러닝 모델들 - 특히 CNN들에 대해서, Batch Normalization은 거의 필수적인 것으로 받아들여지고 있을 만큼 성능 개선 효과가 뚜렷하기에 원 저자들의 연구가 빛이 바래는 것은 아닙니다. 2014년 이후의 Deep CNN 모델들은 BN의 효과 덕분에 훈련이 가능해졌다고 해도 과언이 아니니까요. 앞으로는 이런 방법들을 적용한, 더 깊은 network들에 대해 좀더 살펴보겠습니다.&lt;/p&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">2021 2학기 종강후 쓰는 일기(?)</title><link href="http://localhost:4000/retrospects-and-plans/finishing-2021-fall/" rel="alternate" type="text/html" title="2021 2학기 종강후 쓰는 일기(?)" /><published>2021-12-20T00:00:00+09:00</published><updated>2021-12-20T00:00:00+09:00</updated><id>http://localhost:4000/retrospects-and-plans/finishing-2021-fall</id><content type="html" xml:base="http://localhost:4000/retrospects-and-plans/finishing-2021-fall/">&lt;div id=&quot;toc&quot;&gt;
+Contents
+&lt;/div&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#컴공-전공과목&quot; id=&quot;markdown-toc-컴공-전공과목&quot;&gt;컴공 전공과목&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#수학-전공과목&quot; id=&quot;markdown-toc-수학-전공과목&quot;&gt;수학 전공과목&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#기타-공부&quot; id=&quot;markdown-toc-기타-공부&quot;&gt;기타 공부&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#프로그래밍-대회&quot; id=&quot;markdown-toc-프로그래밍-대회&quot;&gt;프로그래밍 대회&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#수리과학부-졸업논문&quot; id=&quot;markdown-toc-수리과학부-졸업논문&quot;&gt;수리과학부 졸업논문&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#gsim-project&quot; id=&quot;markdown-toc-gsim-project&quot;&gt;GSIM Project&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#posting&quot; id=&quot;markdown-toc-posting&quot;&gt;Posting&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;이번학기는 뭐랄까, 너무 많은걸 시도한 탓인지 중간에 조금은 흔들렸던것 같습니다. 학부 졸업이 가까운 지금도 load balancing이 어렵네요.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/retrospects-and-plans/starting-2021-fall/&quot;&gt;2학기 시작할때 쓴 글&lt;/a&gt; 이랑 지금 느끼는점을 비교해보려고 합니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;컴공-전공과목&quot;&gt;컴공 전공과목&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;계산 이론 : 재밌을것 같았고, 실제로도 재밌었습니다.
+    &lt;ul&gt;
+      &lt;li&gt;String algorithm에 상상 이상으로 많은 시간이 투자되어, 재밌어 보이는 토픽인 randomized algorithm이나 online algorithm은 많이 배우지 못했습니다. 그래도 suffix tree, aho-corasick같은 이름만 들어본 것들부터, 전반적으로 새로운 것들을 재밌게 배우는 시간이었습니다.&lt;/li&gt;
+      &lt;li&gt;관련 분야의 진학에 좀더 확고한 결론을 내리게 되었습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;창의적 통합 설계 : 산학연계 프로젝트 과목입니다. 이번학기에 어떻게보면 가장 아쉽고 가장 성공했습니다.
+    &lt;ul&gt;
+      &lt;li&gt;주제는 놀랍게도 &lt;strong&gt;Subgraph matching을 이용한 약물의 간독성 판별&lt;/strong&gt; 로, 제가 평소 관심을 갖던 주제와 매우 유사한데다가&lt;/li&gt;
+      &lt;li&gt;제가 랩인턴 했던 내용과 매우 관련이 깊은 알고리즘을 활용해보는 기회가 되었습니다.&lt;/li&gt;
+      &lt;li&gt;겨울에도 이쪽 관련된 공부를 지속할 예정입니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;수학-전공과목&quot;&gt;수학 전공과목&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;현대대수학 II : 생각보다 더 어려웠고, 대수 자체가 너무 뭐랄까, 취향이 아니었습니다.
+    &lt;ul&gt;
+      &lt;li&gt;Too abstract..? 글쎄, 제가 암호같은걸 공부하지 않아서인지 별로 “이걸 그래서 어따쓰지” 라는 생각이 들어서인지, 공부하는데 너무 힘들었습니다.&lt;/li&gt;
+      &lt;li&gt;막 열심히 더 공부할 의욕도 딱히 없고… 그렇다고 뭐 딱히 잘하는 과목도 아니고…&lt;/li&gt;
+      &lt;li&gt;수리과학부 남은 3과목은 전부 응용수학과 해석계열로 채워넣을 생각입니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;심층신경망의 수학적 기초 : 새로 생긴 수학과 ML 과목.
+    &lt;ul&gt;
+      &lt;li&gt;최적화이론에 대해 굉장히 좋은 기억이 있고, 정말 많이 배울수 있었던것 같아서 ML도 그런 느낌으로 배워볼 생각으로 신청했습니다.&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;소개원실-최적화와 창통설-심수개를 보며 데자뷰가 좀 있는데, 그런 일은 없었으면 합니다.&lt;/em&gt; 네. 결국 창통설 프로젝트 발표에 쫓겨 공부는 제대로는 못한것 같습니다. 블로그에 노트정리한거 올리면서 다시 보고 있습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;해석학특강 (심층학습의 수치해석) : 2번이랑 같이 배우면서 약간 내용이 많이 겹쳤지만, Uniform approximation theorem 같은것들을 배우는 차이가 있었습니다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;기타-공부&quot;&gt;기타 공부&lt;/h2&gt;
+&lt;h3 id=&quot;프로그래밍-대회&quot;&gt;프로그래밍 대회&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;SNUPC Div2는 무난히 3등상 받았습니다. 딱히 잘한것도 (힘들게 문제를 하나 해결한것도) 못한것도 (풀었어야할걸 못푼것도) 아닙니다.&lt;/li&gt;
+  &lt;li&gt;ICPC 2021은 결국 Little Piplup으로 18등했습니다. 본선 진출권을 왜 던졌는지 후회…해야겠지만, 솔직히 팀연습과 대회가 진심으로 너무 재밌었기 때문에 전혀 후회하지 않습니다.&lt;/li&gt;
+  &lt;li&gt;CF 2200도, AtC 2000도 시간이 있었어야 찍을텐데 안되더군요. ㅋㅋ…&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;수리과학부-졸업논문&quot;&gt;수리과학부 졸업논문&lt;/h3&gt;
+&lt;p&gt;Ongoing. Image segmenation 관련 주제의 생각외로 심각한 맹점을 두개 알게 되었는데,&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;코드가 &lt;strong&gt;미친듯이&lt;/strong&gt; 오래 걸립니다. 딥러닝 경험이 처음이라 하나 돌려놓고 24시간씩 기다려본적이 처음인데, 컴퓨터는 한대인데 24시간동안 기다려야하고 자고일어나서 켜보니 오타 하나 때문에 내가 새벽 소중한 computation time과 전기를 낭비했다는 사실을 깨닫고 혈압이 상승한적이 한 15번은 있는 것 같습니다. 덕분에 1070Ti의 수명이 비트코인 채굴하는거마냥 감소했을텐데 쩝…&lt;/li&gt;
+  &lt;li&gt;왜인지 모르겠지만 Pytorch로 짜면 재현이 잘 안 됩니다. 이건 제 문제인지, 뭔가가 명시되지 않은 것인지…&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;gsim-project&quot;&gt;GSIM Project&lt;/h3&gt;
+&lt;p&gt;다들 너무 바빠서 중간에 흐지부지했습니다. 재밌었는데 아쉽네요&lt;/p&gt;
+
+&lt;h3 id=&quot;posting&quot;&gt;Posting&lt;/h3&gt;
+&lt;p&gt;생각보다 딥러닝 정리를 많이 포스팅했고 (할 예정이고) 많은 것들을 배웠습니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/deep-learning-study/optimizers-for-deep-learning&quot;&gt;Optimizer 정리하기&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/deep-learning-study/backpropagation/&quot;&gt;Backpropagation&lt;/a&gt;
+뭐 이런 것들.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;논문 공부는 많이 못 읽었습니다. 학교 공부하다보니 읽어야했던것들 정도&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/cs-adventure/VEQ/&quot;&gt;VEQ 부분그래프 매칭&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/cs-adventure/APASP/&quot;&gt;‘거의’ 최단 경로&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="retrospects-and-plans" /><summary type="html">Contents</summary></entry><entry><title type="html">Unsupervised Learning, Autoencoders</title><link href="http://localhost:4000/deep-learning-study/autoencoders/" rel="alternate" type="text/html" title="Unsupervised Learning, Autoencoders" /><published>2021-12-14T00:00:00+09:00</published><updated>2021-12-14T00:00:00+09:00</updated><id>http://localhost:4000/deep-learning-study/autoencoders</id><content type="html" xml:base="http://localhost:4000/deep-learning-study/autoencoders/">&lt;div id=&quot;toc&quot;&gt;
 Contents
 &lt;/div&gt;
 &lt;ul id=&quot;markdown-toc&quot;&gt;
@@ -978,97 +1063,4 @@ SGD는 저 멀리서 다시 평면을 기어다니고 있고 (…) 모멘텀은 
   &lt;li&gt;AdamW (Loshchilov et al, 2017) : Adam 에 regularization을 적극적으로 도입해서 Adam의 generalization issue를 해결하는 방법입니다. 언젠가 다룰 수도? 있습니다.&lt;/li&gt;
   &lt;li&gt;AdaDelta, AdaGrad, AdaMax : Adaptive rate 알고리즘들이 굉장히 다양하게 있는데, 약간씩 다른 아이디어가 있지만 기본 아이디어 (gradient와 그 square 등을 EMA해서 계산) 레벨에서는 다르지 않으므로 넘어갑니다.&lt;/li&gt;
   &lt;li&gt;BFGS를 비롯한 2nd-order methods : 수학적으로 흥미롭지만 이 글에서는 일부러 언급을 피했습니다. 차후에 다룰 예정입니다.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry><entry><title type="html">BOJ 17532, ICPC Brazil Subregional 2019D Denouncing Mafia</title><link href="http://localhost:4000/problem-solving/BOJ-17532/" rel="alternate" type="text/html" title="BOJ 17532, ICPC Brazil Subregional 2019D Denouncing Mafia" /><published>2021-11-19T00:00:00+09:00</published><updated>2021-11-19T00:00:00+09:00</updated><id>http://localhost:4000/problem-solving/BOJ-17532</id><content type="html" xml:base="http://localhost:4000/problem-solving/BOJ-17532/">&lt;div id=&quot;toc&quot;&gt;
-Contents
-&lt;/div&gt;
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#풀이&quot; id=&quot;markdown-toc-풀이&quot;&gt;풀이&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#구현&quot; id=&quot;markdown-toc-구현&quot;&gt;구현&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/17532&quot;&gt;문제 링크&lt;/a&gt;&lt;br /&gt;
-난이도 : solved.ac 기준 Platinum 4.&lt;/p&gt;
-
-&lt;h2 id=&quot;풀이&quot;&gt;풀이&lt;/h2&gt;
-&lt;p&gt;결국 주어진 문제는, 어떤 트리가 주어질 때, 트리에서 최대 $K$개의 path를 택하여 그 path들의 union을 최대화하는 문제입니다.&lt;/p&gt;
-
-&lt;p&gt;문제의 특성 상, 트리 DP를 먼저 생각해 볼 수 있습니다.&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dp[i][j]&lt;/code&gt; : $i$번째 노드를 루트로 하는 subtree에 대해, $j$개의 path를 택했을 때의 최댓값&lt;/p&gt;
-
-&lt;p&gt;이 DP를 계산하는 방법을 생각해 봅시다. 만약 내 child node에 대해 모든 dp값을 알고 있다면, 내 child node 들에 대해 각 노드당 몇개의 chain을 사용할지를 정해야 합니다. 이는 굳이 열심히 복잡도를 계산해 보지 않더라도, 적어도 $O(NK)$ 칸의 DP를 모두 채워야 하기 때문에 전혀 답이 없습니다. 예를 들어 3개의 자식노드를 가진 노드에 대해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dp[i][5]&lt;/code&gt;를 계산하려면, 5를 3개로 분할하는 모든 경우에 대해 각각 dp값을 더해서 확인해야 하기 때문에 exponential한 시간이 걸릴 것입니다.&lt;/p&gt;
-
-&lt;p&gt;대신해서, 이렇게 생각해 봅시다. 이하, 한줄로 쭉 연결된 path를 경로 또는 체인으로 표현하겠습니다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;만약 최종적인 답이, 트리에서 가장 긴 경로 (루트-리프 중 가장 긴 경로)를 포함하지 않는다면 적당한 경로 하나를 빼고 대신에 이 가장 긴 경로를 집어넣으면 더 좋은 답이 됩니다.&lt;/li&gt;
-  &lt;li&gt;이를 귀납적으로 반복 적용하면, 무조건 현재 남아 있는 가장 긴 경로를 택해야 한다는 것입니다.&lt;/li&gt;
-  &lt;li&gt;단, path의 길이의 합이 아니라 union에 포함된 노드 수를 세기 때문에, 이미 한번 방문된 노드는 더이상 path의 길이에 의미가 없습니다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;path의 개수는 너무 많고, 우리는 어차피 어떤 노드를 정하면 거기서부터 리프까지 달려가는게 최대한 이득이기 때문에, “어떤 노드를 골라서” 그 노드를 루트로 하는 서브트리에서 가장 깊이 들어가 있는 리프까지의 경로를 택한다고 생각해도 충분합니다. 즉, 트리를 서로 disjoint한 path로 잘라서 생각합니다.&lt;/p&gt;
-
-&lt;p&gt;이제, 미리 모든 path를 priority queue에 넣어놓고, 이를 고르는 식으로 돌립니다. 단, 이미 방문한 노드는 다시 고르지 않도록 조정하면 됩니다. 아래 구현이 충분히 직관적으로 읽힌다고 생각해서, 더이상 설명은 생략하겠습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;구현&quot;&gt;구현&lt;/h2&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
-#define usecppio ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101010&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101010&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101010&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;priority_queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101010&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;int32_t&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;usecppio&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;dfs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;pq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;K&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;vst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;longest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="problem-solving" /><summary type="html">Contents</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="deep-learning-study" /><summary type="html">Contents</summary></entry></feed>

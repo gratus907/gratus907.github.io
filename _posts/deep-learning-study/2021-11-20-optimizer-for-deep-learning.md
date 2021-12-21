@@ -4,6 +4,8 @@ title: Optimizers for Deep Learning
 categories: deep-learning-study
 parlinks: []
 comments : true
+redirect_from:
+  - /deep-learning-study/optimizers-for-deep-learning/
 ---
 <div id="toc">
 Contents

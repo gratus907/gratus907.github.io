@@ -60,6 +60,7 @@ ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image class
 - [CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)
   - [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
 - [CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)
+  - [VGGNet으로 CIFAR10 풀어보기](/deep-learning-study/vggnet-cifar10/)
 - [CNN Architecture : GoogLeNet]
 - [CNN Architecture : ResNet]
 - [CNN Architecture : SENet]

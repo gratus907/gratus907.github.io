@@ -149,6 +149,7 @@ plugins:
   - jekyll-target-blank
   - jekyll-twitter-plugin
   - jemoji
+  - jekyll-redirect-from
 
 # Extras
 github: [metadata]
