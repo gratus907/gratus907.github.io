@@ -34,7 +34,7 @@ a:hover, table.table a:hover { color: var(--global-theme-color); text-decoration
 
 a:hover:after :not(.nav-item.dropdown), table.table a:hover:after :not(.nav-item.dropdown) { width: 100%; }
 
-blockquote { background: var(--global-bg-color); border-left: 2px solid var(--global-theme-color); margin: 1.5em 10px; padding: 0.5em 10px; font-size: 1.2rem; }
+blockquote { background: var(--global-bg-color); border-left: 2px solid var(--global-theme-color); margin: 1.5em 10px; padding: 0em 10px; font-size: 1rem; }
 
 .equation { margin-bottom: 1rem; text-align: center; }
 
