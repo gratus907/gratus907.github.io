@@ -4,7 +4,7 @@ title: Notes
 description: My notes on what I've studied (Collection of posts)
 permalink: /study-note/
 nav: true
-display_categories: [Computer Science]
+display_categories: [Computer Science, Mathematics]
 horizontal: false
 ---
 <div class="projects">
