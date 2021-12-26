@@ -282,6 +282,10 @@ td.cv, li.cardcv { color: var(--global-text-color); background-color: var(--glob
 
 .btncv:hover { color: var(--global-theme-color); border-color: var(--global-theme-color); text-decoration: none; }
 
+b.math_item_title { font-size: 1.1rem; }
+
+div.math_item { background-color: var(--global-bg-color); color: var(--global-text-color); box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12); padding: .5rem 1rem; margin: 0.5rem 0rem; }
+
 a { color: purple; }
 
 body { line-height: 2; }
