@@ -62,16 +62,16 @@
   contents: 
     - subtype: Global
       items:
-      - Google Hash Code 2021 글로벌 211등 (글로벌 참여팀 약 1만 팀 중 상위 2%)
-      - Google Hash Code 2020 글로벌 468등 (글로벌 참여팀 약 1만 팀 중 상위 5%)
-      - Google Codejam 2021 Round 3 진출, 504등
+      - Google Hash Code 2021, 211st place (Top 2% among ~10,000 teams)
+      - Google Hash Code 2020, 468th place (Top 5% among ~10,000 teams)
+      - Google Codejam 2021, 504th place (Advanced to round 3, Top 1.5% among 37,000+)
     - subtype: Domestic
       items:
-      - ICPC 2021 한국 인터넷예선 18위 (Team Little Piplup)
-      - ICPC 2020 한국 인터넷예선 26위 (Team Swift Turtwig)
-      - SNUPC 2021 Div.2 6위 
-      - SNUPC 2020 Div.2 7위
-      - SNUPC 2019 Div.2 9위
+      - ICPC 2021 Korea First Round 18th place (Team Little Piplup)
+      - ICPC 2020 Korea First Round 26th place (Team Swift Turtwig)
+      - SNUPC (SNU Programming Contest) 2021 Div.2 6th place
+      - SNUPC 2020 Div.2 7th place
+      - SNUPC 2019 Div.2 9th place
 
 - title: Skills
   type: list

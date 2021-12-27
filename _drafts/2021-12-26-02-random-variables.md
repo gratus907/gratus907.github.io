@@ -12,7 +12,7 @@ Contents
 {:toc}
 ----------
 
-## 확률변수
+## 확률변수와 확률 질량/밀도 함수
 먼저 정의로 시작합니다. 
 <span style="display:block" class="math_item">
     <b class="math_item_title">정의 : 확률변수</b>  
@@ -43,5 +43,36 @@ Contents
 <b class="math_item_title">정의 : 확률밀도함수</b>  
 연속확률변수 $X$에서, $\displaystyle\int_{a}^{b} f(x) \dd{x} = \P(a \leq X \leq b)$ 인 함수 $f$ 를 $X$의 확률밀도함수 (probability density function) 라 한다.  
 </span> 
+
+거의 비슷한 성질을 pdf에 대해서도 논의할 수 있습니다. 
+- $f(x) \geq 0$
+- $\displaystyle\int_{-\infty}^{\infty} f(x) \dd{x} = 1$
+- $\displaystyle\int_{A} f(x) \dd{x} = \P(X \in A)$
+
+[확률밀도함수에 관한 3b1b 영상](https://www.youtube.com/watch?v=ZA4JkHKZM50) 으로부터도 많은 insight를 얻을 수 있습니다.
+
+사실은, 측도를 이용하게 되면 여기서 이산형과 연속형을 구분하지 않아도 됩니다. 나중에 측도에 기반한 확률론을 공부하고 포스팅할 생각이 있긴한데 언제가 될지는 모르겠습니다. 이하, 확률질량함수와 확률밀도함수를 모두 밀도라는 용어로 통일하겠습니다. 또한 앞으로는, "적분을 합으로 바꾸는" 아이디어를 통해 이산형 확률변수에 대해 간단히 논의할 수 있으므로, 모든 statement는 연속형인 경우만 쓰겠습니다. 
+
+## 확률변수의 기댓값과 분산 
+우리가 잘 알고 있는 평균을 다음과 같이 정의합니다. 
+<span style="display:block" class="math_item">
+<b class="math_item_title">정의 : 평균</b>  
+어떤 확률변수 $X$의 확률밀도함수가 $f$일 때, $X$의 확률분포의 평균(mean)은 다음과 같이 정의된다.  
+$$\mu = \int_{-\infty}^{\infty} xf(x) \dd{x}$$
+</span> 
+(이산형이면 마찬가지로 합으로 바꾸면 됩니다)
+
+보다 일반적으로, 확률변수 $X$에 대해 어떤 함수 $g(X)$를 생각할 수 있고, 이때...
+<span style="display:block" class="math_item">
+<b class="math_item_title">정의 : 기댓값</b>  
+어떤 확률변수 $X$의 확률밀도함수가 $f$일 때, $g(X)$의 기댓값 (expectation)은 다음과 같이 정의된다. 
+$$\E(g(X)) = \int_{-\infty}^{\infty} xf(x) \dd{x}$$
+</span> 
+
+
+
+
+
+
 
 ------
