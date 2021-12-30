@@ -48,7 +48,7 @@ description: My resume. Here you can find what activity I do now, what I did bef
 					{% for content in entry.contents %}
 						<tr>
 							<td class="cv p-0 pr-2 font-weight-bold text-left"><b>{{ content.name }}</b></td>
-							<td class="cv p-0 pl-2 font-weight-light text-left">{{ content.value }}</td>
+							<td class="cv p-0 pl-2 text-left">{{ content.value }}</td>
 						</tr>
 					{% endfor %}
 				</table>

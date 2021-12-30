@@ -2,9 +2,9 @@
   type: map
   contents:
   - name: Full Name
-    value: Wonseok Shin
+    value: '<b>Wonseok Shin</b>'
   - name: Contact
-    value: gratus907@snu.ac.kr
+    value: '<b>gratus907@snu.ac.kr</b>'
 
 - title: Education
   type: table
@@ -13,14 +13,19 @@
     year: 2018 -
     badge: 2018 -
     description:
-      - Major in Computer Science and Engineering
-      - Double major in Mathematical Sciences
+      - Major in Computer Science and Engineering (Major GPA 3.97 / 4.3)
+      - Double major in Mathematical Sciences (Major GPA 4.17 / 4.3)
 
 - title: Experience
   type: table 
   contents: 
+  - title: Research Internship
+    year: 2022 
+    badge: 2022.01-Present
+    description:
+      - 'SNU Bio&Health Informatics Lab (Advisor : Professor Sun Kim)'
   - title: Undergraduate Research Opportunity Program
-    year: 20-21
+    year: 2020
     badge: 2020.08-2021.04
     description:
       - 'SNU Computer Theory Lab (Advisor : Professor Kunsoo Park)'

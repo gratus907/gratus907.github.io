@@ -66,13 +66,41 @@ $$\mu = \int_{-\infty}^{\infty} xf(x) \dd{x}$$
 <span style="display:block" class="math_item">
 <b class="math_item_title">정의 : 기댓값</b>  
 어떤 확률변수 $X$의 확률밀도함수가 $f$일 때, $g(X)$의 기댓값 (expectation)은 다음과 같이 정의된다. 
-$$\E(g(X)) = \int_{-\infty}^{\infty} xf(x) \dd{x}$$
+$$\E(g(X)) = \int_{-\infty}^{\infty} g(x)f(x) \dd{x}$$
 </span> 
 
+이러한 정의들 또한 측도에 의해 보다 자연스럽게 정의되고, 목표는 확률론이 아닌 수리통계에 있으므로 최대한 스킵합니다.
 
+기댓값에 대해, 다음과 같은 정리가 잘 알려져 있습니다.
+<span style="display:block" class="math_item">
+<b class="math_item_title">정리 : 기댓값의 선형성</b>  
+확률변수 $X, Y$와 실수 $a, b$에 대해, 기댓값의 선형성이 성립한다.
+$$\E(aX + bY) = a\E(X) + b\E(Y)$$
+</span> 
 
+어떤 확률변수가 평균으로부터 얼마나 넓게 분포해 있는지를 나타내는 값으로 **분산** 을 씁니다. 
+<span style="display:block" class="math_item">
+<b class="math_item_title">정의 : 분산</b>  
+어떤 확률변수 $X$의 확률밀도함수가 $f$일 때, $X$의 확률분포의 분산(variance)은 다음과 같이 정의된다. 단, $\mu = \E(X)$.
+$$\V(X) = \E((X - \mu)^2)$$
+</span> 
+즉 '평균에서 떨어진 정도', 편차 의 제곱의 평균을 의미합니다. 
 
+분산의 실제 계산은 아래와 같이 수행합니다. 
+<span style="display:block" class="math_item">
+<b class="math_item_title">정리 : 분산의 계산 (제평-평제)</b>  
+확률변수 $X$의 분산을 다음과 같이 계산할 수 있다. 
+$$\V(X) = \E((X - \mu)^2) = \E(X^2 - 2 \mu X + \mu^2) = \E(X^2) - 2\mu\E(X) + \mu^2 = \E(X^2) - \E(X)^2$$
+</span> 
+앞서 논의한 기댓값의 선형성에 의해 바로 유도할 수 있습니다. ($\mu$는 이미 $\E$를 씌운 결과이므로 상수)
 
+분산은 선형적이지 않지만, 다음과 같은 공식이 성립합니다. 
+<span style="display:block" class="math_item">
+<b class="math_item_title">정리 : 분산의 계산</b>  
+확률변수 $X$ 와 실수 $a, b$에 대해, 다음이 성립한다.
+$$\V(aX + b) = a^2 \V(X)$$
+</span> 
+생각해보면 이 공식은 거의 자명한데, 상수를 더하는 것은 평균에서 데이터가 분포한 정도를 바꾸지 않으므로 $X - \mu$를 취하는 과정에서 모두 날아가고, $aX$ 는 편차를 $\abs{a}$배로 만들기 때문에 그 제곱의 기댓값은 $a^2$배가 될 것입니다. 
 
 
 ------

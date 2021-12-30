@@ -19,57 +19,52 @@ PS틱한 내용들 (DP-optimization이 대표적) 도 섞일 예정입니다.
 
 <style>
 table th:first-of-type {
-    width: 80%;
+    width: 40%;
 }
 table th:nth-of-type(2) {
-    width: 20%;
+    width: 60%;
 }
 
 </style>
 
 ### Various topics
 
-| Topic                               | Link                                            |
-|-------------------------------------|-------------------------------------------------|
-| Amortized Analysis                  | [Link](/advanced-algorithms/amortized-analysis) |
-| Hashing                             |                                                 |
-| Network Flows                       |                                                 |
-| Linear Programming                  |                                                 |
-| **Divide and conquer optimization** | [Link](/advanced-algorithms/DP-DnC-Opt/)        |
-| **Pollard's Rho Algorithm**         | [Link](/advanced-algorithms/Pollards-Rho/)      |
+| **Topic**                                                               | **TLDR**                                                                      |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [**Amortized Analysis**](/advanced-algorithms/amortized-analysis)       | Framework of analyzing more complex algorithms consisting multiple operations |
+| Hashing                                                                 |                                                                               |
+| Network Flows                                                           |                                                                               |
+| Linear Programming                                                      |                                                                               |
+| [**Divide and conquer optimization**](/advanced-algorithms/DP-DnC-Opt/) | Method of DP optimization                                                     |
+| [**Pollard's Rho Algorithm**](/advanced-algorithms/Pollards-Rho/)       | Fast probabilistic prime factorization                                        |
 
 ### Advanced Data Structures  
 
-| Topic               | Link                                          |
-|---------------------|-----------------------------------------------|
-| **Fibonacci Heaps** | [Link](/advanced-algorithms/Fibonacci-heaps/) |
-| Splay trees         |                                               |
+| Topic                                                        | **TLDR**                         |
+| ------------------------------------------------------------ | -------------------------------- |
+| [**Fibonacci Heaps**](/advanced-algorithms/Fibonacci-heaps/) | Heap with decrease-key operation |
+| Splay trees                                                  |                                  |
 
 ### Randomized Algorithms
 
-| Topic                    | Link                                              |
-|--------------------------|---------------------------------------------------|
-| **Karger-Stein Min Cut** | [Link](/advanced-algorithms/karger-stein-mincut/) |
+| Topic                                                                 | Link                                          |
+| --------------------------------------------------------------------- | --------------------------------------------- |
+| [**Karger-Stein Min Cut**](/advanced-algorithms/karger-stein-mincut/) | Fast randomized algorithm for min-cut problem |
 
 
 ### Graph Algorithms
 
-| Topic                                   | Link                                                |
-|-----------------------------------------|-----------------------------------------------------|
-| **Fixed Subgraph Isomorphism**          | [Link](/advanced-algorithms/graph-algorithms-lec1/) |
-| **Pagerank & Random walk with Restart** | [Link](/advanced-algorithms/random-walk-on-graphs/) |
+| Topic                                                                                  | Link                                   |
+| -------------------------------------------------------------------------------------- | -------------------------------------- |
+| [**Fixed Subgraph Isomorphism**](/advanced-algorithms/graph-algorithms-lec1/)          | Finding triangles in a graph           |
+| [**Pagerank & Random walk with Restart**](/advanced-algorithms/random-walk-on-graphs/) | Discussion of node affinities on graph |
 
 ### String Algorithms
 
 Mainly from : SNU 2021 Fall Theory of computation
 
-| Topic                  | Link                                                 |
-|------------------------|------------------------------------------------------|
-| Aho-Corasick Algorithm | [Link](/advanced-algorithms/aho-corasick-algorithm/) |
-| Boyer-Moore Algorithm  | [Link](/advanced-algorithms/boyer-moore-algorithm/)  |
-| Baker-Bird Algorithm   |                                                      |
-| Wu-Manber Algorithm    |                                                      |
-| Suffix Tree            |                                                      |
-| Suffix Array           |                                                      |
-
+| Topic                                                                      | Link                          |
+| -------------------------------------------------------------------------- | ----------------------------- |
+| [**Boyer-Moore Algorithm**](/advanced-algorithms/boyer-moore-algorithm/)   | 1-text 1-pattern matching     |
+| [**Aho-Corasick Algorithm**](/advanced-algorithms/aho-corasick-algorithm/) | 1-text multi-pattern matching |
 

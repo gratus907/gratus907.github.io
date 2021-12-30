@@ -74,7 +74,7 @@ ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image class
 
 ## Unsupervised Learning
 - [Unsupervised Learning, AutoEncoders](/deep-learning-study/autoencoders/)
-- [Principal Component Analysis]
+- [Principal Component Analysis](/deep-learning-study/principal-component-analysis/)
 
 ## Generative Models
 [Generative Models : Framework] 
