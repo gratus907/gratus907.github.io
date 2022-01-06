@@ -30,22 +30,22 @@ table {
 </style>
 
 
-| **Topic**                                                                                      | **Book Chapter** |
-| ---------------------------------------------------------------------------------------------- | ---------------- |
+| **Topic**                                                                                          | **Book Chapter** |
+| -------------------------------------------------------------------------------------------------- | ---------------- |
 | **[Definition of Probability, Conditional Probability](/mathematical-statistics/01-probability/)** | 1.1 - 1.2        |
 | **[Random variables, Expectations](/mathematical-statistics/02-random-variables/)**                | 1.3 - 1.5        |
-| Useful Inequalities                                                                            | 1.6              |
-| Bivariate distributions                                                                        | 2.1 - 2.2        |
-| Conditional distributions                                                                      | 2.3 - 2.4        |
-| Multivariate distributions                                                                     | 2.5              |
-| Discrete probability distributions                                                             | 3.1 - 3.4        |
-| Continuous probability distributions                                                           | 3.5              |
-| Normal distribution                                                                            | 3.6, 4.4         |
-| Sample distributions                                                                           | 4.1 - 4.2        |
-| Order statistics                                                                               | 4.3              |
-| Central Limit Theorem                                                                          | 5.1              |
-| Limit distribution                                                                             | 5.2 - 5.3        |
-| Method of Moments Estimation                                                                   | 6.1              |
-| Maximum Likelihood Estimation                                                                  | 6.2 - 6.3        |
-| Maximum Likelihood Estimation : Properties                                                     | 6.5              |
-| Least Square Estimation                                                                        | 6.5              |
+| **[Useful Inequalities](/mathematical-statistics/03-useful-inequalities)**                         | 1.6              |
+| **[Bivariate random variables](/mathematical-statistics/04-bivariate-random-variables/)**            | 2.1 - 2.2        |
+| Bivariate Conditional distributions                                                                          | 2.3 - 2.4        |
+| Multivariate distributions                                                                         | 2.5              |
+| Discrete probability distributions                                                                 | 3.1 - 3.4        |
+| Continuous probability distributions                                                               | 3.5              |
+| Normal distribution                                                                                | 3.6, 4.4         |
+| Sample distributions                                                                               | 4.1 - 4.2        |
+| Order statistics                                                                                   | 4.3              |
+| Central Limit Theorem                                                                              | 5.1              |
+| Limit distribution                                                                                 | 5.2 - 5.3        |
+| Method of Moments Estimation                                                                       | 6.1              |
+| Maximum Likelihood Estimation                                                                      | 6.2 - 6.3        |
+| Maximum Likelihood Estimation : Properties                                                         | 6.5              |
+| Least Square Estimation                                                                            | 6.5              |

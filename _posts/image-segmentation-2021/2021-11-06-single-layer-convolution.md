@@ -54,6 +54,7 @@ model = SingleConvolution().to(device)
 print(summary(model, (3, 600, 400)))
 ```
 여기서 batch size는 GPU 메모리에 들어가는 한 많이 욱여넣는 것이 일반적입니다. 저는 1070Ti를 쓰기 때문에 6정도는 괜찮은것 같습니다. 다른 함수들은 앞서 Prep에서 준비한 함수들입니다. summary가 반환하는 결과가 아래와 같이 나타납니다. 
+
 ```
 ----------------------------------------------------------------
         Layer (type)               Output Shape         Param #
@@ -71,6 +72,7 @@ Params size (MB): 0.00
 Estimated Total Size (MB): 86.98
 ----------------------------------------------------------------
 ```
+
 우리가 예상했던 대로 644개의 trainable param을 갖는 것을 볼 수 있습니다.
 
 ## Training
@@ -124,6 +126,7 @@ def train(
     print(f"Total training time {(time.time()-start)/60:.2f} minutes taken")
     return history
 ```
+
 LeNet으로 MNIST 풀어보는 포스팅에서 다뤘던 것과 거의 같습니다. 여러 모델에 대해 실험하기 위해 함수로 만들었다는 정도만 차이가 있습니다. 달라지는 부분이 거의 없으므로, LeNet 포스팅을 참조해 주세요. 
 - train data를 로딩할 data loader를 받고
 - 몇 epoch 돌릴지를 파라미터로 받고

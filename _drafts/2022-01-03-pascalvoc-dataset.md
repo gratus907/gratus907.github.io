@@ -17,7 +17,7 @@ Contents
 - 이후에 나온 모델들의 코드를 따서 돌려본 결과, training이 안되지는 않는데 너무 느려서 뭘 할수가 없습니다.
 - 결정적으로, 다른사람들의 실험결과가 많지 않아 결과를 비교하기가 어렵습니다
 
-이후에 나올 큰 모델들은 다시 큰 데이터셋으로 돌아가겠지만, 이 프로젝트의 초반부 데이터셋은 PASCALVOC 2012로 바꾸기로 했습니다. 
+이후에 나올 큰 모델들은 다시 큰 데이터셋으로 돌아가겠지만, 이 프로젝트의 초반부 데이터셋은 PASCALVOC 2012로 바꾸기로 했습니다. 특히 이제부터는 pl-lightning을 사용합니다.
 
 ## PASCALVOC 2012
 PASCALVOC은 Pascal Visual Object Classes Challenge의 약자로, ImageNet과 함께 초기 Computer vision의 역사를 견인해왔다고 해도 과언이 아닌 데이터셋입니다. Image classification, semantic segmenation 등 많은 태스크에 사용할 수 있는 수천 장의 이미지가 준비되어 있고, `torchvision` 에도 내장되어 있어서 사용하기 편리합니다. 
