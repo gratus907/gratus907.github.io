@@ -38,8 +38,8 @@ table {
 | **[Bivariate random variables](/mathematical-statistics/04-bivariate-random-variables/)**          | 2.1 - 2.2        |
 | Bivariate Conditional distributions                                                                | 2.3 - 2.4        |
 | Multivariate distributions                                                                         | 2.5              |
-| Discrete probability distributions                                                                 | 3.1 - 3.4        |
-| Poisson distribution                                                                               | 3.1 - 3.4        |
+| **[Discrete probability distributions](/mathematical-statistics/07-discrete-distributions/)**      | 3.1 - 3.3        |
+| Poisson distribution                                                                               | 3.4              |
 | Continuous probability distributions                                                               | 3.5              |
 | Normal distribution                                                                                | 3.6, 4.4         |
 | Sample distributions                                                                               | 4.1 - 4.2        |
