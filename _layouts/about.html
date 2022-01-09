@@ -45,9 +45,27 @@ layout: default
       </div>
     </div>
     {% endif %}
-    Total number of pageviews : <span id="busuanzi_container_site_pv">
-        <span id="busuanzi_value_site_pv"></span> 
-        </span>
+    {% assign totalwords = 0 %}
+    {% assign postcount = 0 %}
+    {% for post in site.posts %}
+        {% assign words = post | strip_html | number_of_words %}
+        {% assign totalwords = totalwords | plus : words %}
+        {% assign postcount = postcount | plus : 1 %}
+    {% endfor %}
+    {% for post in site.pages %}
+        {% assign words = post | strip_html | number_of_words %}
+        {% assign totalwords = totalwords | plus : words %}
+        {% assign postcount = postcount | plus : 1 %}
+    {% endfor %}
+    <strong>Blog statistics!</strong><br>
+    <ul>
+        <li> Total number of pageviews : <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span> 
+            </span>(~{{ "now" | date: "%Y-%m-%d" }})</li>
+        <li> Total number of posts : {{ postcount }} Posts (~{{ "now" | date: "%Y-%m-%d" }}) </li>
+        <li> Total number of words : {{ totalwords }} Words (~{{ "now" | date: "%Y-%m-%d" }}) </li>
+    </ul>
+    
   </article>
 
 </div>
