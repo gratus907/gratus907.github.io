@@ -69,9 +69,9 @@
 
       <div class="periodical">
       {% if entry.type == "article" %}
-        <em>{{entry.journal}}</em>
+        {{entry.journal}}
       {% elsif entry.type == "inproceedings" %}
-        <em>In {{entry.booktitle}}</em>
+        {{entry.booktitle}}
       {% endif %}
       {% if entry.year %}
         {{entry.year}}
@@ -137,6 +137,12 @@
       <p>{{ entry.abstract }}</p>
     </div>
     {% endif %}
+    {% if entry.comment %}
+    <div class="abstract hidden">
+      <p>{{ entry.comment }}</p>
+    </div>
+    {% endif %}
+
 
     <!-- Hidden bibtex block -->
     {% if entry.bibtex_show %}
