@@ -30,6 +30,8 @@ category: Computer Science
 # Postings
 가능한한 포스팅을 읽는 순서를 DAG로 유지하려고 노력했습니다. 현재까지 작성완료된 포스팅은 볼드체로 표시되어 있습니다.
 
+$bigstar$ 가 붙은 포스팅들은 더 많은 수학/통계학 지식을 요구하는 포스팅입니다. 
+
 ![Image](/assets/img/deep-learning.jpg)
 
 ## Supervised Learning 
@@ -52,50 +54,48 @@ $$\underset{\theta \in \Theta}{\minimize}\ \mathfrak{L}(\theta)$$
 
 따라서, Supervised Learning의 문제를 이러한 세팅 하에서 공부할 수 있습니다. 
 - 가장 중요한 문제는 당연히 어떤 $\theta$를 잡아서, $g_\theta$를 만드는지의 문제입니다. 즉, 다양한 **모델** 이 연구되어야 하며, 각 모델마다 **표현할 수 있는 함수들의 공간** 이 다르기 때문에, 이를 고려해야 합니다. 모델에 대해서는 마지막에 다시 나열합니다. 
+  - 기본적인 수리통계? 지식이 있으면 많은 도움이 됩니다. 
+    - **Empirical Risk Minimization**
+    - **KL-Divergence**
+    - **Maximum Likelihood Estimation**
+<br/><br/>
+
 - $\mathfrak{L}(\theta)$가 이미 알려져 있다면, 이를 어떻게 최소화할수 있을까요? $\mathfrak{L}$이 좋은 성질 (볼록성 등) 을 만족하지 않는다면, 일반적으로 이는 매우 어렵습니다. 최적화하는 방법과 각 알고리즘의 성능 등에 대해 공부해야 합니다.
-  - [Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)
-  - [Stochastic Gradient Descent](/deep-learning-study/sgd/)
-  - [Backpropagation](/deep-learning-study/backpropagation/) 
-  - [Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)
-  - [Batch Normalization](/deep-learning-study/batch-normalization/)
+  - **[Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)**
+  - **[Stochastic Gradient Descent](/deep-learning-study/sgd/)**
+  - **[Backpropagation](/deep-learning-study/backpropagation/)**
+  - **[Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)**
+  - **[Batch Normalization](/deep-learning-study/batch-normalization/)**
+<br/><br/>
+
 - 우리는 $\sum_i \ell(f(x^i), g_\theta(x^i))$를 최소화했지만, 사실 바라는 것은 $x^1 \dots x^n$ 에 없는 **새로운 데이터** $x'$가 들어왔을 때, $f(x')$ 이 $g_\theta(x')$ 에 가깝기를 바랍니다. 즉, 개와 고양이 사진을 많이 훈련한 모델은 한번도 본적없는 개/고양이 사진에 대해서도 잘 작동하기를 바랍니다. 이를 Generalization이라 합니다. 
-  - [Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)
+  - **[Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)**
+<br/><br/>
 
 - 가장 간단한 Model들인 Support Vector Machine, Logistic Regression, Softmax Regression 등에 대해 알아봅니다. 
-  - [Support Vector Machine 알아보기](/deep-learning-study/support-vector-machines/)
-  - * More on SVM : Kernel Methods (1) (2)
+  - **[Support Vector Machine 알아보기](/deep-learning-study/support-vector-machines/)**
+  - **($\bigstar$) More on SVM : Kernel Methods (1) (2)**
+<br/><br/>
 
+- 딥 러닝의 시작이라고 할 수 있는, MultiLayer Perceptron에 대해 공부합니다. 
+  - **[Multi-Layer Perceptron](/deep-learning-study/multilayer-perceptron/)**
+  - **[Softmax와 MLP로 MNIST 풀어보기](/deep-learning-study/mnist-mlp/)** : MNIST 손글씨 숫자인식 with Softmax / MLP
+  - **($\bigstar$) Universal Approximation Theorem**
+<br/><br/>
 
-#### Shallow Neural Networks 
-- [Introduction to Shallow Neural Networks](/deep-learning-study/shallow-nn/)
-- [Support Vector Machine & Logistic Regression](/deep-learning-study/svm-and-lr/) : Binary Classification 문제를 해결하는 두 모델에 대하여.
-- [Softmax Regression](/deep-learning-study/softmax-regression/) : Multiclass classification 해결, Logistic Regression의 확장
-
-#### Multi Layer Perceptron 
-가장 기본적인 형태의 딥 러닝인 MultiLayer Perceptron에 대해 공부합니다. 
-- [Multi-Layer Perceptron](/deep-learning-study/multilayer-perceptron/) : 딥 러닝의 시작.
-- [Softmax와 MLP로 MNIST 풀어보기](/deep-learning-study/mnist-mlp/) : MNIST 손글씨 숫자인식 with Softmax / MLP
-
-#### Convolutionary Neural networks
-이미지 처리에 가장 많이 쓰이는, Convolution 기반의 뉴럴 네트워크에 대해 공부합니다. 
-- [Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/) : CNN 개요.
-- [LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST) 
-
-ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
+- 이미지 처리에 가장 많이 쓰이는, Convolution 기반의 뉴럴 네트워크에 대해 공부합니다. 
+  - **[Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/)** : CNN 개요.
+  - **[LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST)**
+- ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
 [CIFAR10에서의 결과 정리](/deep-learning-study/pytorch-cifar10)
-- [CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)
-  - [AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)
-- [CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)
-  - [VGGNet으로 CIFAR10 풀어보기](/deep-learning-study/vggnet-cifar10/)
-- [CNN Architecture : GoogLeNet]
-- [CNN Architecture : ResNet]
-- [CNN Architecture : SENet]
-
-Classificiation 외의 다른 이미지 관련 문제를 푸는 방법에 대해 공부합니다.  
-[Semantic Segmentation 개요](/deep-learning-study/semantic-segmentation/) : Semantic segmentation 문제 정의, 개요
-- [Fully Convolutional Networks]
-- [Encoder-Decoder, U-Net]
-- [Dilated Convolutions, DeepLab]
+  - **[CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)**
+    - **[AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)**
+  - **[CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)**
+    - **[VGGNet으로 CIFAR10 풀어보기](/deep-learning-study/vggnet-cifar10/)**
+  - [CNN Architecture : GoogLeNet]
+  - [CNN Architecture : ResNet]
+  - [CNN Architecture : SENet]
+<br/><br/>
 
 ## Unsupervised Learning
 - [Unsupervised Learning, AutoEncoders](/deep-learning-study/autoencoders/)
