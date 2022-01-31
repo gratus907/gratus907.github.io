@@ -1,8 +1,8 @@
 ---
 layout: single
-title: 
-categories: 
-parlinks: []
+title: Support Vector Machine 알아보기
+categories: deep-learning-study
+parlinks: [dl-theory]
 comments : true
 ---
 <div id="toc">

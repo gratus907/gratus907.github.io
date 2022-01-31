@@ -61,6 +61,10 @@ $$\underset{\theta \in \Theta}{\minimize}\ \mathfrak{L}(\theta)$$
 - 우리는 $\sum_i \ell(f(x^i), g_\theta(x^i))$를 최소화했지만, 사실 바라는 것은 $x^1 \dots x^n$ 에 없는 **새로운 데이터** $x'$가 들어왔을 때, $f(x')$ 이 $g_\theta(x')$ 에 가깝기를 바랍니다. 즉, 개와 고양이 사진을 많이 훈련한 모델은 한번도 본적없는 개/고양이 사진에 대해서도 잘 작동하기를 바랍니다. 이를 Generalization이라 합니다. 
   - [Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)
 
+- 가장 간단한 Model들인 Support Vector Machine, Logistic Regression, Softmax Regression 등에 대해 알아봅니다. 
+  - [Support Vector Machine 알아보기](/deep-learning-study/support-vector-machines/)
+  - * More on SVM : Kernel Methods (1) (2)
+
 
 #### Shallow Neural Networks 
 - [Introduction to Shallow Neural Networks](/deep-learning-study/shallow-nn/)
