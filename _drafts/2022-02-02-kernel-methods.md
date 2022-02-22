@@ -63,3 +63,11 @@ $$f(\cdot) = \sum_{i = 1}^{n} \alpha_i k(\cdot, x_i)$$
 여기에 **내적** 을 부여하고 싶습니다. [선형대수와 군] 같은 책에 잘 나와있는, dual space에서의 내적을 참고하면, $k(\cdot, x_i)$ 와 $k(\cdot, x_j)$의 내적이 $k(x_i, x_j)$ 임을 알 수 있습니다. 따라서, $f$ 처럼 선형결합된 함수들에 대해서도... 
 $$f(\cdot) = \sum_{i = 1}^{n} \alpha_i k(\cdot, x_i),\ g(\cdot) = \sum_{j = 1}^{m} \beta_j k(\cdot, x_j') \Rightarrow \inner{f}{g} = \sum_{i, j} \alpha_i \beta_j k(x_i, x_j')$$
 이렇게 내적이 잘 정의가 됩니다.
+
+이제, $\Psi(x)$들의 선형결합의 공간 - $f(t) = \sum_{i = 1}^{n} \alpha_i k(t, x_i)$ 들을 생각합니다. 이 위에 다시 내적을 주고자 합니다. 
+$$\inner{f}{g} = \sum_{i = 1}^{n} \sum_{j = 1}^{m} \alpha_i \beta_j k(x_j, x_i)$$
+이러한 정의는 (비교적) 자연스러우며, 내적이 된다는 것을 쉽게 보일 수 있습니다. 
+
+(증명하지 않을 것이지만) 이 공간이 완비성을 갖도록 complete하면 $\Psi(x)$ 들의 선형결합의 공간 $\mathcal{F}$ 를 Hilbert space로 만들 수 있습니다. 이때, $k$ 라는 커널이
+$$\inner{k(\cdot, t)}{f} = \sum_{i = 1}^{n} \alpha_i k(t, x_i) = f(t)$$ 
+이러한 성질을 갖기 때문에 reproducing 이라는 이름을 붙여서, Reproducing Kernel Hilbert Space 라고 부릅니다. 
