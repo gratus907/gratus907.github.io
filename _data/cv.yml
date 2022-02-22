@@ -5,31 +5,35 @@
     value: '<b>Wonseok Shin</b>'
   - name: Contact
     value: '<b>gratus907@snu.ac.kr</b>'
-
+    
 - title: Education
   type: table
   contents:
   - title: Seoul National University - Bachelor in Computer Science and Engineering, Mathematical Sciences
-    year: 2018 -
-    badge: 2018 -
+    year: 2018
+    badge: 2018.03-Present
     description:
       - Major in Computer Science and Engineering (Major GPA 3.91 / 4.3)
       - Double major in Mathematical Sciences (Major GPA 4.07 / 4.3)
+  - title : Sangsan High School 
+    year: 2015-2017
+    badge: 2015.03-2017.02
 
 - title: Experience
   type: table 
   contents: 
-  - title: Research Internship
+  - title: Research Internship @ Aigendrug Co.Ltd
     year: 2022 
     badge: 2022.01-Present
     description:
-      - 'SNU Bio&Health Informatics Lab (Advisor : Professor Sun Kim)'
-  - title: Undergraduate Research Opportunity Program
+      - Efficient subgraph search on molecule graph data
+      - 'Advisor : Professor Sun Kim'
+  - title: Undergraduate Research Opportunity Program @ SNU Computer Theory Lab
     year: 2020
     badge: 2020.08-2021.04
     description:
-      - 'SNU Computer Theory Lab (Advisor : Professor Kunsoo Park)'
-      - Improved Adaptive Matching Order for Subgraph Isomorphism
+      - Improved adaptive matching order for subgraph isomorphism
+      - 'Advisor : Professor Kunsoo Park'
 
 - title: Publications
   type: table-publications
@@ -46,21 +50,24 @@
     description:
       - SNU Principles and Practices of Software Design course project
 
-- title: Honors and Awards
+- title: Honors, Awards and Scholarships
   type: table 
   contents: 
+  - subtype: Scholarships
+    items:
+    - 2020 National Scholarship For Science and Engineering
   - subtype: Awards
     items:
-    - 2021 한국컴퓨터종합학술대회 최우수논문상 (컴퓨터이론 분야) 
+    - 2021 Korea Computer Congress, Best paper award (Computer Theory)
 
 - title: Teaching
   type: table
   contents:
   - subtype: TA/Tutor
     items:
-    - '21 Fall, <u>Algorithms</u> Teaching Assistant'
-    - '21 Spring, <u>Engineering Mathematics I</u> Teaching Assistant'
-    - '20-21 Winter, <u>Introduction to Computing - First Course in Computing</u> Tutor'
+    - '21 Fall, <u>Algorithms</u> Undergraduate Teaching Assistant'
+    - '21 Spring, <u>Engineering Mathematics I</u> Undergraduate Teaching Assistant'
+    - '20-21 Winter, <u>Introduction to Computing - First Course in Computing</u> Undergraduate Tutor'
 
 - title: Programming Competitions
   type: table
@@ -81,6 +88,7 @@
 - title: Skills
   type: list
   contents:
-  - '<b>Languages</b>: Korean (native), English'
-  - '<b>Programming languages</b>: C++, Python'
+  - '<b>Languages</b>: Korean (native), English (fluent)'
+  - '<b>Programming languages</b>: C++, Python, JAVA, MATLAB'
+  - '<b>Deep Learning</b>: Pytorch'
   - '<b>Tools</b>: Git, LaTeX'

@@ -29,6 +29,9 @@ description: My resume. Here you can find what activity I do now, what I did bef
     thead {
         border: 0px;
     }
+	.badge {
+		vertical-align: top;
+	}
 </style>
 <div class="cv">
 	{% for entry in site.data.cv %}
