@@ -47,6 +47,6 @@ table {
 | Central Limit Theorem                                                                              | 5.1              |
 | Limit distribution                                                                                 | 5.2 - 5.3        |
 | Method of Moments Estimation                                                                       | 6.1              |
-| Maximum Likelihood Estimation                                                                      | 6.2 - 6.3        |
+| [**Maximum Likelihood Estimation**](/mathematical-statistics/Maximum-Likelihood-Estimation)        | 6.2 - 6.3        |
 | Maximum Likelihood Estimation : Properties                                                         | 6.5              |
 | Least Square Estimation                                                                            | 6.5              |
