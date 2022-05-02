@@ -34,68 +34,10 @@ $bigstar$ 가 붙은 포스팅들은 더 많은 수학/통계학 지식을 요�
 
 ![Image](/assets/img/deep-learning.jpg)
 
-## Supervised Learning 
-Deep Learning, 보다 일반적으로 Machine Learning을 수학적으로 생각해 보면, 결국은 "미지의 함수에 대한, 데이터를 이용한 parametric inference" 라고 할 수 있습니다. 이게 무슨 의미인지를 생각해 보면서 이야기를 시작합니다. 
+## [Supervised Learning (링크)](/deep-learning-study/supervised-learning) 
+Supervised Learning이란, **정답을 알고 있는** 훈련 데이터들이 주어지고 **정답을 모르는** 데이터의 답을 예측하는 문제입니다. 예를 들어, 개와 고양이 사진을 분류하는 문제를 들 수 있습니다. 개와 고양이 사진을 각 1만 장씩 주고, 이를 잘 학습한 후, 개인지 고양이인지 모르는 사진 1천 장에 대해 올바르게 분류해내는 것을 목표로 합니다.
 
-이미지 분류, 주식 가격의 예측, 게임의 최적 전략 등, 많은 딥 러닝의 문제들이 있지만 매우 일반적으로는 다음과 같은 문제로 생각할 수 있습니다. 
-<span style="display:block" class="math_item">
-    <b class="math_item_title">Supervised Learning : Basic Setup</b>  
-    어떤 미지의 '진실' 함수 $f$가 있고, 우리는 이 함수에 대해 알고 싶다. 우리는 일부 데이터 $x^i$ 들에서 $f(x^i)$의 값을 알고 있다. 
-</span> 
-
-- 당연한 이야기지만, 그냥 함수라고 하면 $x^i$들에 대한 정보를 알더라도 아무것도 추측하기 어렵습니다. 따라서, 우리는 이 $f$가 어떤 좋은 성질들을 만족하고 resonable하게 행동할 것이라고 가정합니다 (많은 실세계의 문제가 그러하기 때문)
-- 따라서, 두 함수 간의 "거리를 측정" 하는 $\mathcal{L}$ 가 주어진다면, truth function $f$와의 거리 $\mathcal{L}(f, g)$를 최소화하는 $g$를 찾는 것이 우리의 목표라고 할 수 있겠습니다. 그러나, $f$를 모른다면 $\mathcal{L}(f, \cdot)$ 을 계산하는 것은 불가능할 것입니다. 
-- 대신에 우리는 $x^i$들에서 알고 있다는 정보를 최대한 이용하고 싶기 때문에, 어떤 새로운 페널티 $\ell$ 을 정의해서, $\sum_i \ell(f(x^i), g(x^i))$가 작은 $g$를 $f$의 근사-함수로 생각하고 싶습니다. 이를 **Empirical Risk Minimization** 이라 합니다. 
-- 그런데, **모든 함수들 중에서** $\sum_i \ell(f(x^i), g(x^i))$ 를 최소화한다는 것은 일반적으로 불가능합니다. 따라서, 어떤 **파라미터** (변수) $\theta \in \Theta$를 정의하여, 다음과 같은 최적화 문제를 생각합니다. $g_\theta$는 $\theta$를 이용하여 정의되는 함수입니다. 
-$$\underset{\theta \in \Theta}{\minimize}\ \sum_i \ell(f(x^i), g_\theta(x^i))$$
-이때, $g_\theta$는 **parameter에 의해 정의되는 함수들의 집합** 이며, 이를 **모델(model)** 이라 합니다. 
-- 이제, 위 문제를 보면 결국 $f$는 모르더라도 $f(x^i)$는 이미 알고 있는 값이고, $g_\theta$는 $\theta$에 의해서만 결정됩니다. 따라서, $\sum_i \ell(f(x^i), g_\theta(x^i))$ 전체는 사실 $\theta$에 의한 함수이고, 다음과 같은 최적화 문제로 환원됩니다. 
-$$\underset{\theta \in \Theta}{\minimize}\ \mathfrak{L}(\theta)$$
-
-따라서, Supervised Learning의 문제를 이러한 세팅 하에서 공부할 수 있습니다. 
-- 가장 중요한 문제는 당연히 어떤 $\theta$를 잡아서, $g_\theta$를 만드는지의 문제입니다. 즉, 다양한 **모델** 이 연구되어야 하며, 각 모델마다 **표현할 수 있는 함수들의 공간** 이 다르기 때문에, 이를 고려해야 합니다. 모델에 대해서는 마지막에 다시 나열합니다. 
-  - 기본적인 수리통계? 지식이 있으면 많은 도움이 됩니다. 
-    - **Empirical Risk Minimization**
-    - **KL-Divergence**
-    - **Maximum Likelihood Estimation**
-<br/><br/>
-
-- $\mathfrak{L}(\theta)$가 이미 알려져 있다면, 이를 어떻게 최소화할수 있을까요? $\mathfrak{L}$이 좋은 성질 (볼록성 등) 을 만족하지 않는다면, 일반적으로 이는 매우 어렵습니다. 최적화하는 방법과 각 알고리즘의 성능 등에 대해 공부해야 합니다.
-  - **[Introduction to Optimization / Gradient Descent](/deep-learning-study/opt-and-gd/)**
-  - **[Stochastic Gradient Descent](/deep-learning-study/sgd/)**
-  - **[Backpropagation](/deep-learning-study/backpropagation/)**
-  - **[Optimizers for Deep Learning](/deep-learning-study/optimizer-for-deep-learning)**
-  - **[Batch Normalization](/deep-learning-study/batch-normalization/)**
-<br/><br/>
-
-- 우리는 $\sum_i \ell(f(x^i), g_\theta(x^i))$를 최소화했지만, 사실 바라는 것은 $x^1 \dots x^n$ 에 없는 **새로운 데이터** $x'$가 들어왔을 때, $f(x')$ 이 $g_\theta(x')$ 에 가깝기를 바랍니다. 즉, 개와 고양이 사진을 많이 훈련한 모델은 한번도 본적없는 개/고양이 사진에 대해서도 잘 작동하기를 바랍니다. 이를 Generalization이라 합니다. 
-  - **[Overfitting and Regularization : Dropout, Weight decay, Data Augmentation](/deep-learning-study/overfitting-and-regularization/)**
-<br/><br/>
-
-- 가장 간단한 Model들인 Support Vector Machine, Logistic Regression, Softmax Regression 등에 대해 알아봅니다. 
-  - **[Support Vector Machine 알아보기](/deep-learning-study/support-vector-machines/)**
-  - **($\bigstar$) More on SVM : Kernel Methods (1) (2)**
-<br/><br/>
-
-- 딥 러닝의 시작이라고 할 수 있는, MultiLayer Perceptron에 대해 공부합니다. 
-  - **[Multi-Layer Perceptron](/deep-learning-study/multilayer-perceptron/)**
-  - **[Softmax와 MLP로 MNIST 풀어보기](/deep-learning-study/mnist-mlp/)** : MNIST 손글씨 숫자인식 with Softmax / MLP
-  - **($\bigstar$) Universal Approximation Theorem**
-<br/><br/>
-
-- 이미지 처리에 가장 많이 쓰이는, Convolution 기반의 뉴럴 네트워크에 대해 공부합니다. 
-  - **[Convolutionary Neural Networks](/deep-learning-study/convolutionary-neural-networks/)** : CNN 개요.
-  - **[LeNet으로 MNIST 풀어보기](/deep-learning-study/LeNet-MNIST)**
-- ImageNet Challenge의 역사를 따라가며, 몇가지 성공적인 Image classification 모델들에 대해 공부합니다.   
-[CIFAR10에서의 결과 정리](/deep-learning-study/pytorch-cifar10)
-  - **[CNN Architecture : AlexNet](/deep-learning-study/AlexNet/)**
-    - **[AlexNet으로 CIFAR10 풀어보기](/deep-learning-study/alexnet-cifar10/)**
-  - **[CNN Architecture : VGGNet](/deep-learning-study/VGGNet/)**
-    - **[VGGNet으로 CIFAR10 풀어보기](/deep-learning-study/vggnet-cifar10/)**
-  - [CNN Architecture : GoogLeNet]
-  - [CNN Architecture : ResNet]
-  - [CNN Architecture : SENet]
-<br/><br/>
+Supervised Learning은 딥러닝 이전의 SVM, LR부터 시작해서 이미지 분류에 사용되는 CNN, NLP모델에 사용되는 RNN 등 굉장히 다양합니다.
 
 ## Unsupervised Learning
 - [Unsupervised Learning, AutoEncoders](/deep-learning-study/autoencoders/)
