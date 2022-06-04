@@ -4,7 +4,7 @@ title: Projects
 permalink: /projects/
 description: Collection of my projects.
 nav: true
-display_categories: [SNU, Personal]
+display_categories: [Research Internship @ AIGENDRUG Co. Ltd, SNU, Personal]
 horizontal: false
 ---
 <div class="projects">

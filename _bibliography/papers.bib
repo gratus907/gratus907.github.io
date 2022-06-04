@@ -9,8 +9,7 @@
     year={2021},
     ISSN={2466-0825},
     pages={1519-1521},
-    language = {kor},
-    abstract={최근 다양한 분야에서 그래프 분석이 사용되고 있다. 그래프 분석에서 가장 핵심적인 문제 중 하나인 부분 그래프 매칭(subgraph matching) 문제를 해결하는 많은 알고리즘이 연구되어왔다. 본 논문에서는 이 문제를 해결하는 최신 알고리즘 DAF에서 제안한 동적 매칭 순서의 문제점을 분석하고 이를 개선한 매칭 순서를 소개한다. 또한 제안한 매칭 순서를 실제 데이터 그래프를 가지고 실험을 진행하여 이전 매칭 순서들보다 효과적임을 입증하였다.}
+    language = {kor}
 }
 
 @article{kiise21daf,
@@ -24,7 +23,16 @@
     number={1},
     ISSN={2383-6296},
     pages={1-7},
-    language = {kor},
-    abstract={최근 다양한 분야에서 그래프 분석이 사용되고 있다. 그래프 분석에서 가장 핵심적인 문제 중 하나는 부분 그래프 매칭(subgraph matching) 문제이다. 부분 그래프 매칭 문제는 데이터 그래프와 쿼리 그래프가 주어졌을 때 데이터 그래프에서 쿼리 그래프의 모든 임베딩(embedding)을 찾는 문제이다. 그동안 이 문제를 해결하는 백트래킹 기반의 많은 알고리즘이 연구되어왔다. 본 논문에서는 이 문제를 해결하는 최신 알고리즘인 DAF에서 제안한 동적 매칭 순서의 문제점을 분석하고 이를 개선한 동적 매칭 순서를 소개한다. 또한, 제안한 매칭 순서를 실제 데이터 그래프를 가지고 실험을 진행하여 가지치기 기법을 사용하지 않았거나 가지치기 기법을 사용하더라도 수행 시간이 매우 짧지 않으면 이전 매칭 순서들보다 효과적임을 입증하였다.},
-    comment={이 논문은 2021 한국컴퓨터종합학술대회에서 '부분 그래프 매칭 문제를 위한 향상된 동적 매칭 순서'의 제목으로 발표된 논문을 확장한 것임}
+    language = {kor}
+}
+
+@inproceedings{TriCL22,
+  abbr      = {Under Review},
+  author    = {MinGyu Choi and Wonseok Shin and Yijingxiu Lu and Sun Kim},
+  title     = {{Triangular Contrastive Learning on Molecular Graphs}},
+  booktitle = {Under review.},
+  year      = {2022},
+  arxiv     = {2205.13279}, 
+  blog      = {/TriCL/},
+  abstract  = {Recent contrastive learning methods have shown to be effective in various tasks, learning generalizable representations invariant to data augmentation thereby leading to state of the art performances. Regarding the multifaceted nature of large unlabeled data used in self-supervised learning while majority of real-word downstream tasks use single format of data, a multimodal framework that can train single modality to learn diverse perspectives from other modalities is an important challenge. In this paper, we propose TriCL (Triangular Contrastive Learning), a universal framework for trimodal contrastive learning. TriCL takes advantage of Triangular Area Loss, a novel intermodal contrastive loss that learns the angular geometry of the embedding space through simultaneously contrasting the area of positive and negative triplets. Systematic observation on embedding space in terms of alignment and uniformity showed that Triangular Area Loss can address the line-collapsing problem by discriminating modalities by angle. Our experimental results also demonstrate the outperformance of TriCL on downstream task of molecular property prediction which implies that the advantages of the embedding space indeed benefits the performance on downstream tasks.}
 }

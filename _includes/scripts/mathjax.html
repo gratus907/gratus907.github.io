@@ -3,7 +3,10 @@
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [ ['$$', '$$'], ['\\[', '\\]'], ['\\(', '\\)']],
-        packages: {'[+]': ['physics']}
+        packages: {'[+]': ['physics']},
+        macros: {
+          bm: ["{\\boldsymbol #1}",1],
+        }
       },
       loader: {
         load: ["input/tex", "output/chtml", '[tex]/physics']

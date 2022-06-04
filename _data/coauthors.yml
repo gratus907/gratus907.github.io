@@ -1,3 +1,15 @@
 "Park":
-  - firstname: ["K", "K. S.", "K.", "Kunsoo"]
+  - firstname: ["Kunsoo"]
     url: http://theory.snu.ac.kr/?page_id=427
+
+"Choi":
+  - firstname: ["MinGyu"]
+    url: https://chemgyu.github.io/
+
+"Lu":
+  - firstname: ["Yijingxiu"]
+    url: https://solanoon.github.io/
+
+"Kim":
+  - firstname: ["Sun"]
+    url: https://bhi-kimlab.github.io/members/sun_kim.html

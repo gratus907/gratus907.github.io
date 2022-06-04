@@ -162,7 +162,7 @@ scholar:
 
   last_name: Shin
   first_name: Wonseok
-  style: modern-language-association
+  style: acm-sig-proceedings
   locale: en
 
   source: /_bibliography/
@@ -176,6 +176,9 @@ scholar:
   replace_strings: true
   join_strings: true
   group_by: type, year
+  group_order : descending
+  sort_by: year
+  order: descending
   details_dir: bibliography
   details_layout: bibtex.html
   details_link: Details
