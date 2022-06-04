@@ -5,4 +5,4 @@ inline: true
 on-home: true
 ---
 
-We submitted our new paper [**Triangular Contrastive Learning on Molecular Graphs**](https://arxiv.org/abs/2205.13279) to NeurIPS 2022. 
+Our new paper [**Triangular Contrastive Learning on Molecular Graphs**](https://arxiv.org/abs/2205.13279) is uploaded to arXiv
