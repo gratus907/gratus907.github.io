@@ -50,6 +50,14 @@
               {% endif %}
             </a>
           </li>
+          <li class="nav-item {% if page.title contains 'Publications' %}active{% endif %}">
+            <a class="nav-link" href="{{ '/publications/' | relative_url }}">
+              Publications
+              {% if page.title == "Publications" %}
+              <span class="sr-only">(current)</span>
+              {% endif %}
+            </a>
+          </li>
           <li class="nav-item {% if page.title contains 'Recent updates' %}active{% endif %}">
             <a class="nav-link" href="{{ '/news/' | relative_url }}">
               Recent Updates

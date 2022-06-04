@@ -150,7 +150,7 @@ plugins:
   - jekyll-twitter-plugin
   - jemoji
   - jekyll-redirect-from
-
+  - jekyll-tabs
 # Extras
 github: [metadata]
 
