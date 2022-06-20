@@ -104,6 +104,9 @@ collections:
   notes:
     output: true 
     permalink: /study-note/:path/
+  TIL:
+    output: true
+    permalink: /TIL/:path/
 
 news_limit: 5
 
@@ -175,7 +178,7 @@ scholar:
 
   replace_strings: true
   join_strings: true
-  group_by: type, year
+  group_by: year
   group_order : descending
   sort_by: year
   order: descending
@@ -244,3 +247,8 @@ popper:
 medium_zoom:
   version: "1.0.6"
   integrity: "sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM="
+
+# -----------------------------------------------------------------------------
+
+TILs:
+  - TILs_0 : /_TIL/TILs_0/

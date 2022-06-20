@@ -29,7 +29,7 @@ Goodfellow, Bengio, Courville의 Deep learning book 에서도 이 알고리즘�
 1. 데이터의 원본이 갖는 **변동성** 을 최대한 많이 설명하고 싶고
 2. 계산하기 쉬웠으면 좋겠습니다.
 
-이를 위해서 새로운 parameter로 표현되는 mlp, cnn 등 뉴럴 네트워크로 $f, g$를 만들어서 학습시키는 방법을 **autoencoder** 라고 합니다. Autoencoder에 대해서는 [포스팅 링크](/deep-learning-study/autoencoders) 에 소개한 적이 있는데, 오늘 알아볼 방법은 좀더 근본있게(?) 수학적으로 논증을 전개합니다..
+이를 위해서 새로운 parameter로 표현되는 mlp, cnn 등 뉴럴 네트워크로 $f, g$를 만들어서 학습시키는 방법을 **autoencoder** 라고 합니다. Autoencoder에 대해서는 [포스팅 링크](/deep-learning-study/autoencoders) 에 소개한 적이 있는데, 오늘 알아볼 방법은 좀더 근본있게(?) 수학적으로 논증을 전개합니다.
 
 ## 변동성의 설명 
 이 방법에 대한 설명은 다양하게 있었지만, 저는 

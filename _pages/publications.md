@@ -17,6 +17,24 @@ nav: false
 }
 </style>
 
+{% tabs pub %}
+
+{% tab pub Journals %}
 <div class="publications">
-{% bibliography -f papers %}
+{% bibliography -f journals %}
 </div>
+{% endtab %}
+
+{% tab pub Conferences %}
+<div class="publications">
+{% bibliography -f conferences %}
+</div>
+{% endtab %}
+
+{% tab pub Preprints / In progress %}
+<div class="publications">
+{% bibliography -f preprints %}
+</div>
+{% endtab %}
+
+{% endtabs %}

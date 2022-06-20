@@ -10,8 +10,14 @@
   type: table
   contents:
   - title: Seoul National University
+    year: 2022
+    badge: 2022.09-Present
+    description:
+      - MSc in Computer Science
+      - 'Advisor : Professor Kunsoo Park'
+  - title: Seoul National University
     year: 2018
-    badge: 2018.03-Present
+    badge: 2018.03-2022.08
     description:
       - BSc in Computer Science and Engineering (Major GPA 3.91 / 4.3)
       - BSc in Mathematical Science (Double Major GPA 4.07 / 4.3)
@@ -24,7 +30,7 @@
   contents: 
   - title: Research Internship @ Aigendrug Co.Ltd
     year: 2022 
-    badge: 2022.01-Present
+    badge: 2022.01-2022.07
     description:
       - Efficient subgraph search on molecule graph data
       - 'Advisor : Professor Sun Kim, Dr. Sunho Lee'

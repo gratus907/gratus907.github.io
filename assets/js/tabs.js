@@ -18,7 +18,8 @@ const removeActiveClasses = function (ulElement) {
     }
 
 window.addEventListener('load', function () {
-    const tabLinks = document.querySelectorAll('ul.tab li a');
+    const tabLinks = document.querySelectorAll('ul.tab > li a');
+    const tabContents = document.querySelectorAll('ul.tab-content > li');
 
     Array.prototype.forEach.call(tabLinks, function(link) {
       link.addEventListener('click', function (event) {
@@ -36,8 +37,9 @@ window.addEventListener('load', function () {
         tabContentElement = document.getElementById(tabContentId);
         removeActiveClasses(tabContentElement);
 
-        tabContentElement.querySelectorAll('li')[position].classList.add('active');
+        tabContents[position].classList.add('active');
         liTab.classList.add('active');
+        console.log(tabContentId, tabContentElement);
       }, false);
     });
 });
