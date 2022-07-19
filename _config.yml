@@ -104,9 +104,9 @@ collections:
   notes:
     output: true 
     permalink: /study-note/:path/
-  TIL:
+  HAD:
     output: true
-    permalink: /TIL/:path/
+    permalink: /an-hour-a-day/:path/
 
 news_limit: 5
 
@@ -249,6 +249,3 @@ medium_zoom:
   integrity: "sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM="
 
 # -----------------------------------------------------------------------------
-
-TILs:
-  - TILs_0 : /_TIL/TILs_0/

@@ -22,6 +22,8 @@ List of contests with post links
 
 ## 팀 대회 
 ### Contests
+- Google Hashcode 2022
+  - [준비과정](/cp-rounds/Hashcode-2022-prep/), [후기](/cp-rounds/Hashcode-2022-prelim/)
 - Google Hashcode 2021
   - [준비과정](/cp-rounds/Hashcode-2021-prep/), [후기](/cp-rounds/Hashcode-2021-prelim/)
 - [ICPC Korea First Round 2021](/cp-rounds/icpc-2021-prelim/)
