@@ -15,6 +15,9 @@ nav: false
 .publications ol.bibliography li .author a {
     border-bottom: 0px;
 }
+.row {
+    margin-top:15px;
+}
 </style>
 
 {% tabs pub %}

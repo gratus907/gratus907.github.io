@@ -158,6 +158,8 @@ b, strong {
 }
 
 .tab-content li {
+    margin : 25px 0px 25px 0px;
+    border : 3px;
     display: none;
 }
 .tab-content li.active {
@@ -165,4 +167,12 @@ b, strong {
 }
 .tab-content li.active > .publications > ol > li {
     display : initial;
+}
+
+
+
+.col-sm-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 75%;
+    max-width: 75%;
 }
