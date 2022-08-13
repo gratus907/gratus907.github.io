@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: Undergraduate Student, Seoul National University, CSE
+description: Graduate Student, Seoul National University, CSE
 
 profile:
   align: right
