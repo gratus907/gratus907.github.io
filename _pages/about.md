@@ -14,7 +14,6 @@ social: true  # includes social icons at the bottom of the page
 
 <style>
 div.summary {
-  text-align: justify;
 } 
 </style>
 
