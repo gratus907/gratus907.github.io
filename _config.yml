@@ -117,9 +117,10 @@ news_limit: 5
 # Markdown and syntax highlight
 markdown: kramdown
 highlighter: rouge
-highlight_theme: github  # https://github.com/jwarby/jekyll-pygments-themes
+highlight_theme: monokai  # https://github.com/jwarby/jekyll-pygments-themes
 kramdown:
   input: GFM
+  syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: 'highlight'
     span:
