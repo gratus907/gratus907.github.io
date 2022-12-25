@@ -20,6 +20,7 @@ a {
 }
 body {
     line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
 }
 code {
     font-size: 100%;
@@ -175,4 +176,34 @@ b, strong {
     -ms-flex: 0 0 66.666667%;
     flex: 0 0 75%;
     max-width: 75%;
+}
+
+table.type10 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type10 thead th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #e7708d;
+    margin: 20px 10px;
+}
+table.type10 tbody th {
+    width: 150px;
+    padding: 10px;
+}
+table.type10 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+}
+table.type10 .even {
+    background: #fdf3f5;
 }

@@ -34,7 +34,7 @@ nav: false
 </div>
 {% endtab %}
 
-{% tab pub Preprints / In progress %}
+{% tab pub Preprints %}
 <div class="publications">
 {% bibliography -f preprints %}
 </div>

@@ -19,7 +19,8 @@
     year: 2018
     badge: 2018.03-2022.08
     description:
-      - BSc in Computer Science and Engineering (Major GPA 3.91 / 4.3)
+      - Graduated with <i>summa cum laude</i>, recieved the <i>undergraduate thesis award</i>
+      - BSc in Computer Science and Engineering (Major GPA 3.91 / 4.3)  
       - BSc in Mathematical Science (Double Major GPA 4.07 / 4.3)
   - title : Sangsan High School 
     year: 2015-2017
@@ -64,6 +65,7 @@
     - 2020 National Scholarship For Science and Engineering
   - subtype: Awards
     items:
+    - 2022 Bachelor's Thesis Award, Department of CSE
     - 2021 Korea Computer Congress, Best paper award (Computer Theory)
 
 - title: Teaching
