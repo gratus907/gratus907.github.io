@@ -2,10 +2,11 @@
 layout: page
 title: Triangular Contrastive Learning on Molecular Graphs
 permalink : /TriCL/
-description: Submitted to NeurIPS 2022
+description: Tri-modal contrastive learning to leverage 1D, 2D and 3D information for better understanding of molecular graphs.
 img: /assets/img/triCL-icon.png
 importance: 1
-category: Research Internship @ AIGENDRUG Co. Ltd
+category: Machine Learning
+tags: [Research, Contrastive Learning, Molecular Graphs]
 ---
 
 MinGyu Choi, <ins>Wonseok Shin</ins>, Yijingxiu Lu, Sun Kim, **Triangular Contrastive Learning on Molecular Graphs**

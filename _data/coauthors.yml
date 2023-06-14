@@ -1,6 +1,6 @@
 "Park":
   - firstname: ["Kunsoo"]
-    url: http://theory.snu.ac.kr/?page_id=427
+    url: https://snucse-cta.github.io/professor
 
 "Choi":
   - firstname: ["MinGyu"]
@@ -13,3 +13,7 @@
 "Kim":
   - firstname: ["Sun"]
     url: https://bhi-kimlab.github.io/members/sun_kim.html
+
+"Lim":
+  - firstname: ["Sangsoo"]
+    url: https://sslim0814.github.io/online-cv/

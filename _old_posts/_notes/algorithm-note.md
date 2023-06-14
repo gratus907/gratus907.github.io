@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Algo / DS
+title: Data structures and Algorithms
 permalink : /ds-alg-note/
 description: Data structures & Algorithms
 img: /assets/img/algorithm-2.png

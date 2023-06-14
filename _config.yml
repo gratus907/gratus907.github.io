@@ -7,7 +7,7 @@ first_name: Wonseok
 last_name: Shin
 email: gratus907@snu.ac.kr
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+  Wonseok Shin, SNU CSE
 footer_text: >
   Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
@@ -76,8 +76,8 @@ panelbear_analytics: KX0fnophvY8 # panelbear analytics site ID
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Gratus907's Study Note  # your blog must have a name for it to show up in the nav bar
-blog_description: Portfolio / Study note by Wonseok Shin (Gratus907), SNU CSE
+blog_name: "Blog : Thoughts, Things I've Studied, Etc."  # your blog must have a name for it to show up in the nav bar
+blog_description: 
 permalink: /:categories/:title/
 
 # Pagination

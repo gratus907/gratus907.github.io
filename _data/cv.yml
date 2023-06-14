@@ -19,7 +19,7 @@
     year: 2018
     badge: 2018.03-2022.08
     description:
-      - Graduated with <i>summa cum laude</i>, recieved the <i>undergraduate thesis award</i>
+      - Graduated with <b>summa cum laude</b>, recieved the <b>undergraduate thesis award</b>
       - BSc in Computer Science and Engineering (Major GPA 3.91 / 4.3)  
       - BSc in Mathematical Science (Double Major GPA 4.07 / 4.3)
   - title : Sangsan High School 
@@ -73,8 +73,8 @@
   contents:
   - subtype: TA/Tutor
     items:
+    - '22 Fall, <u>Automata Theory</u> Teaching Assistant'
     - '21 Fall, <u>Algorithms</u> Undergraduate Teaching Assistant'
-    - '21 Spring, <u>Engineering Mathematics I</u> Undergraduate Teaching Assistant'
     - '20-21 Winter, <u>Introduction to Computing - First Course in Computing</u> Undergraduate Tutor'
 
 - title: Programming Competitions

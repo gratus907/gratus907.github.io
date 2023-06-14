@@ -1,3 +1,4 @@
+{% include tag.html %}
 <div class="grid-item">
   {% if project.redirect %}
   <a href="{{ project.redirect }}">
@@ -15,6 +16,11 @@
         <h2 class="card-title">{{ project.title }}</h2>
         <p class="card-text">{{ project.description }}</p>
         <div class="row ml-1 mr-1 p-0">
+          {% if project.tags %}
+            {% for tag in project.tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          {% endif %}
           {% if project.github %}
           <div class="github-icon">
             <div class="icon" data-toggle="tooltip" title="Code Repository">

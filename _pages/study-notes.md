@@ -2,7 +2,7 @@
 layout: page
 title: Notes
 description: My notes on what I've studied (Collection of posts)
-permalink: /study-note/
+permalink: /notes/
 nav: true
 display_categories: [Computer Science, Mathematics]
 horizontal: false

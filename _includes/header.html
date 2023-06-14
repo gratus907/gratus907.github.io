@@ -31,17 +31,6 @@
               {% endif %}
             </a>
           </li>
-          {% if site.blog_name %}
-          <!-- Blog -->
-          <li class="nav-item {% if page.url contains 'blog' %}active{% endif %}">
-            <a class="nav-link" href="{{ '/blog/' | relative_url }}">
-              Posts
-              {% if page.title == "blog" %}
-              <span class="sr-only">(current)</span>
-              {% endif %}
-            </a>
-          </li>
-          {% endif %}
           <li class="nav-item {% if page.url contains 'about-me' %}active{% endif %}">
             <a class="nav-link" href="{{ '/about-me/' | relative_url }}">
               About me
@@ -58,16 +47,32 @@
               {% endif %}
             </a>
           </li>
-          <li class="nav-item {% if page.title contains 'Recent updates' %}active{% endif %}">
+          <!-- <li class="nav-item {% if page.title contains 'Recent updates' %}active{% endif %}">
             <a class="nav-link" href="{{ '/news/' | relative_url }}">
               Recent Updates
               {% if page.title == "Recent Updates" %}
               <span class="sr-only">(current)</span>
               {% endif %}
             </a>
+          </li> -->
+          <!-- Blog -->
+          <li class="nav-item {% if page.url contains 'projects' %}active{% endif %}">
+            <a class="nav-link" href="{{ '/projects/' | relative_url }}">
+              Projects
+            </a>
           </li>
-          <!-- Other pages -->
-          {% assign sorted_pages = site.pages | sort: "title" %}
+          <li class="nav-item {% if page.url contains 'blog' %}active{% endif %}">
+            <a class="nav-link" href="{{ '/blog/' | relative_url }}">
+              Blog
+            </a>
+          </li>
+          <li class="nav-item {% if page.url contains 'notes' %}active{% endif %}">
+            <a class="nav-link" href="{{ '/notes/' | relative_url }}">
+              Notes
+            </a>
+          </li>
+          <!-- Other pages
+          {% assign sorted_pages = site.pages | sort: "title" | reverse %}
           {% for p in sorted_pages %}
           {% if p.nav and p.autogen == nil %}
           {% if p.dropdown %}
@@ -99,7 +104,7 @@
           </li>
           {% endif %}
           {% endif %}
-          {% endfor %}
+          {% endfor %} -->
           {% if site.enable_darkmode %}
             <div class = "toggle-container">
               <a id = "light-toggle">

@@ -4,9 +4,16 @@ title: Projects
 permalink: /projects/
 description: Collection of my projects.
 nav: true
-display_categories: [Research Internship @ AIGENDRUG Co. Ltd, SNU, Personal]
+display_categories: [Machine Learning]
 horizontal: false
 ---
+<style>
+.tag {
+  font-size:12px;
+}
+</style>
+
+
 <div class="projects">
   {% if site.enable_project_categories and page.display_categories %}
   <!-- Display categorized projects -->
