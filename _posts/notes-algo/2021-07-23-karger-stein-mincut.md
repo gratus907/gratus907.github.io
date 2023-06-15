@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[Study] Karger-Stein Minimum Cut"
-categories: advanced-algorithms
+categories: algorithms
 sidebar:
   nav: "sidepost"
 comment: true

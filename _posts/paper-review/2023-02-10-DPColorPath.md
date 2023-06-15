@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "[Reading] Lightning Fast and Space Efficient k-clique Counting"
+categories: paper-reviews
 sidebar:
   nav: "sidepost"
 comment: true

@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "[Study] Random Walk and Pagerank"
+category: data-mining
 sidebar:
   nav: "sidepost"
 comment: true
