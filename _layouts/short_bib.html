@@ -1,0 +1,15 @@
+---
+---
+
+<p>{{entry.author}}, <b>{{ entry.title }}</b>, 
+
+{% if entry.type == "article" %}
+{{ entry.journal }},
+{% elsif entry.type == "inproceedings" %}
+{{ entry.booktitle }},
+{% endif %}
+
+{% if entry.year %}
+{{entry.year}}
+{% endif %}
+</p>

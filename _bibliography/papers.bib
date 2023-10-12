@@ -1,36 +1,634 @@
-@article{kiise21daf,
-    abbr={Journal of KIISE},
-    author={Seunghwan Min and Wonseok Shin and Chaewon Kim and Kunsoo Park},
-    title={부분 그래프 매칭 문제를 위한 새로운 동적 매칭 순서와 성능 비교},
-    journal={정보과학회논문지},
-    publisher={한국정보과학회},
-    year={2022},
-    volume={49},
-    number={1},
-    ISSN={2383-6296},
-    pages={1-7},
-    language = {kor}  
+@preamble{"\newcommand*{\SIGMOD}{Proceedings of ACM SIGMOD}"}
+@preamble{"\newcommand*{\SIGKDD}{Proceedings of ACM SIGKDD}"}
+@preamble{"\newcommand*{\ICDE}{Proceedings of IEEE ICDE}"}
+@preamble{"\newcommand*{\WWW}{Proceedings of ACM WWW}"}
+@preamble{"\newcommand*{\VLDB}{Proceedings of the VLDB Endowment}"}
+@preamble{"\newcommand*{\ICDM}{Proceedings of IEEE ICDM}"}
+@preamble{"\newcommand*{\ICDT}{Proceedings of ICDT}"}
+@preamble{"\newcommand*{\TKDE}{IEEE Transactions on Knowledge and Data Engineering}"}
+
+@online{BoostLibrary,
+    title = "{Boost C++ Libraries}",
+    url = "http://www.boost.org/",
+    year = {2023},
 }
 
-@inproceedings{kcc21daf,
-    abbr={KCC 2021},
-    author={Seunghwan Min and Wonseok Shin and Chaewon Kim and Kunsoo Park},
-    title={부분 그래프 매칭 문제를 위한 향상된 동적 매칭 순서},
-    booktitle={한국정보과학회 학술발표논문집},
-    publisher={한국정보과학회},
-    year={2021},
-    ISSN={2466-0825},
-    pages={1519-1521},
-    language = {kor}
+@misc{fullversion,
+      title={Cardinality Estimation of Subgraph Matching: A Filtering-Sampling Approach}, 
+      author={Wonseok Shin and Siwoo Song and Kunsoo Park and Wook-Shin Han},
+      year={2023},
+      eprint={2309.15433},
+      archivePrefix={arXiv},
 }
 
-@inproceedings{TriCL22,
-  abbr      = {Under Review},
-  author    = {MinGyu Choi and Wonseok Shin and Yijingxiu Lu and Sun Kim},
-  title     = {{Triangular Contrastive Learning on Molecular Graphs}},
-  booktitle = {Under review.},
-  year      = {2022},
-  arxiv     = {2205.13279}, 
-  blog      = {/TriCL/},
-  abstract  = {Recent contrastive learning methods have shown to be effective in various tasks, learning generalizable representations invariant to data augmentation thereby leading to state of the art performances. Regarding the multifaceted nature of large unlabeled data used in self-supervised learning while majority of real-word downstream tasks use single format of data, a multimodal framework that can train single modality to learn diverse perspectives from other modalities is an important challenge. In this paper, we propose TriCL (Triangular Contrastive Learning), a universal framework for trimodal contrastive learning. TriCL takes advantage of Triangular Area Loss, a novel intermodal contrastive loss that learns the angular geometry of the embedding space through simultaneously contrasting the area of positive and negative triplets. Systematic observation on embedding space in terms of alignment and uniformity showed that Triangular Area Loss can address the line-collapsing problem by discriminating modalities by angle. Our experimental results also demonstrate the outperformance of TriCL on downstream task of molecular property prediction which implies that the advantages of the embedding space indeed benefits the performance on downstream tasks.},
+@book{clrs,
+  title={Introduction to algorithms},
+  author={Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford},
+  year={2022},
+  publisher={MIT press}
+}
+
+@inproceedings{DPColorPath,
+   author = {Xiaowei Ye and Rong Hua Li and Qiangqiang Dai and Hongzhi Chen and Guoren Wang},
+   booktitle = {\WWW},
+   title = {Lightning Fast and Space Efficient k-clique Counting},
+   year = {2022},
+   pages = {1191-1202}
+}
+
+@inproceedings{WanderJoin,
+   author = {Feifei Li and Bin Wu and Ke Yi and Zhuoyue Zhao},
+    booktitle = {\SIGMOD},
+   title = {Wander Join: Online Aggregation via Random Walks},
+   year = {2016},
+   pages = {615–629},
+
+}
+
+@inproceedings{Alley,
+   author = {Kyoungmin Kim and Hyeonji Kim and George Fletcher and Wook Shin Han},
+   booktitle = {\SIGMOD},
+   title = {Combining Sampling and Synopses with Worst-Case Optimal Runtime and Quality Guarantees for Graph Pattern Cardinality Estimation},
+   year = {2021},
+   pages = {964-976}
+}
+
+@inproceedings{GCare,
+   author = {Yeonsu Park and Seongyun Ko and Sourav S. Bhowmick and Kyoungmin Kim and Kijae Hong and Wook Shin Han},
+    booktitle = {\SIGMOD},
+   title = {G-CARE: A Framework for Performance Benchmarking of Cardinality Estimation Techniques for Subgraph Matching},
+   year = {2020},
+   pages = {1099-1114}
+}
+
+@inproceedings{NeurSC,
+   author = {Hanchen Wang and Rong Hu and Ying Zhang and Lu Qin and Wei Wang and Wenjie Zhang},
+    booktitle = {\SIGMOD},
+   title = {Neural Subgraph Counting with Wasserstein Estimator},
+   year = {2022},
+   pages = {160-175}
+}
+
+@article{WilsonScoreInterval,
+    author = {Edwin B. Wilson},
+    title = {Probable Inference, the Law of Succession, and Statistical Inference},
+    journal = {Journal of the American Statistical Association},
+    volume = {22},
+    number = {158},
+    pages = {209-212},
+    year  = {1927},
+    publisher = {Taylor & Francis}
+}
+
+@article{ClopperPearson,
+    author = {Clopper, C. J. and Pearson, E. S.},
+    title = {The Use of Confidence or Fiducial Limits Illustrated in the Case of the Binomial},
+    journal = {Biometrika},
+    volume = {26},
+    number = {4},
+    pages = {404-413},
+    year = {1934},
+}
+
+
+
+
+@article{IntervalEstimation,
+author = {Lawrence D. Brown and T. Tony Cai and Anirban DasGupta},
+title = {{Interval Estimation for a Binomial Proportion}},
+volume = {16},
+journal = {Statistical Science},
+number = {2},
+publisher = {Institute of Mathematical Statistics},
+pages = {101-133},
+year = {2001}
+}
+
+
+@article{HTEstimate,
+ author = {D. G. Horvitz and D. J. Thompson},
+ journal = {Journal of the American Statistical Association},
+ publisher = {[American Statistical Association, Taylor & Francis, Ltd.]},
+ title = {A Generalization of Sampling Without Replacement From a Finite Universe},
+ year = {1952}
+}
+
+
+
+@article{VF2,
+	author = {Cordella, L.P. and Foggia, P. and Sansone, C. and Vento, M.},
+	journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+	number = {10},
+	pages = {1367-1372},
+	title = {{A (sub)graph isomorphism algorithm for matching large graphs}},
+	volume = {26},
+	year = {2004}}
+
+@article{Ullmann1976,
+	author = {J. R. Ullmann},
+	journal = {Journal of the ACM},
+	title = {{An Algorithm for Subgraph Isomorphism}},
+	year = {1976},
+ pages = {31-42}
+}
+
+@inproceedings{CFLMatch,
+	author = {Fei Bi and Lijun Chang and Xuemin Lin and Lu Qin and Wenjie Zhang},
+	title = {{Efficient Subgraph Matching by Postponing Cartesian Products}},
+	year = {2016},
+ pages = {1199–1214},
+        booktitle = {\SIGMOD}
+
+ }
+
+@inproceedings{DAF,
+	author = {Myoungji Han and Hyunjoon Kim and Geonmo Gu and Kunsoo Park and Wook-Shin Han},
+	booktitle = {\SIGMOD},
+	title = {{Efficient Subgraph Matching: Harmonizing Dynamic Programming, Adaptive Matching Order, and Failing Set Together}},
+	year = {2019},
+ pages = {1429-1446}
+ }
+
+@inproceedings{GraphQL,
+    author = {He, Huahai and Singh, Ambuj K.},
+    title = {Graphs-at-a-Time: Query Language and Access Methods for Graph Databases},
+    year = {2008},
+    booktitle = {\SIGMOD},
+    pages = {405–418},
+}
+
+@article{VF3,
+	author = {Vincenzo, Carletti and Foggia, Pasquale and Saggese, Alessia and Vento, Mario},
+	journal = {{International Workshop on Graph-Based Representations in Pattern Recognition}},
+	title = {{Introducing VF3: A New Algorithm for Subgraph Isomorphism}},
+	year = {2017}
+ }
+
+@inproceedings{VEQ,
+   author = {Hyunjoon Kim and Yunyoung Choi and Kunsoo Park and Xuemin Lin and Seok Hee Hong and Wook Shin Han},
+    booktitle = {\SIGMOD},
+   title = {Versatile Equivalences: Speeding up Subgraph Query Processing and Subgraph Matching},
+   year = {2021},
+   pages = {925-937}
+}
+
+
+@inproceedings{RapidExperiment,
+	author = {Shixuan Sun and Qiong Luo},
+    booktitle = {\SIGMOD},
+	title = {{In-Memory Subgraph Matching: An In-depth Study}},
+	year = {2020},
+ pages = {1083-1098}
+}
+
+
+@misc{NeuroMatch,
+	author = {Rex Ying and Zhaoyu Lou and Jiaxuan You and Chengtao Wen and Arquimedes Canedo and Jure Leskovec},
+	title = {{Neural Subgraph Matching}},
+	year = {2020}
+}
+
+@inproceedings{LSS,
+   author = {Kangfei Zhao and Jeffrey Xu Yu and Hao Zhang and Qiyan Li and Yu Rong},
+    booktitle = {\SIGMOD},
+   title = {A Learned Sketch for Subgraph Counting},
+   year = {2021},
+   pages = {2142-2155}
+}
+
+
+@article{Alon1995,
+   author = {Noga Alon and Raphael Yuster and Uri Zwick},
+   journal = {Journal of the ACM},
+   title = {Color-coding},
+   year = {1995},
+}
+
+
+@inproceedings{TuranShadow,
+author = {Jain, Shweta and Seshadhri, C.},
+title = {A Fast and Provable Method for Estimating Clique Counts Using Tur\'{a}n's Theorem},
+year = {2017},
+booktitle = {\WWW},
+pages = {441-449}
+}
+
+@inproceedings{TETRIS,
+   author = {Bera, Suman K. and Seshadhri, C.},
+   title = {How to Count Triangles, without Seeing the Whole Graph},
+   year = {2020},
+   booktitle = {Proceedings of ACM SIGKDD},
+   pages = {306–316},
+
+}
+
+@article{PEANUTS,
+   author = {Jain, Shweta and Seshadhri, C.},
+   title = {Provably and Efficiently Approximating Near-Cliques Using the Tur\'{a}n Shadow: PEANUTS},
+   year = {2020},
+   journal = {Proceedings of The Web Conference 2020},
+}
+
+
+@article{ChibaNishizeki,
+  title={Arboricity and Subgraph Listing Algorithms},
+  author={Norishige Chiba and Takao Nishizeki},
+  journal={SIAM Journal of Computing},
+  year={1985},
+  pages = {210-223}
+}
+
+@article{RandomGraphBipartite,
+  author = {Chebolu, Prasad and Frieze, Alan and Melsted, P'all},
+  title = {Finding a Maximum Matching in a Sparse Random Graph in O(n) Expected Time},
+  year = {2010},
+  journal = {Journal of the ACM},
+}
+
+@article{Bast2006,
+  title={Matching Algorithms Are Fast in Sparse Random Graphs},
+  author={Holger Bast and Kurt Mehlhorn and Guido Schafer and Hisao Tamaki},
+  journal={Theory of Computing Systems},
+  year={2006},
+}
+
+
+@article{FordFulkerson, 
+   title={Maximal Flow Through a Network},
+   volume={8}, 
+   journal={Canadian Journal of Mathematics}, 
+   author={Ford, L. R. and Fulkerson, D. R.},
+   year={1956},
+   pages={399-404}
+}
+
+@article{MaximallyMatchableEdges,
+title = {Finding all maximally-matchable edges in a bipartite graph},
+journal = {Theoretical Computer Science},
+volume = {423},
+pages = {50-58},
+year = {2012},
+issn = {0304-3975},
+author = {Tamir Tassa}
+}
+
+
+@inproceedings{CSET,
+  title={Characteristic sets: Accurate cardinality estimation for RDF queries with multiple joins},
+  author={Thomas Neumann and Guido Moerkotte},
+  booktitle={\ICDE},
+  year={2011},
+  pages = {984-994}
+}
+
+@inproceedings{SumRDF,
+   author = {Stefanoni, Giorgio and Motik, Boris and Kostylev, Egor V.},
+   title = {Estimating the Cardinality of Conjunctive Queries over RDF Data Using Graph Summarisation},
+   year = {2018},
+   journal = {\WWW},
+   pages = {1043-1052}
+}
+
+@inproceedings{BoundSketch,
+   author = {Cai, Walter and Balazinska, Magdalena and Suciu, Dan},
+   title = {Pessimistic Cardinality Estimation: Tighter Upper Bounds for Intermediate Join Cardinalities},
+   year = {2019},
+    booktitle = {\SIGMOD},
+    pages = {18-35}
+}
+
+@inproceedings{JSub,
+author = {Zhao, Zhuoyue and Christensen, Robert and Li, Feifei and Hu, Xiao and Yi, Ke},
+title = {Random Sampling over Joins Revisited},
+year = {2018},
+    booktitle = {\SIGMOD},
+    pages = {1525-1539}
+}
+
+
+@inproceedings{IMPR,
+  author={Chen, Xiaowei and Lui, John C. S.},
+  booktitle={\ICDM}, 
+  title={Mining Graphlet Counts in Online Social Networks}, 
+  year={2016},
+  pages={71-80}
+}
+
+@inproceedings{CorrelatedSampling,
+   author = {Vengerov, David and Menck, Andre Cavalheiro and Zait, Mohamed and Chakkappen, Sunil P.},
+   title = {Join Size Estimation Subject to Filter Conditions},
+   year = {2015},
+    booktitle = {\VLDB},
+    pages = {1530-1541}
+}
+
+@article{Kruskal,
+  title={On the shortest spanning subtree of a graph and the traveling salesman problem},
+  author={Kruskal, Joseph B},
+  journal={Proceedings of the American Mathematical society},
+  year={1956},
+}
+
+@article{HopcroftKarp,
+   author = {John E. Hopcroft and Richard M. Karp},
+   journal = {SIAM Journal on Computing},
+   title = {An $n^{5/2}$ Algorithm for Maximum Matchings in Bipartite Graphs},
+   year = {1973},
+}
+
+@inproceedings{DenseSubgraph,
+author = {Fang, Yixiang and Luo, Wensheng and Ma, Chenhao},
+title = {Densest Subgraph Discovery on Large Graphs: Applications, Challenges, and Techniques},
+year = {2022},
+volume = {15},
+number = {12},
+booktitle = {\VLDB},
+pages = {3766–3769},
+}
+
+
+@article{DegeneracyTriangleCounting,
+    author = {Bera, Suman K. and Seshadhri, C.},
+    title = {How the Degeneracy Helps for Triangle Counting in Graph Streams},
+    year = {2020},
+    booktitle = {Proceedings of the 39th ACM SIGMOD-SIGACT-SIGAI Symposium on Principles of Database Systems},
+}
+
+@article{DegenerateGraphCounting,
+    author = {Bera, Suman K. and Gishboliner, Lior and Levanzov, Yevgeny and Seshadhri, C. and Shapira, Asaf},
+    title = {Counting Subgraphs in Degenerate Graphs},
+    year = {2022},
+    journal = {Journal of the ACM},
+}
+
+
+@article{Chernoff,
+ author = {Herman Chernoff},
+ journal = {The Annals of Mathematical Statistics},
+ title = {A Measure of Asymptotic Efficiency for Tests of a Hypothesis Based on the sum of Observations},
+ year = {1952},
+ pages = {493-507}
+}
+
+
+@inproceedings{SubIsoHardness,
+  author =	{D{\'a}niel Marx and Michal Pilipczuk},
+  title =	{{Everything you always wanted to know about the parameterized complexity of Subgraph Isomorphism (but were afraid to ask)}},
+  booktitle =	{Proceedings of STACS},
+  year =	{2014},
+    pages =	{542--553},
+
+}
+
+@article{Prim,
+  author={Prim, R. C.},
+  journal={The Bell System Technical Journal}, 
+  title={Shortest connection networks and some generalizations}, 
+  year={1957},
+  volume={36},
+  number={6},
+  pages={1389-1401},
+}
+
+@article{Degeneracy,
+   author = {Don R. Lick and Arthur T. White},
+   journal = {Canadian Journal of Mathematics},
+   title = {$k$-Degenerate Graphs},
+   year = {1970},
+   volume={22}, 
+   number={5}
+}
+
+@book{StatisticalInference,
+  title={Statistical inference},
+  author={Casella, George and Berger, Roger L},
+  year={2021},
+  publisher={Cengage Learning}
+}
+
+
+@InProceedings{GJSampler,
+  author =	{Yu Chen and Ke Yi},
+  title =	{{Random Sampling and Size Estimation Over Cyclic Joins}},
+  booktitle =	{\ICDT},
+  pages =	{7:1--7:18},
+  year = {2020}
+}
+
+@article{RandomWalkSpanningTree,
+author = {Aldous, David J.},
+title = {The Random Walk Construction of Uniform Spanning Trees and Uniform Labelled Trees},
+year = {1990},
+publisher = {Society for Industrial and Applied Mathematics},
+address = {USA},
+volume = {3},
+number = {4},
+issn = {0895-4801},
+journal = {SIAM J. Discret. Math.},
+pages = {450–465},
+numpages = {16}
+}
+
+@inproceedings{SSTE,
+  author =	{Sepehr Assadi and Michael Kapralov and Sanjeev Khanna},
+  title =	{{A Simple Sublinear-Time Algorithm for Counting Arbitrary Subgraphs via Edge Sampling}},
+  booktitle =	{Proceedings of ITCS},
+  pages =	{6:1--6:20},
+  year =	{2018},
+  annote =	{Keywords: Sublinear-time algorithms, Subgraph counting, AGM bound}
+}
+
+@book{Sampling,
+  title={Sampling: design and analysis},
+  author={Lohr, Sharon L},
+  year={2021},
+  publisher={CRC press}
+}
+
+@inproceedings{WCOJoin,
+author = {Ngo, Hung Q. and Porat, Ely and R\'{e}, Christopher and Rudra, Atri},
+title = {Worst-Case Optimal Join Algorithms: [Extended Abstract]},
+year = {2012},
+booktitle = {Proceedings of the ACM PODS},
+pages = {37–48},
+}
+@inproceedings{WCOSubgraphQueryProcessing,
+   author = {Amine Mhedhbi and Semih Salihoglu},
+    booktitle = {\VLDB},
+   pages = {1692-1704},
+   title = {Optimizing subgraph queries by combining binary and worstcase optimal joins},
+   year = {2018},
+}
+
+
+@book{MeasureConcentration, 
+    title={Concentration of measure for the analysis of randomized algorithms}, 
+    publisher={Cambridge University Press},
+    author={Dubhashi, Devdatt P and Panconesi, Alessandro}, 
+    year={2012}
+} 
+
+
+@inproceedings{TurboHompp,
+   author = {Jinha Kim and Hyungyu Shin and Wook-Shin Han and Sungpack Hong and Hassan Chafi},
+    booktitle = {\VLDB},
+   pages = {1238-1249},
+   title = {Taming subgraph isomorphism for RDF query processing},
+   year = {2015},
+}
+@inproceedings{Fan2012,
+   author = {Wenfei Fan},
+   booktitle = {\ICDT},
+   pages = {8-21},
+   title = {Graph Pattern Matching Revised for Social Network Analysis},
+   year = {2012},
+}
+@article{SING,
+   author = {Raffaele Di Natale and Alfredo Ferro and Rosalba Giugno and Misael Mongiovì and Alfredo Pulvirenti and Dennis Shasha},
+   issue = {1},
+   journal = {BMC Bioinformatics},
+   pages = {96},
+   title = {SING: Subgraph search In Non-homogeneous Graphs},
+   volume = {11},
+   year = {2010},
+}
+
+@article{Bonnici2017,
+   author = {Vincenzo Bonnici and Rosalba Giugno},
+   issue = {1},
+   journal = {IEEE/ACM Transactions on Computational Biology and Bioinformatics},
+   pages = {193-203},
+   title = {On the Variable Ordering in Subgraph Isomorphism Algorithms},
+   volume = {14},
+   year = {2017},
+}
+
+@inproceedings{GraphsAtATime,
+   author = {Huahai He and Ambuj K. Singh},
+   booktitle = {\SIGMOD},
+   pages = {405-418},
+   title = {Graphs-at-a-time : Query language and access methods for graph databases},
+   year = {2008},
+}
+
+@inproceedings{TurboIso,
+   author = {Wook-Shin Han and Jinsoo Lee and Jeong-Hoon Lee},
+   booktitle = {\SIGMOD},
+   pages = {337-348},
+   title = {Turboiso: towards ultrafast and robust subgraph isomorphism search in large graph databases},
+   year = {2013},
+}
+
+
+
+@inproceedings{GraphletKernels,
+  title = 	 {Efficient graphlet kernels for large graph comparison},
+  author = 	 {Shervashidze, Nino and Vishwanathan, SVN and Petri, Tobias and Mehlhorn, Kurt and Borgwardt, Karsten},
+  booktitle = 	 {Proceedings of the AISTATS},
+  pages = 	 {488--495},
+  year = 	 {2009},
+}
+
+
+@article{Bio1,
+   author = {Dongxiao Zhu and Zhaohui S Qin},
+   issue = {1},
+   journal = {BMC Bioinformatics},
+   pages = {8},
+   title = {Structural comparison of metabolic networks in selected single cell organisms},
+   volume = {6},
+   year = {2005},
+}
+
+@article{Bio2,
+    author = {Pržulj, Nataša},
+    title = "{Biological network comparison using graphlet degree distribution}",
+    journal = {Bioinformatics},
+    volume = {23},
+    number = {2},
+    pages = {e177-e183},
+    year = {2007},
+}
+
+@inproceedings{FundementalProblems,
+   author = {Siddhartha Sahu and Amine Mhedhbi and Semih Salihoglu and Jimmy Lin and M. Tamer Özsu},
+    booktitle = {\VLDB},
+   pages = {420-431},
+   title = {The ubiquity of large graphs and surprising challenges of graph processing},
+   year = {2017},
+}
+
+@book{NPHard,
+author = {Garey, Michael R. and Johnson, David S.},
+title = {Computers and Intractability; A Guide to the Theory of NP-Completeness},
+year = {1990},
+isbn = {0716710455},
+publisher = {W. H. Freeman \& Co.},
+address = {USA}
+}
+
+@inproceedings{MOTIVO,
+author = {Bressan, Marco and Leucci, Stefano and Panconesi, Alessandro},
+title = {Motivo: Fast Motif Counting via Succinct Color Coding and Adaptive Sampling},
+year = {2019},
+booktitle = {\VLDB},
+pages = {1651–1663},
+}
+
+@inproceedings{qerror,
+author = {Moerkotte, Guido and Neumann, Thomas and Steidl, Gabriele},
+title = {Preventing Bad Plans by Bounding the Impact of Cardinality Estimation Errors},
+year = {2009},
+    booktitle = {\VLDB},
+pages = {982–993},
+}
+
+@inproceedings{AGMBound,
+  title={Size bounds and query plans for relational joins},
+  author={Atserias, Albert and Grohe, Martin and Marx, D{\'a}niel},
+  booktitle={Proceedings of FOCS},
+  pages={739--748},
+  year={2008},
+}
+
+@misc{WordNet,
+   author={Princeton University},
+   title={About WordNet},
+   publisher ={Princeton University},
+   year={2010},
+   note = "Retrieved April 7, 2023 from \url{https://wordnet.princeton.edu/}"
+} 
+
+@article{RISubgraphMatching,
+   author = {Vincenzo Bonnici and Rosalba Giugno and Alfredo Pulvirenti and Dennis Shasha and Alfredo Ferro},
+   journal = {BMC Bioinformatics},
+   title = {A subgraph isomorphism algorithm and its application to biochemical data},
+   year = {2013},
+}
+
+
+@article{MaresSpanningTree,
+	author = {Martin Mare{\v s}},
+	journal = {{Computer Science Review}},
+	pages = {165-221},
+	title = {{The Saga of Minimum Spanning Trees}},
+	year = {2008},
+}
+
+@ARTICLE{VCSubgraphMatching,
+  author={Sun, Shixuan and Luo, Qiong},
+  journal={\TKDE}, 
+  title={{Subgraph Matching With Effective Matching Order and Indexing}}, 
+  year={2022},
+  volume={34},
+  number={1},
+  pages={491-505},
+}
+
+@inproceedings{CECI,
+author = {Bhattarai, Bibek and Liu, Hang and Huang, H. Howie},
+title = {{CECI: Compact Embedding Cluster Index for Scalable Subgraph Matching}},
+year = {2019},
+booktitle = {\SIGMOD},
+pages = {1447–1462},
 }
