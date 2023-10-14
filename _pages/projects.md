@@ -4,7 +4,7 @@ title: Projects
 permalink: /projects/
 description: Collection of my projects.
 nav: true
-display_categories: [Machine Learning]
+display_categories: [Graph Database, Machine Learning]
 horizontal: false
 ---
 <style>
