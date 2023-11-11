@@ -1,17 +1,15 @@
 ---
 layout: single
-title: "TITLE"
-categories: 
+title: "A* Algortihm: Heuristic improvements for Shortest Path"
+categories: study
 sidebar:
   nav: "sidepost"
 comment: true
 comments : true
 toc : true
-orig-authors: 
 venue: 
-tag: [ ] 
+tag: [study, graph-algorithms] 
 ---
-
 
 <div id="toc">
 Contents
@@ -19,6 +17,12 @@ Contents
 * TOC
 {:toc}
 ----------
+
+## Prelim: Dijkstra's Shortest Path Algorithm
+
+## A* Algorithm for Shortest Path
+
+## Choice of Heuristics
 
 
 

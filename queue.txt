@@ -1,4 +1,0 @@
-DL - Dropout 
-CS - CombiSeminar
-Adv.Alg - Suffix Tree 
-Adv.Alg - Lempel-Ziv Compression
