@@ -73,22 +73,25 @@ td a:hover {
 
 | Problem ID            | Problem Title              | Post Link                              |
 |-----------------------|----------------------------|----------------------------------------|
-| CERC 2012B (BOJ 3406) | Who Wants to Live Forever? | [Link (Kor)](/Nov23W1-ProblemSolving/) |
-| CERC 2012I (BOJ 3413) | The Dragon and the Knights | [Link (Kor)](/Nov23W1-ProblemSolving/) |
+| CERC 2012B (BOJ 3406) | Who Wants to Live Forever? | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
+| CERC 2012I (BOJ 3413) | The Dragon and the Knights | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
+| CERC 2016H (BOJ 13952) | Hanger Hurdles | [Link (Kor)](/problem-solving/Nov23W2-ProblemSolving/) |
+| CERC 2018I (BOJ 16700) | Shooter Islands | [Link (Kor)](/problem-solving/Nov23W2-ProblemSolving/) |
+| CERC 2019A (BOJ 18171) | ABB | [Link (Kor)](/problem-solving/Nov23W2-ProblemSolving/) |
 
 
 #### Poland Collegiate Programming Contest (AMPPZ)
 
 | Problem ID             | Problem Title | Post Link                              |
 |------------------------|---------------|----------------------------------------|
-| AMPPZ 2011F (BOJ 7911) | Laundry       | [Link (Kor)](/Nov23W1-ProblemSolving/) |
-| AMPPZ 2012H (BOJ 7981) | Hydra         | [Link (Kor)](/Nov23W1-ProblemSolving/) |
+| AMPPZ 2011F (BOJ 7911) | Laundry       | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
+| AMPPZ 2012H (BOJ 7981) | Hydra         | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
 
 #### CTU Open Contest
 
 | Problem ID           | Problem Title | Post Link                              |
 |----------------------|---------------|----------------------------------------|
-| CTU 2004E (BOJ 6672) | Electricity   | [Link (Kor)](/Nov23W1-ProblemSolving/) |
+| CTU 2004E (BOJ 6672) | Electricity   | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
 
 ------
 
@@ -96,4 +99,4 @@ td a:hover {
 
 | Problem ID            | Problem Title | Post Link                              |
 |-----------------------|---------------|----------------------------------------|
-| GSHS 2016F (BOJ 7981) | 장비를 정지합니다     | [Link (Kor)](/Nov23W1-ProblemSolving/) |
+| GSHS 2016F (BOJ 7981) | 장비를 정지합니다     | [Link (Kor)](/problem-solving/Nov23W1-ProblemSolving/) |
