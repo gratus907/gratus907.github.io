@@ -21,7 +21,7 @@ Contents
 
 일정상 연습은 같이 참여하지 못하고, 혼자 문제만 풀어봤습니다. 이번에는 CERC 문제들만으로 세팅했다고 들었는데, 역시 퀄리티가 훌륭합니다. 
 
-For some reason, 유럽권은 동유럽이든 서유럽이든 알고리즘 하시는 분들이 geometry를 매우 사랑하는것 같습니다. 
+For some reason, 유럽권은 동유럽이든 서유럽이든 알고리즘 하시는 분들이 geometry를 매우 사랑하는것 같습니다. 기하문제 두개가 있었지만 손도 대지 못했습니다 :( 
 ICPC에서 기하문제의 비율이 다른 리저널보다 높은것만이 아니라, 묘하게 연구 쪽에서도 computational geometry가 강합니다. 
 
 ![picture 1](../../images/d4ee94d0e1007229cff0b9aad086998393efdd3d1b45789d2a1f9b7148cef7ff.png)  
