@@ -25,18 +25,12 @@ pagination:
     {% endif %}
     {% if post.tags %}
       {% for tag in post.tags %}
-        {% assign taglist = taglist | split: ' ' %}
-        {% if taglist contains tag %}
-          {% assign taglist = taglist | join : ' ' %}
-        {% else %}
-          {% assign taglist = taglist | join : ' ' | append: ' ' | append : tag %}
-        {% endif %}
+        {% assign taglist = taglist | append: ',' | append: tag %}
         {% break %}
       {% endfor %}
     {% endif %}
   {% endfor %}
-  {% assign tagstr = '' %}
-  {% assign taglist = taglist | split: ' ' | sort %}
+  {% assign taglist = taglist | remove_first: ',' | split: ',' | sort | uniq %}
 
   {% for tag in taglist %}
     <a href="/blog?tag={{ tag }}">

@@ -43,8 +43,8 @@ img {
 }
 
 .footnotes {
-    font-size:0.8em;
-    font-weight:300;
+    font-size:0.9em;
+    font-weight:400;
 }
 
 h2.card-title {
@@ -146,6 +146,7 @@ b, strong {
 
 
 
+
 .publications .col-sm-8 {
     -ms-flex: 0 0 66.666667%;
     flex: 0 0 75%;
@@ -236,3 +237,22 @@ font-weight: $table-th-font-weight;
 }
 
 td { border-bottom-width: 1px; }
+
+.mathenv-title {
+    font-weight: bold;  /* Bold font for the title */
+    margin-bottom: 8px;  /* Space between title and definition text */
+    color: #de2a7f;  /* Color of the title matching the border */
+}
+
+.mathenv {
+    background-color: #fff4f9;  /* Light blue background for distinction */
+    border-left: 5px solid #de2a7f;  /* Solid blue line on the left for emphasis */
+    padding: 10px 15px;  /* Padding for spacing inside the box */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    border-radius: 4px;  /* Rounded corners for a modern look */
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.mathenv > p {
+    margin-bottom: 0px;
+}
