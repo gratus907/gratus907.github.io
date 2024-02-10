@@ -256,3 +256,13 @@ td { border-bottom-width: 1px; }
 .mathenv > p {
     margin-bottom: 0px;
 }
+
+ol.bibliography p {
+    font-size: 0.9em;
+    font-weight: 300;
+}
+
+ol.bibliography li::marker {
+    font-size: 0.9em;
+    font-weight: 300;
+}

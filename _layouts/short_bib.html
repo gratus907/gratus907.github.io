@@ -1,7 +1,23 @@
 ---
 ---
 
-<p>{{entry.author}}, <b>{{ entry.title }}</b>, 
+<p> 
+    {% if entry.author_array.size < 3 %}
+        {% for author in entry.author_array %}      
+            {% unless forloop.last %}
+                {{author.first}} {{author.last}},
+            {% else %}
+                and {{author.first}} {{author.last}},
+            {% endunless %}
+        {% endfor %}
+    {% else %}
+        {% for author in entry.author_array %}      
+            {% if forloop.first %}
+                {{author.first}} {{author.last}} et al.,
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+<b>{{ entry.title }}</b>, 
 
 {% if entry.type == "article" %}
 {{ entry.journal }},
