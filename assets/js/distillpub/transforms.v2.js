@@ -100,6 +100,9 @@
         console.error('Don\'t know what to do with published date: ' + source.publishedDate);
       }
     }
+    if (source.category) {
+        target.category = source.category;
+    }
     target.description = source.description;
     target.authors = source.authors.map( (authorObject) => new Author(authorObject));
     target.katex = source.katex;
@@ -1032,27 +1035,15 @@
   function bylineTemplate(frontMatter) {
     return `
   <div class="byline grid">
-    <div class="authors-affiliations grid">
-      <h3>Authors</h3>
-      <h3>Affiliations</h3>
-      ${frontMatter.authors.map(author => `
-        <p class="author">
-          ${author.personalURL ? `
-            <a class="name" href="${author.personalURL}">${author.name}</a>` : `
-            <span class="name">${author.name}</span>`}
-        </p>
-        <p class="affiliation">
-        ${author.affiliations.map(affiliation =>
-          affiliation.url ? `<a class="affiliation" href="${affiliation.url}">${affiliation.name}</a>` : `<span class="affiliation">${affiliation.name}</span>`
-        ).join(', ')}
-        </p>
-      `).join('')}
-    </div>
     <div>
       <h3>Published</h3>
       ${frontMatter.publishedDate ? `
         <p>${frontMatter.publishedMonth} ${frontMatter.publishedDay}, ${frontMatter.publishedYear}</p> ` : `
         <p><em>Not published yet.</em></p>`}
+    </div>
+    <div>
+    <h3>Category</h3>
+    ${frontMatter.category}
     </div>
   </div>
 `;

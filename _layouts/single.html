@@ -7,16 +7,42 @@ layout: default
   {{ page._styles }}
 </style>
 {% endif %}
-
 <div class="post">
 
   <header class="post-header">
     <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %} • {{ content | number_of_words }} words</p>
   </header>
+  <div class="byline">
+    <div>
+      <h3>Date</h3>
+    {{ page.date | date: '%B %-d, %Y' }}
+    </div>
+    {% if page.distill_tag %}
+    <div>
+      <h3>Category</h3>
+      {{ page.distill_tag }}
+    </div>
+    {% endif %}
+    {% if page.distill_topic %}
+    <div>
+      <h3>Topic</h3>
+      {{ page.distill_topic }}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if page.toc %}
+    <div class="toc">
+    <h3>Contents</h3>
+    {% toc %}
+    </div>
+  {% endif %}
   <article class="post-content">
+    <div class="post-main-content">
     {{ content }}
+    </div>
   </article>
+  
 
   {% if site.disqus_shortname and page.comments %}
     <div id="disqus_thread"></div>

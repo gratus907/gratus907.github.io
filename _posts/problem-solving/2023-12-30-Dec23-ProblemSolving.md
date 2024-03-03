@@ -10,14 +10,8 @@ toc : true
 orig-authors: 
 venue: 
 tag: [competitive-programming] 
+distill_tag: "Competitive Programming"
 ---
-
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 앞으로 PS 포스팅은 월 1-2회정도는 해보려고 생각하고 있습니다.
 

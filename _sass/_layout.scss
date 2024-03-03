@@ -18,8 +18,10 @@
    padding-bottom: 0;
  }
 
+@media (min-width: 768px) {
 .container {
   max-width: $max-content-width;
+}
 }
 
 // Profile
@@ -44,3 +46,23 @@
 *****************************************************************************/
 
 // TODO: redefine projects layout.
+
+.byline {
+  contain: style;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  line-height: 1.8em;
+  padding: 1.5rem 0;
+  min-height: 1.8em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: grid;
+}
+
+.byline h3 {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  text-transform: uppercase;
+}

@@ -32,6 +32,7 @@
         }{% if forloop.last == false %},{% endif %}
         {% endfor %}
       ],
+      "category": "{{ page.distill_tag }}",
       "katex": {
         "delimiters": [
           {
@@ -66,9 +67,23 @@
 
       <d-byline></d-byline>
 
+      <!-- change starts from here -->
       <d-article>
-        {{ content }}
+        <div class="d-aside sidebar">
+          <div class="d-aside-toc">
+            <nav class="l-text figcaption">
+              <h3>Contents</h3>
+                {% toc %}
+              </nav>
+          </div>
+        </div>
+        <div class="d-main-content">
+          {{ content }}
+        </div>  
       </d-article>
+      <!-- change ends here -->
+      
+      <d-appendix>
 
       <d-appendix>
         <d-footnote-list></d-footnote-list>
@@ -86,4 +101,18 @@
   <d-bibliography src="{{ page.bibliography | prepend: '/assets/bibliography/' | relative_url }}">
   </d-bibliography>
 
+  {% if site.disqus_shortname and page.comments %}
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = '{{ site.disqus_shortname }}';
+      var disqus_identifier = '{{ page.id }}';
+      var disqus_title      = {{ page.title | jsonify }};
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  {% endif %}
 </html>

@@ -10,14 +10,9 @@ toc : true
 orig-authors: 
 venue: 
 tag: [competitive-programming] 
+distill_tag: "Competitive Programming"
 ---
 
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 예전 ICPC 준비했던 팀원들이 (아직 졸업을 하지 않아서) 올해 ICPC에 출전한다고 하여, 바쁜 일상에서 잠시 벗어나는 겸 해서 연습에 끼어들어 같이 풀었습니다. 오랜만에 (해커컵같은 대회를 제외하고) 순수히 즐길수있는 PS에 참여하니 굉장히 refreshing 한 느낌이었습니다. ㅋㅋ...
 

@@ -3,6 +3,7 @@
  ******************************************************************************/
 
 d-byline {
+  height: 2em;
   border-top-color: $grey-color-light !important;
 }
 
@@ -18,6 +19,7 @@ d-byline a, d-article d-byline a {
 }
 
 d-article {
+  overflow-x: clip !important;
   border-top-color: #e8e8e8 !important;
   a, p, h1, h2, h3, h4, h5, h6, li, table {
     color: var(--global-text-color) !important;
@@ -30,6 +32,10 @@ d-article {
   }
 }
 
+d-article p {
+  line-height: 2.0;
+  font-size: 1.0rem;
+}
 d-appendix {
   border-top-color: $grey-color-light !important;
   color: var(--global-distill-app-color) !important;
@@ -42,4 +48,69 @@ d-appendix {
       color: var(--global-hover-color) !important;
     }
   }
+}
+
+/*******************************************************************************
+ * Style overrides for distill blog posts.
+ ******************************************************************************/
+
+
+
+d-appendix {
+  border-top-color: var(--global-divider-color) !important;
+  color: var(--global-distill-app-color) !important;
+  h3,
+  li,
+  span {
+    color: var(--global-distill-app-color) !important;
+  }
+  a,
+  a.footnote-backlink {
+    color: var(--global-distill-app-color) !important;
+    &:hover {
+      color: var(--global-hover-color) !important;
+    }
+  }
+}
+
+.d-aside-toc {
+  nav div {
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+  }
+  nav a {
+    color: rgba(0, 0, 0, 0.8);
+    border-bottom: none;
+    text-decoration: none;
+  }
+  ul {
+    padding-left: 1em;
+  }
+  nav ul li {
+    margin-bottom: 0.7em;
+  }
+} 
+
+
+@media (min-width: 1000px) {
+  
+d-article .d-aside {
+  display:flex;
+  top: 0;
+  grid-column: 1 / 4; 
+  align-self: stretch;
+  flex-direction: column;
+}
+
+d-article .d-aside-toc {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow: scroll; /* If you want the TOC content to scroll */
+  margin-left:50%;
+  margin-right:0%;
+  font-size: 0.9rem;
+}
+
 }

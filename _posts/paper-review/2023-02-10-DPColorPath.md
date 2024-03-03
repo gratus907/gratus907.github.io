@@ -10,16 +10,12 @@ toc : true
 orig-authors: Xiaowei Ye et al.
 venue: WWW22
 tag: [paper-review, cliques, graph-algorithms] 
+distill_tag: "Paper Review"
+distill_topic: "Algorithms on Large Graphs"
 ---
 
 > Xiaowei Ye, Rong-Hua Li, Qiangqiang Dai, Hongzhi Chen, and Guoren Wang. 2022. Lightning Fast and Space Efficient k-clique Counting. In Proceedings of the ACM Web Conference 2022 (WWW '22)
 
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 ### Introduction
 - Analyzing cliques in graph data is critical in many applications, but exact counting or enumeration of these structures can be computationally costly.

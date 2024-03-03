@@ -8,15 +8,10 @@ comment: true
 comments : true
 toc : true
 tag: [study, graph-algorithms, theory] 
+distill_tag: Study
+distill_topic: "Graph Algorithms"
 ---
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
-
-## Min Cut 
+### Min Cut 
 Min Cut 문제란, 어떤 그래프 $G = (V, E)$ 가 주어졌을 때, $V$의 정점들을 두 집합 $S, T$ 로 나누어서, $$\Setcond{(u, v) \in E}{u \in S, v \in T}$$ 즉, 한쪽 끝이 $S$에, 다른쪽 끝이 $T$에 들어가는 간선들의 개수를 최소화하는 문제입니다.
 Weighted graph에서는 간선의 개수가 아니라 weight의 합을 최소화하는 문제로 바꾸어 생각하면 됩니다.
 
@@ -26,7 +21,7 @@ Weighted graph에서는 간선의 개수가 아니라 weight의 합을 최소화
 
 예를 들어 이 그림에서 빨간색 cut은 간선 3개짜리 cut이지만, 초록색 cut은 간선 1개짜리입니다.  
 
-## s-t min cut
+### s-t min cut
 Min cut 문제의 variation 중 하나는, s-t min cut 이라는 문제입니다. 이 문제는 $s, t$ 라는 두 정점이 각각 $S, T$에 속해야 한다는 추가 제약조건이 걸린 min cut 문제입니다. 
 - 매우 유명한 Max-Flow-Min-Cut Theorem에 의하면, s-t min cut 문제는 s-t max flow로 계산할 수 있습니다. 구체적으로, $s$ 에서 $t$로 가는 max flow와 $s-t$ min cut의 크기가 같다는 정리입니다.
 - 이 정리의 핵심 아이디어는 두 문제를 각각 LP (Linear Programming) 문제로 바꾼 후, 두 LP를 비교하는 것입니다. 두 LP는 서로 primal-dual 관계에 있음을 알 수 있는데, Dual Linear Program의 Strong duality theorem에 의하면, LP의 경우 strong duality를 갖기 때문에 두 문제의 최적값, 즉 max-flow와 min-cut의 결과값이 같습니다. 
@@ -35,10 +30,10 @@ Min cut 문제의 variation 중 하나는, s-t min cut 이라는 문제입니다
 
 이제, 일반적인 min cut을 풀고자 한다고 생각해 봅시다. 당연히, 모든 정점 페어를 $s, t$로 잡고 s-t min cut을 해보는 방법을 생각할 수 있으므로, 우리는 적어도 $O(V^5)$ 알고리즘을 가지고 있습니다. 이보다 나은 방법을 생각해 봅시다. 이하, 시간 복잡도를 쓸 때 정점이 $n$ 개, 간선이 $m$개라고 생각하겠습니다. 즉 $\abs{V} = n, \abs{E} = m$.
 
-## Karger's Algorithm
+### Karger's Algorithm
 지금은 MIT의 교수로 계신 Prof. David R Karger가 제시한 Karger's Algorithm은 Edge contraction이라는 연산에 기반하는, 매우 간단하고 elegant한 알고리즘입니다. 
 
-### Edge contraction
+#### Edge contraction
 Edge contraction이란, 말 그대로 edge 양쪽 끝을 접합하는 연산입니다. Edge $e = (u, v)$를 contract한 그래프 $G / e$ 는 다음과 같은 과정을 통해 만들어집니다.
 
 - $(u, v)$ 의 양쪽 vertex $u$ 과 $v$를 합쳐 하나의 vertex $w$를 만듭니다.
@@ -49,7 +44,7 @@ Edge contraction이란, 말 그대로 edge 양쪽 끝을 접합하는 연산입�
 예를 들어 이런 식입니다. 그림을 보면 거의 바로 이해가 갈듯 합니다. 
 ![picture 1](../../images/2c92dd9b9bc3f0c9411cacedc64addffa22ed1adce7826e5922051264953e220.png)  
 
-### Algorithm
+#### Algorithm
 Karger's Algorithm은 정말 어이가 없을 정도로 간단합니다. 
 - Edge Contraction을 계속 진행해서, 노드 두개와 그 노드 두개 사이의 간선 $k$ 개가 남았다고 합시다. 
 - 재미있는 사실은, 우리의 Edge contraction은 사실 **이 두 정점은 같은 집합에 있다** 라고 처리하는 것과 동치입니다. 
@@ -57,7 +52,7 @@ Karger's Algorithm은 정말 어이가 없을 정도로 간단합니다.
 - 그러므로, 정점을 무작정 랜덤하게 줄여나가다가 2개가 남으면 (min cut은 아니겠지만) cut을 하나 얻습니다. 
 - 우리는, 이걸 충분히 많이 반복하면 min cut을 얻을 확률이 충분히 높음을 논증하고자 합니다. 구체적으로, 이렇게 cut을 하나 얻는 과정까지를 $q$ 번 반복하여, 그동안 얻은 cut들 중 가장 작은 (간선이 적은) cut을 취하는 것을 생각하겠습니다.  
 
-### Proof 
+#### Proof 
 min cut의 크기를 편의상 $K$ 라고 하고, 실제 cut edge의 집합을 $C$라고 하겠습니다. 이제, 위 알고리즘이 C를 반환할, 즉 올바른 답을 제공할 확률은 $K$개의 Edge가 $n-2$번의 contraction을 모두 살아남아야 합니다. 각 contraction에서는 남은 edge들 중 하나를 **임의로** contraction해버리므로, 매 스텝을 모두 살아남을 확률은 
 $$\prod_{i = 0}^{n-3} \left(1 - \frac{K}{E - i}\right)$$
 이렇게 계산됩니다. 그런데, $\frac{K}{E - i}$ 는 잘 생각해보면 좋은 바운드를 잡을 수 있습니다. 
@@ -70,13 +65,13 @@ $$p_{success} \geq \prod_{i = 0}^{n-3} \left(1 - \frac{2}{n - i}\right) = \frac{
 
 이정도 실패확률이라면 충분히 큰 $n$에 대해서 받아들일만 합니다. 따라서, 우리는 이 알고리즘을 $n^2 \log n$ 번 정도 실행하면 된다고 생각할 수 있습니다.
 
-### Time Complexity
+#### Time Complexity
 그래프 알고리즘이 대개 그렇듯 한번당 드는 시간은 구현하기 나름입니다. Adjacency matrix가 있다면 $O(n^2)$ 으로 구현하면 되고, Adj list가 있다면 $O(m)$ 비슷한 시간이 걸리는게 그럴듯해 보입니다. 가장 쉽게 짜는 방법은 Kruskal 알고리즘을 구현할 때처럼 구현하는 방법이고, 이 방법의 구현체는 (언젠가 제가 구현하면 구현체 링크를 올릴 예정입니다) $O(m \log m)$ 정도에 돌게 할 수 있습니다. 이렇게 짜면 $m \approx n^2$ 일 때 최대 $O(n^2 \log n)$ 이 되므로, 전체 복잡도는 $O(n^4 \log^2 n)$ 이 되겠습니다.
 
 구현을 잘 하면 한번 iteration을 $O(m)$ 에 돌게 해서, $O(n^4 \log n)$ 에 구겨 넣을 수 있습니다만, 이건 그래프 구현을 잘 하는지의 문제이므로 우리는 다루지 않겠습니다. 다만, 알고리즘의 분석에는 중요하므로, Karger 알고리즘을 잘 구현했을 때의 복잡도는 한번 Iteration에 $O(n^2)$, $n^2 \log n$ 번 반복할 것이므로 $O(n^4 \log n)$ 이다 라고 쓰겠습니다. 
 
 
-## Karger-Stein Algorithm
+### Karger-Stein Algorithm
 Karger-Stein은 위 알고리즘과 거의 똑같지만, Clever idea가 살짝 추가되어 훨씬 빨라집니다. 다시 앞서의 확률 계산으로 돌아가겠습니다. 
 $$p_{success} \geq \prod_{i = 0}^{n-3} \left(1 - \frac{2}{n - i}\right)$$
 이제, 여기서 관찰하고 싶은 사실은, 초반보다 후반에 성공확률이 빠르게 낮아진다는 점입니다. 즉 초반에는 마구 뽑아도 대충 맞을것이라고 기대할 수 있지만, 후반에는 점점 불안해지기 시작한다는 것이죠. 따라서, 초반에는 대충 뽑아서 믿음을 가지고 돌리다가, 후반에는 좀 빡세게 보면 좋지 않을까요?
@@ -90,12 +85,12 @@ $$p_{success} \geq \prod_{i = 0}^{n-3} \left(1 - \frac{2}{n - i}\right)$$
 
 이 알고리즘의 성공 확률과 실행 시간에 대해 이해해 보겠습니다. 단, 위키피디아나 여러 자료에는 ceil 등으로 좀 정확하게 써있지만 우리는 어차피 big-O notation에 ceil을 하냐마냐는 영향도 없고... 대충 모든 수를 정수라고 생각하고 넘기겠습니다. $n / \sqrt{2}$ 같은걸 대충 쓰기로 합시다. (사실 분석에는 아무 문제 없습니다!)
 
-### Time Complexity of iteration
+#### Time Complexity of iteration
 편하게, Ceiling 같은거 다 날리고 점화식을 써 보겠습니다. 위 Pseudocode의 `fastmincut(G)`가 정점 $n$개의 그래프일 때, Contract 한번이 정점 개수만큼의 시간을 소모함을 고려하면[^5] , $\sum_{i = n / \sqrt{2}}^{n} i$ 는 $O(n^2)$ 이므로 (대충 $n^2 / 4$ 정도 된다는걸 보이기 별로 어렵지 않습니다),  
 $$T(n) = 2 T(n / \sqrt{2}) + O(n^2)$$
 이런 점화식을 얻습니다. 우리 모두 알고리즘 시간에 이미 배운 마스터 정리를 쓰면, $\log_{\sqrt{2}} 2 = 2$ 이므로, $T(n) = O(n^2 \log n)$ 을 얻습니다. 즉, 한번 연산에는 $n^2 \log n$ 시간이 걸린다는 것입니다. 앞서의 Karger과 비교하면, 두배로 연산을 늘리는 과정에서 $\log n$ 만큼의 시간을 추가로 지불했다는것을 알 수 있습니다.
 
-### Probability of Success
+#### Probability of Success
 이제 한번 시도의 성공 확률에 대해 알아야 합니다. $P(n)$ 을 $n$개 정점에 대해 `fastmincut`의 결과가 올바를 확률이라고 하면, 이 함수가 실패하기 위해서는 두 개의 `fastmincut(n / sqrt(2))` 가 모두 실패해야 합니다. 따라서, 다음 점화식을 쓸 수 있습니다.
 $$P(n) = 1 - \left(1 - \frac{1}{2} P\left(\frac{n}{\sqrt{2}}\right)\right)^2$$
 - 먼저, 맨 안쪽에 붙는 1/2 는, $n$개에서 $n / \sqrt{2}$ 로 줄일 때 맞게 줄였을 확률이 1/2 밖에 되지 않기 때문입니다. 사실 이 확률이 1/2보다 살짝 크다는 것을 증명할 수 있기 때문에 $P(n) \geq$ 로 시작하는 부등식으로 쓰는 것이 맞습니다.
@@ -115,11 +110,11 @@ $$\frac{1}{\log n - 1/2} - \frac{1}{4(\log n - 1/2)}$$
 이고, 이를 통해 다음과 같은 식을 얻습니다.
 $$\frac{4 \log n - 3}{4\log^2 n - 4\log n + 1} = \frac{1}{\log n} + \frac{1 - 1 / \log{n}}{4\log^2 n - 4\log n + 1} \geq \frac{1}{\log n}$$
 
-이렇게 얻습니다. 부등식을 더 이쁘게 패면 $2 / \log n$ 인가? 하는 바운드도 잡을 수 있을텐데, 별로 중요한 논의는 아닙니다. 
+이렇게 얻습니다. 부등식을 더 열심히 맞추면 $2 / \log n$ 인가? 하는 바운드도 잡을 수 있을텐데, 별로 중요한 논의는 아닙니다. 
 
 어쨌든, 우리는 한번 성공확률이 $1 / \log n$ 수준임을 알았습니다.
 
-### Total time complexity
+#### Total time complexity
 몇번 수행할 것인지만 정하면 끝입니다. 앞서 Karger 알고리즘의 시간 복잡도 증명에서 했던 것과 똑같은 연산을 해 보면, 성공확률이 $p(n)$ 인 베르누이 시행을 반복해서 $1/n$ 이하의 실패확률을 갖게 하려면, $q(n)$ 번 실행한다고 할 때
 $$\left(1 - p(n)\right)^{q(n)} \leq 1 / n$$
 이 식을 목표로 하는 것인데, $(1 - x)^{1/x}$ 의 값이 $1/e$ 이하임을 다시 이용 ($p(n) \leq 1$이므로!), $q(n)$ 을 $\frac{\log n}{p(n)}$ 번으로 잡아주면 된다는 것을 알 수 있습니다. 따라서, $q(n) = \log^2 n$ 으로 잡아주면 됩니다.
@@ -128,7 +123,7 @@ $$\left(1 - p(n)\right)^{q(n)} \leq 1 / n$$
 
 특히 $n^2$ 비슷한 시간이 나왔다는게 중요한데, 간선이 $n^2$ 개일 때 적어도 이 간선들을 검토는 해봐야 하므로 이 문제는 이론상 $O(n^2)$ 보다 빠를 방법이 아예 없습니다. 어렵지 않은 아이디어를 잘 이용해서 이정도까지 복잡도를 내렸다는 점에서, Randomized algorithm의 힘을 잘 보여주는 예시가 아닌가 싶습니다.
 
-## Extension
+### Extension
 이 알고리즘의 재밌는 extension은 $k$-cut입니다. $k$-cut이란, 노드를 $k$개의 connected component로 쪼개기 위한 min cut을 구하는 문제입니다. 우리가 지금까지 공부한 문제는 $k = 2$ 인 경우라고 생각하면 되겠습니다.
 
 이 문제가 재미있는 이유는, 조금만 extension했을 뿐인데 미친듯이 어렵기 때문입니다. 이 문제는 $k$도 입력으로 주어지는 경우, NP-complete함이 잘 알려져 있습니다. 간단히 생각해보면, 2-cut은 적어도 s-t min cut 문제로 환원한다음 그걸 디닉으로 푸는 방법이 있었는데, 이 문제는 플로우 모델링이 아예 안 됩니다.

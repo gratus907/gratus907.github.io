@@ -9,15 +9,10 @@ comments : true
 toc : true
 orig-authors: 
 venue: 
-tag: [competitive-programming] 
+tag: [competitive-programming]
+distill_tag: "Competitive Programming"
 ---
 
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 일정상 연습은 같이 참여하지 못하고, 혼자 문제만 풀어봤습니다. 이번에는 CERC 문제들만으로 세팅했다고 들었는데, 역시 퀄리티가 훌륭합니다. 
 
