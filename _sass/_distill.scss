@@ -3,7 +3,7 @@
  ******************************************************************************/
 
 d-byline {
-  height: 2em;
+  // height: 2em;
   border-top-color: $grey-color-light !important;
 }
 
@@ -21,9 +21,6 @@ d-byline a, d-article d-byline a {
 d-article {
   overflow-x: clip !important;
   border-top-color: #e8e8e8 !important;
-  a, p, h1, h2, h3, h4, h5, h6, li, table {
-    color: var(--global-text-color) !important;
-  }
   a, h1, h2, hr {
     border-bottom-color: $grey-color-light !important;
   }
@@ -92,15 +89,30 @@ d-appendix {
 } 
 
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
   
+d-title h1 {
+  grid-column: 3 / 13 !important;
+}
+d-title p {
+  grid-column: 3 / 13 !important;
+}
+
+d-appendix > * {
+  grid-column: 3 / 13 !important;
+}
+d-article .d-main-content {
+  grid-column: 3 / 13; 
+}
+
 d-article .d-aside {
   display:flex;
   top: 0;
-  grid-column: 1 / 4; 
+  grid-column: 1 / 3; 
   align-self: stretch;
   flex-direction: column;
 }
+
 
 d-article .d-aside-toc {
   position: -webkit-sticky; /* For Safari */
@@ -113,4 +125,36 @@ d-article .d-aside-toc {
   font-size: 0.9rem;
 }
 
+
+.distill .byline {
+  grid-column: 3 / 13 !important;
+}
+}
+
+@media (max-width: 1199px) {
+  .distill .byline {
+    grid-column: text !important;
+  }
+}
+
+d-article hr {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+d-article {
+  font-size: 1rem !important;
+}
+
+d-article a {
+  color: purple !important;
+}
+
+.navbar {
+  grid-column: 3 / 13;
+  padding: 0;
+}
+
+.navbar .container {
+  padding: 0;
 }

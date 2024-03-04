@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: distill
 title: "2024년 1-2월 알고리즘 문제풀이"
 categories: competitive-programming
 sidebar:
@@ -7,10 +7,9 @@ sidebar:
 comment: true
 comments : true
 toc : true
-orig-authors: 
-venue: 
 tag: [competitive-programming] 
 distill_tag: "Competitive Programming"
+byline: true
 ---
 
 1월-2월에는 논문 일정으로 바빠서 PS를 못 한지라, 3/2일에 푼 ICPC Asia Pacific Final 문제를 위주로 작성합니다. :(

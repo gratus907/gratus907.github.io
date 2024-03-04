@@ -2,12 +2,13 @@
 layout: distill
 title: Competitive Programming
 permalink : /competitive-programming/
-description: Competitive Programming
+description: Collection of posts on competitive programming problems
 img: /assets/img/competition.png
 importance: 2
 category: Computer Science
 toc: true
 right-sticky-toc: true
+no_byline: true
 ---
 
 
@@ -54,13 +55,9 @@ td {
 
 /* Link styles */
 td a {
-    color: #3498db;
+    color: #3498db !important;
     text-decoration: none;
     transition: color 0.3s ease;
-}
-
-td a:hover {
-    color: #2c3e50;
 }
 </style>
 
