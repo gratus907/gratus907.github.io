@@ -88,22 +88,7 @@ d-appendix {
   }
 } 
 
-
-@media (min-width: 1200px) {
-  
-d-title h1 {
-  grid-column: 3 / 13 !important;
-}
-d-title p {
-  grid-column: 3 / 13 !important;
-}
-
-d-appendix > * {
-  grid-column: 3 / 13 !important;
-}
-d-article .d-main-content {
-  grid-column: 3 / 13; 
-}
+@media (min-width: 1400px) {
 
 d-article .d-aside {
   display:flex;
@@ -125,6 +110,29 @@ d-article .d-aside-toc {
   font-size: 0.9rem;
 }
 
+}
+
+@media (min-width: 1201px) and (max-width: 1399px) {
+  d-article .d-aside {
+    grid-column: 3 / 13; 
+  }
+}
+
+@media (min-width: 1200px) {
+  
+d-title h1 {
+  grid-column: 3 / 13 !important;
+}
+d-title p {
+  grid-column: 3 / 13 !important;
+}
+
+d-appendix > * {
+  grid-column: 3 / 13 !important;
+}
+d-article .d-main-content {
+  grid-column: 3 / 13; 
+}
 
 .distill .byline {
   grid-column: 3 / 13 !important;
@@ -150,11 +158,21 @@ d-article a {
   color: purple !important;
 }
 
-.navbar {
-  grid-column: 3 / 13;
-  padding: 0;
+@media (max-width: 1199px) {
+  .navbar {
+    grid-column: text !important;
+    padding: 0;
+  }  
 }
+@media (min-width: 1200px) {
+  .navbar {
+    grid-column: 3 / 13;
+    padding: 0;
+  }
+}
+
 
 .navbar .container {
   padding: 0;
+  margin: 0;
 }
