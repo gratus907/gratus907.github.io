@@ -2,9 +2,9 @@
   type: map
   contents:
   - name: Full Name
-    value: '<b>Wonseok Shin</b>'
+    value: '<b>Wonseok Shin (Korean: 신원석)</b>'
   - name: Contact
-    value: '<b>gratus907@snu.ac.kr</b>'
+    value: '<b>wsshin@theory.snu.ac.kr</b>'
     
 - title: Education
   type: table
@@ -45,17 +45,17 @@
 - title: Publications
   type: table-publications
   
-- title: Projects
-  type: table 
-  contents:
-  - title: Efficient Subgraph Matching for Drug Hepatotoxicity Prediction
-    badge: 2021.09-2021.12
-    description:
-      - SNU Creative Integrated Design course project (Capstone)
-  - title: FRIDGE - Recipe recommendation & Fridge management webapp
-    badge: 2020.09-2020.12
-    description:
-      - SNU Principles and Practices of Software Design course project
+# - title: Projects
+#   type: table 
+#   contents:
+#   - title: Efficient Subgraph Matching for Drug Hepatotoxicity Prediction
+#     badge: 2021.09-2021.12
+#     description:
+#       - SNU Creative Integrated Design course project (Capstone)
+#   - title: FRIDGE - Recipe recommendation & Fridge management webapp
+#     badge: 2020.09-2020.12
+#     description:
+#       - SNU Principles and Practices of Software Design course project
 
 - title: Honors, Awards and Scholarships
   type: table 

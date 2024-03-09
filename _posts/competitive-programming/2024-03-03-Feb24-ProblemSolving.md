@@ -1,5 +1,5 @@
 ---
-layout: distill
+layout: single
 title: "2024년 1-2월 알고리즘 문제풀이"
 categories: competitive-programming
 sidebar:

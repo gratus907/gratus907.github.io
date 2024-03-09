@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "11월 1주차 알고리즘 문제풀이"
-categories: Problem-Solving
+categories: competitive-programming
 sidebar:
   nav: "sidepost"
 comment: true
