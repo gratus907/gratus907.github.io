@@ -158,21 +158,21 @@ d-article a {
   color: purple !important;
 }
 
-@media (max-width: 1199px) {
-  .navbar {
-    grid-column: text !important;
-    padding: 0;
-  }  
-}
-@media (min-width: 1200px) {
-  .navbar {
-    grid-column: 3 / 13;
-    padding: 0;
-  }
-}
+// @media (max-width: 1199px) {
+//   .navbar {
+//     grid-column: text !important;
+//     padding: 0;
+//   }  
+// }
+// @media (min-width: 1200px) {
+//   .navbar {
+//     grid-column: 3 / 13;
+//     padding: 0;
+//   }
+// }
 
 
-.navbar .container {
-  padding: 0;
-  margin: 0;
-}
+// .navbar .container {
+//   padding: 0;
+//   margin: 0;
+// }
