@@ -29,6 +29,12 @@ layout: default
       {{ page.distill_topic }}
     </div>
     {% endif %}
+    {% if page.distill_subtopic %}
+    <div>
+      <h3>Topic</h3>
+      {{ page.distill_subtopic }}
+    </div>
+    {% endif %}
   </div>
 
   {% if page.toc %}

@@ -11,12 +11,6 @@ comment: true
 comments : true
 toc : true
 ---
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 ## Motivation
 소인수분해는 매우 어려운 과정이다. 실제로 소인수분해는 (입력 비트 수에 대해) 다항 시간에 결정론적으로 풀 수 있는 방법이 알려져 있지 않다.

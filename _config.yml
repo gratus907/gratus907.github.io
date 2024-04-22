@@ -165,7 +165,7 @@ scholar:
 
   last_name: Shin
   first_name: Wonseok
-  style: ieee
+  style: assets/bibliography/ieee.csl
   locale: en
 
   source: /_bibliography/

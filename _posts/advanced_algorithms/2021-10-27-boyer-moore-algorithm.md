@@ -5,12 +5,6 @@ categories: advanced-algorithms
 comment: true
 comments : true
 ---
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
-----------
 
 
 (아직 작성 중인 글입니다)

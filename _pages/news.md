@@ -4,20 +4,21 @@ title: Recent updates
 permalink: /news/
 ---
 <style>
-    table {
-        width:100%;
-        border:0px;
-        border-collapse: separate;
-        font-weight : 400;
-    }
-    table th {
-        font-size:1rem;
-        border: 0px;
-        padding : 0px;
-    }
-    thead {
-        border: 0px;
-    }
+  table {
+      width:100%;
+      border:0px;
+      border-collapse: separate;
+      font-weight : 400;
+  }
+  table th {
+      font-size:1rem;
+      border: 0px;
+      padding : 0px;
+      width: 15%;
+  }
+  .news table td {
+    font-size: 0.9rem;
+  }
 </style>
 <div class="table-responsive">
     <table class="table table-sm table-borderless">

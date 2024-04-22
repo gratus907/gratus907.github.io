@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Graph Algorithms, Lecture 1 : Fixed subgraph Isomorphism"
+title: "Fixed subgraph Isomorphism"
 categories: advanced-algorithms
 tags:
   - graph
@@ -10,15 +10,11 @@ comment: true
 comments : true
 toc : true
 ---
-<div id="toc">
-Contents
-</div>
-* TOC
-{:toc}
 
 **참고 : Stanford CS267 lecture note**
 ## Subgraph Isomorphism
-그래프 $G(V_G, E_G)$와, 다른 그래프 $H = (V_H, E_H)$ 에 대해, subgraph isomorphism $f : V_H \to V_G$ 는 $(u, v) \in E_H$ 이면 $(f(u), f(v)) \in E_G$ 인 vertex mappint $f$로 정의한다. 일반적인 그래프 $G$에서 $H$를 찾는 문제는 NP-Hard이고, 나한테는 첫 랩 인턴 주제기도 한 매우 재미있는 문제인데, 이 포스팅에서는 특수한 케이스들만 다룰 예정이다.
+그래프 $G(V_G, E_G)$와, 다른 그래프 $H = (V_H, E_H)$ 에 대해, subgraph isomorphism $f : V_H \to V_G$ 는 
+$(u, v) \in E_H$ 이면 $(f(u), f(v)) \in E_G$ 인 vertex mapping $f$로 정의한다. 일반적인 그래프 $G$에서 $H$를 찾는 문제는 NP-Hard이고, 나한테는 첫 랩 인턴 주제기도 한 매우 재미있는 문제인데, 이 포스팅에서는 특수한 케이스들만 다룰 예정이다.
 
 일반적으로, 이러한 문제를 접근하는 경로는 크게 두가지가 있다. TSP, Vertex cover, Ham-path 등등도 다 비슷한 느낌인듯 하다. 
 - Heuristic하게, 일반적인 그래프에 대해 빠르게 (사실은 덜 느리게 라는 말이 맞을 지도...) 푸는 방법을 찾으려는 노력. 다항 시간을 목표로 하지는 않는다.
@@ -29,7 +25,6 @@ Contents
 ## Finding Triangles
 $n$개의 정점과 $m$개의 간선이 있는 그래프에서 삼각형을 찾으려고 할 때, 위 **자명한** 알고리즘은 $O(n^3)$ 시간이 걸린다. 이보다 나은 방법이 있는지 생각해 보자.
 
-문제를 명확히 정의하기 위해, 문제의 답을 True / False 로 답하기로 하자. 즉, 삼각형이 있는지 유무만 판정하고, (시간적 손해가 없다면 삼각형을 돌려줄 수 있겠지만)
 ### $O(mn)$ 알고리즘 
 다음 알고리즘은 생각하기 별로 어렵지 않고, $O(mn)$ 인 것도 거의 자명하다.
 
@@ -96,4 +91,5 @@ $G'$ 을 다음과 같이 정의한다. $G$에서 정점을 $k$개 (순서를 �
 
 시간 복잡도는, 총 $O(n^k)$개의 노드들 사이에 모두 edge 여부를 확인해야 하므로 $O(k^2 n^{2k})$ 시간에 걸쳐 graph construction을 해야 하고, $O(n^{k})$개의 노드를 갖는 그래프에 $O(N^t)$ 삼각형 찾기를 해야 하므로 $O(n^{tk})$ 시간이 든다. $k$를 상수로 생각하기로 했으므로 전부 $O(n^{tk})$임을 알 수 있다. 
 
-참고로, 이 알고리즘을 조금만 잘 변형하면 $O(n^{tk + q})$ 시간에 $3k + q$ ($q = 1, 2$) 에 대한 경우도 해결할 수 있다. 또한, 우리는 $t \geq 2$ 임을 알고 있는데, 일단 그래프를 다 받기는 해야 하기 때문(...). 그러므로 이 방법으로 우리가 얻을 수 있는 최대한은 $O(n^{2k})$ 시간에 $3k$짜리 문제를 푸는 것이다. (Naive는 $O(n^{3k})$ 이므로, 어쨌든 상당한 발전이다).  
+참고로, 이 알고리즘을 조금만 잘 변형하면 $O(n^{tk + q})$ 시간에 $3k + q$ ($q = 1, 2$) 에 대한 경우도 해결할 수 있다. 또한, 우리는 $t \geq 2$ 임을 알고 있다 (그래프를 받기는 해야 하므로). 
+그러므로 이 방법으로 우리가 얻을 수 있는 최대한은 $O(n^{2k})$ 시간에 $3k$짜리 문제를 푸는 것임을 알 수 있다. 

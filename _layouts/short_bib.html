@@ -1,6 +1,44 @@
 ---
 ---
 
+<script>
+window.onload = function() {
+
+    var venue_dict = {
+        "\\NeurIPS": "Advances in Neural Information Processing Systems",
+        "\\ICLR": "International Conference on Learning Representations",
+        "\\CVPR": "Conference on Computer Vision and Pattern Recognition",
+        "\\ICML": "International Conference on Machine Learning",
+        "\\WWW": "Proceedings of ACM Web Conference",
+        "\\VLDB": "Proceedings of the VLDB Endowment",
+        "\\ICDE": "Proceedings of IEEE ICDE",
+        "\\ICDM": "Proceedings of IEEE ICDM",
+        "\\ICDT": "Proceedings of ICDT",
+        "\\TKDE": "IEEE Transactions on Knowledge and Data Engineering",
+        "\\SIGMOD": "Proceedings of ACM SIGMOD",
+        "\\SIGKDD": "Proceedings of ACM SIGKDD",
+        "\\SODA": "Proceedings of the Annual ACM-SIAM Symposium on Discrete Algorithms",
+    }
+    function foo(bookTitle) {
+        if (bookTitle in venue_dict) {
+            return venue_dict[bookTitle];
+        }
+        else 
+            return bookTitle;
+    }
+    
+    var bookTitleElements = document.getElementsByClassName('entryBookTitle');
+    console.log(bookTitleElements, bookTitleElements.length);
+    for (let i = 0; i < bookTitleElements.length; i++) {
+        var elem = bookTitleElements.item(i);
+        var originalBookTitle = elem.getAttribute('data-booktitle');
+        var transformedBookTitle = foo(originalBookTitle);
+        elem.textContent = transformedBookTitle;
+    }
+    
+}
+</script>
+
 <p> 
     {% if entry.author_array.size < 3 %}
         {% for author in entry.author_array %}      
@@ -13,19 +51,17 @@
     {% else %}
         {% for author in entry.author_array %}      
             {% if forloop.first %}
-                {{author.first}} {{author.last}} et al.,
+                {{author.first}} {{author.last}} et al.
             {% endif %}
         {% endfor %}
     {% endif %}
 <b>{{ entry.title }}</b>, 
-
 {% if entry.type == "article" %}
-{{ entry.journal }},
+<span class="entryBookTitle" data-booktitle="{{ entry.journal }}"></span>
 {% elsif entry.type == "inproceedings" %}
-{{ entry.booktitle }},
+<span class="entryBookTitle" data-booktitle="{{ entry.booktitle }}"></span>
 {% endif %}
-
 {% if entry.year %}
-{{entry.year}}
+({{entry.year}})
 {% endif %}
 </p>
