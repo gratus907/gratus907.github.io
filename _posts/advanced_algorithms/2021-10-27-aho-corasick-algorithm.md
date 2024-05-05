@@ -4,9 +4,8 @@ title: Aho-Corasick Multiple Pattern Matching
 categories: advanced-algorithms
 comment: true
 comments : true
+tag: [study, algorithms, string-algorithms] 
 ---
-
-(아직 작성 중인 글입니다)
 
 이 글은 KMP 알고리즘과 Trie 자료구조에 대한 이해를 선행으로 요구합니다. 
 
@@ -56,4 +55,4 @@ Prefix 여러개를 동시에 관리하는 것은 Trie를 이용할 수 있습�
 따라서, 종합하면 간단하게는 $O(qM + n)$ 시간과 $O(qM)$ 공간을 이용하여 multiple pattern matching을 할 수 있게 됩니다. 
 
 ## 구현 
-추가 예정.
+[구현 링크](http://boj.kr/d7bb9f5436ed4277ae0829584ceb0b4a)

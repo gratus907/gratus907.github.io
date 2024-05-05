@@ -10,6 +10,8 @@ sidebar:
 comment: true
 comments : true
 toc : true
+
+tag: [study, algorithms, number-theory] 
 ---
 
 ## Motivation

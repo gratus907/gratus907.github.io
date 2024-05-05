@@ -4,12 +4,9 @@ title: Boyer-Moore Heuristic Pattern Matching
 categories: advanced-algorithms
 comment: true
 comments : true
+tag: [study, algorithms, string-algorithms] 
 ---
 
-
-(아직 작성 중인 글입니다)
-
-이 글은 KMP 알고리즘과 Trie 자료구조에 대한 이해를 선행으로 요구합니다. 
 
 ## Motivation
 Boyer-Moore 알고리즘이 해결하는 문제는 KMP와 똑같이, 어떤 $n$글자의 긴 텍스트 $T$에 대해, 짧은 $m$글자의 패턴 $P$를 매칭하는 것입니다. 

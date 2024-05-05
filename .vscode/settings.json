@@ -7,5 +7,6 @@
         "*.css.liquid": "liquid-css",
         "*.scss.liquid": "liquid-scss",
         "island.C": "cpp"
-    }
+    },
+    "cph.general.saveLocation": ""
 }

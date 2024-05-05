@@ -7,14 +7,14 @@ description: Graduate Student, Seoul National University, CSE
 profile:
   align: right
   image: profile-photo.jpg
-news: true  # includes a list of news items
+news: true # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+social: true # includes social icons at the bottom of the page
 ---
 
 <style>
-div.summary {
-} 
+  div.summary {
+  }
 
   table {
       width:100%;
@@ -36,11 +36,13 @@ div.summary {
 <div class=summary markdown=1>
 I am currently in my final semester towards Master's in Computer Science at Seoul National University, under the guidance of Prof. Kunsoo Park.
 
-I am broadly interested in methods for understanding and analyzing large-scale data, such as efficient algorithms, data mining and machine learning. 
-While I love the rigor and beauty of theoretical methods, I am also deeply interested in practical applications of such techniques. 
+I am broadly interested in methods for understanding and analyzing large-scale data, such as efficient algorithms, data mining and machine learning.
+While I love the rigor and beauty of theoretical methods, I am also deeply interested in practical applications of such techniques.
 
 Previously, I recieved Bachelor's degree in Computer Science and Mathematical Science (double major) also at SNU. I also have spent wonderful time at AIgenDrug Co. Ltd, studying data mining and machine learning on molecular graphs.
 
------- 
+---
+
 For further information about me, please refer to my [**Curriculum Vitae**](/about-me/).
+
 </div>

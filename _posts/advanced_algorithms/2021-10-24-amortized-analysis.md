@@ -4,6 +4,7 @@ title: Amortized Analysis
 categories: advanced-algorithms
 comment: true
 comments : true
+tag: [study, algorithms] 
 ---
 
 **계산이론** 수업에서 배운 내용 정리. CLRS CH 17.

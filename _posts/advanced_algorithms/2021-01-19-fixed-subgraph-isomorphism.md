@@ -2,8 +2,7 @@
 layout: single
 title: "Fixed subgraph Isomorphism"
 categories: advanced-algorithms
-tags:
-  - graph
+tag: [study, algorithms, graph-algorithms] 
 sidebar:
   nav: "sidepost"
 comment: true
