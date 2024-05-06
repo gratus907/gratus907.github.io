@@ -42,16 +42,18 @@ window.onload = function() {
 <p> 
     {% if entry.author_array.size < 3 %}
         {% for author in entry.author_array %}      
+            {% assign author_initial = author.first | slice: 0 %}
             {% unless forloop.last %}
-                {{author.first}} {{author.last}},
+                {{author_initial}}. {{author.last}},
             {% else %}
-                and {{author.first}} {{author.last}},
+                and {{author_initial}}. {{author.last}},
             {% endunless %}
         {% endfor %}
     {% else %}
-        {% for author in entry.author_array %}      
+        {% for author in entry.author_array %}     
+            {% assign author_initial = author.first | slice: 0 %} 
             {% if forloop.first %}
-                {{author.first}} {{author.last}} et al.
+                {{author_initial}}. {{author.last}} et al.
             {% endif %}
         {% endfor %}
     {% endif %}
