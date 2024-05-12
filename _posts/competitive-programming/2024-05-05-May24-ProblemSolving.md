@@ -17,7 +17,7 @@ byline: true
 5월까지 포함하여 한번에 작성할 예정입니다 (작성 중)
 
 ### Atcoder Beginner Contest 352G. Socks 3
-`ABC352F`  
+`ABC352G`  
 난이도 (Atcoder): <span style="color: rgb(255, 128, 0);">2413</span> 
 
 **문제 요약:** $1$ 부터 $n$까지의 숫자 카드가 각각 $x_i$ 장만큼씩 있다. 한장씩 뽑는 행동을 반복할 때, 처음으로 한 종류의 카드가 두 장이 되기 위한 뽑기 횟수의 기댓값을 구하라. 
