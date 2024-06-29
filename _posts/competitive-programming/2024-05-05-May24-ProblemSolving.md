@@ -14,7 +14,7 @@ byline: true
 
 해외 출장과 여러 일정으로 계속 바쁘네요 :(
 
-5월까지 포함하여 한번에 작성할 예정입니다 (작성 중)
+5월까지 포함하여 한번에 작성할 예정입니다
 
 ### Atcoder Beginner Contest 352G. Socks 3
 `ABC352G`  

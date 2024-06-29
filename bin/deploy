@@ -4,6 +4,10 @@
 
 # Parse cmd arguments
 
+git submodule update --remote
+cd ./assets/pdf_notes/Shared-Latex-Notes/
+sh ./compile_all.txt
+
 SRC_BRANCH="master"
 DEPLOY_BRANCH="gh-pages"
 

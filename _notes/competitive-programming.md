@@ -88,6 +88,13 @@ td a {
 | CERC 2019A (BOJ 18171) | ABB                        | [Link (Kor)](/competitive-programming/Nov23W2-ProblemSolving/) |
 | CERC 2019S (BOJ 18180) | Saba1000kg                 | [Link (Kor)](/competitive-programming/Dec23-ProblemSolving/)   |
 
+### ICPC SouthWestern Europe
+#### SouthWestern Europe Regional Contest (SWERC)
+
+| Problem ID             | Problem Title              | Post Link                                                      |
+|------------------------|----------------------------|----------------------------------------------------------------|
+| SWERC 2022C (BOJ 27595)  | Another Wine Tasting Event  | [Link (Kor)](/competitive-programming/Jun24-ProblemSolving/) |
+| SWERC 2016F (BOJ 13962)  | Performance Review  | [Link (Kor)](/competitive-programming/Jun24-ProblemSolving/) |
 
 #### Poland Collegiate Programming Contest (AMPPZ)
 
