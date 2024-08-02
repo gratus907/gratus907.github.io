@@ -79,3 +79,4 @@ For posts in Korean, `contents` in the table is also in Korean. Other posts are 
 | 제목 (Title)                   | 소개 (Contents)                |
 |----------------------|--------------------|
 | [Karger-Stein Min Cut](/algorithms/karger-stein-mincut/) | Min Cut 문제에 대한 randomized algorithm |
+| [Median of Means Trick](/theory/Median-of-Mean-Trick/) | Randomized Algorithm의 정확도를 향상시키는 중간값 기반 boosting 기법 |
