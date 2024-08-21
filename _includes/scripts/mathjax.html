@@ -7,11 +7,13 @@
         macros: {
           bm: ["{\\boldsymbol #1}",1],
         },
+        equationNumbers: {  autoNumber: "AMS"  },
         processEscapes: true
       },
       loader: {
         load: ["input/tex", "output/chtml", '[tex]/physics']
       },
+      extensions: ["AMSmath.js", "AMSsymbols.js"]
     };
   </script>
   <script id="MathJax-script" async

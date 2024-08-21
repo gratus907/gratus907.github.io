@@ -1,0 +1,278 @@
+{
+    "pandoc-api-version": [
+        1,
+        23,
+        1
+    ],
+    "meta": {},
+    "blocks": [
+        {
+            "t": "Div",
+            "c": [
+                [
+                    "",
+                    [
+                        "definition"
+                    ],
+                    []
+                ],
+                [
+                    {
+                        "t": "Para",
+                        "c": [
+                            {
+                                "t": "Span",
+                                "c": [
+                                    [
+                                        "def:sigma_field",
+                                        [],
+                                        [
+                                            [
+                                                "label",
+                                                "def:sigma_field"
+                                            ]
+                                        ]
+                                    ],
+                                    []
+                                ]
+                            },
+                            {
+                                "t": "SoftBreak"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "집합"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Math",
+                                "c": [
+                                    {
+                                        "t": "InlineMath"
+                                    },
+                                    "\\Omega"
+                                ]
+                            },
+                            {
+                                "t": "Str",
+                                "c": "의"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "부분집합의"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "collection"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Math",
+                                "c": [
+                                    {
+                                        "t": "InlineMath"
+                                    },
+                                    "\\mathcal{F}"
+                                ]
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "가"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "다음"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "성질을"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "만족하면,"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "이를"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Math",
+                                "c": [
+                                    {
+                                        "t": "InlineMath"
+                                    },
+                                    "\\sigma"
+                                ]
+                            },
+                            {
+                                "t": "Str",
+                                "c": "-대수라고"
+                            },
+                            {
+                                "t": "Space"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "정의한다."
+                            }
+                        ]
+                    },
+                    {
+                        "t": "BulletList",
+                        "c": [
+                            [
+                                {
+                                    "t": "Para",
+                                    "c": [
+                                        {
+                                            "t": "Math",
+                                            "c": [
+                                                {
+                                                    "t": "InlineMath"
+                                                },
+                                                "\\emptyset \\in \\mathcal{F}"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    "t": "Para",
+                                    "c": [
+                                        {
+                                            "t": "Math",
+                                            "c": [
+                                                {
+                                                    "t": "InlineMath"
+                                                },
+                                                "A \\in \\mathcal{F}"
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "이면,"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Math",
+                                            "c": [
+                                                {
+                                                    "t": "InlineMath"
+                                                },
+                                                "A^c \\in \\mathcal{F}"
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "이다."
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    "t": "Para",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "가산"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "개의"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Math",
+                                            "c": [
+                                                {
+                                                    "t": "InlineMath"
+                                                },
+                                                "A_i \\in \\mathcal{F}"
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "에"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "대하여,"
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Math",
+                                            "c": [
+                                                {
+                                                    "t": "InlineMath"
+                                                },
+                                                "\\cup_i A_i \\in \\mathcal{F}"
+                                            ]
+                                        },
+                                        {
+                                            "t": "Space"
+                                        },
+                                        {
+                                            "t": "Str",
+                                            "c": "이다."
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            ]
+        }
+    ]
+}

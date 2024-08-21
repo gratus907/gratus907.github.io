@@ -1,0 +1,37 @@
+.math_env {
+    border: 1px solid #e6d7e6; /* Border color similar to the box in the image */
+    background-color: #fffaff; /* Light blue background color */
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px; /* Optional: To give slightly rounded corners */
+}
+
+
+.math_env p {
+    margin: 5px 0;
+    font-size: 1em; /* Ensuring text size consistency */
+}
+
+body {
+    counter-reset: global_math;
+}
+
+.math_env::before {
+    font-weight: bold;
+    color: #663366; /* Dark blue color for the title */
+    margin-bottom: 5px;
+    font-size: 1.05em;
+    display: block;
+}
+
+.math_env[math_type]::before {
+    content: attr(math_type) " " counter(global_math) ". ";
+}
+
+.math_env[math_type][math_title]::before {
+    content: attr(math_type) " " counter(global_math) ". (" attr(math_title) ") ";
+}
+
+.math_env {
+    counter-increment: global_math;
+}
