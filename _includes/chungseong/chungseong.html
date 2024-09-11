@@ -1,0 +1,169 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>충!성!</title>
+  <style>
+    /* Add custom styles if needed */
+    body {
+      font-family: '굴림','Comic Sans MS',  Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      width: 50%;
+      margin: 0 auto;
+    }
+    #countdown {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    #countdown span {
+      margin: 0 10px;
+    }
+
+    .my_items {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .my_items span {
+      margin: 0 10px;
+    }
+    #progress-container {
+        width: 100%;
+        height: 30px;
+        background-color: #f3f3f3;
+        border-radius: 2px;
+        border: solid black;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Progress bar itself */
+    #progress-bar {
+        height: 30px;
+        width: 0;
+        background-color: #4caf50;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 30px;
+        color: black;
+        transition: width 0.4s;
+    }
+    #progress-bar #progress-text {
+        margin-left: 10px;
+        position: relative;
+        z-index: 1; /* Ensure the text is above the bar */
+    }
+    #if-what {
+        text-align: left;
+    }
+  </style>
+</head>
+<body>
+    <script>
+        const str = "15,49,106,198,333,705,1265,2105,3347,4589,5831,7073,8315,9557,11047,12835,14980,17554,20642,24347,28793,34128,40530,48212,57430,68491,81764,97691,116803,135915,155027,174139,193251,212363,235297,262817,295841,335469,383022,434379,489844,549746,614440,684309,759767,841261,929274,1024328,1126986,1237856,1357595,1486913,1626576,1777412,1940314,2116248,2306256,2511464,2733088,2954712,3176336,3397960,3619584,3841208,4079453,4335566,4610887,4906857,5225024,5567053,5934734,6329991,6754892,7211660,7700401,8223353,8782911,9381638,10022275,10707756,11441220,12226026,13065768,13964291,14925710,15954428,17055156,18232934,19493156,20835292,22264666,23786949,25408180,27134791,28973631,30931995,33017652,35238876,37604479,39970082,42335685,44701288,47066891,49432494,51951861,54634986,57492514,60535781,63776860,67228609,70904721,74819780,78989317,83429873,88159065,93195654,98559621,104272245,110356189,116835589,123736150,131085247,138912035,147247564,156124902,165579266,175648163,186371538,197791932,209954651,222907946,236703205,251395155,267042081,283706057,301453191,320353888,340483130,361920772,384698266,408899353,434613007,461933764,490962068,521804641,554574874,589393246,626387766,665694443,707457787,751831340,798978240,849071821,902296250,958847205,1018932594,1082773319,1150604089,1222674282,1299248862,1380609353,1467054874,1558903240,1656492128,1760180321,1870349026,1987403275,2111773414,2243916686";
+        const parsed_exp_array = str.split(',').map(num => parseInt(num, 10));
+        function largestSmallerThan(arr, x) {
+            let index = -1;  
+            let maxSmaller = -Infinity;  
+
+            arr.forEach((num, i) => {
+                if (num < x && num > maxSmaller) {
+                    maxSmaller = num;
+                    index = i;
+                }
+            });
+
+            return index;
+        }
+        function levelandexp(x) {
+            let level = largestSmallerThan(parsed_exp_array, x)+1;
+            let next_level_exp = parsed_exp_array[level-1];
+            return level;
+        }
+        function numberWithCommas(x) {
+            return Math.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function get_rank(x) {
+            var r = x / 100;
+            if (r <= 1 / 9) {
+                return "이병";
+            }
+            else if (r <= 4 / 9) {
+                return "일병";
+            }
+            else if (r <= 7 / 9) {
+                return "상병";
+            }
+            else {
+                return "병장";
+            }
+        }
+        function get_where(d) {
+            var kilo = 5 * (d / (60 * 60));
+            if (kilo >= 40000) {
+                return `지구 ${Math.floor(kilo / 40000)} 바퀴를 걸을 수 있습니다`
+            }
+            else {
+                return `서울에서 부산까지 ${Math.floor(kilo / 400)} 번 걸을 수 있습니다`
+            }
+        }
+    </script>
+  <h1>전역까지 남은 시간:</h1>
+  <div id="progress-container">
+    <div id="progress-bar">
+        <span id="progress-text"></span>
+    </div>
+  </div>
+  
+  <div id="countdown">
+      <span id="days"></span> 일
+      <span id="hours"></span> 시간 
+      <span id="minutes"></span> 분
+      <span id="seconds"></span> 초
+  </div>
+
+  <div class="my_items" id="countdown_in_seconds">
+      = <span id="time_in_seconds"></span> 초
+  </div>
+
+  <div class="my_items" id="if-what">
+    <h3>이 시간은...</h3>
+    <ul>
+        <li>시속 5km로 걷는다면: <span id="where"></span></li>
+        <li>매일 한 잔의 스타벅스 아메리카노를 마신다면: <span id="starbucks"></span>원을 써야 합니다</li>
+        <li>매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
+        <li>(비율) 현역이었다면: <span id="rank"></span> 계급이었을 것입니다</li>
+        <li>그날 수능을 보고 의대를 갔더라면: <span id="med"></span> 원 정도를 벌었을 것 같습니다</li>
+    </ul>
+  </div>
+  <script>
+    var countdownDate = new Date("2027-09-10T23:59:59").getTime();
+    var startDate = new Date("2024-09-11T00:00:00").getTime()
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = countdownDate - now;
+      var passed = now - startDate
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var remaining_seconds = (distance / 1000);
+      var remaining_in_days = (remaining_seconds / (60 * 60 * 24));
+      var progressPercent = (passed / (distance + passed) * 100)
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+      document.getElementById("time_in_seconds").innerHTML = remaining_seconds.toFixed(3);
+      document.getElementById("progress-bar").style.width = progressPercent + "%";
+      document.getElementById("progress-text").innerHTML = (progressPercent).toFixed(10) + "%";
+      var maple_mushroom_exp = 17 * Math.round(remaining_seconds);
+      document.getElementById("maple_exp").innerHTML = levelandexp(maple_mushroom_exp);
+      document.getElementById("starbucks").innerHTML = numberWithCommas(5300 * remaining_in_days);
+      document.getElementById("rank").innerHTML = get_rank(progressPercent);
+      document.getElementById("where").innerHTML = get_where(remaining_seconds);
+      document.getElementById("med").innerHTML = numberWithCommas(Math.round(200000000 * (remaining_in_days / 365) ));
+    }, 1);
+  </script>
+</body>
+</html>
