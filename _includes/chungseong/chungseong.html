@@ -134,6 +134,7 @@
         <li>매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
         <li>(비율) 현역이었다면: <span id="rank"></span> 계급이었을 것입니다</li>
         <li>그날 수능을 보고 의대를 갔더라면: <span id="med"></span> 원 정도를 벌었을 것 같습니다</li>
+        <li>마인크래프트에서: 나무 블록 <span id="minecraft_wood"></span>개를 캐거나, 철광석 <span id="minecraft_iron"></span> 개를 철 주괴로 바꿀 수 있습니다</li>
     </ul>
   </div>
   <script>
@@ -163,6 +164,9 @@
       document.getElementById("rank").innerHTML = get_rank(progressPercent);
       document.getElementById("where").innerHTML = get_where(remaining_seconds);
       document.getElementById("med").innerHTML = numberWithCommas(Math.round(200000000 * (remaining_in_days / 365) ));
+      document.getElementById("minecraft_iron").innerHTML = numberWithCommas(Math.round(remaining_seconds / 10));
+      document.getElementById("minecraft_wood").innerHTML = numberWithCommas(Math.round(remaining_seconds / 3));
+      
     }, 1);
   </script>
 </body>
