@@ -1,16 +1,20 @@
 <html lang="en">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>충!성!</title>
   <style>
     /* Add custom styles if needed */
     body {
-      font-family: '굴림','Comic Sans MS',  Arial, sans-serif;
+      font-family:  "Pretendard Variable", Pretendard, -apple-system, 'Comic Sans MS',  Arial, sans-serif;
       text-align: center;
       padding: 50px;
-      width: 50%;
       margin: 0 auto;
+      width: 70%;
+      line-height: 1.8;
     }
     #countdown {
       font-size: 20px;
@@ -21,8 +25,8 @@
     }
 
     .my_items {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 1.2em;
+      font-weight: 500;
     }
     .my_items span {
       margin: 0 10px;
@@ -56,9 +60,61 @@
     #if-what {
         text-align: left;
     }
+
+    .countdown-container {
+        display: inline-block;
+        padding: 20px;
+    }
+
+    .analog-clock {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border: 5px solid black;
+        border-radius: 50%;
+        margin: 20px auto;
+    }
+
+    .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hand {
+        position: absolute;
+        width: 50%;
+        height: 6px;
+        background: black;
+        top: 50%;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+        transition: all 0.05s cubic-bezier(0.4, 2.3, 0.3, 1);
+        transform-origin: 100%;
+    }
+
+    .hour-hand {
+        height: 8px;
+        background-color: #000;
+    }
+
+    .minute-hand {
+        height: 6px;
+        background-color: green;
+    }
+
+    .second-hand {
+        height: 4px;
+        background-color: red;
+    }
+    .millisecond-hand {
+        height: 4px;
+        background-color: blue;
+    }
   </style>
 </head>
 <body>
+    <script></script>
     <script>
         const str = "15,49,106,198,333,705,1265,2105,3347,4589,5831,7073,8315,9557,11047,12835,14980,17554,20642,24347,28793,34128,40530,48212,57430,68491,81764,97691,116803,135915,155027,174139,193251,212363,235297,262817,295841,335469,383022,434379,489844,549746,614440,684309,759767,841261,929274,1024328,1126986,1237856,1357595,1486913,1626576,1777412,1940314,2116248,2306256,2511464,2733088,2954712,3176336,3397960,3619584,3841208,4079453,4335566,4610887,4906857,5225024,5567053,5934734,6329991,6754892,7211660,7700401,8223353,8782911,9381638,10022275,10707756,11441220,12226026,13065768,13964291,14925710,15954428,17055156,18232934,19493156,20835292,22264666,23786949,25408180,27134791,28973631,30931995,33017652,35238876,37604479,39970082,42335685,44701288,47066891,49432494,51951861,54634986,57492514,60535781,63776860,67228609,70904721,74819780,78989317,83429873,88159065,93195654,98559621,104272245,110356189,116835589,123736150,131085247,138912035,147247564,156124902,165579266,175648163,186371538,197791932,209954651,222907946,236703205,251395155,267042081,283706057,301453191,320353888,340483130,361920772,384698266,408899353,434613007,461933764,490962068,521804641,554574874,589393246,626387766,665694443,707457787,751831340,798978240,849071821,902296250,958847205,1018932594,1082773319,1150604089,1222674282,1299248862,1380609353,1467054874,1558903240,1656492128,1760180321,1870349026,1987403275,2111773414,2243916686";
         const parsed_exp_array = str.split(',').map(num => parseInt(num, 10));
@@ -98,16 +154,53 @@
                 return "병장";
             }
         }
-        function get_where(d) {
-            var kilo = 5 * (d / (60 * 60));
-            if (kilo >= 40000) {
-                return `지구 ${Math.floor(kilo / 40000)} 바퀴를 걸을 수 있습니다`
+        function get_where(d, s) {
+            let places = [
+                ["달까지", 380000], // Corrected from parentheses to square brackets
+                ["지구 둘레를", 40000],
+                ["뉴욕까지", 11000],
+                ["도쿄까지", 1159],
+                ["부산까지", 400]
+            ];
+            var kilo = s * (d / (60 * 60));
+            txt = ""
+            while (kilo >= 400) {
+              for (let place of places) {
+                let where = place[0];
+                let distance = place[1];
+                if (kilo >= distance) {
+                  let num = Math.floor(kilo / distance);
+                  let added_text = `${where} ${num} 번`;
+                  
+                  if (txt.length === 0) {
+                    txt = added_text;
+                  } else {
+                    txt = txt + " + " + added_text;
+                  }
+                  
+                  kilo -= (distance * num);
+                  break;
+                }
+              }
             }
-            else {
-                return `서울에서 부산까지 ${Math.floor(kilo / 400)} 번 걸을 수 있습니다`
-            }
+            return txt
         }
+
+        function ratio_to_time(x) {
+          const totalSeconds = 12 * 60 * 60;
+          const timeInSeconds = x * totalSeconds;
+          const hours = (timeInSeconds / 3600);
+          const minutes = (timeInSeconds % 3600) / 60;
+          const seconds = (timeInSeconds % 60);
+          const milliseconds = (timeInSeconds%1)*1000;
+          return [hours*30, minutes*6, seconds*6, milliseconds/1000*360];
+        }
+          
     </script>
+
+  
+<div class="countdown-container">
+</div>
   <h1>전역까지 남은 시간:</h1>
   <div id="progress-container">
     <div id="progress-bar">
@@ -129,18 +222,56 @@
   <div class="my_items" id="if-what">
     <h3>이 시간은...</h3>
     <ul>
-        <li>시속 5km로 걷는다면: <span id="where"></span></li>
+        <li>12시간으로 압축하면, 시계가 이 속도로 흐르게 됩니다.</li>
+        <p>검은색, 초록색, 빨간색이 각각 시/분/초침이고, 파란색은 "밀리초" 입니다!</p>
+        <div class="analog-clock">
+            <div class="clock-face">
+                <div class="hand hour-hand"></div>
+                <div class="hand minute-hand"></div>
+                <div class="hand second-hand"></div>
+                <div class="hand millisecond-hand"></div>
+            </div>
+        </div>
+        <li>서울에서 출발해서 쉬지 않고 움직이면</li>
+        <ul>
+          <li>일반적인 속도로 걷는다면 (시속 5km): <span id="where_walk"></span> 갈 수 있습니다.</li>
+          <li>우사인 볼트의 속도 (시속 44.72km)로는: <span id="where_bolt"></span> 갈 수 있습니다.</li>
+          <li>고속도로를 달린다면 (시속 100km): <span id="where_car"></span> 갈 수 있습니다.</li>
+        </ul>
+        <li>게임에서는 다음의 기록을 세울 수 있습니다</li>
+        <ul>
+          <li>15분 57초에 한 게임이 끝난다면, 리그 오브 레전드 <span id="num_lol"></span> 게임을 할 수 있습니다</li>
+          <li>매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
+          <li>마인크래프트에서: 나무 블록 <span id="minecraft_wood"></span>개를 캐거나, 철광석 <span id="minecraft_iron"></span> 개를 철 주괴로 바꿀 수 있습니다</li>
+        </ul>
+        
         <li>매일 한 잔의 스타벅스 아메리카노를 마신다면: <span id="starbucks"></span>원을 써야 합니다</li>
-        <li>매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
-        <li>(비율) 현역이었다면: <span id="rank"></span> 계급이었을 것입니다</li>
-        <li>그날 수능을 보고 의대를 갔더라면: <span id="med"></span> 원 정도를 벌었을 것 같습니다</li>
-        <li>마인크래프트에서: 나무 블록 <span id="minecraft_wood"></span>개를 캐거나, 철광석 <span id="minecraft_iron"></span> 개를 철 주괴로 바꿀 수 있습니다</li>
-    </ul>
+        
+        <li>군생활의 비율로 따졌을 때: 현역이었다면 저는 아직 <span id="rank"></span> 계급이었을 것입니다</li>
+        <li>그날 수능을 보고 의대를 갔더라면: 이 시간동안 <span id="med"></span> 원 정도를 벌었을 것 같습니다</li>
+        
+        
+        <!-- <li>이만한 시간이 주어졌을 때, 위대한 사람들은 무엇을 이루었을까요?</li>
+        <ul>
+          <li>맨해튼 프로젝트의 공식적 출범으로부터 첫 번째 핵 실험까지 약 3년</li>
+          <li>마리 퀴리가 방사성 물질에 대해 연구하기 시작해서 폴로늄을 발견하기까지 약 3년</li>
+          <li>빈센트 반 고흐의 "몽마르트의 풍차" 부터 "해바라기", "별이 빛나는 밤" 까지 약 3년</li>
+          <li>윌리엄 셰익스피어의 "뜻대로 하세요" 부터 "햄릿", "</li>
+        </ul> -->
+      </ul>
   </div>
+
+
+
+
+<button id="cheer">응원하기</button>
+
+
+<p>[그래픽을 도와주실수 있는 분을 찾고 있습니다!]</p>
   <script>
     var countdownDate = new Date("2027-09-10T23:59:59").getTime();
     var startDate = new Date("2024-09-11T00:00:00").getTime()
-    var x = setInterval(function() {
+    var _ = setInterval(function() {
       var now = new Date().getTime();
       var distance = countdownDate - now;
       var passed = now - startDate
@@ -162,12 +293,31 @@
       document.getElementById("maple_exp").innerHTML = levelandexp(maple_mushroom_exp);
       document.getElementById("starbucks").innerHTML = numberWithCommas(5300 * remaining_in_days);
       document.getElementById("rank").innerHTML = get_rank(progressPercent);
-      document.getElementById("where").innerHTML = get_where(remaining_seconds);
       document.getElementById("med").innerHTML = numberWithCommas(Math.round(200000000 * (remaining_in_days / 365) ));
       document.getElementById("minecraft_iron").innerHTML = numberWithCommas(Math.round(remaining_seconds / 10));
       document.getElementById("minecraft_wood").innerHTML = numberWithCommas(Math.round(remaining_seconds / 3));
       
+      document.getElementById("where_walk").innerHTML = get_where(remaining_seconds, 5);
+      document.getElementById("where_bolt").innerHTML = get_where(remaining_seconds, 44.72);
+      document.getElementById("where_car").innerHTML = get_where(remaining_seconds, 100);
+
+      // Analog Clock
+      // Rotate the hands based on the calculated degrees
+      var to_time_form = ratio_to_time(progressPercent/100);
+      document.querySelector('.millisecond-hand').style.transform = `rotate(${(to_time_form[3])+90}deg)`;
+      document.querySelector('.second-hand').style.transform = `rotate(${(to_time_form[2])+90}deg)`;
+      document.querySelector('.minute-hand').style.transform = `rotate(${(to_time_form[1])+90}deg)`;
+      document.querySelector('.hour-hand').style.transform = `rotate(${(to_time_form[0])+90}deg)`;
+
+      document.getElementById('num_lol').innerHTML = numberWithCommas(remaining_seconds/957);
+
     }, 1);
+
+    // Button event listener for "Thank you" alert
+    document.getElementById("cheer").addEventListener("click", function() {
+        alert("감사합니다. 웹 개발 실력이 미천하여 아직 별다른 기능은 없습니다 :(");
+    });
   </script>
+
 </body>
 </html>
