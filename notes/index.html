@@ -3,7 +3,7 @@
 
   <head>
     
-    <meta http-equiv="refresh" content="3; url=https://gratus907.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   Wonseok Shin
 
 
-  | Page not found
+  | Notes
 
 </title>
 <meta name="description" content="Wonseok Shin, SNU CSE
@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/syntax.css">
-<link rel="canonical" href="/404.html">
+<link rel="canonical" href="/notes/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -219,7 +219,7 @@
               Blog
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="/notes/">
               Notes
             </a>
@@ -256,9 +256,11 @@
           
           
           
-          <li class="nav-item ">
+          <li class="nav-item active">
               <a class="nav-link" href="/notes/">
                 Notes
+                
+                <span class="sr-only">(current)</span>
                 
               </a>
           </li>
@@ -280,6 +282,8 @@
               
               </div>
           </li>
+          
+          
           
           
           
@@ -318,11 +322,578 @@
 
   
   <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
+    <h1 class="post-title">Notes</h1>
+    <p class="post-description">My notes on what I've studied (Collection of posts)</p>
   </header>
   <article class="post-content">
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://gratus907.github.io/">here</a>.</p>
+    <div class="projects">
+  
+  <!-- Display categorized projects -->
+    
+      <h2 class="category">Computer Science</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/algorithms/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/algorithm-2.png" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Data structures and Algorithms</h2>
+        <p class="card-text"></p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/data-mining/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/algorithm-1.png" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Data Mining</h2>
+        <p class="card-text">Data Mining. Especially interested on efficient methods for analysis of graph structured data.</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/machine-learning/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/math-stat.png" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Machine Learning</h2>
+        <p class="card-text">Notes on Machine Learning</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/competitive-programming/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/competition.png" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Competitive Programming</h2>
+        <p class="card-text">Collection of posts on competitive programming problems</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+        </div>
+      
+    
+      <h2 class="category">Mathematics</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+        </div>
+      
+    
+
+  
+
+</div>
 
   </article>
 

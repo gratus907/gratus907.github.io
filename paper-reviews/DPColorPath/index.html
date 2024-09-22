@@ -3,7 +3,7 @@
 
   <head>
     
-    <meta http-equiv="refresh" content="3; url=https://gratus907.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   Wonseok Shin
 
 
-  | Page not found
+  | [Reading] Lightning Fast and Space Efficient k-clique Counting
 
 </title>
 <meta name="description" content="Wonseok Shin, SNU CSE
@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/syntax.css">
-<link rel="canonical" href="/404.html">
+<link rel="canonical" href="/paper-reviews/DPColorPath/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -314,18 +314,150 @@
 
     <!-- Content -->
     <div class="container mt-5">
-      <div class="post">
+      
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">[Reading] Lightning Fast and Space Efficient k-clique Counting</h1>
+  </header>
+  <div class="byline">
+    <div>
+      <h3>Date</h3>
+    February 10, 2023
+    </div>
+    
+    <div>
+      <h3>Category</h3>
+      Paper Review
+    </div>
+    
+    
+    <div>
+      <h3>Topic</h3>
+      Algorithms on Large Graphs
+    </div>
+    
+    
+    
+    
+    
+    
+    <div>
+      <h3>Pageview</h3>
+      <div class="align-items-center w-100" style="margin-bottom: 1rem;">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://gratus907.github.io/paper-reviews/DPColorPath/&amp;count_bg=%233A3A3A&amp;title_bg=%23111111&amp;icon=myspace.svg&amp;icon_color=%23E7E7E7&amp;title=Views&amp;edge_flat=false%0A">
+      </div>
+    </div>
+  </div>
 
   
-  <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
-  </header>
+    <div class="toc">
+    <h3>Contents</h3>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h3"><a href="#key-ideas">Key Ideas</a></li>
+<li class="toc-entry toc-h3"><a href="#results">Results</a></li>
+</ul>
+    </div>
+  
   <article class="post-content">
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://gratus907.github.io/">here</a>.</p>
+    <div class="post-main-content">
+    <blockquote>
+  <p>Xiaowei Ye, Rong-Hua Li, Qiangqiang Dai, Hongzhi Chen, and Guoren Wang. 2022. Lightning Fast and Space Efficient k-clique Counting. In Proceedings of the ACM Web Conference 2022 (WWW ‘22)</p>
+</blockquote>
 
+<h3 id="introduction">Introduction</h3>
+<ul>
+  <li>Analyzing cliques in graph data is critical in many applications, but exact counting or enumeration of these structures can be computationally costly.</li>
+  <li>
+<strong>Problem:</strong> Given a graph $G$ and $k \in \N$, estimate the number of $k$-cliques in $G$.</li>
+</ul>
+
+<h4 id="sampling-algorithm-for-counting-cliques">Sampling Algorithm for Counting Cliques</h4>
+<ul>
+  <li>
+<strong>Sampling</strong> is often the way to go when the objective is to count some structure in a large graph.</li>
+  <li>The aim is to efficiently gather <strong>samples</strong> from a <strong>sample space</strong> which encapsulates the set we’re interested in.</li>
+  <li>Assuming that the set of interest is $\mathcal{A}$ and the sample space is $\Omega$. If it is possible to obtain uniform random samples from $\Omega$, it is natural to take $t$ samples, and count the number of samples that are in $\mathcal{A}$.</li>
+  <li>For this simple algorithm, the <strong>Chernoff’s Bound</strong> ensures a probabilisitic guarantee.
+<span style="display:block" class="math_item">
+  <b class="math_item_title">Chernoff’s Bound for Sampling</b><br>
+  Let $\rho = \abs{\mathcal{A}} / \abs{\Omega}$. A uniform sampling algorithm returns a $1 - \epsilon$ approximation of $\abs{\mathcal{A}}$ with probability $1 - 2\sigma$ if more than $\frac{3}{\rho\epsilon^2}\log(1/\sigma)$ samples are taken uniformly at random.
+</span>
+</li>
+  <li>Hence, the ultimate aim is to maximize $\rho$, which essentially means finding a sample space that closely mirrors $\mathcal{A}$.</li>
+</ul>
+
+<h3 id="key-ideas">Key Ideas</h3>
+<p>This paper develops an efficient algorithm for $k$-clique estimation via uniform sampling. 
+By employing a greedy coloring strategy, the algorithm initially reduces the sample space to the set of $k$-colored sets/paths, which are structures that have a high likelihood of being cliques. The counting of the number of $k$-colored sets/paths is achieved through dynamic programming.</p>
+
+<p>For sparse graphs, <span style="font-family:Helvetica;">PIVOTER (WSDM 20)</span> already performs remarkably well. The authors thereby propose a framework where given graph is split into sparse and dense region, and run PIVOTER on sparse region, while the dense region is dealt with the sampling algorithm authors propose.</p>
+
+<h4 id="dp-based-colored-set-sampling-dpcolor">DP-Based Colored Set Sampling (DPColor)</h4>
+<ul>
+  <li>Consider the proper graph coloring (no edge should connect vertices with same color).</li>
+  <li>A $k$-colored set (set of $k$ vertices with distinct color) is a good candidate for cliques!
+<span style="display:block" class="math_item">
+  <b class="math_item_title">Correctness (Unbiasedness) of Sample Space</b><br>
+  If a set $\set{v_1, \dots, v_k}$ is a $k$-clique in $G$, it must have distinct colors for any given proper coloring.
+</span>
+</li>
+  <li>To use small number of colors, use degeneracy-ordered greedy coloring</li>
+  <li>To sample $k$-colored set, we shall count the number of $k$-colored set via dynamic programming.</li>
+  <li>Let $a_i$ be the number of nodes with color $i$, and $F(i, j)$ be the number of $j$-colored sets, considering the vertices with color only up to $i$. The $F(i, j)$ follows the following recurrence.
+\(F(i, j) = a_i \times F(i-1, j-1) + F(i-1, j)\)</li>
+  <li>Using this as weights, uniform random sampling can be easily done.</li>
+</ul>
+
+<h4 id="dp-based-colored-path-sampling-dpcolorpath">DP-Based Colored Path Sampling (DPColorPath)</h4>
+<ul>
+  <li>How to improve further? Instead of $k$-colored set, consider $k$-colored paths.</li>
+  <li>Choose a center node $u$ arbitrarily. From $N(u)$, count and sample $k$-colored path.</li>
+  <li>This is much more likely to be a clique than $k$-colored sets.</li>
+  <li>Similar to $k$-colored sets, $k$-colored paths (locally on $N(u)$) can be counted via dynamic programming.</li>
+</ul>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li>The DPColorPath method demonstrates significant speed (an order of magnitude faster than the state-of-the-art methods) and negligible (0.1%) error on large-scale real-world graph datasets, including social networks and citation networks.</li>
+  <li>The $\rho$ value for $k$-colored paths are much higher than $k$-colored sets</li>
+</ul>
+
+<hr>
+<p>Overall, impressive results (accuracy and speed) with relatively simple algorithm. Implementation seems also reasonably doable.
+Giving more structure on the graph via proper coloring to reduce the sample space seems like a really nice idea.</p>
+
+    </div>
   </article>
+  
 
+  
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://gratus907-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+  <!-- 
+  <a href="https://gratus907.github.io/paper-reviews"> Back to : paper-reviews</a><br/>
+  
+   -->
 </div>
 
     </div>
