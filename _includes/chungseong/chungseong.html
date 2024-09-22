@@ -46,7 +46,6 @@
         height: 30px;
         width: 0;
         background-color: #4caf50;
-        border-radius: 5px;
         text-align: center;
         line-height: 30px;
         color: black;
@@ -96,20 +95,24 @@
     .hour-hand {
         height: 8px;
         background-color: #000;
+        border-radius: 4px;
     }
 
     .minute-hand {
         height: 6px;
         background-color: green;
+        border-radius: 2px;
     }
 
     .second-hand {
         height: 4px;
         background-color: red;
+        border-radius: 2px;
     }
     .millisecond-hand {
         height: 4px;
         background-color: blue;
+        border-radius: 2px;
     }
   </style>
 </head>
@@ -156,10 +159,10 @@
         }
         function get_where(d, s) {
             let places = [
-                ["달까지", 380000], // Corrected from parentheses to square brackets
+                ["달까지", 380000],
                 ["지구 둘레를", 40000],
                 ["뉴욕까지", 11000],
-                ["도쿄까지", 1159],
+                ["도쿄까지", 1100],
                 ["부산까지", 400]
             ];
             var kilo = s * (d / (60 * 60));
@@ -237,27 +240,34 @@
           <li>일반적인 속도로 걷는다면 (시속 5km): <span id="where_walk"></span> 갈 수 있습니다.</li>
           <li>우사인 볼트의 속도 (시속 44.72km)로는: <span id="where_bolt"></span> 갈 수 있습니다.</li>
           <li>고속도로를 달린다면 (시속 100km): <span id="where_car"></span> 갈 수 있습니다.</li>
+          <li>비행기를 타면 (시속 800km): <span id="where_plane"></span> 갈 수 있습니다.</li>
         </ul>
         <li>게임에서는 다음의 기록을 세울 수 있습니다</li>
         <ul>
           <li>15분 57초에 한 게임이 끝난다면, 리그 오브 레전드 <span id="num_lol"></span> 게임을 할 수 있습니다</li>
-          <li>매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
+          <li>편입 시점부터 지금까지 매 초 한 마리의 주황버섯을 사냥했다면: <span id="maple_exp_start"></span>레벨에 도달했을 것입니다</li>
+          <li>1레벨에서 시작하여, 앞으로 전역 때까지 매 초 한 마리의 주황버섯을 사냥한다면: <span id="maple_exp"></span>레벨에 도달할 수 있습니다</li>
           <li>마인크래프트에서: 나무 블록 <span id="minecraft_wood"></span>개를 캐거나, 철광석 <span id="minecraft_iron"></span> 개를 철 주괴로 바꿀 수 있습니다</li>
         </ul>
         
         <li>매일 한 잔의 스타벅스 아메리카노를 마신다면: <span id="starbucks"></span>원을 써야 합니다</li>
         
         <li>군생활의 비율로 따졌을 때: 현역이었다면 저는 아직 <span id="rank"></span> 계급이었을 것입니다</li>
-        <li>그날 수능을 보고 의대를 갔더라면: 이 시간동안 <span id="med"></span> 원 정도를 벌었을 것 같습니다</li>
+        <!-- <li>그날 수능을 보고 의대를 갔더라면: 이 시간동안 <span id="med"></span> 원 정도를 벌었을 것 같습니다</li> -->
         
         
-        <!-- <li>이만한 시간이 주어졌을 때, 위대한 사람들은 무엇을 이루었을까요?</li>
+        <li>이만한 시간이 주어졌을 때, 위대한 사람들은 무엇을 이루었을까요?</li>
         <ul>
           <li>맨해튼 프로젝트의 공식적 출범으로부터 첫 번째 핵 실험까지 약 3년</li>
           <li>마리 퀴리가 방사성 물질에 대해 연구하기 시작해서 폴로늄을 발견하기까지 약 3년</li>
           <li>빈센트 반 고흐의 "몽마르트의 풍차" 부터 "해바라기", "별이 빛나는 밤" 까지 약 3년</li>
-          <li>윌리엄 셰익스피어의 "뜻대로 하세요" 부터 "햄릿", "</li>
-        </ul> -->
+        </ul>
+        <!-- ChatGPT Ideas
+         "Leonardo da Vinci took 4 years to paint the Mona Lisa — you’re [Y%] on your way to completing something equally great!"
+         Movies/TV Shows: “In the time left, you could binge-watch the entire [Your favorite show] series [X] times."
+         "If you had spent this time coding, you could have built [X amount of] fully functioning websites or AI models."
+        
+        -->
       </ul>
   </div>
 
@@ -289,17 +299,18 @@
       document.getElementById("time_in_seconds").innerHTML = remaining_seconds.toFixed(3);
       document.getElementById("progress-bar").style.width = progressPercent + "%";
       document.getElementById("progress-text").innerHTML = (progressPercent).toFixed(10) + "%";
-      var maple_mushroom_exp = 17 * Math.round(remaining_seconds);
-      document.getElementById("maple_exp").innerHTML = levelandexp(maple_mushroom_exp);
+      document.getElementById("maple_exp").innerHTML = levelandexp(17 * Math.round(remaining_seconds));
+      document.getElementById("maple_exp_start").innerHTML = levelandexp(17 * Math.round(passed/1000));
       document.getElementById("starbucks").innerHTML = numberWithCommas(5300 * remaining_in_days);
       document.getElementById("rank").innerHTML = get_rank(progressPercent);
-      document.getElementById("med").innerHTML = numberWithCommas(Math.round(200000000 * (remaining_in_days / 365) ));
+      // document.getElementById("med").innerHTML = numberWithCommas(Math.round(200000000 * (remaining_in_days / 365) ));
       document.getElementById("minecraft_iron").innerHTML = numberWithCommas(Math.round(remaining_seconds / 10));
       document.getElementById("minecraft_wood").innerHTML = numberWithCommas(Math.round(remaining_seconds / 3));
       
       document.getElementById("where_walk").innerHTML = get_where(remaining_seconds, 5);
       document.getElementById("where_bolt").innerHTML = get_where(remaining_seconds, 44.72);
       document.getElementById("where_car").innerHTML = get_where(remaining_seconds, 100);
+      document.getElementById("where_plane").innerHTML = get_where(remaining_seconds, 800);
 
       // Analog Clock
       // Rotate the hands based on the calculated degrees
