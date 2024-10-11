@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-description: Graduate Student, Seoul National University, CSE
+description: Scientist @ Standigm Inc. 
 
 profile:
   align: right
@@ -34,12 +34,14 @@ social: true # includes social icons at the bottom of the page
 </style>
 
 <div class=summary markdown=1>
-I am currently in my final semester towards Master's in Computer Science at Seoul National University, under the guidance of Prof. Kunsoo Park.
+I am currently working as a Scientist at <a href="https://www.standigm.com">Standigm</a>, working on AI for drug discovery.
 
-I am broadly interested in methods for understanding and analyzing large-scale data, such as efficient algorithms, data mining and machine learning.
-While I love the rigor and beauty of theoretical methods, I am also deeply interested in practical applications of such techniques.
+My research interests span methods for understanding and analyzing large-scale data, including machine learning, data mining and efficient algorithms. 
+While I appreciate the rigor and beauty of theoretical approaches, I am also deeply passionate about applying these techniques to solve real-world problems.
 
-Previously, I recieved Bachelor's degree in Computer Science and Mathematical Science (double major) also at SNU. I also have spent wonderful time at AIgenDrug Co. Ltd, studying data mining and machine learning on molecular graphs.
+Previously, I obtained my Master’s degree in Computer Science from Seoul National University (SNU), where I studied under the guidance of Prof. Kunsoo Park. My research during my Master’s program focused on efficient algorithms for large-scale graph data management and data mining, with a thesis centered on accurate and efficient estimation of subgraph counts.
+
+Before that, I completed my Bachelor’s degree in Computer Science and Mathematical Sciences (double major) at SNU.
 
 ---
 

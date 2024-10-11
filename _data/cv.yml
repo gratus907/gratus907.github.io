@@ -3,25 +3,26 @@
   contents:
   - name: Full Name
     value: '<b>Wonseok Shin (Korean: 신원석)</b>'
-  - name: Contact
-    value: '<b>wsshin@theory.snu.ac.kr</b>'
+  - name: Contact (Personal)
+    value: '<b>wonseok.shin@icloud.com</b>'
     
 - title: Education
   type: table
   contents:
-  - title: Seoul National University
+  - title: M.S in Computer Science and Engineering, Seoul National University
     year: 2022
-    badge: 2022.09-Present
+    badge: 2022.09-2024.08
     description:
-      - MSc in Computer Science
       - 'Advisor : Professor Kunsoo Park'
-  - title: Seoul National University
+      - Graduated with <b>master's thesis award</b>
+      - 'Thesis: Cardinality Estimation of Subgraph Matching: A Filtering-Sampling Approach'
+  - title: B.S in Computer Science and Engineering / Mathematical Sciences, Seoul National University
     year: 2018
     badge: 2018.03-2022.08
     description:
       - Graduated with <b>summa cum laude</b>, recieved the <b>undergraduate thesis award</b>
-      - BSc in Computer Science and Engineering (Major GPA 3.91 / 4.3)  
-      - BSc in Mathematical Science (Double Major GPA 4.07 / 4.3)
+      - B.S in Computer Science and Engineering (Major GPA 3.91 / 4.3)  
+      - B.S in Mathematical Science (Double Major GPA 4.07 / 4.3)
   - title : Sangsan High School 
     year: 2015-2017
     badge: 2015.03-2018.02
@@ -29,11 +30,17 @@
 - title: Experience
   type: table 
   contents: 
+  - title: Scientist @ Standigm
+    year: 2024
+    badge: 2024.09-Present
+    description:
+      - Research on Artificial Intelligence for Drug Discovery
   - title: Research Internship @ Aigendrug Co.Ltd
     year: 2022 
     badge: 2022.01-2022.08
     description:
-      - Efficient subgraph search on molecule graph data
+      - Developed an efficient subgraph search algorithm on molecule graph data
+      - Research on contrastive learning for molecular property prediction
       - 'Advisor : Professor Sun Kim, Dr. Sunho Lee'
   - title: Undergraduate Research Opportunity Program @ SNU Computer Theory Lab
     year: 2020
@@ -45,18 +52,6 @@
 - title: Publications
   type: table-publications
   
-# - title: Projects
-#   type: table 
-#   contents:
-#   - title: Efficient Subgraph Matching for Drug Hepatotoxicity Prediction
-#     badge: 2021.09-2021.12
-#     description:
-#       - SNU Creative Integrated Design course project (Capstone)
-#   - title: FRIDGE - Recipe recommendation & Fridge management webapp
-#     badge: 2020.09-2020.12
-#     description:
-#       - SNU Principles and Practices of Software Design course project
-
 - title: Honors, Awards and Scholarships
   type: table 
   contents: 
@@ -65,6 +60,7 @@
     - 2020 National Scholarship For Science and Engineering
   - subtype: Awards
     items:
+    - 2024 Master's Thesis Award, Department of CSE
     - 2022 Bachelor's Thesis Award, Department of CSE
     - 2021 Korea Computer Congress, Best paper award (Computer Theory)
 
