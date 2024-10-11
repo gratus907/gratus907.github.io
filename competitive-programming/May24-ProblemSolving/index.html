@@ -3,7 +3,7 @@
 
   <head>
     
-    <meta http-equiv="refresh" content="3; url=https://gratus907.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   Wonseok Shin
 
 
-  | Page not found
+  | 2024년 3-5월 알고리즘 문제풀이
 
 </title>
 <meta name="description" content="Wonseok Shin, SNU CSE
@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/syntax.css">
-<link rel="canonical" href="/404.html">
+<link rel="canonical" href="/competitive-programming/May24-ProblemSolving/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -314,18 +314,155 @@
 
     <!-- Content -->
     <div class="container mt-5">
-      <div class="post">
+      
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">2024년 3-5월 알고리즘 문제풀이</h1>
+  </header>
+  <div class="byline">
+    <div>
+      <h3>Date</h3>
+    May 5, 2024
+    </div>
+    
+    <div>
+      <h3>Category</h3>
+      Competitive Programming
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    <div>
+      <h3>Pageview</h3>
+      <div class="align-items-center w-100" style="margin-bottom: 1rem;">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://gratus907.github.io/competitive-programming/May24-ProblemSolving/&amp;count_bg=%233A3A3A&amp;title_bg=%23111111&amp;icon=myspace.svg&amp;icon_color=%23E7E7E7&amp;title=Views&amp;edge_flat=false%0A">
+      </div>
+    </div>
+  </div>
 
   
-  <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
-  </header>
+    <div class="toc">
+    <h3>Contents</h3>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#atcoder-beginner-contest-352g-socks-3">Atcoder Beginner Contest 352G. Socks 3</a></li>
+<li class="toc-entry toc-h3"><a href="#1997-koi-%EA%B3%A0%EB%93%B1%EB%B6%80-2%EB%B2%88-%EA%B5%90%EC%B0%A8%ED%95%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EC%9B%90%EC%9D%98-%ED%98%84%EB%93%A4%EC%9D%98-%EC%B5%9C%EB%8C%80%EC%A7%91%ED%95%A9">1997 KOI 고등부 2번, 교차하지 않는 원의 현들의 최대집합</a></li>
+</ul>
+    </div>
+  
   <article class="post-content">
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://gratus907.github.io/">here</a>.</p>
+    <div class="post-main-content">
+    <p>해외 출장과 여러 일정으로 계속 바쁘네요 :(</p>
 
+<p>5월까지 포함하여 한번에 작성할 예정입니다</p>
+
+<h3 id="atcoder-beginner-contest-352g-socks-3">Atcoder Beginner Contest 352G. Socks 3</h3>
+<p><code class="language-plaintext highlighter-rouge">ABC352G</code><br>
+난이도 (Atcoder): <span style="color: rgb(255, 128, 0);">2413</span></p>
+
+<p><strong>문제 요약:</strong> $1$ 부터 $n$까지의 숫자 카드가 각각 $x_i$ 장만큼씩 있다. 한장씩 뽑는 행동을 반복할 때, 처음으로 한 종류의 카드가 두 장이 되기 위한 뽑기 횟수의 기댓값을 구하라.</p>
+
+<details>
+
+  <summary><b>풀이 보기:</b></summary>
+  <p>일종의 Coupon Collector’s Problem 변형 문제입니다.</p>
+
+  <p>1부터 3까지의 카드가 $a, b, c$ 장만큼씩 있고, $a + b + c = M$이라고 할 때, 두 장을 뽑는 경우는 다음의 경우들이 있습니다.</p>
+  <ul>
+    <li>(1, 1), (2, 2), (3, 3) 을 뽑는 경우: $a(a - 1) + b(b - 1) + c(c - 1)$ 가지 경우의 수가 있습니다.</li>
+    <li>(1, 2), (2, 3), (3, 1) 을 뽑는 경우 (또는 그 반대 순서): $2(ab + bc + ca)$ 가지가 경우의 수가 있습니다.</li>
+  </ul>
+
+  <p>종합하여 $a^2 + b^2 + c^2 + 2(ab + bc + ca) - M = (a + b + c)^2 - M = M(M - 1)$ 가지 경우를 이루게 됩니다.</p>
+
+  <p>이때, 전자는 <strong>성공</strong> 했지만, 후자는 <strong>더 뽑아야</strong> 합니다. $k$장을 뽑았을 때 실패할 확률을 $p_k$라고 한다면, 구하고자 하는 답은 <strong>성공할 때까지 필요한 반복의 기댓값</strong> 이므로,
+  $1 + (\sum_{i = 1}^{\infty} p_i)$ 가 우리가 원하는 답이 됩니다. (실패한다는건 다음 실행을 해야 한다는 의미가 되므로)
+  여기서, $n + 1$ 장을 뽑으면 반드시 성공하므로, 우리는 $\infty$가 아닌 $n$까지만 더하면 됩니다.</p>
+
+  <p>각각의 $p_i$를 구하기 위해, 위 예시로 돌아가 보겠습니다. 일반화해서, 2장을 뽑아서 실패할 확률을
+  \(p_2 = \frac{1}{M(M - 1)}\sum_{i \neq j} x_i x_j = \frac{2}{M(M - 1)}\sum_{i &lt; j} x_i x_j\)
+  로 쓸 수 있습니다. 비슷한 방법으로 $k$ 장을 뽑았을 때 실패하는 확률을 생각해 보면, 전체 경우의 수가 $M(M-1)\dots(M-K+1)$ 가지고, <strong>서로 겹치지 않게</strong> 무엇을 뽑을지 정하고 나면 경우의 수는 그냥 곱해지기 때문에,
+  \(p_k = \frac{k!}{M(M-1)\dots(M-k+1)}\sum_{1 \leq j_1 &lt; j_2 &lt; \dots &lt; j_k \leq n} x_{j_1} x_{j_2} \dots x_{j_k}\)
+  이렇게 구해다는 것을 알 수 있습니다.</p>
+
+  <p>위 $p_k$ 항에서, 앞부분은 미리 팩토리얼값을 전처리해두면 되기 때문에 구하기 어렵지 않습니다. 뒷부분은 하나의 $k$를 구하기 위해 $\binom{n}{k}$ 시간이 들기 때문에 약간의 생각을 더 해야 합니다. 뒷부분의 합이 <strong>근과 계수의 관계</strong> 에서 얻어지는 항과 비슷함을 관찰할 수 있습니다. 구체적으로,
+  \(S_k = \sum_{1 \leq j_1 &lt; j_2 &lt; \dots &lt; j_k \leq n} x_{j_1} x_{j_2} \dots x_{j_k}\)
+  에 대해, 다음이 성립함을 알고 있습니다. ($S_0 = 1$로 생각합니다)
+  \((t + x_1)(t + x_2) \dots (t + x_n) = \sum_{i = 0}^{n}t^n S_{n - i}\)
+  따라서, 좌변의 다항식을 전개하여 그 계수를 알아낼 수 있다면 $S_1$부터 $S_n$까지의 모든 $S$를 구할 수 있습니다.</p>
+
+  <p>그러나 $d$차 다항식을 곱셈하는 것은 그냥 곱셈하면 $d^2$ 시간이 걸리고, FFT를 이용하더라도 $d \log d$ 시간이 걸립니다. 구체적으로, $a$차와 $b$차 다항식을 곱하면 FFT를 사용하더라도 $(a + b) \log (a + b)$ 시간이 걸리므로, 앞에서부터 순서대로 곱한다면 전체 시간 복잡도는 $n^2 \log n$ 시간이 걸리게 됩니다.</p>
+
+  <p>이러한 형태의 다항식을 빠르게 전개하기 위해서는 FFT를 이용하되, 이진 트리 형태로 곱셈해 나가는 방법을 쓸 수 있습니다. 다항식들을 이진 트리의 리프노드에 배치했다고 생각하고, 분할정복식으로 첫번째부터 $n / 2$ 번째까지의 다항식들의 곱과 $n / 2 + 1$ 부터 $n$번째까지의 다항식들의 곱을 따로 구하여 FFT로 합치는 방법입니다.
+  이렇게 하면, $n$개의 $t + x$ 형태 다항식을 곱하기 위해
+  \(T(n) = 2T(n / 2) + O(n \log n)\)
+  시간이 들기 때문에, 이를 마스터 정리로 전개하면 $O(n \log^2 n)$ 시간이 됩니다.</p>
+
+  <p>따라서, $O(n \log^2 n)$ 시간에 모든 $S_i$ 들을 구하고, 이걸로 $p_i$들을 구하면 전체 문제를 해결할 수 있습니다.</p>
+
+</details>
+
+<hr>
+
+<h3 id="1997-koi-고등부-2번-교차하지-않는-원의-현들의-최대집합">1997 KOI 고등부 2번, 교차하지 않는 원의 현들의 최대집합</h3>
+<p><code class="language-plaintext highlighter-rouge">BOJ 2673 / KOI 1997 H2</code>
+난이도: <span style="color: rgb(0, 199, 139);">Platinum IV</span></p>
+
+<p><strong>문제 요약:</strong> 문제 서술이 충분히 간단하게 작성되어 있어 그대로 가져옵니다.</p>
+
+<p>평면상에 있는 원의 둘레에 100개의 점이 일정한 간격으로 시계방향으로 번호가 $1, 2, … 100$ 으로 붙여져 있다. 이 점들을 끝점으로 갖는 $N$개의 선분(원의 현)이 입력으로 주어질 때, 이들중에서 서로 교차하지 않는 것들을 최대한 많이 찾아서 그 개수를 출력하는 프로그램을 작성하라.</p>
+
+<p>단, $1 \leq N \leq 50$ 이고, 주어진 각 점은 많아야 한 현의 끝점이 될 수 있다.</p>
+
+<details>
+  <summary><b>풀이 보기:</b></summary>
+
+  <p>현의 개수가 최대 50개임을 생각하고, 주어진 각 점은 많아야 한 현의 끝점이 될 수 있다는 것을 생각하면, <strong>반드시</strong> 선분 $(i, i+1)$이 주어진 현이 아닌 $i$를 생각할 수 있습니다. 그 점에서 원을 끊어서, 선형으로 문제를 변형할 수 있습니다.</p>
+
+  <p>일반성을 잃지 않고, 끊은 지점이 $(N, 1)$ 사이라고 하겠습니다. 현의 끝점이 아닌 점들은 필요 없으므로 잊어버리고, 좌표압축을 수행합니다.</p>
+  <ul>
+    <li>$D(i, j)$ 를 $(i, j)$ 번 점까지만 보면서 고를 수 있는 최대 현의 개수라고 하고, 이를 DP를 이용하여 찾습니다.</li>
+    <li>$(i, j)$가 주어진 현이면 $c = 1$, 아니면 $0$이라고 생각합니다.</li>
+    <li>임의의 $i \leq k \leq j$ 인 $k$에 대해, $D(i, j) \geq D(i, k) + D(k, j) + c$ 가 성립합니다. 어떤 $k$에서 끊어서 그 왼쪽과 오른쪽 구간을 따로 계산한 후, $(i, j)$ 현을 끼워넣을 수 있기 때문입니다.</li>
+    <li>선택한 현들이 겹칠 수 없기 때문에, $D(i, j)$ 들은 반드시 저러한 $k$에 의해 정해져야 하므로, 실제로는 $D(i, j) \geq D(i, k) + D(k, j) + c$ 로 계산할 수 있습니다.</li>
+    <li>잘 알려진 <a href="https://www.acmicpc.net/problem/11049" target="_blank" rel="noopener noreferrer">행렬 곱셈 순서</a> 와 같은 느낌의 DP로, $O(N^3)$ 시간에 해결할 수 있습니다.</li>
+  </ul>
+</details>
+
+    </div>
   </article>
+  
 
+  
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://gratus907-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+</noscript>
+  
+  <!-- 
+  <a href="https://gratus907.github.io/competitive-programming"> Back to : competitive-programming</a><br/>
+  
+   -->
 </div>
 
     </div>

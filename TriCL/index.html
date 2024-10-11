@@ -3,7 +3,7 @@
 
   <head>
     
-    <meta http-equiv="refresh" content="3; url=https://gratus907.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   Wonseok Shin
 
 
-  | Page not found
+  | Triangular Contrastive Learning on Molecular Graphs
 
 </title>
 <meta name="description" content="Wonseok Shin, SNU CSE
@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/syntax.css">
-<link rel="canonical" href="/404.html">
+<link rel="canonical" href="/TriCL/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -318,11 +318,87 @@
 
   
   <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
+    <h1 class="post-title">Triangular Contrastive Learning on Molecular Graphs</h1>
+    <p class="post-description">Tri-modal contrastive learning to leverage 1D, 2D and 3D information for better understanding of molecular graphs.</p>
   </header>
   <article class="post-content">
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://gratus907.github.io/">here</a>.</p>
+    <p>MinGyu Choi, <ins>Wonseok Shin</ins>, Yijingxiu Lu, Sun Kim, <strong>Triangular Contrastive Learning on Molecular Graphs</strong></p>
+
+<p><a href="https://arxiv.org/abs/2205.13279" target="_blank" rel="noopener noreferrer">ArXiv Link (2205.13279)</a></p>
+
+<hr>
+
+<style>
+div.justified {
+  text-align: justify;
+} 
+</style>
+
+<p><strong>TriCL</strong> is a tri-modal contrastive learning framework with triangular loss function that learns the angular geometry of the embedding space through simultaneously contrasting the area of positive and negative triplets. We achieved SOTA performance on MoleculeNet, the molecular property prediction dataset.</p>
+
+<h3 id="code-and-dataset">Code and Dataset</h3>
+<p>Code and dataset will be disclosed soon.</p>
+
+<h3 id="motivation">Motivation</h3>
+<div class="justified">
+  <p>Consider the <strong>molecular property prediction</strong> problem, as a supervised learning setup. (For example, BBBP - classification problem regarding whether molecule will penetrate through the blood-brain-barrier (1) or not (0))</p>
+
+  <p>Despite vast number of chemicals that are known and used to us, obtaining labeled data for such task is generally very difficult, expensive and involves some <a href="https://en.wikipedia.org/wiki/Animal_testing" target="_blank" rel="noopener noreferrer">ethical concerns</a>. It is thus of our primary interest to somehow utilize unlabeled data to pretrain the model whenever applicable.</p>
+
+  <p>An important point to consider is the multifaceted nature of some tasks. Again for examples, while molecules are naturally thought as graphs, most graph neural networks are inherently insufficient to express 3D geometric information. <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+  <p>Furthermore, these kind of 3D information might not be always obtainable for any downstream tasks. Hence to utilize existing information to the maximal extent, we must develop a model which can:</p>
+  <ul>
+    <li>While pretraining a neural network model A is the goal,</li>
+    <li>“Teach” informations available for modality B to modality A</li>
+    <li>So that A can “learn” how small differences in representation A can be expressed as larger difference in representation B.</li>
+  </ul>
+
+  <p>So conceptually, if our multimodal contrastive learning is well done, GNN can understand how one simple change in single/double bond at this specific location can change the 3D structure, and focus on those changes when classifying molecules.</p>
+</div>
+
+<h3 id="alignment-and-uniformity">Alignment and Uniformity</h3>
+<p><strong>Alignment</strong> and <strong>Uniformity</strong> suggested by Wang and Isola<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> is a assessment metric of contrastive learning embedding space.</p>
+<ul>
+  <li>
+<strong>Alignment</strong> : Similar inputs (=augmented inputs from same raw input) should be mapped closely</li>
+  <li>
+<strong>Uniformity</strong> : Dissimilar inputs should be mapped away from each other</li>
+</ul>
+
+<p>In short, CL-embedding space should map similar inputs <strong>RELATIVELY</strong> closer.</p>
+
+<h3 id="triangular-contrastive-loss">Triangular Contrastive Loss</h3>
+<p><img src="../images/triCL.png" alt="Image">
+<strong>TriCL</strong> utilzes both intra-modal and inter-modal loss to learn the geometry of embedding space. For <strong>ANY</strong> neural network model to generate embedding representation from augmented input data, TriCL can be applied.</p>
+
+<p>For intra-modal loss, we suggest <strong>NT-Xent</strong> loss function. Again, Wang and Isola<sup id="fnref:2:1" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> showed how NT-Xent can be understood as improving alignment and uniformity; 
+\(\begin{aligned}
+    \mathcal{L}_{\mathrm{intra}}^{\mathrm{enc}} &amp;= \frac{1}{2B}\sum_{k = 1}^{B} \left(\ell(2k-1, 2k) + \ell(2k, 2k-1)\right)\\
+    \text{where}\quad  \ell(i, j) &amp;= \underbrace{-\frac{1}{n \tau}\sum_{i,j}\mathrm{sim}(\bm z^{\mathrm{enc}}_i, \bm z^{\mathrm{enc}}_j)}_{ \text{intramodal alignment}} 
+    +  \underbrace{\frac{1}{n}\sum_i\log\sum_{k=1}^{2n} \mathrm{1}_{k \neq i}\exp(\mathrm{sim}(\bm z^{\mathrm{enc}}_i, \bm z^{\mathrm{enc}}_k)/\tau)}_{\text{intramodal uniformity}} \nonumber
+\end{aligned}\)
+And our new <strong>Triangular Loss</strong> aims to improve intermodal alignment/uniformity. 
+\(\begin{aligned}
+    \mathcal{L}_{\mathrm{inter}} = \underbrace{\mathbb{E}\left[\mathrm{Area}(\bm z^{\mathrm{main}}_i, \bm z^{\mathrm{aux1}}_j, \bm z^{\mathrm{aux2}}_k)^2 \mid  \mathbf{P}\right]}_{\text{intermodal alignment}} - 
+    \underbrace{\mathbb{E}\left[\mathrm{Area}(\bm z^{\mathrm{main}}_i, \bm z^{\mathrm{aux1}}_j, \bm z^{\mathrm{aux2}}_k)^2 \mid \mathbf{N}\right]}_{\text{intermodal uniformity}}
+\end{aligned}\)
+For more information, please refer to the arXiv link above.</p>
+
+<h3 id="results">Results</h3>
+<p>We achieved SOTA performance on MoleculeNet, by pretraining same GNN model with same dataset (GEOM)
+<img src="../images/f5a0787488759bdb37526ead9e5256bfb732dcd135a9d909bb5a21c7dad0db02.png" alt="picture 1"></p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Consider the case of Cyclohexane and Benzene. Despite their graph representations looking quite similar, their 3D geometry is vastly different. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Tongzhou Wang and Phillip Isola. Understanding Contrastive Representation Learning through Alignment and Uniformity on the Hypersphere. In International Conference on Machine Learning. PMLR, 2020. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:2:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>
 
   </article>
 

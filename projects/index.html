@@ -3,7 +3,7 @@
 
   <head>
     
-    <meta http-equiv="refresh" content="3; url=https://gratus907.github.io/" />
+    
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
   Wonseok Shin
 
 
-  | Page not found
+  | Projects
 
 </title>
 <meta name="description" content="Wonseok Shin, SNU CSE
@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/syntax.css">
-<link rel="canonical" href="/404.html">
+<link rel="canonical" href="/projects/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -209,7 +209,7 @@
             </a>
           </li> -->
           <!-- Blog -->
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="/projects/">
               Projects
             </a>
@@ -243,9 +243,11 @@
           
           
           
-          <li class="nav-item ">
+          <li class="nav-item active">
               <a class="nav-link" href="/projects/">
                 Projects
+                
+                <span class="sr-only">(current)</span>
                 
               </a>
           </li>
@@ -294,6 +296,8 @@
           
           
           
+          
+          
            -->
           
         </ul>
@@ -318,11 +322,326 @@
 
   
   <header class="post-header">
-    <h1 class="post-title">Page not found</h1>
-    <p class="post-description">Looks like there has been a mistake. Nothing exists here.</p>
+    <h1 class="post-title">Projects</h1>
+    <p class="post-description">Collection of my projects.</p>
   </header>
   <article class="post-content">
-    <p>You will be redirected to the main page within 3 seconds. If not redirected, please click <a href="https://gratus907.github.io/">here</a>.</p>
+    <style>
+.tag {
+  font-size:12px;
+}
+</style>
+
+<div class="projects">
+  
+  <!-- Display categorized projects -->
+    
+      <h2 class="category">Graph Database</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/FaSTest/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/subgp.jpg" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Cardinality Estimation of Subgraph Matching Query</h2>
+        <p class="card-text">Filtering-sampling approach for efficient and accurate cardinality estimation of subgraph matching query.</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+            <span class="tag">Research</span>
+            
+            <span class="tag">Graph Database</span>
+            
+            <span class="tag">Graph Algorithm</span>
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+        </div>
+      
+    
+      <h2 class="category">Machine Learning</h2>
+      
+      
+      <!-- Generate cards for each project -->
+      
+        <div class="grid">
+          
+            <script>
+$("[data-tag]").click((e) => {
+    console.log("log");
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+})
+  
+function filterByTagName(tagName) {
+    console.log(tagName);
+    $('.hidden').removeClass('hidden');
+    $('.post-wrapper').each((index, elem) => {
+        if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).addClass('hidden');
+        }
+    });
+    $(`.tag`).removeClass('selected');
+    $(`.tag[data-tag=${tagName}]`).addClass('selected');
+}
+
+$(document).ready(function() {
+  let currentTag = "";
+  const queryTag = getUrlParams().tag;
+  if (queryTag) {
+    currentTag = queryTag;
+    filterByTagName(currentTag)
+  }
+});
+
+function getUrlParams() {     
+    var params = {};  
+    
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        	params[key] = value; 
+        }
+    );     
+    
+    return params; 
+}
+
+function updateQueryString(tagName) {
+  const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+  window.history.replaceState({ path }, '', path);
+}
+</script>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.tag {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tag li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 18px 0 23px;
+  position: relative;
+  margin: 0 8px 8px 0;
+  text-decoration: none;
+  font-size: 12px;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: crimson; 
+}
+</style>
+<div class="grid-item">
+  
+  <a href="/TriCL/">
+  
+    <div class="card hoverable">
+      
+      <div class="card-img-container">
+        <span class="helper"></span>
+        <img src="/assets/img/triCL-icon.png" alt="project thumbnail">
+      </div>
+      
+      <div class="card-body">
+        <h2 class="card-title">Triangular Contrastive Learning on Molecular Graphs</h2>
+        <p class="card-text">Tri-modal contrastive learning to leverage 1D, 2D and 3D information for better understanding of molecular graphs.</p>
+        <div class="row ml-1 mr-1 p-0">
+          
+            
+            <span class="tag">Research</span>
+            
+            <span class="tag">Contrastive Learning</span>
+            
+            <span class="tag">Molecular Graphs</span>
+            
+          
+          
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+          
+        </div>
+      
+    
+
+  
+
+</div>
 
   </article>
 
